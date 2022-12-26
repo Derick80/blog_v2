@@ -1,0 +1,25 @@
+# Ignore artifacts:
+build
+coverage
+cache
+public/build
+prisma/seed.ts
+prisma/migrations
+node_modules
+.env
+styles/app.css
+tailwind.config.js
+readMe.md
+.eslintrc.js
+.prettierrc.js
+.prettierrc.json
+package.json
+.gitignore
+remix.env.d.ts
+remix.config.js
+tsconfig.json
+package-lock.json
+coverage
+/app/styles/app.css
+/app/entry.server.tsx
+/app/entry.client.tsx

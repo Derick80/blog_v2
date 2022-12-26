@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,700;1,300;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Eczar:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
+@import url("https://fonts.googleapis.com/css2?family=Material+Icons+Outlined");
+@import url("https://fonts.googleapis.com/css2?family=Material+Icons");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .nav-ul {
+    @apply mb-1 flex w-full items-center justify-around;
+  }
+  .nav-li {
+    @apply flex flex-col-reverse items-center;
+  }
+  .form-primary {
+    @apply w-full text-xl font-semibold;
+  }
+
+  .form-field-primary {
+    @apply mb-6 w-full resize rounded-xl border-2 border-black p-2 shadow-sm focus:border-slate-700 focus:outline-none focus:ring-1 dark:border-white dark:bg-slate-400;
+  }
+
+  .btn-primary {
+    @apply flex flex-row items-end justify-items-center rounded-xl bg-green-400 px-3 py-2 font-semibold transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-yellow-400;
+  }
+  .btn {
+    @apply absolute bottom-5 right-5 rounded bg-slate-200 px-3 py-2 text-center text-xs transition hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600;
+  }
+  .form-validation-error {
+    @apply m-0 mt-1 bg-red-500 text-xs;
+  }
+  .error-container {
+    @apply rounded-md border-black bg-purple-50 p-2;
+  }
+}

@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @unique @default(uuid())
+  userName  String    @unique
+  email     String    @unique
+  password  String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  role      Role      @default(USER)
+  accounts  Account[]
+  tokens    Token[]
+  profile   Profile?
+
+  posts Post[]
+  likes Like[]
+  projects Project[]
+}
+
+model Project{
+  id String @id @unique @default(uuid())
+  title String
+  description String
+  projectImg String
+  projectUrl String
+  githubUrl String
+   categories Category[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+}
+
+model Post {
+  id          String   @id @unique @default(uuid())
+  title       String
+  description String
+  body        String
+  postImg     String
+  createdBy   String
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+    comments Post[] @relation("comments")
+  parentId String?
+  parent   Post?   @relation("comments", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId      String
+
+  categories Category[]
+  likes      Like[]
+
+  @@index([id, userId])
+  @@index([userId])
+}
+
+model Category {
+  id    String @id @unique @default(uuid())
+  name  String @unique
+  posts Post[]
+  projects Project[]
+}
+
+model Profile {
+  id              String   @id @unique @default(uuid())
+  firstName       String
+  lastName        String
+  bio             String
+  location String
+  education       String
+  occupation      String
+  profilePicture  String   @default("https://remix-bucket.s3.us-east-2.amazonaws.com/Derick2022.jpeg")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String   @unique
+  email           String
+}
+
+model Like {
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([postId, userId])
+  @@index([postId, userId])
+  @@index([postId])
+  @@index([userId])
+}
+
+model Token {
+  id        String    @id @default(cuid())
+  token     String
+  type      TokenType
+  expiresAt DateTime?
+  sentTo    String?
+  usedAt    DateTime?
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([token, type])
+  @@index([userId])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  provider          String
+  providerAccountId String
+  refreshToken      String?
+  accessToken       String?
+  expiresAt         Int?
+  userId            String
+  user              User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+enum Role {
+  ADMIN
+  USER
+  MEMBER
+}
+
+enum TokenType {
+  REFRESH_TOKEN
+  VERIFY_EMAIL
+  RESET_PASSWORD
+}
