@@ -1,5 +1,5 @@
 import { Form, useActionData, useSearchParams } from '@remix-run/react'
-import { useTransition } from 'react'
+import { useEffect, useTransition } from 'react'
 
 type Props = {
   authType: 'register' | 'login' | 'request' | 'confirm'
@@ -33,11 +33,11 @@ export const AuthForm = ({ authType }: Props) => {
   const token = searchParams.get('token')
   const redirectTo = searchParams.get('redirectTo')
 
-  // useEffect(() => {
-  //   if (action && action.message) {
-  //     alert(action.message)
-  //   }
-  // }, [action])
+  useEffect(() => {
+    if (action && action.message) {
+      alert(action.message)
+    }
+  }, [action])
 
   return (
     <Form className='flex flex-col gap-5' method='post' action={url}>

@@ -105,7 +105,9 @@ function NavLinks() {
             { siteLinks.map((link, index) => (
               <LinkMaker key={ index } link={ link } toggle={ toggle } />
             )) }
-
+        {userLinks.map((link, index) => (
+          <LinkMaker key={index} link={link} toggle={toggle} />
+        ))}
           </>
         ) : (
           <>

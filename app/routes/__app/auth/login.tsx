@@ -65,7 +65,9 @@ export default function Login() {
         <div className='bg-white'>Or continue with</div>
 
         <SocialLoginForm provider='github'>
-          <button>Github</button>
+          <button
+          className='btn-base'
+          >Github</button>
         </SocialLoginForm>
         <div className='mt-4'>
           <Link to='/auth/register'>Don't have an account?</Link>

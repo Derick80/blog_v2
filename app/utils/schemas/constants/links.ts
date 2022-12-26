@@ -13,5 +13,5 @@ export const nonUserLinks = [
 
 // can probably remove this type of link and just use the nonUserLinks
 export const userLinks = [
-  { name: 'Logout', href: '/auth/logout', icon_name: 'logout' }
+  { name: 'Users', href: '/users', icon_name: 'person' }
 ]

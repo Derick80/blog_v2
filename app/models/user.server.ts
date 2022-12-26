@@ -2,8 +2,24 @@ import { Prisma } from '@prisma/client'
 import { createPasswordHash } from './auth/auth-service.server'
 import { prisma } from './prisma.server'
 
+export type UserProps = {
+  id: string
+  email: string
+  userName: string
+  avatarUrl?: string
+}
+
+const defaultUserSelect = {
+  id: true,
+  email: true,
+  userName: true,
+  avatarUrl: true,
+
+}
 export async function getUsers() {
-  const users = await prisma.user.findMany()
+  const users = await prisma.user.findMany({
+    select: defaultUserSelect
+  })
   return users
 }
 
@@ -15,12 +31,7 @@ export async function getUserById(userId: string) {
   })
 }
 
-export const defaultUserSelect = {
-  id: true,
-  email: true,
-  userName: true,
-  password: false
-}
+
 
 export const createUser = async (
   input: Prisma.UserCreateInput & {
