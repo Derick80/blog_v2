@@ -8,10 +8,7 @@ import { Form, Link } from '@remix-run/react'
 import { badRequest, serverError } from 'remix-utils'
 import { AuthForm } from '~/components/shared/auth/auth-form'
 import { SocialLoginForm } from '~/components/shared/auth/social-login-form'
-import {
-  authenticator,
-  isAuthenticated
-} from '~/models/auth/authenticator.server'
+import { isAuthenticated, authenticator } from '~/models/auth/auth.server'
 
 export const meta: MetaFunction = () => {
   return {
@@ -59,14 +56,12 @@ export default function Login() {
       <div className='rounded-lg bg-white p-8 shadow-md'>
         <AuthForm authType='login' />
         <div className='bg-white'>Or continue with</div>
-        <Form action='/github' method='post'>
-          <button>GitHub</button>
-        </Form>
+
         <SocialLoginForm provider='github'>
           <button>Github</button>
         </SocialLoginForm>
         <div className='mt-4'>
-          <Link to='/register'>Don't have an account?</Link>
+          <Link to='/auth/register'>Don't have an account?</Link>
         </div>
       </div>
     </article>

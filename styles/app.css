@@ -9,6 +9,11 @@
 @tailwind utilities;
 
 @layer components {
+  .mh1 {
+    @apply text-2xl md:text-3xl font-bold text-zinc-900 dark:text-slate-100
+  }
+
+
   .nav-ul {
     @apply mb-1 flex w-full items-center justify-around;
   }

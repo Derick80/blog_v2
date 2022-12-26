@@ -6,7 +6,6 @@ import type {
 import { notFound } from 'remix-utils'
 import { authenticator } from '~/models/auth/auth.server'
 
-
 export const loader: LoaderFunction = () => {
   throw notFound({ message: "This page doesn't exists." })
 }

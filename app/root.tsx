@@ -9,7 +9,7 @@ import {
   useLoaderData
 } from '@remix-run/react'
 import Layout from './components/shared/layout/layout'
-import { isAuthenticated } from './models/auth/authenticator.server'
+import { isAuthenticated } from './models/auth/auth.server'
 import styles from './styles/app.css'
 import {
   NonFlashOfWrongThemeEls,
