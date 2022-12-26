@@ -8,8 +8,9 @@ import {
 } from '~/utils/schemas/constants/links'
 import { Theme, Themed, useTheme } from '~/utils/theme-provider'
 import { useOptionalUser, useUser } from '~/utils/utils'
+import ColorMode from './color-mode'
 import { BrandIcon, MoonIcon, SunIcon, Twitter } from '../icons'
-import LinkMaker from '../link-maker'
+import LinkMaker from './link-maker'
 import Footer from './footer'
 import NavBar from './nav-bar'
 
@@ -24,6 +25,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <h1
           className='text-2xl md:text-3xl font-bold text-zinc-900 dark:text-slate-100'
           >Derick C. Hoskinson PhD</h1>
+          <ColorMode
+            className='ml-2'
+          />
+
+
+
         </div>
         <NavLinks />
         <SiteActions />

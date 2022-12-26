@@ -52,8 +52,15 @@ export const action: ActionFunction = async ({ request }) => {
 }
 export default function Login() {
   return (
-    <article>
+    <article
+      className='flex flex-col items-center justify-center min-h-screen'
+
+    >
+
+
+
       <div className='rounded-lg bg-white p-8 shadow-md'>
+        <h1 className='text-2xl font-bold'>Login</h1>
         <AuthForm authType='login' />
         <div className='bg-white'>Or continue with</div>
 

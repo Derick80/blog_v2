@@ -8,7 +8,7 @@ if (!sessionSecret) {
 
 const themeStorage = createCookieSessionStorage({
   cookie: {
-    name: 'my_theme',
+    name: 'blog_theme',
     secure: false,
     secrets: [sessionSecret],
     sameSite: 'lax',

@@ -21,35 +21,41 @@ async function seed(){
         data:{
             email:'Grayone@gmail.com',
             password: '1234567',
-            userName: 'Grayone'
+            userName: 'Grayone',
+            avatarUrl:`https://res.cloudinary.com/dch-photo/image/upload/v1672076729/stock/DerickTrain1_ysxonq.jpg`
         }
     })
       const user3 = await prisma.user.create({
         data:{
             email:'thegrayone00@gmail.com',
             password: '1234567',
-            userName: 'TheGrayone00'
+            userName: 'TheGrayone00',
+            avatarUrl: `https://res.cloudinary.com/dch-photo/image/upload/v1672076790/stock/fitzy_cx2zku.jpg`
         }
     })
       const user4 = await prisma.user.create({
         data:{
             email:'sean@gmail.com',
             password: '1234567',
-            userName: 'Sean Dempsey'
+            userName: 'Sean Dempsey',
+            avatarUrl:`https://res.cloudinary.com/dch-photo/image/upload/v1672076840/stock/DerickWork_zah8vu.jpg`
         }
     })
       const user5 = await prisma.user.create({
         data:{
             email:'thatGrayone@gmail.com',
             password: '1234567',
-            userName: 'ThatGrayone'
+            userName: 'ThatGrayone',
+            avatarUrl:`https://res.cloudinary.com/dch-photo/image/upload/v1672076841/stock/turntable_bkgwyx.jpg`
         }
     })
     const user = await prisma.user.create({
         data:{
             email,
             password: hashedPassword,
-            userName: 'Derick'
+            userName: 'Derick',
+            avatarUrl: `https://res.cloudinary.com/dch-photo/image/upload/v1672019067/stock/blogapp_xx4zq3.png`,
+
         }
     })
     await prisma.profile.create({
