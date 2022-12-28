@@ -26,9 +26,7 @@ export default function Index() {
   return (
     <>
       {/* <Carousel images={allImages} /> */}
-      <Carousel2
-        images={allImages}
-        />
+      <Carousel2 images={allImages} />
     </>
   )
 }
