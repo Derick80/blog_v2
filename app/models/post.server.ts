@@ -10,6 +10,27 @@ type QueriedPost = Post & {
   }
 }
 
+export async function getMyPosts(email: string) {
+  const posts = await prisma.post.findMany({
+    where: {
+      user: {
+        email
+      }
+    },
+
+    include: {
+      _count: true,
+      categories: true,
+      likes: true,
+      comments: {
+        include: {
+          user: true
+        }
+      }
+    }
+  })
+  return posts
+}
 export async function getUserPosts(userId: string) {
   const posts = await prisma.post.findMany({
     where: {

@@ -5,6 +5,7 @@ export type UserType = {
   id: string
   email: string
   userName: string
+  role: string
 }
 
 const DEFAULT_REDIRECT = '/'

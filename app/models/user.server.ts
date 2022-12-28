@@ -7,6 +7,7 @@ export type UserProps = {
   email: string
   userName: string
   avatarUrl?: string
+  role?: string
   _count: {
     accounts: number
     tokens: number
@@ -21,8 +22,30 @@ const defaultUserSelect = {
   email: true,
   userName: true,
   avatarUrl: true,
+  role: true,
   _count: true
 }
+
+// using this for selecting just MY posts
+const defaultPersonalSelect = {
+  id: true,
+  email: true,
+  userName: true,
+  avatarUrl: true,
+  role: true,
+  posts: true,
+  _count: true
+}
+export async function getMyPostsByEmail(email: string) {
+  const posts = await prisma.user.findMany({
+    where: {
+      email: email
+    },
+    select: defaultPersonalSelect
+  })
+  return posts
+}
+
 export async function getUsers() {
   const users = await prisma.user.findMany({
     select: defaultUserSelect

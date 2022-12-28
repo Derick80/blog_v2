@@ -75,6 +75,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
             email,
             password: hashedPassword,
             userName: 'Derick',
+            role: 'ADMIN',
             avatarUrl: `https://res.cloudinary.com/dch-photo/image/upload/v1672019067/stock/blogapp_xx4zq3.png`,
 
         }
