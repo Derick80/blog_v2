@@ -1,3 +1,4 @@
+import { Link, NavLink } from '@remix-run/react'
 import { useState } from 'react'
 // https://github.com/zioan/react-slider/blob/master/src/components/Slider2.jsx
 export type CarouselProps = {
@@ -64,11 +65,15 @@ export type CarouselProps = {
             </button>
             <div
             className='w-full h-[400px]'>
-<img
+
+<Link to={`/travel/${item.id}`}
+className='text-2xl text-center text-white bg-black p-2'
+><img
 src={item.imageUrl}
 alt='landscape'
 className='object-cover w-full h-[400px] px-6'
 />
+</Link>
             </div>
 <button
               className='text-6xl border-2 border-black'
