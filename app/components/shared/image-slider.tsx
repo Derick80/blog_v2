@@ -1,14 +1,9 @@
+import { JapanImages } from '@prisma/client'
 import { Link, NavLink } from '@remix-run/react'
 import { useState } from 'react'
 // https://github.com/zioan/react-slider/blob/master/src/components/Slider2.jsx
 export type CarouselProps = {
-  images: Array<{
-    id: number
-    imageUrl: string
-    userId: string
-    imgTitle: string | ''
-    imgDescription: string | ''
-  }>
+  images: JapanImages[]
 }
 
 export const ImageSlider = ({ images }: CarouselProps) => {
@@ -35,73 +30,55 @@ export const ImageSlider = ({ images }: CarouselProps) => {
   }
 
   return (
-    <div className='m-6'>
-      {images?.map((item, index) => {
-        return (
-          <div
-            key={index}
-            className={
-              activeSlide === index
-                ? 'flex items-center justify-between'
-                : 'hidden'
-            }
-          >
-            <button
-              className='border-2 border-black text-6xl'
-              onClick={() => prevSliderHandler(index)}
+    <article className='flex flex-col items-center justify-center'>
+      <div className=''>
+        {images?.map((item, index) => {
+          return (
+            <div
+              key={index}
+              className={
+                activeSlide === index
+                  ? 'flex items-center justify-center'
+                  : 'hidden'
+              }
             >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='-ml-5 h-12 w-20'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M15 19l-7-7 7-7'
-                />
-              </svg>
-            </button>
-            <Link to={`/travel/${index}/edit`}>Edit</Link>
+              <div className='flex flex-col items-center justify-center'>
+                <button className='' onClick={() => prevSliderHandler(index)}>
+                  <span className='material-symbols-outlined -ml-5 h-12 w-20 text-4xl'>
+                    arrow_back_ios
+                  </span>
+                </button>
+              </div>
+              <div className='h-[400px] w-1/2' key={index}>
+                <h1 className='text-center text-2xl'>{item.imgTitle}</h1>
 
-            <div className='h-[400px] w-full' key={index}>
-              <NavLink
-                //   this will link to the full image page but will probably refactor such that image may be seen and edited in a modal.
-                to={`/travel/${item.id}`}
-                className='bg-black text-center text-2xl text-white'
-              >
-                <img
-                  src={item.imageUrl}
-                  alt='landscape'
-                  className='h-[400px] w-full object-cover px-6'
-                />
-              </NavLink>
+                <div
+                  className='relative overflow-hidden rounded-t-lg'
+                  style={{
+                    backgroundImage: `url(${item.imageUrl})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    height: '400px',
+                    width: '100%'
+                  }}
+                ></div>
+                <div className='flex w-full justify-between rounded-b-lg bg-slate-200 p-2 text-center text-2xl text-zinc-900 dark:bg-slate-500 dark:text-slate-100'>
+                  <div> </div>
+                  <div>{item.imgDescription}</div>
+                  <Link to={`/travel/${index}/edit`}>Edit</Link>
+                </div>
+              </div>
+              <div className='flex flex-col items-center justify-center'>
+                <button onClick={() => nextSliderHandler(index)}>
+                  <span className='material-symbols-outlined -m4-5 h-12 w-20 text-4xl'>
+                    arrow_forward_ios
+                  </span>
+                </button>
+              </div>
             </div>
-            <button
-              className='border-2 border-black text-6xl'
-              onClick={() => nextSliderHandler(index)}
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='-ml-5 h-12 w-20'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M9 5l7 7-7 7'
-                />
-              </svg>
-            </button>
-          </div>
-        )
-      })}
-    </div>
+          )
+        })}
+      </div>
+    </article>
   )
 }

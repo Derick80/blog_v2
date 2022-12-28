@@ -7,18 +7,13 @@ import { getJImages } from '~/models/j-images.server'
 import type { JapanImages } from '@prisma/client'
 import { ImageSlider } from '~/components/shared/image-slider'
 
-
-
-
-export default function TravelRoute(){
-
+export default function TravelRoute() {
   return (
-
     <>
-    <h1>Travel
-    <Outlet />
-    </h1>
+      <h1>
+        Travel
+        <Outlet />
+      </h1>
     </>
   )
-
 }

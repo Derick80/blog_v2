@@ -10,21 +10,19 @@ export async function getJImages() {
 }
 
 export async function getJImageById(id: number) {
-
   const image = await prisma.japanImages.findUnique({
     where: {
       id: id
     }
   })
- if(!image) {
-   throw new Error('No image found')
- }
+  if (!image) {
+    throw new Error('No image found')
+  }
   return image
 }
 
-
-export async function updateJImage(input: Partial<JapanImages>){
-  const {id, ...data} = input
+export async function updateJImage(input: Partial<JapanImages>) {
+  const { id, ...data } = input
   const image = await prisma.japanImages.update({
     where: {
       id: id

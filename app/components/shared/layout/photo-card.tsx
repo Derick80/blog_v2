@@ -1,6 +1,3 @@
-
 typ
 
-export default function PhotoCard(){
-
-}
+export default function PhotoCard() {}

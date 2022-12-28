@@ -582,11 +582,31 @@ video {
   position: fixed;
 }
 
+.absolute{
+  position: absolute;
+}
+
+.relative{
+  position: relative;
+}
+
 .inset-0{
   top: 0px;
   right: 0px;
   bottom: 0px;
   left: 0px;
+}
+
+.bottom-0{
+  bottom: 0px;
+}
+
+.top-5{
+  top: 1.25rem;
+}
+
+.bottom-2{
+  bottom: 0.5rem;
 }
 
 .m-auto{
@@ -620,6 +640,18 @@ video {
 
 .mr-4{
   margin-right: 1rem;
+}
+
+.ml-5{
+  margin-left: 1.25rem;
+}
+
+.-ml-4{
+  margin-left: -1rem;
+}
+
+.-ml-6{
+  margin-left: -1.5rem;
 }
 
 .flex{
@@ -686,6 +718,14 @@ video {
   width: 16rem;
 }
 
+.w-8{
+  width: 2rem;
+}
+
+.w-1\/2{
+  width: 50%;
+}
+
 .grow{
   flex-grow: 1;
 }
@@ -700,6 +740,10 @@ video {
 
 .flex-col{
   flex-direction: column;
+}
+
+.flex-wrap{
+  flex-wrap: wrap;
 }
 
 .items-center{
@@ -744,6 +788,10 @@ video {
   margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.overflow-hidden{
+  overflow: hidden;
+}
+
 .overflow-scroll{
   overflow: scroll;
 }
@@ -770,6 +818,20 @@ video {
 
 .rounded-lg{
   border-radius: 0.5rem;
+}
+
+.rounded-sm{
+  border-radius: 0.125rem;
+}
+
+.rounded-t-lg{
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.rounded-b-lg{
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
 }
 
 .border{
@@ -883,6 +945,23 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-black\/5{
+  background-color: rgb(0 0 0 / 0.05);
+}
+
+.bg-black\/50{
+  background-color: rgb(0 0 0 / 0.5);
+}
+
+.bg-black\/25{
+  background-color: rgb(0 0 0 / 0.25);
+}
+
+.bg-slate-200{
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-80{
   --tw-bg-opacity: 0.8;
 }
@@ -971,6 +1050,11 @@ video {
 .text-xl{
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .font-medium{
@@ -1142,6 +1226,11 @@ video {
   background-color: rgb(148 163 184 / var(--tw-bg-opacity));
 }
 
+.dark .dark\:bg-slate-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
+}
+
 .dark .dark\:bg-opacity-80{
   --tw-bg-opacity: 0.8;
 }
@@ -1208,6 +1297,21 @@ video {
   .md\:text-3xl{
     font-size: 1.875rem;
     line-height: 2.25rem;
+  }
+
+  .md\:text-6xl{
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .md\:text-xs{
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .md\:text-4xl{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
   }
 }
 
