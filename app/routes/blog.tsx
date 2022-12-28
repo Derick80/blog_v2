@@ -4,10 +4,10 @@ import { useLoaderData } from '@remix-run/react'
 import { getImageByFolder } from '~/models/cloudinary.server'
 import { getPosts } from '~/models/post.server'
 
-export async function loader({ ...args }: LoaderArgs) {
+export async function loader({}: LoaderArgs) {
   const posts = await getPosts()
 
-  return json({  posts })
+  return json({ posts })
 }
 
 export default function BlogRoute() {
@@ -15,7 +15,6 @@ export default function BlogRoute() {
   return (
     <>
       <h1>Blog</h1>
-
     </>
   )
 }

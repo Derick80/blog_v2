@@ -26,8 +26,10 @@ model User {
 }
 
 model JapanImages {
-  id       String @id @unique @default(uuid())
+id  Int @id @unique @default(autoincrement())
   imageUrl String
+  imgTitle String?
+  imgDescription String?
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId   String
 }

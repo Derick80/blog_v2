@@ -1,108 +1,142 @@
 import { JapanImages } from '@prisma/client'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 export type CarouselProps = {
-
   images: {
-    id:string
-    imageUrl:string
-    userId:string
-  }
-
+    id: number
+    imageUrl: string
+    userId: string
+  }[]
 }
 
-export const Carousel = ({ images }: any) => {
-  console.log('images', images);
+export const Carousel = ({ images }: CarouselProps) => {
+  const maxScrollWidth = useRef(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const carousel = useRef(null)
 
-  // We will start by storing the index of the current image in the state.
-  const [currentImage, setCurrentImage] = React.useState(0)
-
-  // We are using react ref to 'tag' each of the images. Below will create an array of
-  // objects with numbered keys. We will use those numbers (i) later to access a ref of a
-  // specific image in this array.
-  const refs = images.reduce((acc, val, i) => {
-    acc[i] = React.createRef()
-    return acc
-  }, {})
-
-  const scrollToImage = (i) => {
-    // First let's set the index of the image we want to see next
-    setCurrentImage(i)
-    // Now, this is where the magic happens. We 'tagged' each one of the images with a ref,
-    // we can then use built-in scrollIntoView API to do eaxactly what it says on the box - scroll it into
-    // your current view! To do so we pass an index of the image, which is then use to identify our current
-    // image's ref in 'refs' array above.
-    refs[i].current.scrollIntoView({
-      //     Defines the transition animation.
-      behavior: 'smooth',
-      //      Defines vertical alignment.
-      block: 'nearest',
-      //      Defines horizontal alignment.
-      inline: 'start'
-    })
-  }
-
-  // Some validation for checking the array length could be added if needed
-  const totalImages = images.length
-
-  // Below functions will assure that after last image we'll scroll back to the start,
-  // or another way round - first to last in previousImage method.
-  const nextImage = () => {
-    if (currentImage >= totalImages - 1) {
-      scrollToImage(0)
-    } else {
-      scrollToImage(currentImage + 1)
+  const movePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prevState) => prevState - 1)
     }
   }
 
-  const previousImage = () => {
-    if (currentImage === 0) {
-      scrollToImage(totalImages - 1)
-    } else {
-      scrollToImage(currentImage - 1)
+  const moveNext = () => {
+    if (
+      carousel.current !== null &&
+      carousel.current.offsetWidth * currentIndex <= maxScrollWidth.current
+    ) {
+      setCurrentIndex((prevState) => prevState + 1)
     }
   }
 
-  // Tailwind styles. Most importantly notice position absolute, this will sit relative to the carousel's outer div.
-  const arrowStyle =
-    'absolute text-white text-2xl z-10 bg-black h-10 w-10 rounded-full opacity-75 flex items-center justify-center'
+  // const isDisabled = (direction:string) => {
+  //   if (direction === 'prev') {
+  //     return currentIndex <= 0;
+  //   }
 
-  // Let's create dynamic buttons. It can be either left or right. Using
-  // isLeft boolean we can determine which side we'll be rendering our button
-  // as well as change its position and content.
-  const sliderControl = (isLeft: boolean | undefined) => (
-    <button
-      type='button'
-      onClick={isLeft ? previousImage : nextImage}
-      className={`${arrowStyle} ${isLeft ? 'left-2' : 'right-2'}`}
-      style={{ top: '40%' }}
-    >
-      <span role='img' aria-label={`Arrow ${isLeft ? 'left' : 'right'}`}>
-        {isLeft ? '◀' : '▶'}
-      </span>
-    </button>
-  )
+  //   if (direction === 'next' && carousel.current !== null) {
+  //     return (
+  //       carousel.current.offsetWidth * currentIndex >= maxScrollWidth.current
+  //     );
+  //   }
+
+  //   return false;
+  // };
+
+  useEffect(() => {
+    if (carousel !== null && carousel.current !== null) {
+      carousel.current.scrollLeft = carousel.current.offsetWidth * currentIndex
+    }
+  }, [currentIndex])
+
+  useEffect(() => {
+    maxScrollWidth.current = carousel.current
+      ? carousel.current.scrollWidth - carousel.current.offsetWidth
+      : 0
+  }, [])
 
   return (
-    // Images are placed using inline flex. We then wrap an image in a div
-    // with flex-shrink-0 to stop it from 'shrinking' to fit the outer div.
-    // Finally the image itself will be 100% of a parent div. Outer div is
-    // set with position relative, so we can place our cotrol buttons using
-    // absolute positioning on each side of the image.
-    <div className='flex w-screen items-center justify-center p-12 md:w-1/2'>
-      <div className='relative w-full'>
-        <div className='carousel'>
-          {sliderControl(true)}
-          {images.map((img, i) => (
-            <div className='w-full flex-shrink-0' key={img.id} ref={refs[i.id]}>
-              <img
-                src={img.imageUrl}
-                className='w-full object-contain'
-                alt=''
+    <div className='carousel my-12 mx-auto'>
+      <h2 className='mb-12 text-4xl font-semibold leading-8 text-slate-700'>
+        Kyoto Japan 2018{' '}
+      </h2>
+      <div className='relative overflow-hidden'>
+        <div className='top left absolute flex h-full w-full justify-between'>
+          <button
+            onClick={movePrev}
+            className='z-10 m-0 h-full w-10 p-0 text-center text-white opacity-75 transition-all duration-300 ease-in-out hover:bg-blue-900/75 hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25'
+            // disabled={isDisabled('prev')}
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='-ml-5 h-12 w-20'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M15 19l-7-7 7-7'
               />
-            </div>
-          ))}
-          {sliderControl()}
+            </svg>
+            <span className='sr-only'>Prev</span>
+          </button>
+          <button
+            onClick={moveNext}
+            className='z-10 m-0 h-full w-10 p-0 text-center text-white opacity-75 transition-all duration-300 ease-in-out hover:bg-blue-900/75 hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25'
+            // disabled={isDisabled('next')}
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='-ml-5 h-12 w-20'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M9 5l7 7-7 7'
+              />
+            </svg>
+            <span className='sr-only'>Next</span>
+          </button>
+        </div>
+        <div
+          ref={carousel}
+          className='carousel-container relative z-0 flex touch-pan-x snap-x snap-mandatory gap-1 overflow-hidden scroll-smooth'
+        >
+          {images.map((item, index) => {
+            return (
+              <div
+                key={index}
+                className='carousel-item relative h-64 w-64 snap-start text-center'
+              >
+                <a
+                  href={item.imageUrl}
+                  className='z-0 block aspect-square h-full w-full bg-cover bg-left-top bg-no-repeat bg-origin-padding'
+                  style={{ backgroundImage: `url(${item.imageUrl || ''})` }}
+                >
+                  <img
+                    src={item.imageUrl || ''}
+                    alt='blank'
+                    className='hidden aspect-square w-full'
+                  />
+                </a>
+                <a
+                  href={item.imageUrl}
+                  className='absolute top-0 left-0 z-10 block aspect-square h-full w-full bg-blue-800/75 opacity-0 transition-opacity duration-300 hover:opacity-100'
+                >
+                  <h3 className='mx-auto py-6 px-3 text-xl text-white'>
+                    {item.imageUrl}
+                  </h3>
+                </a>
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>

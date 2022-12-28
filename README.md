@@ -10,6 +10,9 @@ From your terminal:
 npm run dev
 ```
 
+## Resources
+https://github.com/bpk68/react-carousel/tree/master/src
+
 This starts your app in development mode, rebuilding assets on file changes.
 
 ## Deployment
