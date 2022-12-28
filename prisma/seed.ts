@@ -46,8 +46,28 @@ async function seed(){
             email:'thatGrayone@gmail.com',
             password: '1234567',
             userName: 'ThatGrayone',
-            avatarUrl:`https://res.cloudinary.com/dch-photo/image/upload/v1672076841/stock/turntable_bkgwyx.jpg`
+            avatarUrl:`https://res.cloudinary.com/dch-photo/image/upload/v1672076841/stock/turntable_bkgwyx.jpg`,
+
+
         }
+    })
+
+    await prisma.profile.create({
+      data:{
+
+        userName: 'Grayone',
+        firstName: 'Grayone',
+        lastName: 'Hoskinson',
+bio:`I was born in western New York`
+,
+location:`Chicago, IL`,
+education:`Education`,
+occupation:`Coder`,
+profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimages/DerickFace.jpg',
+      userId: user2.id,
+      email: user2.email,
+
+      }
     })
     const user = await prisma.user.create({
         data:{
@@ -60,6 +80,7 @@ async function seed(){
     })
     await prisma.profile.create({
       data: {
+        userName: 'Derick',
         firstName: 'Derick',
         lastName: 'Hoskinson',
 bio:`I was born in western New York state where I lived until I moved to Bolivar Missouri (yikes) until I went off to college, quit college and moved to Boston in 2001.
@@ -123,6 +144,54 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
         }
         }
     })
+
+    await prisma.post.create({
+        data: {
+            title: "Post One",
+            description: "Post one",
+          body:'This is the body of post one',
+            postImg: "https://blogphotosbucket.s3.us-east-2.amazonaws.com/postimages/post_two_memory_game.png",
+            createdBy:user.userName,
+            userId: user.id,
+            published: true,
+           categories: {
+        connectOrCreate: [
+            {
+            where: { name: 'Typescript' },
+            create: { name: 'Typescript' }
+            },
+            {
+            where: { name: 'Remix-run' },
+            create: { name: 'Remix-run' }
+            }
+        ]
+        }
+        }
+    })
+await prisma.post.create({
+        data: {
+            title: "Post Two",
+            description: "Post 2",
+          body:'This is the body of post two',
+            postImg: "",
+            createdBy:user.userName,
+            userId: user.id,
+            published: true,
+           categories: {
+        connectOrCreate: [
+            {
+            where: { name: 'Science' },
+            create: { name: 'Science' }
+            },
+            {
+            where: { name: 'Genetics' },
+            create: { name: 'Genetics' }
+            }
+        ]
+        }
+        }
+    })
+
 
 
 

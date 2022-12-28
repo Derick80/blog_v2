@@ -11,5 +11,5 @@ export const loader: LoaderFunction = () => {
 }
 
 export const action: ActionFunction = async ({ request }: ActionArgs) => {
-  return authenticator.authenticate('github', request)
+  return authenticator.authenticate('github', request, { successRedirect: '/' })
 }

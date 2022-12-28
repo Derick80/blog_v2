@@ -71,13 +71,14 @@ model Category {
 
 model Profile {
   id              String   @id @unique @default(uuid())
+  userName        String
   firstName       String
   lastName        String
   bio             String
   location String
   education       String
   occupation      String
-  profilePicture  String   @default("https://remix-bucket.s3.us-east-2.amazonaws.com/Derick2022.jpeg")
+  profilePicture  String   @default("https://res.cloudinary.com/dch-photo/image/upload/v1672092441/stock/image_FILL0_wght400_GRAD0_opsz48_loo0xo.png")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @default(now())
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)

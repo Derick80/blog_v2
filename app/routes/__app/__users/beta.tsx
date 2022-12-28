@@ -1,4 +1,5 @@
 import { Button } from '~/components/shared/button'
+import { ImagePlaceHolder } from '~/components/shared/icons'
 
 const button_base =
   'inline-flex items-center border justify-center rounded-xl px-4 py-2 font-medium leading-4 transition duration-300 ease-in-out hover:-translate-y-1 focus:outline-none focus:ring-2 disabled:cursor-not-allowed'
@@ -15,6 +16,7 @@ const btn_solid_primary = `bg-green-500 border shadow-sm text-slate-900 dark:tex
 export default function Index() {
   return (
     <div className='flex min-h-screen flex-row items-center justify-center py-2'>
+
       <div className='flex h-full w-full flex-col border-2 bg-slate-800 text-slate-100'>
         <div className='min-h-screen p-2'>
           dark

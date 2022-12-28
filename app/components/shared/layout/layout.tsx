@@ -14,7 +14,8 @@ import LinkMaker from './link-maker'
 import Footer from './footer'
 import NavBar from './nav-bar'
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout ({ children }: { children: React.ReactNode }) {
+
   return (
     <>
       <NavBar>
@@ -23,11 +24,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <BrandIcon />
           </div>
           <h1
-          className='text-2xl md:text-3xl font-bold text-zinc-900 dark:text-slate-100'
+            className='text-2xl md:text-3xl font-bold text-zinc-900 dark:text-slate-100'
           >Derick C. Hoskinson PhD</h1>
-          <ColorMode
-            className='ml-2'
-          />
+
 
 
 
@@ -35,10 +34,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <NavLinks />
         <SiteActions />
       </NavBar>
-      <main className='grow'>{children}</main>
+      <main className='grow'>{ children }</main>
       <Footer>
         <ul
-        className='flex flex-row justify-center items-center text-sm text-zinc-900 dark:text-slate-100 space-x-3'
+          className='flex flex-row justify-center items-center text-sm text-zinc-900 dark:text-slate-100 space-x-3'
         >
 
           <li>
@@ -84,7 +83,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </svg>
           </a></li>
           <li>
-{/* add more socials */}
+            {/* add more socials */ }
           </li>
         </ul>
       </Footer>
@@ -92,7 +91,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   )
 }
 
-function NavLinks() {
+function NavLinks () {
   const [isActive, setIsActive] = useState(false)
   const toggle = () => setIsActive(!isActive)
   const user = useOptionalUser()
@@ -100,86 +99,41 @@ function NavLinks() {
   return (
     <nav className='hidden md:flex'>
       <ul className='flex space-x-5'>
-        {user ? (
+
+        { user ? (
+          <>
+
+            { siteLinks.map((link, index) => (
+              <LinkMaker key={ index } link={ link } toggle={ toggle } />
+            )) }
+
+            { userLinks.map((link, index) => (
+              <LinkMaker key={ index } link={ link } toggle={ toggle } />
+            )) }
+
+          </>
+        ) : (
           <>
             { siteLinks.map((link, index) => (
               <LinkMaker key={ index } link={ link } toggle={ toggle } />
             )) }
-        {userLinks.map((link, index) => (
-          <LinkMaker key={index} link={link} toggle={toggle} />
-        ))}
-          </>
-        ) : (
-          <>
-            {siteLinks.map((link, index) => (
-              <LinkMaker key={index} link={link} toggle={toggle} />
-            ))}
 
           </>
-        )}
+        ) }
       </ul>
     </nav>
   )
 }
 
-const iconTransformOrigin = { transformOrigin: '50% 100px' }
 
-function DarkModeToggle({
-  variant = 'icon'
-}: {
-  variant?: 'icon' | 'labelled'
-}) {
-  const [, setTheme] = useTheme()
-  return (
-    <>
-      <button
-        onClick={() =>
-          setTheme((prevTheme) =>
-            prevTheme === Theme.DARK ? Theme.LIGHT : Theme.DARK
-          )
-        }
-        className={clsx(
-          'hover:border-primary focus:border-primary inline-flex h-14 items-center justify-center overflow-hidden rounded-full border-2 border-black p-1 transition focus:outline-none dark:border-white',
-          {
-            'w-14': variant === 'icon',
-            'px-8': variant === 'labelled'
-          }
-        )}
-      >
-        {/* note that the duration is longer then the one on body, controlling the bg-color */}
-        <div className='relative h-8 w-8'>
-          <span
-            className='absolute inset-0 rotate-90 transform text-black transition duration-1000 motion-reduce:duration-[0s] dark:rotate-0 dark:text-sky-400'
-            style={iconTransformOrigin}
-          >
-            <MoonIcon />
-          </span>
-          <span
-            className='absolute inset-0 rotate-0 transform text-yellow-400 transition duration-1000 motion-reduce:duration-[0s] dark:-rotate-90 dark:text-white'
-            style={iconTransformOrigin}
-          >
-            <SunIcon />
-          </span>
-        </div>
-        <span
-          className={clsx('ml-4 text-black dark:text-white', {
-            'sr-only': variant === 'icon'
-          })}
-        >
-          {' '}
-          <Themed dark='switch to light mode' light='switch to dark mode' />
-        </span>
-      </button>
-    </>
-  )
-}
 
-function SiteActions() {
+
+function SiteActions () {
   const user = useOptionalUser()
 
   return (
     <ul className='hidden items-center justify-end space-x-5 md:flex'>
-      {user ? (
+      { user ? (
         <>
           <li className='flex items-center flex-col'><div
             className='text-2xl font-bold text-zinc-900 dark:text-slate-100'
@@ -189,17 +143,20 @@ function SiteActions() {
           >
               { user.userName }
             </p></li>
+          <li>
+            <ColorMode
+            />
+          </li>
           <li className='noscript-hidden lg:block'>
-            <DarkModeToggle />
           </li>
 
 
           <LinkMaker
-            link={{
+            link={ {
               name: 'Preferences',
               href: '/preferences',
               icon_name: 'account_circle'
-            }}
+            } }
           />
 
           <li className='flex items-center'><Form method='post' action='auth/logout'>
@@ -212,12 +169,15 @@ function SiteActions() {
         </>
       ) : (
         <>
-          <DarkModeToggle />
-          {nonUserLinks.map((link, index) => (
-            <LinkMaker key={index} link={link} />
-          ))}
+          <li>
+            <ColorMode
+            />
+          </li>
+          { nonUserLinks.map((link, index) => (
+            <LinkMaker key={ index } link={ link } />
+          )) }
         </>
-      )}
+      ) }
     </ul>
   )
 }

@@ -23,7 +23,6 @@ export const registerStrategy = new FormStrategy(async ({ form }) => {
 export const loginStrategy = new FormStrategy(async ({ form }) => {
   const email = form.get('email')
   const password = form.get('password')
-  console.log('password', password)
 
   invariant(typeof email === 'string', 'Email is not a string')
   invariant(typeof password === 'string', 'Password is not a string')

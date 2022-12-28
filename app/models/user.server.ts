@@ -7,6 +7,13 @@ export type UserProps = {
   email: string
   userName: string
   avatarUrl?: string
+  _count: {
+    accounts: number
+    tokens: number
+    posts: number
+    likes: number
+    projects: number
+  }
 }
 
 const defaultUserSelect = {
@@ -14,7 +21,7 @@ const defaultUserSelect = {
   email: true,
   userName: true,
   avatarUrl: true,
-
+  _count: true
 }
 export async function getUsers() {
   const users = await prisma.user.findMany({
@@ -30,8 +37,6 @@ export async function getUserById(userId: string) {
     }
   })
 }
-
-
 
 export const createUser = async (
   input: Prisma.UserCreateInput & {
