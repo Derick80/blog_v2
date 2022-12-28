@@ -6,14 +6,13 @@ export type CarouselProps = {
     id: number
     imageUrl: string
     userId: string
-    imgTitle: string
-    imgDescription: string
+    imgTitle: string | ''
+    imgDescription: string | ''
   }>
 }
 
-export const Carousel2 = ({ images }: CarouselProps) => {
+export const ImageSlider = ({ images }: CarouselProps) => {
   const [activeSlide, setActiveSlide] = useState(1)
-  console.log('images', images)
 
   const prevSliderHandler = (index: number) => {
     if (index === 0) {
@@ -66,17 +65,20 @@ export const Carousel2 = ({ images }: CarouselProps) => {
                 />
               </svg>
             </button>
+            <Link to={`/travel/${index}/edit`}>Edit</Link>
+
             <div className='h-[400px] w-full' key={index}>
-              <Link
+              <NavLink
+                //   this will link to the full image page but will probably refactor such that image may be seen and edited in a modal.
                 to={`/travel/${item.id}`}
-                className='bg-black p-2 text-center text-2xl text-white'
+                className='bg-black text-center text-2xl text-white'
               >
                 <img
                   src={item.imageUrl}
                   alt='landscape'
                   className='h-[400px] w-full object-cover px-6'
                 />
-              </Link>
+              </NavLink>
             </div>
             <button
               className='border-2 border-black text-6xl'

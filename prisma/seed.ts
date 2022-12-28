@@ -106,7 +106,9 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
     await prisma.japanImages.create({
       data: {
         imageUrl: urls.imgUrl,
-        userId: user.id
+        userId: user.id,
+        imgTitle: '',
+        imgDescription: '',
       }
     }
     )
