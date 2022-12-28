@@ -46,16 +46,14 @@ export const AuthForm = ({ authType }: Props) => {
 
       {authType !== 'confirm' && (
         <>
-        <label>Email</label>
+          <label>Email</label>
           <input
             id='email'
             name='email'
             type='email'
             placeholder='youremail@mail.com'
           />
-          <label>
-            Username
-          </label>
+          <label>Username</label>
           <input
             id='username'
             name='username'
@@ -75,7 +73,6 @@ export const AuthForm = ({ authType }: Props) => {
             placeholder='********'
           />
         </>
-
       )}
 
       <button className='mt-2 w-full' type='submit'>

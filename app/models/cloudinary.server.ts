@@ -13,6 +13,12 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
+export async function getImageByFolder(folder: string) {
+  const images = await cloudinary.v2.search
+    .expression(`folder:${folder}`)
+    .execute()
+  return images
+}
 export async function uploadImage(data: AsyncIterable<Uint8Array>) {
   const uploadPromise = new Promise(async (resolve, reject) => {
     const uploadStream = cloudinary.v2.uploader.upload_stream(

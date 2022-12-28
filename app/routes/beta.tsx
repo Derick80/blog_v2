@@ -16,7 +16,6 @@ const btn_solid_primary = `bg-green-500 border shadow-sm text-slate-900 dark:tex
 export default function Index() {
   return (
     <div className='flex min-h-screen flex-row items-center justify-center py-2'>
-
       <div className='flex h-full w-full flex-col border-2 bg-slate-800 text-slate-100'>
         <div className='min-h-screen p-2'>
           dark

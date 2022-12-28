@@ -1,25 +1,16 @@
-
 export type Props = {
-data:{
+  data: {
     id: string | number
     description: string
 
     [key: string]: number | string | boolean | undefined
+  }
 }
-}
-
 
 export const Card = ({ data }: Props) => {
-
-    return(
-        <>
-        <div
-        key={data.id}
-        className='border-2'
-        >
-
-
-        </div>
-        </>
-    )
+  return (
+    <>
+      <div key={data.id} className='border-2'></div>
+    </>
+  )
 }

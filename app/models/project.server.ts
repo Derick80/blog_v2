@@ -7,7 +7,6 @@ export async function getProjects() {
       user: true
     }
   })
-  console.log(res)
 
   return res
 }

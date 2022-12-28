@@ -25,13 +25,13 @@ export const meta: MetaFunction = () => ({
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
-export async function loader ({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderArgs) {
   const themeSession = await getThemeSession(request)
   const user = await isAuthenticated(request)
 
   return { theme: themeSession, user }
 }
-function LayoutWrapper () {
+function LayoutWrapper() {
   return (
     <Layout>
       <Outlet />
@@ -41,16 +41,16 @@ function LayoutWrapper () {
     </Layout>
   )
 }
-function App () {
+function App() {
   const data = useLoaderData<typeof loader>()
   const [theme] = useTheme()
 
   return (
-    <html lang='en' className={ `${theme}` }>
+    <html lang='en' className={`${theme}`}>
       <head>
         <Meta />
         <Links />
-        <NonFlashOfWrongThemeEls ssrTheme={ Boolean(data.theme) } />
+        <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} />
       </head>
 
       <body className='flex min-h-screen flex-col bg-stone-100 text-black dark:bg-zinc-700 dark:text-white'>
@@ -59,10 +59,10 @@ function App () {
     </html>
   )
 }
-export default function AppWithThemeProvider () {
+export default function AppWithThemeProvider() {
   const data = useLoaderData<typeof loader>()
   return (
-    <ThemeProvider specifiedTheme={ data.theme }>
+    <ThemeProvider specifiedTheme={data.theme}>
       <App />
     </ThemeProvider>
   )

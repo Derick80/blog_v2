@@ -8,34 +8,40 @@ datasource db {
 }
 
 model User {
-  id        String    @id @unique @default(uuid())
-  userName  String    @unique
-  email     String    @unique
-  password  String?
-  avatarUrl String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
-  role      Role      @default(USER)
-  accounts  Account[]
-  tokens    Token[]
-  profile   Profile?
-
-  posts Post[]
-  likes Like[]
-  projects Project[]
+  id          String        @id @unique @default(uuid())
+  userName    String        @unique
+  email       String        @unique
+  password    String?
+  avatarUrl   String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
+  role        Role          @default(USER)
+  accounts    Account[]
+  tokens      Token[]
+  profile     Profile?
+  japanImages JapanImages[]
+  posts       Post[]
+  likes       Like[]
+  projects    Project[]
 }
 
-model Project{
-  id String @id @unique @default(uuid())
-  title String
-  description String
-  projectImg String
-  projectUrl String
-  githubUrl String
-   categories Category[]
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
+model JapanImages {
+  id       String @id @unique @default(uuid())
+  imageUrl String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId   String
+}
 
+model Project {
+  id          String     @id @unique @default(uuid())
+  title       String
+  description String
+  projectImg  String
+  projectUrl  String
+  githubUrl   String
+  categories  Category[]
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId      String
 }
 
 model Post {
@@ -48,12 +54,12 @@ model Post {
   published   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-    comments Post[] @relation("comments")
-  parentId String?
-  parent   Post?   @relation("comments", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  comments    Post[]   @relation("comments")
+  parentId    String?
+  parent      Post?    @relation("comments", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId      String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
 
   categories Category[]
   likes      Like[]
@@ -63,27 +69,27 @@ model Post {
 }
 
 model Category {
-  id    String @id @unique @default(uuid())
-  name  String @unique
-  posts Post[]
+  id       String    @id @unique @default(uuid())
+  name     String    @unique
+  posts    Post[]
   projects Project[]
 }
 
 model Profile {
-  id              String   @id @unique @default(uuid())
-  userName        String
-  firstName       String
-  lastName        String
-  bio             String
-  location String
-  education       String
-  occupation      String
-  profilePicture  String   @default("https://res.cloudinary.com/dch-photo/image/upload/v1672092441/stock/image_FILL0_wght400_GRAD0_opsz48_loo0xo.png")
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @default(now())
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String   @unique
-  email           String
+  id             String   @id @unique @default(uuid())
+  userName       String
+  firstName      String
+  lastName       String
+  bio            String
+  location       String
+  education      String
+  occupation     String
+  profilePicture String   @default("https://res.cloudinary.com/dch-photo/image/upload/v1672092441/stock/image_FILL0_wght400_GRAD0_opsz48_loo0xo.png")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String   @unique
+  email          String
 }
 
 model Like {

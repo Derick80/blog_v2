@@ -13,27 +13,37 @@ type QueriedPost = Post & {
 export async function getUserPosts(userId: string) {
   const posts = await prisma.post.findMany({
     where: {
-      userId,
+      userId
     },
     include: {
+      categories: true,
       likes: true,
       comments: {
         include: {
-          user: true,
-        },
-      },
-    },
+          user: true
+        }
+      }
+    }
   })
   return posts
 }
 
-export async function getPosts(){
+export async function getPosts() {
   const initialPosts = await prisma.post.findMany({
     where: {
-      published: true,
+      published: true
     },
-
+    include: {
+      categories: true,
+      likes: true,
+      comments: {
+        include: {
+          user: true
+        }
+      }
+    }
   })
+  return initialPosts
 }
 
 export async function getPostById(id: string) {
@@ -43,10 +53,10 @@ export async function getPostById(id: string) {
       likes: true,
       comments: {
         include: {
-          user: true,
-        },
-      },
-    },
+          user: true
+        }
+      }
+    }
   })
   return post
 }

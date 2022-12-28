@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { imageUrls } from '~/utils/schemas/constants/imgurls'
 
 
 const prisma = new PrismaClient()
@@ -98,6 +99,18 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
       email: user.email,
       }
     })
+
+
+
+  for (let urls of imageUrls) {
+    await prisma.japanImages.create({
+      data: {
+        imageUrl: urls.imgUrl,
+        userId: user.id
+      }
+    }
+    )
+  }
 
     await prisma.project.create({
         data: {

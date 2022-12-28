@@ -52,22 +52,14 @@ export const action: ActionFunction = async ({ request }) => {
 }
 export default function Login() {
   return (
-    <article
-      className='flex flex-col items-center justify-center min-h-screen'
-
-    >
-
-
-
+    <article className='flex min-h-screen flex-col items-center justify-center'>
       <div className='rounded-lg bg-white p-8 shadow-md'>
         <h1 className='text-2xl font-bold'>Login</h1>
         <AuthForm authType='login' />
         <div className='bg-white'>Or continue with</div>
 
         <SocialLoginForm provider='github'>
-          <button
-          className='btn-base'
-          >Github</button>
+          <button className='btn-base'>Github</button>
         </SocialLoginForm>
         <div className='mt-4'>
           <Link to='/auth/register'>Don't have an account?</Link>
