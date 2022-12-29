@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { imageUrls } from '~/utils/schemas/constants/imgurls'
+import { nycUrls } from '~/utils/schemas/constants/nycurls'
 
 
 const prisma = new PrismaClient()
@@ -115,6 +116,37 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
     )
   }
 
+  for (let urls of imageUrls) {
+    await prisma.travelLog.create({
+      data: {
+        imageUrl: urls.imgUrl,
+        userId: user.id,
+        imageTitle: '',
+        imageDescription: '',
+        album: 'Japan',
+        city:'Kyoto',
+        year:'2018'
+
+      }
+    }
+    )
+  }
+
+  for(let urls of nycUrls){
+    await prisma.travelLog.create({
+      data: {
+        imageUrl: urls.imgUrl,
+        userId: user.id,
+        imageTitle: '',
+        imageDescription: '',
+        album: 'NYC',
+        city:'New York City',
+        year:'2022'
+
+      }
+    }
+    )
+  }
     await prisma.project.create({
         data: {
             title: "Memory Game",

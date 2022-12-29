@@ -3,13 +3,14 @@ import { useLoaderData, Link, Outlet } from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { getJImageById } from '~/models/j-images.server'
+import { getTravelLogById } from '~/models/travel.server'
 
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
   invariant(user, 'user is required')
   const currentUser = user.id
   const imageId = Number(params.imageId)
-  const image = await getJImageById(imageId)
+  const image = await getTravelLogById(imageId)
   console.log('imageId', imageId)
 
   // if(!photo) return redirect('/travel'    )

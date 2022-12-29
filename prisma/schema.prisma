@@ -20,6 +20,7 @@ model User {
   tokens      Token[]
   profile     Profile?
   japanImages JapanImages[]
+  travelLogs   TravelLog[]
   posts       Post[]
   likes       Like[]
   projects    Project[]
@@ -34,6 +35,21 @@ id  Int @id @unique @default(autoincrement())
   userId   String
 }
 
+
+model TravelLog {
+  id  Int @id @unique @default(autoincrement())
+  imageUrl String
+  imageTitle String?
+  imageDescription String?
+  // album describes the primary destination
+  album String?
+  city String?
+  year String?
+
+
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId   String
+}
 model Project {
   id          String     @id @unique @default(uuid())
   title       String

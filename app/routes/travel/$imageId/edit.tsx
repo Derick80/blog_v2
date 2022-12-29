@@ -6,12 +6,13 @@ import invariant from 'tiny-invariant'
 import { Modal } from '~/components/shared/model'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { getJImageById, updateJImage } from '~/models/j-images.server'
+import { getTravelLogById, updateTravelLog } from '~/models/travel.server'
 
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
   invariant(user, 'user is required')
   const imageId = Number(params.imageId)
-  const image = await getJImageById(imageId)
+  const image = await getTravelLogById(imageId)
   console.log('imageId', imageId)
 
   // if(!photo) return redirect('/travel'    )
@@ -22,16 +23,21 @@ export async function action({ request, params }: ActionArgs) {
   const formData = await request.formData()
   const id = Number(params.imageId)
   const userId = formData.get('userId')
-  const imgTitle = formData.get('imgTitle')
+  const imageTitle = formData.get('imageTitle')
   const imageUrl = formData.get('imageUrl')
-  const imgDescription = formData.get('imgDescription')
+  const imageDescription = formData.get('imageDescription')
+  const album = formData.get('album')
+  const year = formData.get('year')
 
   if (
     typeof id !== 'number' ||
     typeof userId !== 'string' ||
-    typeof imgTitle !== 'string' ||
+    typeof imageTitle !== 'string' ||
     typeof imageUrl !== 'string' ||
-    typeof imgDescription !== 'string'
+    typeof imageDescription !== 'string' ||
+    typeof album !== 'string' ||
+    typeof year !== 'string'
+
   ) {
     return badRequest({
       fieldErrors: null,
@@ -41,10 +47,10 @@ export async function action({ request, params }: ActionArgs) {
   }
 
   const fieldErrors = {
-    imgTitle:
-      imgTitle.length < 3 ? 'Title must be at least 3 characters' : null,
-    imgDescription:
-      imgDescription.length < 3
+    imageTitle:
+      imageTitle.length < 3 ? 'Title must be at least 3 characters' : null,
+    imageDescription:
+      imageDescription.length < 3
         ? 'Description must be at least 3 characters'
         : null,
     imageUrl:
@@ -53,10 +59,11 @@ export async function action({ request, params }: ActionArgs) {
 
   const fields = {
     id,
-    userId,
-    imgTitle,
+    imageTitle,
     imageUrl,
-    imgDescription
+    imageDescription,
+    album,
+    year
   }
 
   if (Object.values(fieldErrors).some(Boolean)) {
@@ -67,7 +74,7 @@ export async function action({ request, params }: ActionArgs) {
     })
   }
 
-  await updateJImage({ ...fields })
+  await updateTravelLog({ ...fields })
 
   return redirect(`/travel`)
 }
@@ -77,8 +84,11 @@ export default function EditRoute() {
   const data = useLoaderData<typeof loader>()
   const [formData, setFormData] = React.useState({
     imageUrl: data.image.imageUrl,
-    imgTitle: data.image.imgTitle || '',
-    imgDescription: data.image.imgDescription || '',
+    imageTitle: data.image.imageTitle || '',
+    imageDescription: data.image.imageDescription || '',
+    album: data.image.album || '',
+    year: data.image.year || '',
+
     userId: data.image.userId
   })
 
@@ -92,7 +102,7 @@ export default function EditRoute() {
       <h1>Edit</h1>
       <Form method='post'>
         <div className='h-64 w-64'>
-          <img src={formData.imageUrl} alt={formData.imgTitle} />
+          <img src={formData.imageUrl} alt={formData.imageTitle} />
         </div>
         <input
           id='userId'
@@ -112,27 +122,47 @@ export default function EditRoute() {
           }
         />
 
-        <label htmlFor='imgTitle'>Image Title</label>
+        <label htmlFor='imageTitle'>Image Title</label>
         <input
-          id='imgTitle'
-          name='imgTitle'
+          id='imageTitle'
+          name='imageTitle'
           type='text'
-          value={formData.imgTitle}
+          value={formData.imageTitle}
           onChange={(e) =>
-            setFormData({ ...formData, imgTitle: e.target.value })
+            setFormData({ ...formData, imageTitle: e.target.value })
           }
         />
 
-        <label htmlFor='imgDescription'>Image Description</label>
+        <label htmlFor='imageDescription'>Image Description</label>
         <input
-          id='imgDescription'
-          name='imgDescription'
+          id='imageDescription'
+          name='imageDescription'
           type='text'
-          value={formData.imgDescription}
+          value={formData.imageDescription}
           onChange={(e) =>
-            setFormData({ ...formData, imgDescription: e.target.value })
+            setFormData({ ...formData, imageDescription: e.target.value })
           }
         />
+
+        <label htmlFor='album'>Album</label>
+        <input
+          id='album'
+          name='album'
+          type='text'
+          value={formData.album}
+          onChange={(e) => setFormData({ ...formData, album: e.target.value })}
+        />
+
+        <label htmlFor='year'>Year</label>
+        <input
+
+          id='year'
+          name='year'
+          type='text'
+          value={formData.year}
+          onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+        />
+
         <div className='flex flex-row items-center justify-between'>
           <button type='submit' className='btn-base btn-solid space-x-1'>
             <span className='material-symbols-outlined'>save</span>
