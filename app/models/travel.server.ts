@@ -11,27 +11,26 @@ export async function getTravelLog() {
   return travelLog
 }
 
-
 export async function getTravelLogById(id: number) {
-    const travelLog = await prisma.travelLog.findUnique({
-        where: {
-        id: id
-        }
-    })
-    if (!travelLog) {
-        throw new Error('No travelLog found')
+  const travelLog = await prisma.travelLog.findUnique({
+    where: {
+      id: id
     }
-    return travelLog
+  })
+  if (!travelLog) {
+    throw new Error('No travelLog found')
+  }
+  return travelLog
 }
 export async function updateTravelLog(input: Partial<TravelLog>) {
-    const { id, ...data } = input
-    const image = await prisma.travelLog.update({
-      where: {
-        id: id
-      },
-      data: {
-        ...data
-      }
-    })
-    return image
-  }
+  const { id, ...data } = input
+  const image = await prisma.travelLog.update({
+    where: {
+      id: id
+    },
+    data: {
+      ...data
+    }
+  })
+  return image
+}

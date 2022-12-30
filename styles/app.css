@@ -12,7 +12,39 @@
   .mh1 {
     @apply text-2xl md:text-3xl font-bold text-zinc-900 dark:text-slate-100
   }
-
+  .option-badge > .remove-btn {
+    @apply text-xl;
+    color: rgba(119, 119, 119, 1);
+  }
+  .option-badge {
+    @apply bg-none rounded border-solid border cursor-pointer flex items-center px-1 py-px gap-1;
+    border-color: rgba(119, 119, 119, 1);
+    outline: none;
+  }
+  .options {
+    @apply bg-white rounded border-solid border hidden m-0 overflow-y-auto p-0 absolute left-0 w-full;
+    list-style: none;
+    max-height: 15em;
+    border-color: rgba(119, 119, 119, 1);
+    top: calc(100% + 0.25em);
+    z-index: 100;
+  }
+  .divider {
+    @apply self-stretch w-px;
+    background-color: rgba(119, 119, 119, 1);
+  }
+  .clear-btn {
+    @apply bg-none cursor-pointer text-xl p-0;
+    color: rgba(119, 119, 119, 1);
+    outline: none;
+  }
+  .containers {
+    @apply rounded border-solid border flex items-center p-2 relative gap-2;
+    width: 320px;
+    min-height: 1.5em;
+    border-color: rgba(119, 119, 119, 1);
+    outline: none;
+  }
 
   .nav-ul {
     @apply mb-1 flex w-full items-center justify-around;

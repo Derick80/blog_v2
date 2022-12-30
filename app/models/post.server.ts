@@ -1,6 +1,10 @@
-import { Like } from '~/utils/schemas/like-schema'
-import { Post } from '~/utils/schemas/post-schema'
+import type { Like } from '~/utils/schemas/like-schema'
+import type { Post } from '~/utils/schemas/post-schema'
 import { prisma } from './prisma.server'
+
+export type CategoryForm = {
+  value: string
+}[]
 
 type QueriedPost = Post & {
   likes?: Like[]
@@ -76,6 +80,44 @@ export async function getPostById(id: string) {
         include: {
           user: true
         }
+      }
+    }
+  })
+  return post
+}
+
+export type PostInput = {
+  title: string
+  description: string
+  body: string
+  postImg: string
+  createdBy: string
+  userId: string
+  correctedCategories: CategoryForm
+}
+export async function createPost(data: PostInput) {
+  const post = await prisma.post.create({
+    data: {
+      title: data.title,
+      description: data.description,
+      body: data.body,
+      postImg: data.postImg,
+      createdBy: data.createdBy,
+      user: {
+        connect: {
+          id: data.userId
+        }
+      },
+      categories: {
+        connectOrCreate: data.correctedCategories.map((category) => ({
+          where: {
+            value: category.value
+          },
+          create: {
+            value: category.value,
+            label: category.value
+          }
+        }))
       }
     }
   })

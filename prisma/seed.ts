@@ -158,12 +158,12 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
            categories: {
         connectOrCreate: [
           {
-            where: { name: 'Typescript' },
-            create: { name: 'Typescript' }
+            where: { value: 'Typescript' },
+            create: { label: 'Typescript', value: 'Typescript' }
           },
           {
-            where: { name: 'React' },
-            create: { name: 'React' }
+            where: {  value: 'React' },
+            create: { label: 'React',value: 'React' }
           }
         ]
       }
@@ -181,12 +181,12 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
               categories: {
         connectOrCreate: [
             {
-            where: { name: 'Typescript' },
-            create: { name: 'Typescript' }
+            where: { value: 'Prisma' },
+            create: { label: 'Prisma',value: 'Prisma' }
             },
             {
-            where: { name: 'Remix-run' },
-            create: { name: 'Remix-run' }
+            where: {value: 'Remix-run' },
+            create: { label: 'Remix-run',value: 'Remix-run' }
             }
         ]
         }
@@ -205,12 +205,12 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
            categories: {
         connectOrCreate: [
             {
-            where: { name: 'Typescript' },
-            create: { name: 'Typescript' }
+            where: { value: 'JavaScript' },
+            create: { label: 'JavaScript',value: 'JavaScript' }
             },
             {
-            where: { name: 'Remix-run' },
-            create: { name: 'Remix-run' }
+            where: { value: 'Elixir' },
+            create: { label: 'Elixir',value: 'Elixir' }
             }
         ]
         }
@@ -228,12 +228,12 @@ await prisma.post.create({
            categories: {
         connectOrCreate: [
             {
-            where: { name: 'Science' },
-            create: { name: 'Science' }
+            where: { value: 'Science' },
+            create: { label: 'Science',value: 'Science' }
             },
             {
-            where: { name: 'Genetics' },
-            create: { name: 'Genetics' }
+            where: { value: 'Genetics'},
+            create: { label: 'Genetics',value: 'Genetics' }
             }
         ]
         }

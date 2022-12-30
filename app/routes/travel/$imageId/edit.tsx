@@ -37,7 +37,6 @@ export async function action({ request, params }: ActionArgs) {
     typeof imageDescription !== 'string' ||
     typeof album !== 'string' ||
     typeof year !== 'string'
-
   ) {
     return badRequest({
       fieldErrors: null,
@@ -155,7 +154,6 @@ export default function EditRoute() {
 
         <label htmlFor='year'>Year</label>
         <input
-
           id='year'
           name='year'
           type='text'

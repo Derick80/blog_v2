@@ -17,8 +17,6 @@ export async function loader({ request }: LoaderArgs) {
 
   const jp = travelLog.filter((item) => item.album === 'Japan')
 
-
-
   return json({ currentUser, jp, nyc })
 }
 
@@ -30,30 +28,25 @@ export default function Index() {
       <div className='flex w-full flex-col items-center'>
         <h1 className='mh1'>Japan 2018</h1>
 
-       {data.jp.length > 1 ?  <ImageSlider images={data.jp} /> :
-
-       <div className='flex flex-col items-center justify-center'>
-       {data.jp.map((item) => {
-          return (
-            <div
-            key={item.id}
-            className='flex flex-col items-center'>
- <img
-
-          className='w-1/2'
-            width='100%'
-            height='100%'
-            src={item.imageUrl}
-            alt='Japan 2018'
-
-            />
-
-            </div>
-          )
-        })}
-        </div>
-
-        }
+        {data.jp.length > 1 ? (
+          <ImageSlider images={data.jp} />
+        ) : (
+          <div className='flex flex-col items-center justify-center'>
+            {data.jp.map((item) => {
+              return (
+                <div key={item.id} className='flex flex-col items-center'>
+                  <img
+                    className='w-1/2'
+                    width='100%'
+                    height='100%'
+                    src={item.imageUrl}
+                    alt='Japan 2018'
+                  />
+                </div>
+              )
+            })}
+          </div>
+        )}
       </div>
 
       <div className='flex w-full flex-col items-center'>
