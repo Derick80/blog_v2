@@ -10,7 +10,7 @@ const btn_outline = `bg-slate-100 border shadow-sm text-slate-600 border-slate-2
 const btn_solid = `bg-slate-600 border shadow-sm text-slate-300 dark:text-slate-200 dark:border-none border-slate-700 hover:bg-slate-800`
 const btn_success = `bg-green-500 shadow-sm text-slate-900 dark:text-slate-100  hover:bg-green-600`
 const btn_warn = `bg-yellow-500 border shadow-sm text-slate-900 dark:text-slate-100 border-yellow-500 hover:bg-yellow-600`
-const btn_danger = `bg-red-500 border shadow-sm text-white border-red-500 hover:bg-red-600`
+const btn_danger = `bg-red-500 shadow-sm text-slate-900 dark:text-slate-100 border-red-500 hover:bg-red-600`
 
 const btn_solid_primary = `bg-green-500 border shadow-sm text-slate-900 dark:text-slate-100 `
 export default function Index() {

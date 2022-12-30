@@ -31,7 +31,7 @@ export const Modal: React.FC<props> = ({
       ></div>
       <div className='pointer-events-none fixed inset-0 flex max-h-screen items-center justify-center overflow-scroll'>
         <div
-          className={`${className} d-bg-opacity-80 pointer-events-auto max-h-screen p-4 md:rounded-xl`}
+          className={`${className} d-bg-opacity-80 pointer-events-auto overflow-y-auto max-h-screen p-4 md:rounded-xl`}
         >
           {/* This is where the modal content is rendered  */}
           {children}

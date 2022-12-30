@@ -4,6 +4,7 @@ import { json, redirect } from '@remix-run/node'
 import { Form, Link, useFetcher, useLoaderData } from '@remix-run/react'
 import React, { useEffect, useState } from 'react'
 import { Select } from '~/components/shared/box/select-box'
+import FormField from '~/components/shared/form-field'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import getAllCategories from '~/models/categories.server'
 import { CategoryForm, createPost } from '~/models/post.server'
@@ -115,13 +116,14 @@ export default function NewPost() {
             setFormData({ ...formData, description: e.target.value })
           }
         />
-        <label htmlFor='body'>Body</label>
-        <textarea
+        <label htmlFor='body'>Post Content</label>
+        <FormField
           name='body'
-          id='body'
+          type='textarea'
           value={formData.body}
           onChange={(e) => setFormData({ ...formData, body: e.target.value })}
         />
+
         <div className='flex flex-row items-center justify-center'>
           <input
             type='hidden'

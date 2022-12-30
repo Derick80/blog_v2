@@ -79,11 +79,11 @@
     @apply flex flex-col-reverse items-center;
   }
   .form-primary {
-    @apply flex flex-col items-center justify-center bg-zinc-100 dark:d-bg
+    @apply flex flex-col rounded-xl items-center justify-center bg-zinc-100 dark:d-bg text-zinc-900 dark:text-slate-300
   }
 
   .form-field-primary {
-    @apply mb-6 w-11/12 resize rounded-xl border-2 border-black p-2  focus:border-slate-700 focus:outline-none focus:ring-1 dark:border-slate-300 ;
+    @apply mb-6 w-11/12 resize rounded-xl border-2 border-black p-2  focus:border-slate-700 focus:outline-none focus:ring-1 dark:border-slate-300 dark:bg-zinc-600;
   }
 
   .btn-primary {
