@@ -98,11 +98,11 @@ export default function EditRoute() {
       className='h-3/4 w-full md:w-1/2 lg:w-2/3'
     >
       {' '}
-      <h1>Edit</h1>
-      <Form method='post'>
-        <div className='h-64 w-64'>
-          <img src={formData.imageUrl} alt={formData.imageTitle} />
-        </div>
+      <h1 className='mh1 text-center'>Edit</h1>
+      <Form
+        method='post'
+        className='form-primary flex flex-col items-center justify-center space-y-4'
+      >
         <input
           id='userId'
           name='userId'
@@ -112,6 +112,7 @@ export default function EditRoute() {
         />
         <label htmlFor='imageUrl'>Image URL</label>
         <input
+          className='form-field-primary'
           id='imageUrl'
           name='imageUrl'
           type='text'
@@ -123,6 +124,7 @@ export default function EditRoute() {
 
         <label htmlFor='imageTitle'>Image Title</label>
         <input
+          className='form-field-primary'
           id='imageTitle'
           name='imageTitle'
           type='text'
@@ -134,6 +136,7 @@ export default function EditRoute() {
 
         <label htmlFor='imageDescription'>Image Description</label>
         <input
+          className='form-field-primary'
           id='imageDescription'
           name='imageDescription'
           type='text'
@@ -145,6 +148,7 @@ export default function EditRoute() {
 
         <label htmlFor='album'>Album</label>
         <input
+          className='form-field-primary'
           id='album'
           name='album'
           type='text'
@@ -154,13 +158,16 @@ export default function EditRoute() {
 
         <label htmlFor='year'>Year</label>
         <input
+          className='form-field-primary'
           id='year'
           name='year'
           type='text'
           value={formData.year}
           onChange={(e) => setFormData({ ...formData, year: e.target.value })}
         />
-
+        <div className='h-64 w-64'>
+          <img src={formData.imageUrl} alt={formData.imageTitle} />
+        </div>
         <div className='flex flex-row items-center justify-between'>
           <button type='submit' className='btn-base btn-solid space-x-1'>
             <span className='material-symbols-outlined'>save</span>

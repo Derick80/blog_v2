@@ -64,11 +64,16 @@ export const ImageSlider = ({ images }: CarouselProps) => {
                   width: '100%'
                 }}
               ></div>
-              <div className='flex w-full justify-between rounded-b-lg bg-slate-200 p-2 text-center text-2xl text-zinc-900 dark:bg-slate-500 dark:text-slate-100'>
+              <div className='flex w-full justify-between rounded-b-lg bg-slate-200 p-2 text-center text-2xl text-zinc-900 dark:bg-slate-500/40 dark:text-slate-100'>
                 <div> </div>
                 <div>{item.imageDescription}</div>
                 {user?.role === 'ADMIN' ? (
-                  <Link to={`/travel/${item.id}/edit`}>Edit</Link>
+                  <Link
+                    className='btn-base btn-solid-warn'
+                    to={`/travel/${item.id}/edit`}
+                  >
+                    Edit
+                  </Link>
                 ) : (
                   <div></div>
                 )}

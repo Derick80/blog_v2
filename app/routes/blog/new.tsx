@@ -32,11 +32,10 @@ export async function action({ request }: ActionArgs) {
   const body = formData.get('body') as string
   const postImg = formData.get('postImg') as string
   const categories = formData.getAll('categories')
-console.log(Array.isArray(categories));
-
+  console.log(Array.isArray(categories))
 
   const correctedCategories = categories.map((item) => {
-    return {value: item}
+    return { value: item }
   }) as CategoryForm
 
   const data = {
@@ -44,9 +43,9 @@ console.log(Array.isArray(categories));
     description,
     body,
     postImg,
-     correctedCategories,
+    correctedCategories,
     userId: user.id,
-    createdBy:user.userName
+    createdBy: user.userName
   }
   console.log('data', categories)
 
@@ -66,29 +65,17 @@ export default function NewPost() {
     }
   }, [fetcher])
 
-  // do not need this now, I think
-  // if( fetcher.data && fetcher.data.data){
-  //     console.log('fetcher', fetcher.data.data.categories)
-  //     }
-
-  // go from label and value to just a string array of the values
+  //   grab the categories from the fetcher
   const cata =
     fetcher.data && fetcher.data.data ? fetcher.data.data.categories : []
 
-  // use for the select box
-  // const [selected, setSelected] = useState<string[]>([])
-  // console.log('selected', selected);
-
-  // React.useEffect(() => {
-  //   setFormData((form) => ({ ...form, categories: selected }))
-  // }, [selected])
   //   form data for the post
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     body: '',
     postImg: '',
-    categories: [] as string[],
+    categories: [] as string[]
   })
 
   function handleSelects(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -96,21 +83,22 @@ export default function NewPost() {
     if (formData.categories.includes(value)) {
       setFormData((prev) => ({
         ...prev,
-        categories: prev.categories.filter((item) => item !== value),
+        categories: prev.categories.filter((item) => item !== value)
       }))
     } else {
       setFormData((prev) => ({
         ...prev,
-        categories: [...prev.categories, value],
+        categories: [...prev.categories, value]
       }))
     }
   }
 
   return (
-    <div className='flex items-center justify-center'>
-      <Form method='post' action='/blog/new'>
+    <div className='flex items-center justify-center '>
+      <Form method='post' action='/blog/new' className='form-primary'>
         <label htmlFor='title'>Title</label>
         <input
+          className='form-field-primary'
           type='text'
           name='title'
           id='title'
@@ -134,48 +122,53 @@ export default function NewPost() {
           value={formData.body}
           onChange={(e) => setFormData({ ...formData, body: e.target.value })}
         />
-        <label htmlFor='postImg'>Image</label>
-        <input
-          type='text'
-          name='postImg'
-          id='postImg'
-          value={formData.postImg}
-          onChange={(e) =>
-            setFormData({ ...formData, postImg: e.target.value })
-          }
-        />
-
-        <div className='flex w-64 flex-col bg-sky-50 text-zinc-900 dark:text-slate-100'>
-          <div className='flex w-full bg-red-300'>
-            {formData.categories.map((item) => (
-              <div key={item} className='flex items-center'>
-                <p>{item}</p>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      categories: prev.categories.filter((cat) => cat !== item)
-                    }))
-                  }}
-                >
-                  X
-                </button>
-              </div>
-            ))}
-          </div>
-          <Select
-            options={cata}
-            multiple={true}
-            label='Categories'
-            name='categories'
-            value={formData.categories}
-            onChange={(event)=> handleSelects(event)}
+        <div className='flex flex-row items-center justify-center'>
+          <input
+            type='hidden'
+            name='postImg'
+            id='postImg'
+            value={formData.postImg}
+            onChange={(e) =>
+              setFormData({ ...formData, postImg: e.target.value })
+            }
           />
+
+          <div className='flex w-96 flex-col bg-slate-100 pt-2 text-zinc-800 dark:bg-zinc-800 dark:text-slate-100'>
+            <div className='flex w-full rounded-md bg-red-300'>
+              {formData.categories.map((item) => (
+                <div key={item} className='flex items-center'>
+                  <p>{item}</p>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setFormData((prev) => ({
+                        ...prev,
+                        categories: prev.categories.filter(
+                          (cat) => cat !== item
+                        )
+                      }))
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+            <Select
+              options={cata}
+              multiple={true}
+              label='Categories'
+              name='categories'
+              value={formData.categories}
+              onChange={(event) => handleSelects(event)}
+            />
+          </div>
           <br />
         </div>
 
-        <button type='submit'>Submit</button>
+        <button type='submit' className='btn-base btn-solid-success'>
+          Save
+        </button>
       </Form>
     </div>
   )

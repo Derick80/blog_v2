@@ -53,7 +53,7 @@ function App() {
         <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} />
       </head>
 
-      <body className='flex min-h-screen flex-col bg-stone-100 text-black dark:bg-zinc-700 dark:text-white'>
+      <body className='flex min-h-screen flex-col bg-slate-200 from-emerald-500 to-slate-600 text-black dark:bg-gradient-to-br dark:text-white'>
         <LayoutWrapper />
       </body>
     </html>

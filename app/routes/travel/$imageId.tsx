@@ -23,9 +23,9 @@ export default function Page() {
     <>
       One Image
       <div key={data.image.id}>
-        <img src={data.image.imageUrl} alt={data.image.imgTitle} />
-        <h2>{data.image.imgTitle}</h2>
-        <p>{data.image.imgDescription}</p>
+        <img src={data.image.imageUrl} alt={data.image.imageTitle} />
+        <h2>{data.image.imageTitle}</h2>
+        <p>{data.image.imageDescription}</p>
         {data.currentUser === data.image.userId && (
           <>
             <Link to={`/travel/${data.image.id}/edit`}>Edit</Link>

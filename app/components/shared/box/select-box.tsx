@@ -18,7 +18,6 @@ export const Select = ({
   options,
   multiple = true
 }: SelectProps) => {
-
   return (
     <>
       <select
@@ -26,7 +25,7 @@ export const Select = ({
         value={value}
         onChange={onChange}
         size={options.length}
-        className=''
+        className='w-96 rounded-xl py-2 text-gray-400'
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
