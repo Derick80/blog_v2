@@ -9,7 +9,6 @@ type SelectProps = {
   value: string | string[]
   options: Options
   multiple: boolean
-  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void
 } & React.SelectHTMLAttributes<HTMLSelectElement>
 
 export const Select = ({
@@ -19,17 +18,7 @@ export const Select = ({
   options,
   multiple = true
 }: SelectProps) => {
-  const [selected, setSelected] = React.useState<string[]>([])
-  function handleSelected(event: React.ChangeEvent<HTMLSelectElement>) {
-    const { value } = event.target
-    if (selected.includes(value)) {
-      setSelected((prev) => ({
-        ...prev.filter((item) => item !== value)
-      }))
-    } else {
-      setSelected((prev) => [...prev, value])
-    }
-  }
+
   return (
     <>
       <select

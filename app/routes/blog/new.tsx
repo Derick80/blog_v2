@@ -32,10 +32,11 @@ export async function action({ request }: ActionArgs) {
   const body = formData.get('body') as string
   const postImg = formData.get('postImg') as string
   const categories = formData.getAll('categories')
-  console.log(Array.isArray(categories))
+console.log(Array.isArray(categories));
+
 
   const correctedCategories = categories.map((item) => {
-    return { value: item }
+    return {value: item}
   }) as CategoryForm
 
   const data = {
@@ -43,9 +44,9 @@ export async function action({ request }: ActionArgs) {
     description,
     body,
     postImg,
-    correctedCategories,
+     correctedCategories,
     userId: user.id,
-    createdBy: user.userName
+    createdBy:user.userName
   }
   console.log('data', categories)
 
@@ -87,7 +88,7 @@ export default function NewPost() {
     description: '',
     body: '',
     postImg: '',
-    categories: [] as string[]
+    categories: [] as string[],
   })
 
   function handleSelects(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -95,28 +96,15 @@ export default function NewPost() {
     if (formData.categories.includes(value)) {
       setFormData((prev) => ({
         ...prev,
-        categories: prev.categories.filter((item) => item !== value)
+        categories: prev.categories.filter((item) => item !== value),
       }))
     } else {
       setFormData((prev) => ({
         ...prev,
-        categories: [...prev.categories, value]
+        categories: [...prev.categories, value],
       }))
     }
   }
-
-  // function handleSelected(event: React.ChangeEvent<HTMLSelectElement>) {
-  //   const { value } = event.target
-  //   if (selected.includes(value)) {
-  //     setSelected((prev) => ({
-  //       ...prev.filter((item) => item !== value)
-  //     }))
-  //   } else {
-  //     setSelected((prev) => [...prev, value])
-  //   }
-  //   console.log('select form', formData.categories);
-
-  // }
 
   return (
     <div className='flex items-center justify-center'>
@@ -182,7 +170,7 @@ export default function NewPost() {
             label='Categories'
             name='categories'
             value={formData.categories}
-            onChange={handleSelects}
+            onChange={(event)=> handleSelects(event)}
           />
           <br />
         </div>
