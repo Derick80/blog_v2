@@ -16,45 +16,40 @@ export async function loader({ request }: LoaderArgs) {
   const nyc = travelLog.filter((item) => item.album === 'NYC')
 
   const jp = travelLog.filter((item) => item.album === 'Japan')
+const shinkjuku = jp.filter((item)=> item.city === 'Shinjuku')
 
-  return json({ currentUser, jp, nyc })
+  return json({ currentUser, jp, nyc, shinkjuku })
 }
 
 export default function Index() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <div className='flex flex-row items-center justify-around'>
-      <div className='flex w-full flex-col items-center'>
-        <h1 className='mh1'>Japan 2018</h1>
+    <>
+       <div
+       className='w-full'
+       id="Japan"
+       >
+         <ImageSlider images={data.jp} />
+       </div>
 
-        {data.jp.length > 1 ? (
-          <ImageSlider images={data.jp} />
-        ) : (
-          <div className='flex flex-col items-center justify-center'>
-            {data.jp.map((item) => {
-              return (
-                <div key={item.id} className='flex flex-col items-center'>
-                  <img
-                    className='w-1/2'
-                    width='100%'
-                    height='100%'
-                    src={item.imageUrl}
-                    alt='Japan 2018'
-                  />
-                </div>
-              )
-            })}
-          </div>
-        )}
-      </div>
+       <div className='w-full' id="Shinjuku">
+       <ImageSlider images={data.shinkjuku} />
+        </div>
 
-      <div className='flex w-full flex-col items-center'>
-        <h1 className='mh1'>NYC 2022</h1>
+        <ImageSlider images={data.jp} />
 
+        <ImageSlider images={data.jp} />
+        <div
+       className='w-full'
+       id="nyc"
+       >
         <ImageSlider images={data.nyc} />
-      </div>
-      <Outlet />
-    </div>
+        </div>
+        <Outlet />
+        <div
+        className='border-2 border-black'
+        ></div>
+    </>
   )
 }

@@ -29,7 +29,7 @@ export async function action({ request, params }: ActionArgs) {
   const imageDescription = formData.get('imageDescription')
   const album = formData.get('album')
   const year = formData.get('year')
-  console.log('formData', imageDescription);
+  console.log('formData', imageDescription)
 
   if (
     typeof id !== 'number' ||
@@ -80,7 +80,6 @@ export async function action({ request, params }: ActionArgs) {
   return redirect(`/travel`)
 }
 export default function EditRoute() {
-
   const navigate = useNavigate()
   const transition = useTransition()
   const data = useLoaderData<typeof loader>()
@@ -94,7 +93,6 @@ export default function EditRoute() {
     userId: data.image.userId
   })
 
-
   return (
     <Modal
       isOpen={true}
@@ -107,7 +105,6 @@ export default function EditRoute() {
         method='post'
         className='form-primary flex flex-col items-center justify-center space-y-4'
       >
-
         <input
           id='userId'
           name='userId'
@@ -117,61 +114,63 @@ export default function EditRoute() {
         />
         <label htmlFor='imageUrl'>Image URL</label>
 
-<FormField
-       name='imageUrl'
-       type='text'
-       value={formData.imageUrl}
-       onChange={(e) =>
-         setFormData({ ...formData, imageUrl: e.target.value })
-       }
-     />
+        <FormField
+          name='imageUrl'
+          type='text'
+          value={formData.imageUrl}
+          onChange={(e) =>
+            setFormData({ ...formData, imageUrl: e.target.value })
+          }
+        />
         <label htmlFor='imageTitle'>Image Title</label>
-  <FormField
-      type='text'
-      name='imageTitle'
-      value={formData.imageTitle}
-      onChange={(e) =>
-        setFormData({ ...formData, imageTitle: e.target.value })
-      }
-    />
+        <FormField
+          type='text'
+          name='imageTitle'
+          value={formData.imageTitle}
+          onChange={(e) =>
+            setFormData({ ...formData, imageTitle: e.target.value })
+          }
+        />
         <label htmlFor='imageDescription'>Image Description</label>
 
-
-<FormField
-        id='imageDescription'
-        name='imageDescription'
-         type='text'
-         value={formData.imageDescription}
-         onChange={(e) =>
+        <FormField
+          id='imageDescription'
+          name='imageDescription'
+          type='text'
+          value={formData.imageDescription}
+          onChange={(e) =>
             setFormData({ ...formData, imageDescription: e.target.value })
-        }
-       />
+          }
+        />
 
         <label htmlFor='album'>Album</label>
         <FormField
-         name='album'
-         type='text'
-         value={formData.album}
-         onChange={(e) => setFormData({ ...formData, album: e.target.value })}
-       />
-
+          name='album'
+          type='text'
+          value={formData.album}
+          onChange={(e) => setFormData({ ...formData, album: e.target.value })}
+        />
 
         <label htmlFor='year'>Year</label>
         <FormField
-        name='year'
-        type='text'
-        value={formData.year}
-        onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-      />
+          name='year'
+          type='text'
+          value={formData.year}
+          onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+        />
 
         <div className='h-32 w-64'>
-          <img src={formData.imageUrl} alt={formData.imageTitle}
-            className='object-cover h-full w-full'
-
-        />
+          <img
+            src={formData.imageUrl}
+            alt={formData.imageTitle}
+            className='h-full w-full object-cover'
+          />
         </div>
         <div className='flex space-x-4'>
-          <button type='submit' className='btn-base btn-solid-success space-x-1'>
+          <button
+            type='submit'
+            className='btn-base btn-solid-success space-x-1'
+          >
             <p>{transition.state === 'submitting' ? 'Saving...' : 'Save'}</p>
           </button>
           <button

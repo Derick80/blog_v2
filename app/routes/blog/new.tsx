@@ -31,7 +31,7 @@ export async function action({ request }: ActionArgs) {
   const title = formData.get('title') as string
   const description = formData.get('description') as string
   const body = formData.get('body') as string
-  const postImg = formData.get('postImg') as string
+  const imageUrl = formData.get('imageUrl') as string
   const categories = formData.getAll('categories')
   console.log(Array.isArray(categories))
 
@@ -43,7 +43,7 @@ export async function action({ request }: ActionArgs) {
     title,
     description,
     body,
-    postImg,
+    imageUrl,
     correctedCategories,
     userId: user.id,
     createdBy: user.userName
@@ -75,7 +75,7 @@ export default function NewPost() {
     title: '',
     description: '',
     body: '',
-    postImg: '',
+    imageUrl: '',
     categories: [] as string[]
   })
 
@@ -127,11 +127,11 @@ export default function NewPost() {
         <div className='flex flex-row items-center justify-center'>
           <input
             type='hidden'
-            name='postImg'
-            id='postImg'
-            value={formData.postImg}
+            name='imageUrl'
+            id='imageUrl'
+            value={formData.imageUrl}
             onChange={(e) =>
-              setFormData({ ...formData, postImg: e.target.value })
+              setFormData({ ...formData, imageUrl: e.target.value })
             }
           />
 

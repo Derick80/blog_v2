@@ -32,7 +32,9 @@ export const ImageSlider = ({ images }: CarouselProps) => {
   }
 
   return (
-    <>
+    <div
+    className='mb-10'
+    >
       {' '}
       {images?.map((item, index) => {
         return (
@@ -40,7 +42,7 @@ export const ImageSlider = ({ images }: CarouselProps) => {
             key={index}
             className={
               activeSlide === index
-                ? 'flex w-full items-center justify-center'
+                ? 'flex p-6 h-250'
                 : 'hidden'
             }
           >
@@ -52,6 +54,10 @@ export const ImageSlider = ({ images }: CarouselProps) => {
               </button>
             </div>
             <div className='h-[400px] w-full' key={index}>
+              <h2
+              className='text-center text-xl font-semibold'>
+                {item.city}
+                </h2>
               <h1 className='text-center text-2xl'>{item.imageTitle}</h1>
 
               <div
@@ -89,6 +95,6 @@ export const ImageSlider = ({ images }: CarouselProps) => {
           </div>
         )
       })}
-    </>
+    </div>
   )
 }

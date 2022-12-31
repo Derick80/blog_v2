@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { imageUrls } from '~/utils/schemas/constants/imgurls'
 import { nycUrls } from '~/utils/schemas/constants/nycurls'
+import { shin_urls } from '~/utils/schemas/constants/shinjukuurls'
 
 
 const prisma = new PrismaClient()
@@ -147,6 +148,22 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
     }
     )
   }
+
+  for(let urls of shin_urls){
+    await prisma.travelLog.create({
+      data: {
+        imageUrl: urls.imgUrl,
+        userId: user.id,
+        imageTitle: '',
+        imageDescription: '',
+        album: 'Japan',
+        city:'Shinjuku',
+        year:'2018'
+
+      }
+    }
+    )
+  }
     await prisma.project.create({
         data: {
             title: "Memory Game",
@@ -198,7 +215,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
             title: "Post One",
             description: "Post one",
           body:'This is the body of post one',
-            postImg: "https://blogphotosbucket.s3.us-east-2.amazonaws.com/postimages/post_two_memory_game.png",
+            imageUrl: "https://blogphotosbucket.s3.us-east-2.amazonaws.com/postimages/post_two_memory_game.png",
             createdBy:user.userName,
             userId: user.id,
             published: true,
@@ -221,7 +238,7 @@ await prisma.post.create({
             title: "Post Two",
             description: "Post 2",
           body:'This is the body of post two',
-            postImg: "",
+            imageUrl: "",
             createdBy:user.userName,
             userId: user.id,
             published: true,

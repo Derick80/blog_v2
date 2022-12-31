@@ -67,7 +67,7 @@ model Post {
   title       String
   description String
   body        String
-  postImg     String
+  imageUrl     String
   createdBy   String
   published   Boolean  @default(false)
   createdAt   DateTime @default(now())
