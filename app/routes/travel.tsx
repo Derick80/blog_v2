@@ -1,49 +1,67 @@
-import { Outlet } from '@remix-run/react'
+import { LoaderArgs, json } from '@remix-run/node'
+import { Link, Outlet, useLoaderData } from '@remix-run/react'
+import { Key, ReactElement, JSXElementConstructor, ReactFragment } from 'react'
+import invariant from 'tiny-invariant'
+import { ImageSlider } from '~/components/shared/image-slider'
+import { getAlbums } from '~/models/travel.server'
+import { reduceTextArray } from '~/utils/functions.server'
+import { PhotoMapProps } from './travel/$albumId'
+export async function loader({ request }: LoaderArgs) {
+  const citiesAndAlbums = await getAlbums()
+  invariant(citiesAndAlbums, 'No cities found')
+
+  const album = await citiesAndAlbums.reduce((acc, item) => {
+   const index = acc.album.includes(item.album)
+
+    if (!index) {
+      acc.album.push(item.album)
+    }
+    return acc
+  }, { album: [] as string[] })
+
+
+
+const city = citiesAndAlbums.reduce((acc, curr)=> {
+    if (!acc.includes(curr.city)) {
+      acc.push(curr.city)
+    }
+    return acc
+}, [] as string[])
+
+
+
+
+  return json({ album, citiesAndAlbums })
+}
 
 export default function TravelRoute() {
+  const data = useLoaderData<typeof loader>()
   return (
     <>
-      <div className='flex flex-col md:flex-row mt-10'>
-      <div className=' items-center p-2 flex flex-row md:flex-col flex-wrap space-x-6 justify-start'>
-        <h1 className='mh1 underline capitalize'>Travel Photos</h1>
-
-<div
-className='pt-4 flex flex-col justify-start items-start space-y-2'
->
-<h1 className='mh1 -indent-3.5'>Japan</h1>
-
-<ul>
-  <li
-  className='text-base font-semibold indent-2 italic  '
-  ><a href='#kyoto'>Kyoto</a></li>
-  <li
-    className='text-base font-semibold indent-2 italic '
-
-  ><a href='#shinjuku'>Shinjuku</a></li>
-
-</ul>
-<h1 className='mh1 -indent-3.5'>New York City</h1>
-<ul>
-  <li
-    className='text-base font-semibold indent-2 italic'
-
-  ><a href='#nyc'>NYC</a></li>
-</ul>
-</div>
-      </div>
-
-
-      <div className='grow'>
-    <div className='flex justify-center'>  <h1 className='mh1 uppercase'>Gallery</h1></div>
-
-
-     <Outlet />
-
+      <div className='mt-10 flex flex-row md:flex-row'>
+<PhotoSideBar
+          category={data.album.album}
+        />
 
 
       </div>
 
-    </div>
+<Outlet />
     </>
+  )
+}
+
+
+function PhotoSideBar({ category,  }: { category: string[]  }) {
+  return (
+    <div className='flex flex-col'>
+      {category.map((item) => (
+       <Link to={`/travel/${item}`} key={item}>
+          <div className='flex flex-col'>
+            <h1 className='capitalize'>{item}</h1>
+          </div>
+        </Link>
+      ))}
+    </div>
   )
 }

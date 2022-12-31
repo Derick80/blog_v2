@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
-import { imageUrls } from '~/utils/schemas/constants/imgurls'
-import { nycUrls } from '~/utils/schemas/constants/nycurls'
-import { shin_urls } from '~/utils/schemas/constants/shinjukuurls'
+import { fuji, kyoto, shimo, shinJuku } from '~/utils/schemas/constants/japan-links'
+import { nyc } from '~/utils/schemas/constants/nycurls'
+
 
 
 const prisma = new PrismaClient()
@@ -105,22 +105,41 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
 
 
 
-  for (let urls of imageUrls) {
-    await prisma.japanImages.create({
+  for (let urls of shinJuku) {
+    await prisma.travelLog.create({
       data: {
-        imageUrl: urls.imgUrl,
+        imageUrl: urls.links,
         userId: user.id,
-        imgTitle: '',
-        imgDescription: '',
+        imageTitle: '',
+        imageDescription: '',
+      album:'Japan',
+      city:'Shinjuku',
+      year:'2018'
       }
     }
     )
   }
 
-  for (let urls of imageUrls) {
+  for (let urls of fuji) {
     await prisma.travelLog.create({
       data: {
-        imageUrl: urls.imgUrl,
+        imageUrl: urls.links,
+        userId: user.id,
+        imageTitle: '',
+        imageDescription: '',
+        album: 'Japan',
+        city:'Fuji',
+        year:'2018'
+
+      }
+    }
+    )
+  }
+
+  for(let urls of kyoto){
+    await prisma.travelLog.create({
+      data: {
+        imageUrl: urls.links,
         userId: user.id,
         imageTitle: '',
         imageDescription: '',
@@ -133,10 +152,28 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
     )
   }
 
-  for(let urls of nycUrls){
+  for(let urls of shimo){
     await prisma.travelLog.create({
       data: {
-        imageUrl: urls.imgUrl,
+        imageUrl: urls.links,
+        userId: user.id,
+        imageTitle: '',
+        imageDescription: '',
+        album: 'Japan',
+        city:'Shimokitazawa'
+,
+        year:'2018'
+
+  }
+    }
+    )
+  }
+
+
+  for(let urls of nyc){
+    await prisma.travelLog.create({
+      data: {
+        imageUrl: urls.links,
         userId: user.id,
         imageTitle: '',
         imageDescription: '',
@@ -149,21 +186,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
     )
   }
 
-  for(let urls of shin_urls){
-    await prisma.travelLog.create({
-      data: {
-        imageUrl: urls.imgUrl,
-        userId: user.id,
-        imageTitle: '',
-        imageDescription: '',
-        album: 'Japan',
-        city:'Shinjuku',
-        year:'2018'
 
-      }
-    }
-    )
-  }
     await prisma.project.create({
         data: {
             title: "Memory Game",

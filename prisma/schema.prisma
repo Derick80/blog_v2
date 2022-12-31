@@ -42,9 +42,9 @@ model TravelLog {
   imageTitle String?
   imageDescription String?
   // album describes the primary destination
-  album String?
-  city String?
-  year String?
+  album String
+  city String
+  year String
 
 
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
