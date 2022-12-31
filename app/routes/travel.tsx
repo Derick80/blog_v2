@@ -5,63 +5,35 @@ import invariant from 'tiny-invariant'
 import { ImageSlider } from '~/components/shared/image-slider'
 import { getAlbums } from '~/models/travel.server'
 import { reduceTextArray } from '~/utils/functions.server'
-import { PhotoMapProps } from './travel/$albumId'
 export async function loader({ request }: LoaderArgs) {
-  const citiesAndAlbums = await getAlbums()
-  invariant(citiesAndAlbums, 'No cities found')
-
-  const album = await citiesAndAlbums.reduce((acc, item) => {
-   const index = acc.album.includes(item.album)
-
-    if (!index) {
-      acc.album.push(item.album)
+  const albums = await getAlbums()
+  const byGroup = albums.reduce((acc, item) => {
+    const { album, city, year } = item
+    const key = `${album}`
+    if (!acc[key]) {
+      acc[key] = []
     }
+    acc[key].push(item)
     return acc
-  }, { album: [] as string[] })
+  }, {} as Record<string, typeof Image[]>)
 
+  const [NYC, Japan] = Object.values(byGroup)
 
-
-const city = citiesAndAlbums.reduce((acc, curr)=> {
-    if (!acc.includes(curr.city)) {
-      acc.push(curr.city)
-    }
-    return acc
-}, [] as string[])
-
-
-
-
-  return json({ album, citiesAndAlbums })
+  // if(!photo) return redirect('/travel'    )
+  return json({ byGroup })
 }
 
 export default function TravelRoute() {
   const data = useLoaderData<typeof loader>()
   return (
-    <>
-      <div className='mt-10 flex flex-row md:flex-row'>
-<PhotoSideBar
-          category={data.album.album}
-        />
+<>
 
 
-      </div>
 
-<Outlet />
+
+      <Outlet />
     </>
   )
 }
 
 
-function PhotoSideBar({ category,  }: { category: string[]  }) {
-  return (
-    <div className='flex flex-col'>
-      {category.map((item) => (
-       <Link to={`/travel/${item}`} key={item}>
-          <div className='flex flex-col'>
-            <h1 className='capitalize'>{item}</h1>
-          </div>
-        </Link>
-      ))}
-    </div>
-  )
-}

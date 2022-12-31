@@ -11,10 +11,10 @@ export type CitiesAndAlbums = {
   year: string
   userId: string
 }[]
-export async function getAblumbyAblum(){
+export async function getAblumbyAblum() {
   return await prisma.travelLog.groupBy({
     by: ['album'],
-    select:{
+    select: {
       album: true,
       city: true,
       imageTitle: true,
@@ -22,7 +22,6 @@ export async function getAblumbyAblum(){
       imageUrl: true,
       year: true,
       userId: true
-
     }
   })
 }

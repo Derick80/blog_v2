@@ -1,10 +1,11 @@
 import { JapanImages, TravelLog } from '@prisma/client'
 import { Link, NavLink } from '@remix-run/react'
 import { useState } from 'react'
+import { CitiesAndAlbums } from '~/models/travel.server'
 import { useOptionalUser } from '~/utils/utils'
 // https://github.com/zioan/react-slider/blob/master/src/components/Slider2.jsx
 export type CarouselProps = {
-  images: TravelLog[]
+  images: CitiesAndAlbums
 }
 
 export const ImageSlider = ({ images }: CarouselProps) => {
@@ -32,19 +33,13 @@ export const ImageSlider = ({ images }: CarouselProps) => {
   }
 
   return (
-    <div
-    className='mb-10'
-    >
+    <div className='mb-10'>
       {' '}
       {images?.map((item, index) => {
         return (
           <div
             key={index}
-            className={
-              activeSlide === index
-                ? 'flex p-6 h-250'
-                : 'hidden'
-            }
+            className={activeSlide === index ? 'h-400 flex p-6' : 'hidden'}
           >
             <div className='flex'>
               <button className='' onClick={() => prevSliderHandler(index)}>
@@ -54,11 +49,8 @@ export const ImageSlider = ({ images }: CarouselProps) => {
               </button>
             </div>
             <div className='h-[400px] w-full' key={index}>
-              <h2
-              className='text-center text-xl font-semibold'>
-                {item.city}
-                </h2>
-              <h1 className='text-center text-2xl'>{item.imageTitle}</h1>
+              <h2 className='text-center text-xl font-bold'>{item.city}</h2>
+              <h1 className='text-center text-2xl italic'>{item.imageTitle}</h1>
 
               <div
                 className='rounded-t-lg'
@@ -69,10 +61,13 @@ export const ImageSlider = ({ images }: CarouselProps) => {
                   height: '400px',
                   width: '100%'
                 }}
-              ></div>
-              <div className='flex w-full justify-between rounded-b-lg bg-slate-200 p-2 text-center text-2xl text-zinc-900 dark:bg-slate-500/40 dark:text-slate-100'>
+              >
+
+<div className='flex w-full justify-between rounded-b-lg bg-slate-200 p-2 text-center text-2xl text-zinc-900 dark:bg-slate-500/40 dark:text-slate-100'>
                 <div> </div>
-                <div>{item.imageDescription}</div>
+                <div
+                  className='text-center text-base'
+                >{item.imageDescription}</div>
                 {user?.role === 'ADMIN' ? (
                   <Link
                     className='btn-base btn-solid-warn'
@@ -85,6 +80,8 @@ export const ImageSlider = ({ images }: CarouselProps) => {
                 )}
               </div>
             </div>
+              </div>
+
             <div className='flex flex-col items-center justify-center'>
               <button onClick={() => nextSliderHandler(index)}>
                 <span className='material-symbols-outlined -m4-5 h-12 w-20 text-4xl'>

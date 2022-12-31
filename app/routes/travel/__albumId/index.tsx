@@ -3,8 +3,6 @@ import { useLoaderData, Outlet } from '@remix-run/react'
 import { ImageSlider } from '~/components/shared/image-slider'
 import { getAlbums } from '~/models/travel.server'
 
-
-
 export async function loader({ request, params }: LoaderArgs) {
   const albums = await getAlbums()
   const byGroup = albums.reduce((acc, item) => {
@@ -12,36 +10,39 @@ export async function loader({ request, params }: LoaderArgs) {
     const key = `${album}`
     if (!acc[key]) {
       acc[key] = []
-      }
-      acc[key].push(item)
-      return acc
-      }, {} as Record<string, typeof Image[]>)
+    }
+    acc[key].push(item)
+    return acc
+  }, {} as Record<string, typeof Image[]>)
 
-const [NYC, Japan] = Object.values(byGroup)
-
-
+  const [NYC, Japan] = Object.values(byGroup)
 
   // if(!photo) return redirect('/travel'    )
-  return json({ NYC, Japan  })
+  return json({ NYC, Japan })
 }
 
 export default function Index() {
-    const data = useLoaderData<typeof loader>()
+  const data = useLoaderData<typeof loader>()
 
-    return (
-        <>
-        <div className='h-screen w-full grow border-2 border-red-500'>
-            <div className='grow'>
-<div
->        <ImageSlider images={data.NYC} />
-    </div>
-<div
->        <ImageSlider images={data.Japan} />
-    </div>
-            </div>
-        </div>
+  return (
+    <>
+      <div className='h-full w-full columns-3 overscroll-y-auto py-6 px-6'>
 
-        <Outlet />
-        </>
-    )
-    }
+            <ImageSlider images={data.Japan} />
+
+
+            <ImageSlider images={data.NYC} />
+
+
+            <ImageSlider images={data.NYC} />
+
+          <div>
+
+          </div>
+
+
+      <Outlet />
+      </div>
+    </>
+  )
+}
