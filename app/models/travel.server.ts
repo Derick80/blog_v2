@@ -80,6 +80,14 @@ export async function getTravelLogByAlbum(album: string) {
   return travelLog
 }
 
+export async function createTravelLog(input: Omit<TravelLog, 'id'>) {
+  const travelLog = await prisma.travelLog.create({
+    data: {
+      ...input
+    }
+  })
+  return travelLog
+}
 export async function updateTravelLog(input: Partial<TravelLog>) {
   const { id, ...data } = input
   const image = await prisma.travelLog.update({

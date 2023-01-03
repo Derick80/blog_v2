@@ -40,7 +40,7 @@ export const AuthForm = ({ authType }: Props) => {
   }, [action])
 
   return (
-    <Form className='flex flex-col gap-5' method='post' action={url}>
+    <Form className='form-primary' method='post' action={url}>
       <input type='hidden' name='redirectTo' value={redirectTo || '/'} />
       <input type='hidden' name='token' value={token || ''} />
 
@@ -48,6 +48,7 @@ export const AuthForm = ({ authType }: Props) => {
         <>
           <label>Email</label>
           <input
+            className='form-field-primary'
             id='email'
             name='email'
             type='email'
@@ -55,6 +56,7 @@ export const AuthForm = ({ authType }: Props) => {
           />
           <label>Username</label>
           <input
+            className='form-field-primary'
             id='username'
             name='username'
             type='text'
@@ -66,6 +68,7 @@ export const AuthForm = ({ authType }: Props) => {
         <>
           <label>Password</label>
           <input
+            className='form-field-primary'
             id='password'
             name='password'
             type='password'

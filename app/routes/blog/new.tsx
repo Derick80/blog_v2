@@ -1,13 +1,17 @@
-import { Category } from '@prisma/client'
+import type { Category } from '@prisma/client'
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Form, Link, useFetcher, useLoaderData } from '@remix-run/react'
+import { useFetcher, useLoaderData } from '@remix-run/react'
 import React, { useEffect, useState } from 'react'
+import { ClientOnly } from 'remix-utils'
 import { Select } from '~/components/shared/box/select-box'
 import FormField from '~/components/shared/form-field'
+import { ImageUploader } from '~/components/shared/image-uploader'
+import Quill from '~/components/shared/quill-client'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import getAllCategories from '~/models/categories.server'
-import { CategoryForm, createPost } from '~/models/post.server'
+import type { CategoryForm } from '~/models/post.server'
+import { createPost } from '~/models/post.server'
 
 export type CatFetcher = {
   categories: Pick<Category, 'value' | 'label'>[]
@@ -33,7 +37,6 @@ export async function action({ request }: ActionArgs) {
   const body = formData.get('body') as string
   const imageUrl = formData.get('imageUrl') as string
   const categories = formData.getAll('categories')
-  console.log(Array.isArray(categories))
 
   const correctedCategories = categories.map((item) => {
     return { value: item }
@@ -79,6 +82,23 @@ export default function NewPost() {
     categories: [] as string[]
   })
 
+  const handleFileUpload = async (file: File) => {
+    const inputFormData = new FormData()
+    inputFormData.append('imageUrl', file)
+    const response = await fetch('/actions/image', {
+      method: 'POST',
+      body: inputFormData
+    })
+
+    const { imageUrl } = await response.json()
+    console.log('imageUrl', imageUrl)
+
+    setFormData({
+      ...formData,
+      imageUrl: imageUrl
+    })
+  }
+
   function handleSelects(event: React.ChangeEvent<HTMLSelectElement>) {
     const { value } = event.target
     if (formData.categories.includes(value)) {
@@ -96,7 +116,7 @@ export default function NewPost() {
 
   return (
     <div className='flex items-center justify-center '>
-      <Form method='post' action='/blog/new' className='form-primary'>
+      <form method='post' action='/blog/new' className='form-primary'>
         <label htmlFor='title'>Title</label>
         <input
           className='form-field-primary'
@@ -116,7 +136,15 @@ export default function NewPost() {
             setFormData({ ...formData, description: e.target.value })
           }
         />
+
         <label htmlFor='body'>Post Content</label>
+
+        <ClientOnly
+          fallback={<div style={{ width: 500, height: 300 }}>hmm</div>}
+        >
+          {() => <Quill value={formData.body} name='body' />}
+        </ClientOnly>
+
         <FormField
           name='body'
           type='textarea'
@@ -167,11 +195,14 @@ export default function NewPost() {
           </div>
           <br />
         </div>
-
+        <ImageUploader
+          onChange={handleFileUpload}
+          imageUrl={formData.imageUrl}
+        />
         <button type='submit' className='btn-base btn-solid-success'>
           Save
         </button>
-      </Form>
+      </form>
     </div>
   )
 }

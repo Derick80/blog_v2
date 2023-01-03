@@ -1,11 +1,23 @@
-import type { ActionFunction } from '@remix-run/node'
+import {
+  ActionFunction,
+  unstable_parseMultipartFormData
+} from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { cloudUpload } from '~/models/cloudinary.server'
+import { s3UploadHandler } from '~/models/s3.server'
 
-// This is the ac tion that will be called when the form is submitted on the client from the image upload component that's likely in another route
-export const action: ActionFunction = async ({ request }) => {
-  const imageUrl = await cloudUpload(request)
-  // console.log('imageUrl', imageUrl)
+export const action: ActionFunction = async ({ request, params }) => {
+  async function uploadImage(request: Request) {
+    const formData = await unstable_parseMultipartFormData(
+      request,
+      s3UploadHandler
+    )
+    const imageUrl = formData.get('imageUrl') || ''
+    if (!imageUrl) {
+      return { error: 'No image uploaded' }
+    }
+    return imageUrl
+  }
+  const imageUrl = await uploadImage(request)
 
   return json({ imageUrl })
 }

@@ -89,10 +89,27 @@ export const createUser = async (
     }
   }
 
-  return await prisma.user.create({
+  const user = await prisma.user.create({
     data,
     select: defaultUserSelect
   })
+
+  await prisma.profile.create({
+    data: {
+      userId: user.id,
+      userName: user.userName,
+      bio: '',
+      firstName: '',
+      lastName: '',
+      location: '',
+      education: '',
+      occupation: '',
+      profilePicture: '',
+      email: user.email
+    }
+  })
+
+  return user
 }
 
 export const getUser = async (input: Prisma.UserWhereUniqueInput) => {

@@ -23,7 +23,7 @@ export const Modal: React.FC<props> = ({
   return (
     <Portal wrapperId='modal'>
       <div
-        className='dark:d-bg-opacity-80 fixed inset-0 overflow-y-auto bg-gray-600 bg-opacity-80'
+        className='dark:d-bg-opacity-80 fixed inset-0 overflow-y-auto '
         aria-labelledby={ariaLabel ?? 'modal-title'}
         role='dialog'
         aria-modal='true'
@@ -31,7 +31,7 @@ export const Modal: React.FC<props> = ({
       ></div>
       <div className='pointer-events-none fixed inset-0 flex max-h-screen items-center justify-center overflow-scroll'>
         <div
-          className={`${className} d-bg-opacity-80 pointer-events-auto max-h-screen overflow-y-auto p-4 md:rounded-xl`}
+          className={`${className} d-bg-opacity-80 pointer-events-auto relative h-full max-h-screen w-full max-w-2xl overflow-y-auto border-2 border-white p-4 md:h-auto md:rounded-xl`}
         >
           {/* This is where the modal content is rendered  */}
           {children}

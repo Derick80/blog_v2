@@ -5,7 +5,16 @@ export type UserType = {
   id: string
   email: string
   userName: string
+  avatarUrl: string
   role: string
+  _count: {
+    accounts: number
+    tokens: number
+    posts: number
+    comments: number
+    likes: number
+    projects: number
+  }
 }
 
 const DEFAULT_REDIRECT = '/'

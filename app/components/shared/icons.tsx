@@ -165,3 +165,36 @@ export function ImagePlaceHolder() {
     </svg>
   )
 }
+
+export function UserPlaceHolder() {
+  return (
+    <svg
+      className='absolute -left-1 h-12 w-12 text-gray-400'
+      fill='currentColor'
+      viewBox='0 0 20 20'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path
+        fill-rule='evenodd'
+        d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z'
+        clip-rule='evenodd'
+      ></path>
+    </svg>
+  )
+}
+
+export function VerticalDots() {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' height='48' width='48'>
+      <path d='M24 40q-1 0-1.7-.7t-.7-1.7q0-1 .7-1.7t1.7-.7q1 0 1.7.7t.7 1.7q0 1-.7 1.7T24 40Zm0-13.6q-1 0-1.7-.7t-.7-1.7q0-1 .7-1.7t1.7-.7q1 0 1.7.7t.7 1.7q0 1-.7 1.7t-1.7.7Zm0-13.6q-1 0-1.7-.7t-.7-1.7q0-1 .7-1.7T24 8q1 0 1.7.7t.7 1.7q0 1-.7 1.7t-1.7.7Z' />
+    </svg>
+  )
+}
+
+export function CommentIcon() {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' height='24' width='48'>
+      <path d='M12 28h24v-3H12Zm0-6.5h24v-3H12Zm0-6.5h24v-3H12Zm32 29-8-8H7q-1.15 0-2.075-.925Q4 34.15 4 33V7q0-1.15.925-2.075Q5.85 4 7 4h34q1.2 0 2.1.925Q44 5.85 44 7ZM7 7v26h30.25L41 36.75V7H7Zm0 0v29.75V7Z' />
+    </svg>
+  )
+}

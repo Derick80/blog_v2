@@ -53,16 +53,19 @@ export const action: ActionFunction = async ({ request }) => {
 export default function Login() {
   return (
     <article className='flex min-h-screen flex-col items-center justify-center'>
-      <div className='rounded-lg bg-white p-8 shadow-md'>
+      <div className='rounded-lg p-8 shadow-md'>
         <h1 className='text-2xl font-bold'>Login</h1>
         <AuthForm authType='login' />
-        <div className='bg-white'>Or continue with</div>
+        <div className='flex flex-col items-center justify-center'>
+          <div>OR</div>
+          continue with
+        </div>
 
         <SocialLoginForm provider='github'>
-          <button className='btn-base'>Github</button>
+          <button className=''>Github</button>
         </SocialLoginForm>
-        <div className='mt-4'>
-          <Link to='/auth/register'>Don't have an account?</Link>
+        <div className='flexflex-col mt-4 items-center justify-center'>
+          <Link to='/auth/register'>New to the site?? ..Register Here</Link>
         </div>
       </div>
     </article>

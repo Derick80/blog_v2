@@ -1,105 +1,132 @@
 export const shinJuku = [
   {
     links:
-      'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/',
-    city: 'shinjuku'
-  },
-  {
-    links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/DJI_20180224_153024.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/DJI_20180224_153039.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/DJI_20180224_153414.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180223_223901.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_110750.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_110816.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_111017.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_111048.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_111058.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_111110.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_113119.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_153614.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_153621.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_154233.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_154733.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_160412.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_160435.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shinjuku/MVIMG_20180224_222655.jpg',
-    city: 'shinjuku'
+    city: 'shinjuku',
+    imageTitle: 'Shinjuku Blossoms',
+    imageDescription: 'Shinjuku Blossoms'
   }
 ]
 export const fuji = [
-  {
-    links: 'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/fuji/',
-    city: 'fuji'
-  },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/fuji/DJI_20180301_125305.jpg',
@@ -214,11 +241,6 @@ export const fuji = [
 export const kyoto = [
   {
     links:
-      'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/kyoto/',
-    city: 'kyoto'
-  },
-  {
-    links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/kyoto/DJI_20180302_151929.jpg',
     city: 'kyoto'
   },
@@ -282,16 +304,7 @@ export const kyoto = [
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/kyoto/DJI_20180302_154635.jpg',
     city: 'kyoto'
   },
-  {
-    links:
-      'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/kyoto/DJI_20180302_160809.mp4',
-    city: 'kyoto'
-  },
-  {
-    links:
-      'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/kyoto/DJI_20180302_160849.mp4',
-    city: 'kyoto'
-  },
+
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/kyoto/DJI_20180302_161057.jpg',
@@ -372,11 +385,7 @@ export const kyoto = [
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/kyoto/DJI_20180303_101615.jpg',
     city: 'kyoto'
   },
-  {
-    links:
-      'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/kyoto/DJI_20180303_103140.mp4',
-    city: 'kyoto'
-  },
+
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/kyoto/DJI_20180303_103301.jpg',
@@ -525,11 +534,6 @@ export const kyoto = [
 ]
 
 export const shimo = [
-  {
-    links:
-      'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shimo/',
-    city: 'shimo'
-  },
   {
     links:
       'https://dchtravelbucket.s3.us-east-2.amazonaws.com/Japan2018/shimo/MVIMG_20180304_205531.jpg',

@@ -82,7 +82,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
 
         }
     })
-    await prisma.profile.create({
+    await prisma.about.create({
       data: {
         userName: 'Derick',
         firstName: 'Derick',
@@ -98,7 +98,6 @@ location:`Chicago, IL`,
 education:`Education I completed my Ph.D in genetics at Tufts Graduate School of Biomedical Sciences in Boston, MA.`,
 occupation:`I am a Senior Clinical Scientist at Tempus Labs in Chicago, IL.`,
 profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimages/DerickFace.jpg',
-      userId: user.id,
       email: user.email,
       }
     })
@@ -175,8 +174,8 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
       data: {
         imageUrl: urls.links,
         userId: user.id,
-        imageTitle: '',
-        imageDescription: '',
+        imageTitle: urls.imageTitle,
+        imageDescription: urls.imageDescription,
         album: 'NYC',
         city:'New York City',
         year:'2022'
@@ -233,7 +232,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
         }
     })
 
-    await prisma.post.create({
+    const post1= await prisma.post.create({
         data: {
             title: "Post One",
             description: "Post one",
@@ -256,7 +255,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
         }
         }
     })
-await prisma.post.create({
+const post2 = await prisma.post.create({
         data: {
             title: "Post Two",
             description: "Post 2",
@@ -279,6 +278,38 @@ await prisma.post.create({
         }
         }
     })
+
+    const comment1= await prisma.comment.create({
+      data:{
+        message:`I'm a root comment`,
+        createdBy:user.userName,
+        userId:user.id,
+
+        postId:post1.id
+      }
+    })
+
+    const comment2= await prisma.comment.create({
+      data:{
+        parentId: comment1.id,
+        message:`I'm a child comment`,
+        createdBy:user2.userName,
+        userId:user2.id,
+        postId:post1.id
+      }
+    })
+
+    const comment3= await prisma.comment.create({
+      data:{
+        message:`I'm a root comment`,
+        createdBy:user2.userName,
+        userId:user2.id,
+        postId:post2.id
+
+      }
+    })
+
+
 
 
 

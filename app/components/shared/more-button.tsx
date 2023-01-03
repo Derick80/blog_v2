@@ -4,7 +4,7 @@ import { SerializedPost } from '~/utils/schemas/post-schema'
 import { User } from '~/utils/schemas/user-schema'
 import { useUser } from '~/utils/utils'
 import { iconAttrs } from './icons'
-import { Modal } from './model'
+import { Modal } from './modal'
 
 type Props = {
   post: SerializedPost
