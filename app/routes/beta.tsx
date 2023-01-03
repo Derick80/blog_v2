@@ -15,7 +15,6 @@ export async function loader({ request }: LoaderArgs) {
   return json({ comments })
 }
 
-
 // export default function BlogIndex() {
 //     const data = useLoaderData()
 //     console.log(data)
@@ -40,4 +39,3 @@ export async function loader({ request }: LoaderArgs) {
 //         </div>
 //     )
 //     }
-

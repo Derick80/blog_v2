@@ -21,7 +21,6 @@ export async function loader({}: LoaderArgs) {
   const rootcomments = comments.map((comment) =>
     comment.filter((comment) => !commentsByParentId.includes(comment.id))
   )
-  console.log('rootcomments', rootcomments)
 
   return json({ posts, rootcomments, comments, commentsByParentId })
 }

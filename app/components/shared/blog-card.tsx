@@ -2,7 +2,8 @@ import { Link, useFetcher } from '@remix-run/react'
 import { useState } from 'react'
 import type { serializedQueriedPost } from '~/models/post.server'
 import { useOptionalUser } from '~/utils/utils'
-import CommentForm from './comment-form'
+import CommentForm from './comment/comment-form'
+import CommentList from './comment/comment-list'
 import FavoriteContainer from './favorite-button'
 import { ImagePlaceHolder } from './icons'
 import LikeContainer from './like-container'
@@ -12,7 +13,6 @@ import { ShareButton } from './share-button'
 export type BlogCardProps = {
   posts: serializedQueriedPost
 }
-
 
 export const BlogCard = ({ posts }: BlogCardProps) => {
   const user = useOptionalUser()
@@ -49,37 +49,30 @@ export const BlogCard = ({ posts }: BlogCardProps) => {
             {posts.description}{' '}
           </p>
           <article className='flex-grow'>{posts.body}</article>
-          <section>
-
-             </section>
+          <section></section>
         </div>
 
         {user && posts.id ? (
-            <div className='flex flex-row items-center justify-start'>
-              <LikeContainer
-                post={posts}
-                currentUser={user.id}
-                postId={posts.id}
-              />
-              <FavoriteContainer postId={posts.id} currentUser={user.id} />
+          <div className='flex flex-row items-center justify-start'>
+            <LikeContainer
+              post={posts}
+              currentUser={user.id}
+              postId={posts.id}
+            />
+            <FavoriteContainer postId={posts.id} currentUser={user.id} />
 
-              <ShareButton id={posts.id} />
+            <ShareButton id={posts.id} />
 
-              <div>
+            <div>
+              <span className='material-symbols-outlined'>comment</span>
+              <span className='min-w-[0.75rem] text-xs'>
+                {posts._count.comments || 0}
+              </span>
+            </div>
 
-                  <span className='material-symbols-outlined'>comment</span>
-                  <span className='min-w-[0.75rem] text-xs'>
-                    {posts._count.comments || 0}
-                  </span>
-              </div>
-
-
-
-              <PostOptions>
-                <CardActions id={posts.id} published={posts.published} />
-              </PostOptions>
-
-
+            <PostOptions>
+              <CardActions id={posts.id} published={posts.published} />
+            </PostOptions>
           </div>
         ) : (
           <div className='flex flex-row justify-between'>
@@ -88,25 +81,24 @@ export const BlogCard = ({ posts }: BlogCardProps) => {
             </div>
           </div>
         )}
+
+        <fetcher.Form method='post' action={`/blog/${posts.id}/comment`}>
+          <label htmlFor='message'>Message</label>
+          <textarea
+            id='message'
+            className='rounded-md border border-gray-300 bg-slate-200 text-zinc-900 dark:bg-zinc-600 dark:text-slate-200'
+            name='message'
+            rows={3}
+            value={formData.message}
+            onChange={(e) =>
+              setFormData({ ...formData, message: e.target.value })
+            }
+          />
+          <button type='submit'>Submit</button>
+        </fetcher.Form>
+
         <div>
-          {/* <CommentForm /> */}
-<fetcher.Form method='post' action={`/blog/${posts.id}/comment/new`}>
-
-            <label htmlFor='message'>Message</label>
-            <textarea
-              id='message'
-              className='border border-gray-300 bg-slate-200 dark:bg-zinc-600 rounded-md text-zinc-900 dark:text-slate-200'
-              name='message'
-              rows={3}
-              value={formData.message}
-              onChange={(e) =>
-                setFormData({ ...formData, message: e.target.value })
-              }
-            />
-            <button type='submit'>Submit</button>
-          </fetcher.Form>
-
-
+          <CommentList comments={posts.comments} />
         </div>
       </div>
     </>

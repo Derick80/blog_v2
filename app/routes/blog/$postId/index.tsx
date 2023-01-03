@@ -85,7 +85,7 @@ export default function Index() {
     <>
       <h1>Index</h1>
       {data.postId ? (
-        <Link to={`/blog/${data.postId}/comment`}>New Comment</Link>
+        <Link to={`/blog/${data.postId}/new`}>New Comment</Link>
       ) : null}
       <BlogCard posts={data.post} />
     </>

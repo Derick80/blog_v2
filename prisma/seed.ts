@@ -290,15 +290,7 @@ const post2 = await prisma.post.create({
       }
     })
 
-    const comment2= await prisma.comment.create({
-      data:{
-        parentId: comment1.id,
-        message:`I'm a child comment`,
-        createdBy:user2.userName,
-        userId:user2.id,
-        postId:post1.id
-      }
-    })
+
 
     const comment3= await prisma.comment.create({
       data:{
@@ -311,25 +303,9 @@ const post2 = await prisma.post.create({
     })
 
 
-    const comment4= await prisma.comment.create({
-      data:{
-        parentId: comment2.id,
-        message:`I'm a child comment`,
-        createdBy:user.userName,
-        userId:user.id,
-        postId:post1.id
-      }
-    })
 
-    const comment5= await prisma.comment.create({
-      data:{
-        parentId: comment3.id,
-        message:`I'm a child comment`,
-        createdBy:user2.userName,
-        userId:user2.id,
-        postId:post1.id
-      }
-    })
+
+
 
 
 

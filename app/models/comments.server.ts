@@ -29,6 +29,7 @@ export async function createComment(input: CreateCommentInput) {
       createdBy: input.createdBy
     }
   })
+
   return comment
 }
 
@@ -55,4 +56,34 @@ export async function createChildComment(input: CreateChildCommentInput) {
     }
   })
   return comment
+}
+
+export async function deleteComment(commentId: string) {
+  const deleted = await prisma.comment.delete({
+    where: {
+      id: commentId
+    }
+  })
+  return deleted
+}
+
+type DeleteProps = {
+  postId: string
+  commentId: string
+}
+export async function deleteByPost({ postId, commentId }: DeleteProps) {
+  const deled = await prisma.post.delete({
+    where: {
+      id: postId
+    },
+    data: {
+      comments: {
+        delete: {
+          id: commentId
+        }
+      }
+    }
+  })
+
+  return deled
 }
