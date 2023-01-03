@@ -1,4 +1,4 @@
-import { ActionArgs } from '@remix-run/node'
+import { ActionArgs, redirect } from '@remix-run/node'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import { prisma } from '~/models/prisma.server'
@@ -19,11 +19,12 @@ export async function action({ request, params }: ActionArgs) {
     return badRequest({ message: 'Invalid comment' })
 
 
-    return await prisma.comment.delete({
+     await prisma.comment.delete({
         where: {
             id: commentId
 
         }
     })
 
+    return redirect('/blog', { headers: { 'Set-Cookie': 'flash=Comment deleted' } })
 }
