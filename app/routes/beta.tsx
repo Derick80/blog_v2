@@ -12,7 +12,6 @@ export async function loader({ request }: LoaderArgs) {
       comment.map((c) => (c.parentId === null ? c : null)).filter((c) => c)
     )
     .flat()
-  console.log('rootcomments', rootcomments)
   return json({ comments })
 }
 

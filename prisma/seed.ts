@@ -234,10 +234,11 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
 
     const post1= await prisma.post.create({
         data: {
-            title: "Post One",
-            description: "Post one",
-          body:'This is the body of post one',
-            imageUrl: "https://blogphotosbucket.s3.us-east-2.amazonaws.com/postimages/post_two_memory_game.png",
+            title: `PRODUCTION OF MATURE MRNA IS A MULTISTEP PROCESS REQUIRING MANY PROTEINS THAT IS ESSENTIAL FOR PROPER CELLULAR FUNCTION
+            `,
+                       description: `Defects in mRNA maturation lead to radical changes in development, growth and viability of the cell.`,
+          body:`Production of mature mRNA is a multistep process requiring many proteins that is essential for proper cellular function. Defects in mRNA maturation lead to radical changes in development, growth and viability of the cell. The essential mRNA 3’ end processing subunit, Pcf11, is required for the cleavage and polyadenylation of nascent mRNAs and for proper termination of RNA polymerase II transcription. Pcf11 also plays a role in alternative polyadenylation. Previous work has identified and described the function of several domains in the Pcf11 protein, but the crystal structure has not been solved and there remain large stretches of Pcf11 that are uncharacterized. Pcf11 is part of the CF 1A factor involved in cleavage and polyadenylation. As part of CF 1A, Pcf11 makes contacts with each of the other CF 1A protein subunits as well as several of the protein subunits that make up the Cleavage and Polyadenylation Factor (CPF), but the importance of these cross-factor interactions is not known. Pcf11 and other mRNA 3’ end processing subunits have been primarily studied in the context of RNA polymerase II transcription and mRNA processing but there are indications that mRNA processing subunits participate in other aspects of RNA maturation such as tRNA `,
+            imageUrl: "https://blogphotosbucket.s3.us-east-2.amazonaws.com/postimages/post_three_yeast_plates.jpeg",
             createdBy:user.userName,
             userId: user.id,
             published: true,
@@ -257,10 +258,10 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
     })
 const post2 = await prisma.post.create({
         data: {
-            title: "Post Two",
-            description: "Post 2",
-          body:'This is the body of post two',
-            imageUrl: "",
+            title: "mRNA Maturation",
+            description: "Introns are removed from the pre-mRNA by the spliceosome components in a two step reaction that ends in the joining of two exons together",
+          body:`Many genes, if not most, in higher organisms contain non-coding, intervening DNA sequences called introns, between the protein-coding exon portions of the gene. The second major step in mRNA maturation is the removal of introns and the splicing of exons. Introns are removed from the pre-mRNA by the spliceosome components in a two step reaction that ends in the joining of two exons together (Bentley 2014). Most metazoan genes have numerous introns while very few genes in yeast have introns. The selection of which exons are included in the final mRNA has lead to a diversification of gene products such that one gene can code for numerous different mRNA isoforms, each of which may have unique functions. Chromatin modifications and differential phosphorylation of the CTD of RNAP II play an active role in the recruitment of splicing factors, and the splicing reaction itself may occur prior to or following the cleavage and polyadenylation step of mRNA maturation (Bentley 2014; Rigo & Martinson 2009; Oesterreich et al. 2011; David & Manley 2011). mRNAs that contain introns that are not properly spliced are recognized by the mRNA surveillance complex, TRAMP (Trf4/Air2/Mtr4p Polyadenylation), and degraded by the nuclear exosome. If intron-containing mRNAs escape to the cytoplasm, they are degraded via nonsense mediated decay (NMD) or NMD-independent degradation pathways (Aguilera, 2005; Bentley, 2014).`,
+            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/lab.jpeg",
             createdBy:user.userName,
             userId: user.id,
             published: true,
@@ -310,6 +311,25 @@ const post2 = await prisma.post.create({
     })
 
 
+    const comment4= await prisma.comment.create({
+      data:{
+        parentId: comment2.id,
+        message:`I'm a child comment`,
+        createdBy:user.userName,
+        userId:user.id,
+        postId:post1.id
+      }
+    })
+
+    const comment5= await prisma.comment.create({
+      data:{
+        parentId: comment3.id,
+        message:`I'm a child comment`,
+        createdBy:user2.userName,
+        userId:user2.id,
+        postId:post1.id
+      }
+    })
 
 
 

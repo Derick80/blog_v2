@@ -1,11 +1,8 @@
-import { Comment } from '@prisma/client'
-import { Link, useNavigate } from '@remix-run/react'
+import { Link, useFetcher } from '@remix-run/react'
 import { useState } from 'react'
 import type { serializedQueriedPost } from '~/models/post.server'
 import { useOptionalUser } from '~/utils/utils'
-import Comment from './comment/comment'
-import CommentForm from './comment/comment-form'
-import CommentList from './comment/comment-list'
+import CommentForm from './comment-form'
 import FavoriteContainer from './favorite-button'
 import { ImagePlaceHolder } from './icons'
 import LikeContainer from './like-container'
@@ -14,11 +11,12 @@ import { ShareButton } from './share-button'
 
 export type BlogCardProps = {
   posts: serializedQueriedPost
-  rootComments:
 }
 
-export const BlogCard = ({ posts, rootComments }: BlogCardProps) => {
+
+export const BlogCard = ({ posts }: BlogCardProps) => {
   const user = useOptionalUser()
+  const fetcher = useFetcher()
   const [formData, setFormData] = useState({
     message: ''
   })
@@ -52,17 +50,12 @@ export const BlogCard = ({ posts, rootComments }: BlogCardProps) => {
           </p>
           <article className='flex-grow'>{posts.body}</article>
           <section>
-             {rootComments !== null && rootComments.length > 0 && (
-                <div className='mt-4'>
-                  <CommentList rootComments={rootComments} />
-                </div>
-                  )}
+
              </section>
         </div>
 
         {user && posts.id ? (
-          <div className='flex flex-col justify-between'>
-            <div className='flex flex-row items-center justify-end'>
+            <div className='flex flex-row items-center justify-start'>
               <LikeContainer
                 post={posts}
                 currentUser={user.id}
@@ -81,14 +74,12 @@ export const BlogCard = ({ posts, rootComments }: BlogCardProps) => {
               </div>
 
 
-                <CommentForm postId={posts.id} action='comment' />
 
               <PostOptions>
                 <CardActions id={posts.id} published={posts.published} />
               </PostOptions>
 
 
-            </div>
           </div>
         ) : (
           <div className='flex flex-row justify-between'>
@@ -97,6 +88,26 @@ export const BlogCard = ({ posts, rootComments }: BlogCardProps) => {
             </div>
           </div>
         )}
+        <div>
+          {/* <CommentForm /> */}
+<fetcher.Form method='post' action={`/blog/${posts.id}/comment/new`}>
+
+            <label htmlFor='message'>Message</label>
+            <textarea
+              id='message'
+              className='border border-gray-300 bg-slate-200 dark:bg-zinc-600 rounded-md text-zinc-900 dark:text-slate-200'
+              name='message'
+              rows={3}
+              value={formData.message}
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
+            />
+            <button type='submit'>Submit</button>
+          </fetcher.Form>
+
+
+        </div>
       </div>
     </>
   )

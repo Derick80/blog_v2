@@ -11,7 +11,7 @@ export default function ColorMode() {
     )
   }
   return (
-    <li className='flex items-center'>
+    <div className='flex items-center'>
       {theme === Theme.DARK ? (
         <button onClick={toggleTheme}>
           <svg
@@ -41,6 +41,6 @@ export default function ColorMode() {
           </svg>
         </button>
       )}
-    </li>
+    </div>
   )
 }
