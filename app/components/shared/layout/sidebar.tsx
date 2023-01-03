@@ -1,5 +1,5 @@
 import type { UserProps } from '~/models/user.server'
-import UserCard from './user-card'
+import UserCard from '../user-ui/user-card'
 
 export type SideBarProps = {
   children: React.ReactNode

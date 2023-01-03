@@ -1,7 +1,7 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { NavLink, Outlet, useLoaderData, useMatches } from '@remix-run/react'
-import UserCard from '~/components/shared/user-card'
+import UserCard from '~/components/shared/user-ui/user-card'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import type { UserProps } from '~/models/user.server'
 import { getUsers } from '~/models/user.server'

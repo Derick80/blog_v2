@@ -1,41 +1,14 @@
 import type { LoaderArgs } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import { getPosts, getPostsAndComments } from '~/models/post.server'
+import { Card } from '~/components/shared/blog-ui/card'
+import { getCommentsAndUserData } from '~/models/comments.server'
 export async function loader({ request }: LoaderArgs) {
-  const user = await isAuthenticated(request)
-  const posts = await getPosts()
-  const comments = posts.map((post) => post.comments || [])
-  const rootcomments = comments
-    .map((comment) =>
-      comment.map((c) => (c.parentId === null ? c : null)).filter((c) => c)
-    )
-    .flat()
-  return json({ comments })
+  const results = await getCommentsAndUserData()
+  return json({ results })
 }
 
-// export default function BlogIndex() {
-//     const data = useLoaderData()
-//     console.log(data)
-//     return (
-//         <div>
-//         {data.comments.map((comment) => {
-//             return (
-//            <>
-//            {comment.parentId === null && (
-//                <div>
-//                 <p>{comment.message}</p>
-//                 <p>{comment.createdBy}</p>
-//                 <p>{comment.createdAt}</p>
-//                 </div>
-//             )}
-
-//            </>
-//             )
-//         })
-
-//         }
-//         </div>
-//     )
-//     }
+export default function BlogIndex() {
+  const data = useLoaderData<typeof loader>()
+  return <div className='mx-auto flex w-fit flex-col gap-5'></div>
+}

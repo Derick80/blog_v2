@@ -2,10 +2,11 @@ import { ActionArgs, LoaderArgs, redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
-import { BlogCard } from '~/components/shared/blog-card'
+import { BlogCard } from '~/components/shared/blog-ui/blog-card'
+import { Card } from '~/components/shared/blog-ui/card'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { flashAndCommit } from '~/models/auth/session.server'
-import { createComment } from '~/models/comments.server'
+import { createComment, getCommentsAndUserData } from '~/models/comments.server'
 import { getPosts } from '~/models/post.server'
 import { validateText } from '../validators.server'
 
@@ -21,8 +22,9 @@ export async function loader({}: LoaderArgs) {
   const rootcomments = comments.map((comment) =>
     comment.filter((comment) => !commentsByParentId.includes(comment.id))
   )
+  const results = await getCommentsAndUserData()
 
-  return json({ posts, rootcomments, comments, commentsByParentId })
+  return json({ posts, rootcomments, comments, commentsByParentId, results })
 }
 export async function action({ request, params }: ActionArgs) {
   const user = await isAuthenticated(request)
@@ -83,11 +85,10 @@ export async function action({ request, params }: ActionArgs) {
 export default function BlogRoute() {
   const data = useLoaderData<typeof loader>()
   return (
-    <div className='mt-10 flex flex-col items-center justify-center'>
-      {data.posts.map((post) => (
-        <BlogCard key={post.id} posts={post} rootComments={data.rootcomments} />
+    <div className='mx-auto flex w-fit flex-col gap-5'>
+      {data.results.map((results) => (
+        <Card key={results.postId} results={results} />
       ))}
-
       <Outlet />
     </div>
   )

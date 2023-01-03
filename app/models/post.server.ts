@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client'
+import { Favorite } from '@prisma/client'
 import type { SerializeFrom } from '@remix-run/node'
 import type { Like } from '~/utils/schemas/like-schema'
 import type { Post } from '~/utils/schemas/post-schema'
@@ -28,9 +28,30 @@ export type Category = {
 
 type QueriedPost = Post & {
   likes?: Like[]
+  favorites?: Favorite[]
   _count: {
     comments?: number
     likes?: number
+    favorites?: number
+  }
+}
+export type PostAndComments = QueriedPost & {
+  comments: {
+    id: string
+    message: string
+    comments: {
+      id: string
+      postId: string
+      userId: string
+      message: string
+      createdBy: string
+      user: {
+        id: string
+        username: string
+        avatarUrl: string
+        createdBy: string
+      }
+    }
   }
 }
 
@@ -84,13 +105,42 @@ export async function getPosts() {
       published: true
     },
     include: {
-      comments: true,
+      comments: {
+        include: {
+          user: true
+        }
+      },
       categories: true,
       _count: true,
       likes: true
     }
   })
-  return initialPosts
+  const posts = initialPosts.map((post) => {
+    const { _count, comments, ...rest } = post
+    return {
+      ...rest,
+      comments,
+
+      commentsCount: _count.comments,
+      likesCount: _count.likes
+    }
+  })
+  const results = posts.map((post) => {
+    return {
+      ...post,
+      comments: post.comments.map((comment) => {
+        const { user, ...rest } = comment
+        return {
+          ...rest,
+          user: {
+            ...user,
+            avatarUrl: user.avatarUrl
+          }
+        }
+      })
+    }
+  })
+  return results
 }
 
 export async function getPostById(id: string) {

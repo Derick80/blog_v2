@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react'
 import { SerializedPost } from '~/models/post.server'
-import { Divider } from './divider'
-import { iconAttrs } from './icons'
-import Footer from './layout/footer'
-import { Modal } from './modal'
-import { useToast } from './toaster'
+import { Divider } from '../layout/divider'
+import { iconAttrs } from '../icons'
+import Footer from '../layout/footer'
+import { Modal } from '../layout/modal'
+import { useToast } from '../toaster'
 
 type Props = {
   id: string | number

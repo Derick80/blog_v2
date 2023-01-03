@@ -1,7 +1,7 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { BlogCard } from '~/components/shared/blog-card'
+import { BlogCard } from '~/components/shared/blog-ui/blog-card'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { getUserDrafts } from '~/models/post.server'
 export async function loader({ request }: LoaderArgs) {

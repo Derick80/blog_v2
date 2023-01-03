@@ -1,8 +1,6 @@
 import { LoaderArgs, json, ActionArgs, redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { Link } from 'react-router-dom'
 import { badRequest } from 'remix-utils'
-import { BlogCard } from '~/components/shared/blog-card'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { flashAndCommit } from '~/models/auth/session.server'
 import { createComment } from '~/models/comments.server'
@@ -79,15 +77,9 @@ export async function action({ request, params }: ActionArgs) {
 }
 
 export default function Index() {
-  const data = useLoaderData()
-
   return (
     <>
       <h1>Index</h1>
-      {data.postId ? (
-        <Link to={`/blog/${data.postId}/new`}>New Comment</Link>
-      ) : null}
-      <BlogCard posts={data.post} />
     </>
   )
 }

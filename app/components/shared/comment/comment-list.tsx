@@ -1,36 +1,33 @@
-import { Comment } from '@prisma/client'
-import { useParams } from '@remix-run/react'
-import { Link } from 'react-router-dom'
+import type { PostAndComments } from '~/models/post.server'
+import CommentContent from './comment'
+import CommentActionBox from './comment-actions'
 
 export type Props = {
-  comments: Comment[]
+  comments: {
+    id: string
+    message: string
+    postId: string
+    user: {
+      id: string
+      userName: string
+      avatarUrl: string
+      createdAt: string
+    }[]
+  }[]
 }
 
 export default function CommentList({ comments }: Props) {
   return (
-    <div>
+    <ul className='flex flex-col gap-4'>
       {comments.map((comment) => (
-        <RootComments key={comment.id} comment={comment} />
+        <CommentContent
+          key={comment.id}
+          comment={comment}
+          user={comment.user}
+        />
       ))}
-    </div>
-  )
-}
 
-type commentList = {
-  comment: Comment
-}
-function RootComments({ comment }: commentList) {
-  console.log('comment', comment.id);
-
-  return (
-    <ul key={comment.id} className='w-1/2 rounded-xl'>
-      <li className='flex flex-col space-y-2'>{comment.message}</li>
-      <li>
-        <form method='post' action={`/blog/${comment.postId}/${comment.id}`}>
-          <button type='submit'>Delete</button>
-          </form>
-
-      </li>
+      <CommentActionBox />
     </ul>
   )
 }

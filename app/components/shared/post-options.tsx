@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { iconAttrs, VerticalDots } from './icons'
-import { Modal } from './modal'
+import { Modal } from './layout/modal'
 
 export type OptionProps = {
   children: React.ReactNode

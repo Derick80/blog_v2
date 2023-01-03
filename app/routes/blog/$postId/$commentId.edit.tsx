@@ -1,16 +1,13 @@
-import { ActionArgs, json, LoaderArgs, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
-import CommentContent from '~/components/shared/comment/comment'
+import CommentForm from '~/components/shared/comment/comment-form'
 import { Modal } from '~/components/shared/layout/modal'
 import { isAuthenticated } from '~/models/auth/auth.server'
-import {
-  deleteComment,
-  editComment,
-  editPostComment
-} from '~/models/comments.server'
+import { editPostComment } from '~/models/comments.server'
 import { prisma } from '~/models/prisma.server'
 import { validateText } from '~/routes/validators.server'
 
@@ -87,8 +84,8 @@ export default function CommentRoute() {
   })
 
   return (
-    <div>
-      <CommentContent comment={data.comment} />
-    </div>
+    <Modal isOpen={true}>
+      <CommentForm />
+    </Modal>
   )
 }

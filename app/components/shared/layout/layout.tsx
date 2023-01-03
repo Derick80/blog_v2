@@ -15,6 +15,7 @@ import Footer from './footer'
 import NavBar from './nav-bar'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const user = useOptionalUser()
   return (
     <>
       <NavBar>

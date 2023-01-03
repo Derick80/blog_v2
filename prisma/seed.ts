@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PrismaClient } from '@prisma/client'
 import { fuji, kyoto, shimo, shinJuku } from '~/utils/schemas/constants/japan-links'
 import { nyc } from '~/utils/schemas/constants/nycurls'
@@ -282,7 +283,7 @@ const post2 = await prisma.post.create({
 
     const comment1= await prisma.comment.create({
       data:{
-        message:`I'm a root comment`,
+        message:`I'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root comment`,
         createdBy:user.userName,
         userId:user.id,
 

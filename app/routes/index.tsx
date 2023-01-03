@@ -1,6 +1,6 @@
 import { json, LoaderArgs } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import Sidebar from '~/components/shared/sidebar'
+import Sidebar from '~/components/shared/layout/sidebar'
 import { getMyPosts } from '~/models/post.server'
 import { getMyPostsByEmail } from '~/models/user.server'
 import { useOptionalUser } from '~/utils/utils'

@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,700;1,300;1,400;1,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Eczar:wght@400;500;600;700;800&display=swap");
+
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
 @import url("https://fonts.googleapis.com/css2?family=Material+Icons+Outlined");
 @import url("https://fonts.googleapis.com/css2?family=Material+Icons");
@@ -10,14 +10,18 @@
 
 @layer components {
   .mh1 {
+    @apply text-3xl md:text-4xl font-bold text-zinc-900 dark:text-slate-100
+  }
+  .mh2 {
     @apply text-2xl md:text-3xl font-bold text-zinc-900 dark:text-slate-100
   }
 
-  .d-bg {
-    @apply dark:bg-gradient-to-br from-emerald-500 to-slate-600
+  .mh3 {
+    @apply text-xl md:text-2xl font-bold text-zinc-900 dark:text-slate-100
   }
+
   .btn-base {
-    @apply inline-flex items-center border justify-center rounded-xl px-4 py-2 font-medium leading-4 transition duration-300 ease-in-out hover:-translate-y-1 focus:outline-none focus:ring-2 disabled:cursor-not-allowed
+    @apply inline-flex items-center border justify-center rounded-xl px-2 py-1 font-medium leading-4 transition duration-300 ease-in-out hover:-translate-y-1 focus:outline-none focus:ring-2 disabled:cursor-not-allowed
   }
 
   .btn-solid {
@@ -32,31 +36,17 @@
     @apply bg-orange-400 shadow-sm text-slate-900 dark:text-slate-100  hover:bg-yellow-600
   }
 
-  .btn-solid-danger {
+.btn-solid-danger {
     @apply bg-red-500 shadow-sm text-slate-900 dark:text-slate-100  hover:bg-red-600
   }
-  .container-bg{
-    @apply bg-zinc-100 dark:bg-slate-400
-  }
-
-  .form-primary {
-    @apply flex flex-col rounded-xl items-center justify-center bg-zinc-100 dark:d-bg text-zinc-900 dark:text-slate-300
+.form-primary {
+    @apply flex flex-col rounded-xl items-center justify-center bg-zinc-100 text-zinc-900 dark:text-slate-300
   }
 
   .form-field-primary {
     @apply mb-6 w-11/12 resize rounded-xl border-2 border-black p-2  focus:border-slate-700 focus:outline-none focus:ring-1 dark:border-slate-300 dark:bg-zinc-600 text-zinc-900 dark:text-slate-300;
   }
 
-  .btn-primary {
-    @apply flex flex-row items-end justify-items-center rounded-xl bg-green-400 px-3 py-2 font-semibold transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-yellow-400;
-  }
-  .btn {
-    @apply absolute bottom-5 right-5 rounded bg-slate-200 px-3 py-2 text-center text-xs transition hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600;
-  }
-  .form-validation-error {
-    @apply m-0 mt-1 bg-red-500 text-xs;
-  }
-  .error-container {
-    @apply rounded-md border-black bg-purple-50 p-2;
-  }
 }
+
+

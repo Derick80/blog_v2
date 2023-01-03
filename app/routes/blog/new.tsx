@@ -59,8 +59,6 @@ export async function action({ request }: ActionArgs) {
 }
 
 export default function NewPost() {
-  const data = useLoaderData<typeof loader>()
-
   //   fetcher works! Grab all the categories from the database and display them in the select box. Use fetcher to ping the database and grab the categories.
   const fetcher = useFetcher()
   useEffect(() => {
