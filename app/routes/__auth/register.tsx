@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
   }
 }
 
-export async function action({ request }: LoaderArgs) {
+export async function action ({ request }: LoaderArgs) {
   try {
     return await authenticator.authenticate('register', request, {
       successRedirect: '/blog'
@@ -25,14 +25,15 @@ export async function action({ request }: LoaderArgs) {
   }
 }
 
-export default function Page() {
+export default function Page () {
   return (
     <div>
       <AuthForm authType='register' />
-      <SocialLoginForm />
-      <div className='mt-4'>
-        <Link to='/auth/login'>Already have an Account?</Link>
-      </div>
+      <SocialLoginForm >
+        <div className='mt-4'>
+          <Link to='/login'>Already have an Account?</Link>
+        </div>
+      </SocialLoginForm>
     </div>
   )
 }

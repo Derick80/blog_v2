@@ -90,11 +90,8 @@ export async function getUserPosts(userId: string) {
       categories: true,
       likes: true,
       comments: {
-
-
         include: {
           user: true
-
         }
       }
     }
@@ -174,8 +171,7 @@ export async function getPosts() {
     }
   })
 
-
-  return {posts, commentsByParentId, postsWithComments}
+  return { posts, commentsByParentId, postsWithComments }
 }
 
 export async function getPostById(id: string) {
@@ -328,7 +324,6 @@ export async function getPostsAndComments() {
           comments: prisma.comment.findMany({
             where: {
               postId: post.id
-
             },
             include: {
               user: true

@@ -1,7 +1,7 @@
 import type { Category } from '@prisma/client'
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { useFetcher, useLoaderData } from '@remix-run/react'
+import { useFetcher } from '@remix-run/react'
 import React, { useEffect, useState } from 'react'
 import { ClientOnly } from 'remix-utils'
 import { Select } from '~/components/shared/box/select-box'
@@ -16,7 +16,7 @@ import { createPost } from '~/models/post.server'
 export type CatFetcher = {
   categories: Pick<Category, 'value' | 'label'>[]
 }
-export async function loader({ request }: LoaderArgs) {
+export async function loader ({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
     return { redirect: '/auth/login' }
@@ -26,7 +26,7 @@ export async function loader({ request }: LoaderArgs) {
   return json({ user, categories })
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action ({ request }: ActionArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
     return { redirect: '/auth/login' }
@@ -58,7 +58,7 @@ export async function action({ request }: ActionArgs) {
   return redirect('/blog')
 }
 
-export default function NewPost() {
+export default function NewPost () {
   //   fetcher works! Grab all the categories from the database and display them in the select box. Use fetcher to ping the database and grab the categories.
   const fetcher = useFetcher()
   useEffect(() => {
@@ -97,7 +97,7 @@ export default function NewPost() {
     })
   }
 
-  function handleSelects(event: React.ChangeEvent<HTMLSelectElement>) {
+  function handleSelects (event: React.ChangeEvent<HTMLSelectElement>) {
     const { value } = event.target
     if (formData.categories.includes(value)) {
       setFormData((prev) => ({
@@ -121,16 +121,16 @@ export default function NewPost() {
           type='text'
           name='title'
           id='title'
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+          value={ formData.title }
+          onChange={ (e) => setFormData({ ...formData, title: e.target.value }) }
         />
         <label htmlFor='description'>Description</label>
         <input
           type='text'
           name='description'
           id='description'
-          value={formData.description}
-          onChange={(e) =>
+          value={ formData.description }
+          onChange={ (e) =>
             setFormData({ ...formData, description: e.target.value })
           }
         />
@@ -138,16 +138,16 @@ export default function NewPost() {
         <label htmlFor='body'>Post Content</label>
 
         <ClientOnly
-          fallback={<div style={{ width: 500, height: 300 }}>hmm</div>}
+          fallback={ <div style={ { width: 500, height: 300 } }>hmm</div> }
         >
-          {() => <Quill value={formData.body} name='body' />}
+          { () => <Quill value={ formData.body } name='body' /> }
         </ClientOnly>
 
         <FormField
           name='body'
           type='textarea'
-          value={formData.body}
-          onChange={(e) => setFormData({ ...formData, body: e.target.value })}
+          value={ formData.body }
+          onChange={ (e) => setFormData({ ...formData, body: e.target.value }) }
         />
 
         <div className='flex flex-row items-center justify-center'>
@@ -155,47 +155,47 @@ export default function NewPost() {
             type='hidden'
             name='imageUrl'
             id='imageUrl'
-            value={formData.imageUrl}
-            onChange={(e) =>
+            value={ formData.imageUrl }
+            onChange={ (e) =>
               setFormData({ ...formData, imageUrl: e.target.value })
             }
           />
 
           <div className='flex w-96 flex-col bg-slate-100 pt-2 text-zinc-800 dark:bg-zinc-800 dark:text-slate-100'>
             <div className='flex w-full rounded-md bg-red-300'>
-              {formData.categories.map((item) => (
-                <div key={item} className='flex items-center'>
-                  <p>{item}</p>
+              { formData.categories.map((item) => (
+                <div key={ item } className='flex items-center'>
+                  <p>{ item }</p>
                   <button
                     type='button'
-                    onClick={() => {
+                    onClick={ () => {
                       setFormData((prev) => ({
                         ...prev,
                         categories: prev.categories.filter(
                           (cat) => cat !== item
                         )
                       }))
-                    }}
+                    } }
                   >
                     X
                   </button>
                 </div>
-              ))}
+              )) }
             </div>
             <Select
-              options={cata}
-              multiple={true}
+              options={ cata }
+              multiple={ true }
               label='Categories'
               name='categories'
-              value={formData.categories}
-              onChange={(event) => handleSelects(event)}
+              value={ formData.categories }
+              onChange={ (event) => handleSelects(event) }
             />
           </div>
           <br />
         </div>
         <ImageUploader
-          onChange={handleFileUpload}
-          imageUrl={formData.imageUrl}
+          onChange={ handleFileUpload }
+          imageUrl={ formData.imageUrl }
         />
         <button type='submit' className='btn-base btn-solid-success'>
           Save

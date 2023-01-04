@@ -8,8 +8,8 @@ export const siteLinks = [
 ]
 
 export const nonUserLinks = [
-  { name: 'Login', href: '/auth/login', icon_name: 'login' },
-  { name: 'Register', href: '/auth/register', icon_name: 'person_add' }
+  { name: 'Login', href: '/login', icon_name: 'login' },
+  { name: 'Register', href: '/register', icon_name: 'person_add' }
 ]
 
 // can probably remove this type of link and just use the nonUserLinks

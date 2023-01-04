@@ -34,7 +34,7 @@ type ActionData = {
   }
 }
 
-export async function loader(args: LoaderArgs) {
+export async function loader (args: LoaderArgs) {
   return (await isAuthenticated(args.request)) ? redirect('/') : null
 }
 
@@ -50,7 +50,7 @@ export const action: ActionFunction = async ({ request }) => {
     return serverError(error)
   }
 }
-export default function Login() {
+export default function Login () {
   return (
     <article className='flex min-h-screen flex-col items-center justify-center'>
       <div className='rounded-lg p-8 shadow-md'>
@@ -64,8 +64,11 @@ export default function Login() {
         <SocialLoginForm provider='github'>
           <button className=''>Github</button>
         </SocialLoginForm>
+        <SocialLoginForm provider='discord'>
+          <button className=''>Discord</button>
+        </SocialLoginForm>
         <div className='flexflex-col mt-4 items-center justify-center'>
-          <Link to='/auth/register'>New to the site?? ..Register Here</Link>
+          <Link to='/register'>New to the site?? ..Register Here</Link>
         </div>
       </div>
     </article>

@@ -12,7 +12,7 @@ export const gitHubStrategy = new GitHubStrategy(
   {
     clientID: ghClientId,
     clientSecret: ghClientSecret,
-    callbackURL: 'http://localhost:5832/auth/github/callback'
+    callbackURL: 'http://localhost:5832/github/callback'
   },
   async ({ accessToken, extraParams, profile }) => {
     const account = await getAccount({
