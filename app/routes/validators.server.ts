@@ -32,3 +32,7 @@ export const validateAmount = (amount: number) => {
 export const validateDate = (date: Date) => {
   if (!date) return `Please enter a date`
 }
+
+export const validateTitle=(title:string)=>{
+  if(!title.length || title.length > 25) return `Please create a title that is less than 15 characters`
+}

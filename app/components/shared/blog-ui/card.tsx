@@ -1,4 +1,4 @@
-import { Form, useFetcher } from '@remix-run/react'
+import { Form, Link, useFetcher } from '@remix-run/react'
 import { format } from 'date-fns'
 import { useState } from 'react'
 import CommentActionBox from '../comment/comment-actions'
@@ -19,20 +19,45 @@ export type Props = {
     userName: string
     description: string
     email: string
+    imageUrl: string
     avatarUrl: string
   }
 }
 
 export const Card = ({ results }: Props) => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   const fetcher = useFetcher()
   const [formData, setFormData] = useState({
     message: ''
   })
   return (
     <>
-      <div key={results.postId} className='max-w-prose p-2 shadow-2xl'>
-        <div className='flex flex-row'>{results.description}</div>
+      <div key={results.postId} className='max-w-prose p-2 shadow-2xl rounded-lg hover:ring-1 ring-indigo-300 dark:hover:ring-gray-400'>
+       <div
+          className='flex flex-row items-center justify-between'
+       > <h1 className='mh2'>{results.title}</h1>
+      <Link className='hover:animate-pulse' to={`/users/${results.userId}`}>
+      <img
+                  src={results.avatarUrl}
+                  alt='avatar'
+                  className='h-10 w-10 rounded-full'
+                  style={{ height: '50px', width: '50px', objectFit: 'cover', minWidth: '50px' }}
+                />
+                </Link>
+       </div>
+
+
+            <img src={results.imageUrl} alt='avatar' className='float-left h-10 w-10 mt-5 mb-5 rounded-full'
+            style={{ height: '250px', width: '250px', objectFit: 'cover' }}
+            />
+
+
+        <div className='flex flex-row mt-10 pl-2 italic'>{results.description}</div>
+        <div className='float-right flex flex-row mt-10 pl-2 italic'><p>Published: </p>{format(new Date(results.createdAt), 'MMM dd ')}
+          </div>
+        <div className='float-right flex flex-row mt-10 pl-2 italic'><p>Written by: </p>{results.userName}</div>
+
+        <div className='text-base clear-left indent-6'>{results.body}</div>
         <div className='flex flex-row items-center justify-end space-x-2'>
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -71,7 +96,8 @@ export const Card = ({ results }: Props) => {
           </div>
         )}
         <CommentCard results={results} />
-      </div>
+
+                </div>
     </>
   )
 }
@@ -79,7 +105,7 @@ export const Card = ({ results }: Props) => {
 function CommentCard({ results }: Props) {
   return (
     <>
-      <div key={results.id} className=''>
+      <div key={results.id} className='m-5 border-2 rounded-sm border-black/20 hover:ring-2 ring-indigo-300 dark:hover:ring-gray-400'>
         <div className='flex flex-col place-items-start'>
           <div className='pl-4 indent-4'>{results.message}</div>
         </div>
@@ -90,7 +116,7 @@ function CommentCard({ results }: Props) {
                 <img
                   src={results.avatarUrl}
                   alt='avatar'
-                  className='h-10 w-10 rounded-full'
+                  className='h-5 w-5 rounded-full'
                 />
                 <div>
                   {' '}
