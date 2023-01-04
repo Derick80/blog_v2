@@ -24,27 +24,32 @@ export const Card = ({ post }: Props) => {
 const parentData = useMatches().find((match)=> match.pathname === '/blog')?.data as
    Array<Comment>
 
-  console.log('matches', parentData
-  );
+
+
 
   const t = parentData.comments.map(c => c)
-  console.log('t', t);
   const p = parentData.comments.map(c => c)
-  console.log('p', p);
 const [ comments] = parentData.comments
-  console.log('comments', comments);
 
   const myComments = comments.map(c => {
     return {
       id: c.id,
       message: c.message,
       postId: c.postId,
+      parentId: c.parentId,
     }
   }
   )
-  console.log('myComments', myComments);
 
-  const [isOpen, setIsOpen] = useState(false)
+
+  const childrenComments = comments.filter((c) => c.parentId !== null
+  )
+
+
+
+
+
+  const [isOpen, setIsOpen] = useState(true)
   const fetcher = useFetcher()
   const [formData, setFormData] = useState({
     message: ''
@@ -157,7 +162,13 @@ const [ comments] = parentData.comments
                 <span className='material-icons'>save</span>
               </button>
             </fetcher.Form>
-            <ul>{listItems}</ul>
+            {/* <ul>{listItems}</ul> */}
+            {comments.map((parent)=>
+            <div key={parent.parentId}><h2 className='font-bold'>{parent.message}</h2>
+            </div>
+
+            )}
+
         <div className='flex flex-col justify-between'>
           <div className='flex flex-row items-center justify-end space-x-2'>
             {post.imageUrl ? (

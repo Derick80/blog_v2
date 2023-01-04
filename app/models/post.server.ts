@@ -90,8 +90,11 @@ export async function getUserPosts(userId: string) {
       categories: true,
       likes: true,
       comments: {
+
+
         include: {
           user: true
+
         }
       }
     }
@@ -116,7 +119,7 @@ export async function getPosts() {
       favorites: true
     }
   })
-  const posts = initialPosts.map((post) => {
+  const res = initialPosts.map((post) => {
     const { _count, comments, ...rest } = post
     return {
       ...rest,
@@ -126,7 +129,7 @@ export async function getPosts() {
       likesCount: _count.likes
     }
   })
-  const results = posts.map((post) => {
+  const posts = res.map((post) => {
     return {
       ...post,
       comments: post.comments.map((comment) => {
@@ -141,7 +144,38 @@ export async function getPosts() {
       })
     }
   })
-  return results
+
+  const commentsByParentId = posts.reduce((acc, post) => {
+    const comments = post.comments.reduce((acc, comment) => {
+      const { id, ...rest } = comment
+      return {
+        ...acc,
+        [id]: rest
+      }
+    }, {})
+    return {
+      ...acc,
+      [post.id]: comments
+    }
+  }, {})
+  const postsWithComments = posts.map((post) => {
+    const comments = post.comments.map((comment) => {
+      const { id, ...rest } = comment
+      return {
+        ...rest,
+        id,
+        comments: commentsByParentId[id]
+      }
+    })
+
+    return {
+      ...post,
+      comments
+    }
+  })
+
+
+  return {posts, commentsByParentId, postsWithComments}
 }
 
 export async function getPostById(id: string) {

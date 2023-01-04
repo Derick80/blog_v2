@@ -283,7 +283,7 @@ const post2 = await prisma.post.create({
 
     const comment1= await prisma.comment.create({
       data:{
-        message:`I'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root commentI'm a root comment`,
+        message:`I'm a root comment`,
         createdBy:user.userName,
         userId:user.id,
 
@@ -291,17 +291,54 @@ const post2 = await prisma.post.create({
       }
     })
 
+const comment2= await prisma.comment.create({
+      data:{
+        parentId:comment1.id,
+        message:`I'm a child comment of comment1`,
+        createdBy:user2.userName,
+        userId:user2.id,
+        postId:post1.id
+
+      }
+    })
+
+
 
 
     const comment3= await prisma.comment.create({
       data:{
-        message:`I'm a root comment`,
+        message:`I'm a root comment comment3`,
         createdBy:user2.userName,
         userId:user2.id,
         postId:post2.id
 
       }
     })
+
+    const comment4= await prisma.comment.create({
+      data:{
+        parentId:comment3.id,
+        message:`I'm a child comment of comment 3`,
+        createdBy:user.userName,
+        userId:user.id,
+        postId:post2.id
+
+      }
+    })
+
+
+    const comment5= await prisma.comment.create({
+      data:{
+        parentId:comment3.id,
+        message:`I'm a child comment`,
+        createdBy:user.userName,
+        userId:user.id,
+        postId:post2.id
+
+      }
+
+    })
+
 
 
 

@@ -10,9 +10,12 @@ import { getPosts } from '~/models/post.server'
 import { validateText } from '../validators.server'
 
 export async function loader() {
-  const posts = await getPosts()
+  const {posts,commentsByParentId, postsWithComments} = await getPosts()
+
   const comments = posts.map((item) => item.comments)
-  return json({ posts,comments })
+
+
+  return json({ posts,comments,commentsByParentId,postsWithComments })
 }
 export async function action({ request, params }: ActionArgs) {
   const user = await isAuthenticated(request)
