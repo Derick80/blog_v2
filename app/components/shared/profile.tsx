@@ -4,7 +4,7 @@ import { Link } from '@remix-run/react'
 import { useOptionalUser } from '~/utils/utils'
 
 export type AboutProps = {
-  about: SerializeFrom<About>
+  about: Partial<SerializeFrom<About>>
 }
 
 export default function MyProfile({ about }: AboutProps) {

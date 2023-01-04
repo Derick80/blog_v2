@@ -112,7 +112,8 @@ export async function getPosts() {
       },
       categories: true,
       _count: true,
-      likes: true
+      likes: true,
+      favorites: true
     }
   })
   const posts = initialPosts.map((post) => {
@@ -247,10 +248,10 @@ export async function savePost(
 }
 
 export async function deletePost(id: string) {
-  const post = await prisma.post.delete({
+  const success = await prisma.post.delete({
     where: { id }
   })
-  return post
+  return success
 }
 
 export async function publishPost(id: string) {
@@ -276,6 +277,10 @@ export async function unPublishPost(id: string) {
 export async function getPostsAndComments() {
   const posts = await prisma.post
     .findMany({
+      where: {
+        published: true
+      },
+
       include: {
         likes: true,
         categories: true,
@@ -289,6 +294,7 @@ export async function getPostsAndComments() {
           comments: prisma.comment.findMany({
             where: {
               postId: post.id
+
             },
             include: {
               user: true

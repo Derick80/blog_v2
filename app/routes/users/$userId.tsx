@@ -1,6 +1,7 @@
 import { json, LoaderArgs, Response } from '@remix-run/node'
 import { useCatch, useMatches, useParams } from '@remix-run/react'
 import invariant from 'tiny-invariant'
+import MyProfile from '~/components/shared/profile'
 import { getProfiles, Profile } from '~/models/profile.server'
 import { getUserById } from '~/models/user.server'
 
@@ -31,7 +32,7 @@ export default function UserProfileRoute() {
   }
   return (
     <div>
-      <h1>{profile.firstName}</h1>
+     <MyProfile about={profile} />
     </div>
   )
 }

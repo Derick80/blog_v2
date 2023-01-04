@@ -2,40 +2,29 @@ import { ActionArgs, LoaderArgs, redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
-import { BlogCard } from '~/components/shared/blog-ui/blog-card'
-import { Card } from '~/components/shared/blog-ui/card'
+import { Card,  } from '~/components/shared/blog-ui/card'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { flashAndCommit } from '~/models/auth/session.server'
 import { createComment, getCommentsAndUserData } from '~/models/comments.server'
 import { getPosts } from '~/models/post.server'
 import { validateText } from '../validators.server'
 
-export async function loader({}: LoaderArgs) {
+export async function loader() {
   const posts = await getPosts()
-  const comments = posts.map((post) => post.comments || [])
-  const commentsByParentId = comments
-    .map((comment) =>
-      comment.map((comment) => comment.parentId).filter((comment) => comment)
-    )
-    .flat()
-
-  const rootcomments = comments.map((comment) =>
-    comment.filter((comment) => !commentsByParentId.includes(comment.id))
-  )
-  const results = await getCommentsAndUserData()
-
-  return json({ posts, rootcomments, comments, commentsByParentId, results })
+  const comments = posts.map((item) => item.comments)
+  return json({ posts,comments })
 }
 export async function action({ request, params }: ActionArgs) {
   const user = await isAuthenticated(request)
-  const postId = params?.postId
   const userId = user?.id
   const createdBy = user?.userName
   const formData = await request.formData()
   const action = formData.get('_action')
 
   const message = formData.get('message')
-  console.log(message)
+  const postId = formData.get('postId')
+  console.log('postId: ', postId);
+
 
   if (
     typeof message !== 'string' ||
@@ -86,9 +75,12 @@ export default function BlogRoute() {
   const data = useLoaderData<typeof loader>()
   return (
     <div className='mx-auto flex w-fit flex-col gap-5'>
-      {data.results.map((results) => (
-        <Card key={results.postId} results={results} />
+      {data.posts.map((post) => (
+      <Card key={ post.id } post={ post } />
+
+
       ))}
+
       <Outlet />
     </div>
   )

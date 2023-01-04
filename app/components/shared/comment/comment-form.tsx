@@ -13,13 +13,16 @@ export default function CommentForm() {
 
   const [formData, setFormData] = useState({
     message: '',
-    commentId: matches?.commentId
+    commentId: matches?.commentId,
+    postId: params.postId
   })
 
   return (
     <>
       <Form className='flex w-full flex-col gap-8'>
+        <input type='hidden' name='userId' value={user?.id} />
         <input type='hidden' name='commentId' value={params.commentId} />
+        <input type='hidden' name='postId' value={params.postId} />
         <label htmlFor='message'>Message</label>
         <input
           placeholder='write your comment here...'

@@ -1,36 +1,23 @@
 import { Link } from '@remix-run/react'
 
 export type BlogActionProps = {
-  id: string
-  published: boolean | null | undefined
+  commentId: string
+  postId: string
 }
 
-export default function BlogActions({ id, published }: BlogActionProps) {
+export default function BlogActions({ commentId,postId }: BlogActionProps) {
   return (
     <div className='flex flex-col justify-start'>
       <div className='flex flex-col justify-center space-y-2'>
-        {published ? (
-          <Link
-            className='btn-base btn-solid-warn'
-            to={`/blog/${id}/unpublish`}
-          >
-            Unpublish
+
+        <button>
+          <Link className='btn-base btn-solid-info' to={`/blog/${postId}/${commentId}/edit`}>
+            <span className='material-symbols-outlined'>edit</span>
+            Edit
           </Link>
-        ) : (
-          <div>
-            <Link
-              className='btn-base btn-solid-success'
-              to={`/blog/${id}/publish`}
-            >
-              Publish
-            </Link>
-          </div>
-        )}
-        <Link className='btn-base btn-solid-success' to={`/blog/${id}/edit`}>
-          <span className='material-symbols-outlined'>edit</span>
-          Edit
-        </Link>
-        <Link className='btn-base btn-solid-danger' to={`/blog/${id}/archive`}>
+
+        </button>
+        <Link className='btn-base btn-solid-danger' to={`/blog/${postId}/${commentId}/delete`}>
           <span className='material-symbols-outlined'>delete</span>
           Delete
         </Link>

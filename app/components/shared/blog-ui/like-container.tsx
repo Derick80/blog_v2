@@ -6,7 +6,7 @@ import type { serializedQueriedPost } from '~/models/post.server'
 export type LikeContainerProps = {
   post: serializedQueriedPost
   currentUser: string
-  postId: string | ''
+  postId: string
 }
 
 export default function LikeContainer({
@@ -20,6 +20,8 @@ export default function LikeContainer({
   )
     ? true
     : false
+
+    console.log('userLikedPost', userLikedPost);
 
   const [likeCount, setLikeCount] = useState(post?._count?.likes || 0)
   const [isLiked, setIsLiked] = useState(userLikedPost)
@@ -38,7 +40,7 @@ export default function LikeContainer({
     console.log('likeCount', likeCount)
 
     fetcher.submit(
-      { userId: currentUser, postId },
+      { userId: currentUser, postId  },
       { method, action: `/blog/${postId}/like` }
     )
   }
