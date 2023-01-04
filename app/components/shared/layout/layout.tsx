@@ -13,6 +13,7 @@ import { BrandIcon, MoonIcon, SunIcon, Twitter } from '../icons'
 import LinkMaker from './link-maker'
 import Footer from './footer'
 import NavBar from './nav-bar'
+import Sidebar from './sidebar'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
@@ -30,7 +31,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <NavLinks />
         <SiteActions />
       </NavBar>
-      <main className='grow'>{children}</main>
+      <main className='flex flex-row grow'>
+       {user && <Sidebar>
+
+        </Sidebar>}
+
+        {children}</main>
       <Footer>
         <ul className='flex flex-row items-center justify-center space-x-3 text-sm text-zinc-900 dark:text-slate-100'>
           <li>

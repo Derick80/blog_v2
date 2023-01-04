@@ -19,14 +19,7 @@ export default function Index() {
   return (
     <>
       <div className='flex flex-col gap-5 p-2 md:flex-row'>
-        {user && (
-          <Sidebar user={user}>
-            <div className='flex flex-col'>
-              user stats
-              <div></div>
-            </div>
-          </Sidebar>
-        )}
+
         <div className='flex grow basis-5/6 flex-col rounded-lg bg-zinc-200 dark:bg-zinc-400'>
           <div>Hero Post</div>
           <div>About me post</div>

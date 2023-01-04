@@ -3,19 +3,19 @@ import { UserProps } from '~/models/user.server'
 import { UserPlaceHolder } from '../icons'
 
 export type UserCardProps = {
-  user: UserProps
+  user?: UserProps
 }
 export default function UserCard({ user }: UserCardProps) {
   return (
     <div
-      key={user.id}
+      key={user?.id}
       className='m-auto my-2 flex w-60 flex-col justify-between rounded-md border-2 p-1 md:p-2'
     >
       <div
         // main content
         className='flex flex-row border-b-2 border-b-red-300 pb-2'
       >
-        {user.avatarUrl ? (
+        {user?.avatarUrl ? (
           <img
             src={user.avatarUrl}
             alt={user.userName}
