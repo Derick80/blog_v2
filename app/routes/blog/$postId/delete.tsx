@@ -1,5 +1,3 @@
-
-
 import { ActionArgs, LoaderArgs, redirect } from '@remix-run/node'
 import { badRequest } from 'remix-utils'
 import { deleteComment } from '~/models/comments.server'

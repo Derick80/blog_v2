@@ -32,7 +32,7 @@ export default function UserProfileRoute() {
   }
   return (
     <div>
-     <MyProfile about={profile} />
+      <MyProfile about={profile} />
     </div>
   )
 }

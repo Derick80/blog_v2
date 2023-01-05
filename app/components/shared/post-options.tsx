@@ -16,45 +16,41 @@ export default function PostOptions({ id, published }: OptionProps) {
     <div className='flex flex-col items-center justify-center'>
       <button onClick={() => setExpand(!expand)}>
         <span className='material-symbols-outlined'>more_vert</span>
-        </button>
+      </button>
 
-<Dialog isOpen={expand} handleClose={() => setExpand(false)}>
+      <Dialog isOpen={expand} handleClose={() => setExpand(false)}>
         <>
-        {published ? (
-          <Link
-            className='btn-base btn-solid-warn'
-            to={`/blog/${id}/unpublish`}
-          >
-            Unpublish
-          </Link>
-        ) : (
-          <div>
+          {published ? (
             <Link
-              className='btn-base btn-solid-success'
-              to={`/blog/${id}/publish`}
+              className='btn-base btn-solid-warn'
+              to={`/blog/${id}/unpublish`}
             >
-              Publish
+              Unpublish
             </Link>
-          </div>
-        )}
-        <button>
-          <Link className='btn-base btn-solid-info' to={`/blog/${id}/edit`}>
-            <span className='material-symbols-outlined'>edit</span>
-            Edit
-          </Link>
-
-        </button>
-        <Form method='post' action={`/blog/${id}/delete`}>
-          <button className='btn-base btn-solid-danger'>
-            <span className='material-symbols-outlined'>delete</span>
-            Delete
+          ) : (
+            <div>
+              <Link
+                className='btn-base btn-solid-success'
+                to={`/blog/${id}/publish`}
+              >
+                Publish
+              </Link>
+            </div>
+          )}
+          <button>
+            <Link className='btn-base btn-solid-info' to={`/blog/${id}/edit`}>
+              <span className='material-symbols-outlined'>edit</span>
+              Edit
+            </Link>
           </button>
-        </Form>
+          <Form method='post' action={`/blog/${id}/delete`}>
+            <button className='btn-base btn-solid-danger'>
+              <span className='material-symbols-outlined'>delete</span>
+              Delete
+            </button>
+          </Form>
         </>
       </Dialog>
-
-
-
     </div>
   )
 }

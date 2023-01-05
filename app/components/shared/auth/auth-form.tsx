@@ -40,11 +40,11 @@ export const AuthForm = ({ authType }: Props) => {
   }, [action])
 
   return (
-    <Form className='form-primary' method='post' action={ url }>
-      <input type='hidden' name='redirectTo' value={ redirectTo || '/' } />
-      <input type='hidden' name='token' value={ token || '' } />
+    <Form className='form-primary' method='post' action={url}>
+      <input type='hidden' name='redirectTo' value={redirectTo || '/'} />
+      <input type='hidden' name='token' value={token || ''} />
 
-      { authType !== 'confirm' && (
+      {authType !== 'confirm' && (
         <>
           <label>Email</label>
           <input
@@ -63,8 +63,8 @@ export const AuthForm = ({ authType }: Props) => {
             placeholder='username'
           />
         </>
-      ) }
-      { authType !== 'request' && (
+      )}
+      {authType !== 'request' && (
         <>
           <label>Password</label>
           <input
@@ -76,10 +76,10 @@ export const AuthForm = ({ authType }: Props) => {
             placeholder='********'
           />
         </>
-      ) }
+      )}
 
       <button className='mt-2 w-full' type='submit'>
-        { button }
+        {button}
       </button>
     </Form>
   )

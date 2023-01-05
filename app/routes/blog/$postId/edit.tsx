@@ -4,7 +4,7 @@ import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/models/auth/auth.server'
-import Edit from '~/models/edit-post'
+import Edit from '~/components/shared/blog-ui/edit-post'
 import type { CategoryForm } from '~/models/post.server'
 import {
   deletePost,

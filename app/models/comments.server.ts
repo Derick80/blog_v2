@@ -81,29 +81,27 @@ export async function deleteComment(commentId: string) {
 }
 
 export type CommentAndUserData = {
-
-    id: string
-    message: string
-    postId: string
-    userId: string
-    createdAt: Date
-    updatedAt: Date
-    createdBy: string
-    userName: string
-    email: string
-    avatarUrl: string | ''
-    imageUrl: string | ''
-    title: string | ''
-    description: string | ''
-    body: string | ''
-    postedBy: string | ''
-    postedAt: Date | ''
-    published: boolean | ''
-    _count: Prisma.PostCountAggregateOutputType | null
-    likes: string[] | [] | null
-    comment: Comment[]
-    favorites: string[]
-
+  id: string
+  message: string
+  postId: string
+  userId: string
+  createdAt: Date
+  updatedAt: Date
+  createdBy: string
+  userName: string
+  email: string
+  avatarUrl: string | ''
+  imageUrl: string | ''
+  title: string | ''
+  description: string | ''
+  body: string | ''
+  postedBy: string | ''
+  postedAt: Date | ''
+  published: boolean | ''
+  _count: Prisma.PostCountAggregateOutputType | null
+  likes: string[] | [] | null
+  comment: Comment[]
+  favorites: string[]
 }
 
 export async function getCommentsAndUserData() {
@@ -115,11 +113,10 @@ export async function getCommentsAndUserData() {
           comments: true,
           _count: true,
           likes: true,
-          favorites: true,
-
+          favorites: true
+        }
       }
-    },
-  },
+    }
   })
 
   const results = result.map((comment) => {
@@ -137,7 +134,7 @@ export async function getCommentsAndUserData() {
       createdAt: comment.createdAt,
       updatedAt: comment.updatedAt,
       createdBy: comment.createdBy,
-published: comment.post.published,
+      published: comment.post.published,
 
       comment: comment.post.comments,
       userName: comment.user.userName,
@@ -145,7 +142,6 @@ published: comment.post.published,
       avatarUrl: comment.user.avatarUrl,
       _count: comment.post._count,
       likes: comment.post.likes
-
     }
   })
   return results

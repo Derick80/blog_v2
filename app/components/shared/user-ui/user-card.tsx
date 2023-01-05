@@ -5,23 +5,22 @@ import { UserPlaceHolder } from '../icons'
 export type UserCardProps = {
   user?: UserProps
 }
-export default function UserCard ({ user }: UserCardProps) {
-
+export default function UserCard({ user }: UserCardProps) {
   return (
     <>
-      { user &&
+      {user && (
         <div
-          key={ user.id }
+          key={user.id}
           className='m-auto my-2 flex w-60 flex-col justify-between rounded-md border-2 p-1 md:p-2'
         >
           <div
             // main content
             className='flex flex-row border-b-2 border-b-red-300 pb-2'
           >
-            { user?.avatarUrl ? (
+            {user?.avatarUrl ? (
               <img
-                src={ user.avatarUrl }
-                alt={ user.userName }
+                src={user.avatarUrl}
+                alt={user.userName}
                 width='50'
                 height='50'
                 className='h-10 w-10 rounded-full'
@@ -30,13 +29,13 @@ export default function UserCard ({ user }: UserCardProps) {
               <div className='relative h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600'>
                 <UserPlaceHolder />
               </div>
-            ) }
+            )}
             <NavLink
               className='flex flex-col pl-1 md:pl-2 '
-              to={ `/users/${user.id}` }
+              to={`/users/${user.id}`}
             >
               <p className='text-xs italic'>Username</p>
-              <p className='text-base'> { user.userName }</p>
+              <p className='text-base'> {user.userName}</p>
             </NavLink>
           </div>
 
@@ -47,21 +46,21 @@ export default function UserCard ({ user }: UserCardProps) {
           >
             <NavLink
               className='flex flex-row items-center'
-              to={ `/users/${user.id}/posts` }
+              to={`/users/${user.id}/posts`}
             >
               <p className='text-sm italic'>User posts:</p>
-              <p className='text-sm'>{ user._count.posts }</p>
+              <p className='text-sm'>{user._count.posts}</p>
             </NavLink>
             <NavLink
               className='flex flex-row items-center'
-              to={ `/users/${user.id}/posts` }
+              to={`/users/${user.id}/posts`}
             >
               <p className='text-sm italic'>total likes:</p>
-              <p className='text-sm'>{ user._count.likes }</p>
+              <p className='text-sm'>{user._count.likes}</p>
             </NavLink>
           </div>
         </div>
-      }
+      )}
     </>
   )
 }

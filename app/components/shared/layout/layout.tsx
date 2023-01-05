@@ -15,7 +15,7 @@ import Footer from './footer'
 import NavBar from './nav-bar'
 import Sidebar from './sidebar'
 
-export default function Layout ({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
   return (
     <>
@@ -31,12 +31,11 @@ export default function Layout ({ children }: { children: React.ReactNode }) {
         <NavLinks />
         <SiteActions />
       </NavBar>
-      <main className='flex flex-row grow'>
-        { user && <Sidebar>
+      <main className='flex grow flex-row'>
+        {user && <Sidebar></Sidebar>}
 
-        </Sidebar> }
-
-        { children }</main>
+        {children}
+      </main>
       <Footer>
         <ul className='flex flex-row items-center justify-center space-x-3 text-sm text-zinc-900 dark:text-slate-100'>
           <li>
@@ -58,7 +57,7 @@ export default function Layout ({ children }: { children: React.ReactNode }) {
             </a>
           </li>
           <li>
-            <p className='mr-4'> copyright &copy; { new Date().getFullYear() }</p>
+            <p className='mr-4'> copyright &copy; {new Date().getFullYear()}</p>
           </li>
           <li>
             <a
@@ -80,14 +79,14 @@ export default function Layout ({ children }: { children: React.ReactNode }) {
               </svg>
             </a>
           </li>
-          <li>{/* add more socials */ }</li>
+          <li>{/* add more socials */}</li>
         </ul>
       </Footer>
     </>
   )
 }
 
-function NavLinks () {
+function NavLinks() {
   const [isActive, setIsActive] = useState(false)
   const toggle = () => setIsActive(!isActive)
   const user = useOptionalUser()
@@ -95,41 +94,41 @@ function NavLinks () {
   return (
     <nav className='hidden md:flex'>
       <ul className='flex space-x-5'>
-        { user ? (
+        {user ? (
           <>
-            { siteLinks.map((link, index) => (
-              <LinkMaker key={ index } link={ link } toggle={ toggle } />
-            )) }
+            {siteLinks.map((link, index) => (
+              <LinkMaker key={index} link={link} toggle={toggle} />
+            ))}
 
-            { userLinks.map((link, index) => (
-              <LinkMaker key={ index } link={ link } toggle={ toggle } />
-            )) }
+            {userLinks.map((link, index) => (
+              <LinkMaker key={index} link={link} toggle={toggle} />
+            ))}
           </>
         ) : (
           <>
-            { siteLinks.map((link, index) => (
-              <LinkMaker key={ index } link={ link } toggle={ toggle } />
-            )) }
+            {siteLinks.map((link, index) => (
+              <LinkMaker key={index} link={link} toggle={toggle} />
+            ))}
           </>
-        ) }
+        )}
       </ul>
     </nav>
   )
 }
 
-function SiteActions () {
+function SiteActions() {
   const user = useOptionalUser()
 
   return (
     <ul className='hidden items-center justify-end space-x-5 md:flex'>
-      { user ? (
+      {user ? (
         <>
           <li className='flex flex-col items-center'>
             <div className='text-2xl font-bold text-zinc-900 dark:text-slate-100'>
               Welcome
-            </div>{ ' ' }
+            </div>{' '}
             <p className='text-xl italic text-zinc-900 dark:text-slate-100'>
-              { user.userName }
+              {user.userName}
             </p>
           </li>
           <li>
@@ -138,11 +137,11 @@ function SiteActions () {
           <li className='noscript-hidden lg:block'></li>
 
           <LinkMaker
-            link={ {
+            link={{
               name: 'Preferences',
               href: '/preferences',
               icon_name: 'account_circle'
-            } }
+            }}
           />
 
           <li className='flex items-center'>
@@ -162,11 +161,11 @@ function SiteActions () {
           <li>
             <ColorMode />
           </li>
-          { nonUserLinks.map((link, index) => (
-            <LinkMaker key={ index } link={ link } />
-          )) }
+          {nonUserLinks.map((link, index) => (
+            <LinkMaker key={index} link={link} />
+          ))}
         </>
-      ) }
+      )}
     </ul>
   )
 }

@@ -25,16 +25,19 @@ export async function action({ request, params }: ActionArgs) {
   const message = formData.get('message')
   const postId = formData.get('postId')
   const userId = formData.get('userId')
-const createdBy = user?.userName
+  const createdBy = user?.userName
 
   invariant(postId, 'Invalid post')
   console.log('message', postId)
 
-  if (typeof message !== 'string' || typeof postId !== 'string' || typeof userId !== 'string' || typeof createdBy !== 'string'
+  if (
+    typeof message !== 'string' ||
+    typeof postId !== 'string' ||
+    typeof userId !== 'string' ||
+    typeof createdBy !== 'string'
   ) {
     return badRequest({ message: 'Invalid comment' })
   }
-
 
   if (!userId || !postId) return badRequest({ message: 'Invalid post' })
 

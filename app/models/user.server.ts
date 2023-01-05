@@ -6,8 +6,8 @@ export type UserProps = {
   id: string
   email: string
   userName: string
-  avatarUrl?: string
-  role?: string
+  avatarUrl: string | null
+  role: string | null
   _count: {
     accounts: number
     tokens: number
@@ -46,7 +46,7 @@ export async function getMyPostsByEmail(email: string) {
   return posts
 }
 
-export async function getUsers() {
+export async function getUsers(): Promise<UserProps[]> {
   const users = await prisma.user.findMany({
     select: defaultUserSelect
   })
