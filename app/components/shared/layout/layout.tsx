@@ -24,6 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className='flex h-24 w-24 items-center rounded md:h-24 md:w-24'>
             <BrandIcon />
           </div>
+
           <h1 className='text-2xl font-bold text-zinc-900 dark:text-slate-100 md:text-3xl'>
             Derick C. Hoskinson PhD
           </h1>
@@ -32,7 +33,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <SiteActions />
       </NavBar>
       <main className='flex grow flex-row'>
-        {user && <Sidebar></Sidebar>}
+
 
         {children}
       </main>

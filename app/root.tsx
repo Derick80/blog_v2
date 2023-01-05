@@ -8,6 +8,7 @@ import {
   ScrollRestoration,
   useLoaderData
 } from '@remix-run/react'
+import { RemixInspector } from 'remix-inspector'
 import Layout from './components/shared/layout/layout'
 import { isAuthenticated } from './models/auth/auth.server'
 import styles from './styles/app.css'
@@ -34,6 +35,8 @@ export async function loader({ request }: LoaderArgs) {
 function LayoutWrapper() {
   return (
     <Layout>
+      {process.env.NODE_ENV == 'development' && <RemixInspector defaultOpen={true} />}
+
       <Outlet />
       <ScrollRestoration />
       <Scripts />

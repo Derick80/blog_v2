@@ -11,7 +11,7 @@ import { SerializedPost } from '~/utils/schemas/post-schema'
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
-    return { redirect: '/auth/login' }
+    return { redirect: '/login' }
   }
 
   const categoryId = params.categoryId

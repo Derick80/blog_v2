@@ -23,10 +23,10 @@ export async function action ({ request, params }: ActionArgs) {
   const categories = formData.getAll('categories')
 
 
-  const headers = await flashAndCommit(request, "categories")
 
-  return redirect('/blog', { headers })
-  ∫   V
+  return redirect('/blog')
+
+
 
 }
 export default function BlogIndex () {

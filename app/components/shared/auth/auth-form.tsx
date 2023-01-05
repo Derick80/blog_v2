@@ -25,7 +25,6 @@ const actionMap: Record<Props['authType'], { button: string; url: string }> = {
 }
 
 export const AuthForm = ({ authType }: Props) => {
-  const transition = useTransition()
   const action = useActionData()
   const [searchParams] = useSearchParams()
   const { button, url } = actionMap[authType]
@@ -40,13 +39,16 @@ export const AuthForm = ({ authType }: Props) => {
   }, [action])
 
   return (
-    <Form className='form-primary' method='post' action={url}>
+
+    <Form className='mx-auto flex-col flex justify-center w-full items-center' method='post' action={url}>
       <input type='hidden' name='redirectTo' value={redirectTo || '/'} />
       <input type='hidden' name='token' value={token || ''} />
 
       {authType !== 'confirm' && (
         <>
-          <label>Email</label>
+          <label
+          className='text-sm text-zinc-900 dark:text-slate-200'
+          >Email</label>
           <input
             className='form-field-primary'
             id='email'
@@ -78,7 +80,7 @@ export const AuthForm = ({ authType }: Props) => {
         </>
       )}
 
-      <button className='mt-2 w-full' type='submit'>
+      <button className='btn-base btn-outline mb-2' type='submit'>
         {button}
       </button>
     </Form>

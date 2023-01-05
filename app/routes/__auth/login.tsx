@@ -8,6 +8,7 @@ import { Form, Link } from '@remix-run/react'
 import { badRequest, serverError } from 'remix-utils'
 import { AuthForm } from '~/components/shared/auth/auth-form'
 import { SocialLoginForm } from '~/components/shared/auth/social-login-form'
+import { Discord, Github } from '~/components/shared/icons'
 import { isAuthenticated, authenticator } from '~/models/auth/auth.server'
 
 export const meta: MetaFunction = () => {
@@ -52,25 +53,26 @@ export const action: ActionFunction = async ({ request }) => {
 }
 export default function Login() {
   return (
-    <article className='flex min-h-screen flex-col items-center justify-center'>
-      <div className='rounded-lg p-8 shadow-md'>
-        <h1 className='text-2xl font-bold'>Login</h1>
-        <AuthForm authType='login' />
-        <div className='flex flex-col items-center justify-center'>
-          <div>OR</div>
-          continue with
-        </div>
+    <div className='flex flex-col mx-auto shadow-2xl h-fit w-1/4 mt-10 md:mt-20'>
 
-        <SocialLoginForm provider='github'>
-          <button className=''>Github</button>
-        </SocialLoginForm>
+        <AuthForm authType='login' />
+        <div className='h-full mt-2 md:mt-5 mb-2 md:mb-5 flex flex-col items-center justify-center'>
+          <h3 className='mh3'>OR</h3>
+          <p className='text-sm italic'>Login with your social account</p>
+        </div>
         <SocialLoginForm provider='discord'>
-          <button className=''>Discord</button>
+          <button className=''>
+Discord          </button>
         </SocialLoginForm>
-        <div className='flexflex-col mt-4 items-center justify-center'>
+        <SocialLoginForm provider='github'>
+          <button className=''>
+Github
+          </button>
+        </SocialLoginForm>
+
+        <div className='flex flex-col mt-2 md:mt-5 mb-2 md:mb-5 items-center justify-center'>
           <Link to='/register'>New to the site?? ..Register Here</Link>
         </div>
-      </div>
-    </article>
+    </div>
   )
 }
