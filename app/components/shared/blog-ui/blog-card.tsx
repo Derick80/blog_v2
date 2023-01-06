@@ -14,7 +14,7 @@ export type BlogCardProps = {
   posts: ReturnedPost
 }
 
-export const BlogCard = ( posts: BlogCardProps) => {
+export const BlogCard = (posts: BlogCardProps) => {
   const user = useOptionalUser()
   const fetcher = useFetcher()
   const [formData, setFormData] = useState({

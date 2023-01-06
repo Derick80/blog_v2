@@ -39,7 +39,7 @@ export default function CommentContent({ comment, user }: CommentProps) {
             action={`/blog/${comment.postId}/${comment.id}/delete`}
           >
             <button type='submit'>
-           <TrashIcon className='rounded-full' />
+              <TrashIcon className='rounded-full' />
             </button>
           </form>
           <Link to={`/blog/${comment.postId}/${comment.id}`}>Edit</Link>

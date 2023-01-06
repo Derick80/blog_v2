@@ -1,4 +1,10 @@
-import { PlusIcon, PencilSquareIcon, ArrowsRightLeftIcon, ArrowRightOnRectangleIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import {
+  PlusIcon,
+  PencilSquareIcon,
+  ArrowsRightLeftIcon,
+  ArrowRightOnRectangleIcon,
+  UserCircleIcon
+} from '@heroicons/react/24/outline'
 import ColorMode from '~/components/shared/layout/color-mode'
 
 export const siteLinks = [
@@ -20,13 +26,25 @@ export const userLinks = [
   { name: 'Users', href: '/users', icon_name: 'person' }
 ]
 export const adminLinks = [
-  { text: 'New post', link: '/blog/new', children: <PlusIcon className='rounded-full' /> },
+  {
+    text: 'New post',
+    link: '/blog/new',
+    children: <PlusIcon className='rounded-full' />
+  },
   {
     text: 'Drafts',
     link: '/blog/drafts',
     children: <PencilSquareIcon className='rounded-full' />
   },
-  {text: 'Preferences', link: '/preferences', children: <UserCircleIcon className='rounded-full' />},
-  {text: 'Admin', link: '/admin', children: <ColorMode />},
-  {text: 'Logout' , link: '/logout', children: <ArrowRightOnRectangleIcon className='rounded-full' />}
+  {
+    text: 'Preferences',
+    link: '/preferences',
+    children: <UserCircleIcon className='rounded-full' />
+  },
+  { text: 'Admin', link: '/admin', children: <ColorMode /> },
+  {
+    text: 'Logout',
+    link: '/logout',
+    children: <ArrowRightOnRectangleIcon className='rounded-full' />
+  }
 ]

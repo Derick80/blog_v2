@@ -80,6 +80,7 @@ export async function deleteComment(commentId: string) {
   return deleted
 }
 
+
 export type CommentAndUserData = {
   id: string
   message: string
@@ -100,7 +101,7 @@ export type CommentAndUserData = {
   published: boolean | ''
   _count: Prisma.PostCountAggregateOutputType | null
   likes: string[] | [] | null
-  comment: Comment[]
+  comments: Comment
   favorites: string[]
 }
 

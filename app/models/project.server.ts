@@ -1,7 +1,7 @@
 import { prisma } from './prisma.server'
 
 export type ProjectCategories = {
-  id: number
+  id: string
   value: string
   label: string
 }

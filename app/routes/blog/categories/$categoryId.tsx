@@ -3,8 +3,13 @@ import { json, redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { BlogCard } from '~/components/shared/blog-ui/blog-card'
+import { Card } from '~/components/shared/blog-ui/card'
 import { isAuthenticated } from '~/models/auth/auth.server'
-import { getPostByCategoryValue } from '~/models/post.server'
+import {
+  getPostByCategoryValue,
+  PostAndCategories,
+  ReturnedPost
+} from '~/models/post.server'
 import { prisma } from '~/models/prisma.server'
 import { SerializedPost } from '~/utils/schemas/post-schema'
 
@@ -16,29 +21,29 @@ export async function loader({ request, params }: LoaderArgs) {
 
   const categoryId = params.categoryId
   invariant(categoryId, 'categoryId is required')
-  console.log(categoryId, 'categoryId');
+  console.log(categoryId, 'categoryId')
 
-  const posts = await getPostByCategoryValue('JavaScript')
+  const posts = await getPostByCategoryValue(categoryId)
+  const post = await posts.map((post) => {
+    return {
+      ...post,
+      categories: post.categories
+    }
+  })
+  console.log(post, 'post')
 
   return json({ posts })
 }
 
 export default function CategoryRoute() {
   const data = useLoaderData<typeof loader>()
-console.log(data, 'data');
 
-  return (
-    <>
-{ data.posts && <BlogCard
-        posts={data.posts   } /> }
+  console.log(data, 'data')
 
-    </>
-  )
+  return <>{data && <Card posts={data} />}</>
 }
 
-
-
-function NoPosts(){
+function NoPosts() {
   return (
     <div>
       <h1>No Posts</h1>

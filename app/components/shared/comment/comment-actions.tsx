@@ -24,28 +24,29 @@ export default function CommentActionBox({
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (
-         <div className='flex items-center flex-col'>
-          <ChevronUpIcon className='h-5 w-5 transform rotate-180' />   <div className='flex items-center flex-col gap-4'>
-          <LinkMaker
-            link={{
-              name: 'Edit',
-              href: `/blog/${postId}/${commentId}/edit`,
-              icon_name: 'edit'
-            }}
-          />
+          <div className='flex flex-col items-center'>
+            <ChevronUpIcon className='h-5 w-5 rotate-180 transform' />{' '}
+            <div className='flex flex-col items-center gap-4'>
+              <LinkMaker
+                link={{
+                  name: 'Edit',
+                  href: `/blog/${postId}/${commentId}/edit`,
+                  icon_name: 'edit'
+                }}
+              />
 
-          <LinkMaker
-            link={{
-              name: 'Reply',
-              href: `/blog/${postId}/${commentId}/reply`,
-              icon_name: 'reply'
-            }}
-          />
-        </div>
-         </div>   ) : (
+              <LinkMaker
+                link={{
+                  name: 'Reply',
+                  href: `/blog/${postId}/${commentId}/reply`,
+                  icon_name: 'reply'
+                }}
+              />
+            </div>
+          </div>
+        ) : (
           <>
             <ChevronUpIcon className='h-5 w-5' />
-
           </>
         )}
       </button>

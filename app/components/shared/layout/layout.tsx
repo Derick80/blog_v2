@@ -20,8 +20,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <NavBar>
-
-
         <div className='flex flex-row items-center p-2'>
           <div className='flex h-24 w-24 items-center rounded md:h-24 md:w-24'>
             <BrandIcon />
@@ -33,17 +31,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
         <NavLinks />
         <SiteActions />
-
       </NavBar>
       {user?.role === 'ADMIN' && (
-          <div className='fixed bottom-0 right-5 md:right-5'>
-            <AdminMaker />
-          </div>
-        )}
+        <div className='fixed bottom-0 right-5 md:right-5'>
+          <AdminMaker />
+        </div>
+      )}
       <main className='flex grow flex-col justify-items-center'>
-
         {children}
-
       </main>
 
       <Footer>
@@ -92,7 +87,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <li>{/* add more socials */}</li>
         </ul>
       </Footer>
-
     </>
   )
 }

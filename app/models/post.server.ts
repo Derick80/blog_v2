@@ -33,7 +33,6 @@ export const PostSelect = {
   userId: true,
   favorites: true,
   _count: true
-
 }
 export type CategoryForm = {
   value: string
@@ -45,15 +44,14 @@ export type Category = {
   label: string
 }
 
-export type Categories ={
+export type Categories = {
   id: string
   value: string
   label: string
-
 }[]
 
-export type PostAndCategories = Omit<Post, "categories"> & {
-  categories: Categories
+export type PostAndCategories = Omit<Post, 'categories'> & {
+  categories: Category
 }
 
 type QueriedPost = Post & {
@@ -66,25 +64,18 @@ type QueriedPost = Post & {
   }
 }
 
-export type ReturnedPost ={
-  posts: PostAndCategories[]
-}
 export type PostAndComments = QueriedPost & {
   comments: {
     id: string
+    postId: string
+    userId: string
     message: string
-    comments: {
+    createdBy: string
+    user: {
       id: string
-      postId: string
-      userId: string
-      message: string
+      username: string
+      avatarUrl: string
       createdBy: string
-      user: {
-        id: string
-        username: string
-        avatarUrl: string
-        createdBy: string
-      }
     }
   }
 }
@@ -166,11 +157,7 @@ export async function getPosts() {
       comments: post.comments.map((comment) => {
         const { user, ...rest } = comment
         return {
-          ...rest,
-          user: {
-            ...user,
-            avatarUrl: user.avatarUrl
-          }
+          ...rest
         }
       })
     }
@@ -368,19 +355,23 @@ export async function getPostsAndComments() {
     })
 }
 export async function getPostByCategoryValue(value: string) {
-  const posts = prisma.post.findMany({
-      where:{
-          categories:{
-              some:{
-                  value: value
-
+  const results = await prisma.post.findMany({
+    where: {
+      categories: {
+        some: {
+          value: value
+        }
+      }
+    },
+    include: {
+      categories: true,
+      likes: true,
+      comments: {
+        include: {
+          user: true
+        }
       }
     }
-  },
-    select: PostSelect,
-
   })
-
-      return posts
-
-  }
+  return results
+}

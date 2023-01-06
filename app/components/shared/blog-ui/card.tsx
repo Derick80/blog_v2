@@ -6,7 +6,9 @@ import { useState } from 'react'
 import { CommentAndUserData } from '~/models/comments.server'
 import { SerializedPost, serializedQueriedPost } from '~/models/post.server'
 import { useOptionalUser } from '~/utils/utils'
+import CategoryContainer from '../category-container'
 import CommentActionBox from '../comment/comment-actions'
+import CommentBox from '../comment/comment-box'
 import { UserPlaceHolder } from '../icons'
 import PostOptions from '../post-options'
 import BlogActions from './blog-actions'
@@ -21,10 +23,8 @@ export type Props = {
 export const Card = ({ post }: Props) => {
   const user = useOptionalUser()
   const parentData = useMatches().find((match) => match.pathname === '/blog')
-    ?.data as Array<Comment>
+    ?.data as CommentAndUserData[]
 
-  const t = parentData.comments.map((c) => c)
-  const p = parentData.comments.map((c) => c)
   const [comments] = parentData.comments
 
   const myComments = comments.map((c) => {
@@ -35,8 +35,6 @@ export const Card = ({ post }: Props) => {
       parentId: c.parentId
     }
   })
-
-  const childrenComments = comments.filter((c) => c.parentId !== null)
 
   const [isOpen, setIsOpen] = useState(true)
   const fetcher = useFetcher()
@@ -57,24 +55,31 @@ export const Card = ({ post }: Props) => {
         key={post.id}
         className='max-w-prose rounded-lg p-2 shadow-2xl ring-indigo-300 hover:ring-1 dark:hover:ring-gray-400'
       >
-        <div className='flex flex-row items-center justify-between'>
+        <div className='items- flex flex-row justify-between'>
           {' '}
           <h1 className='mh2'>{post.title}</h1>
           <Link className='hover:animate-pulse' to={`/users/${post.userId}`}>
-            <img
-              src={post.imageUrl}
-              alt='avatar'
-              className='h-10 w-10 rounded-full'
-              style={{
-                height: '50px',
-                width: '50px',
-                objectFit: 'cover',
-                minWidth: '50px'
-              }}
-            />
+            <div className='relative'>
+              <p className='absolute left-2 text-xs text-white'>
+                {post.createdBy?.[0]}
+              </p>
+              <img
+                src={post.imageUrl}
+                alt='avatar'
+                className='h-10 w-10 rounded-full'
+                style={{
+                  height: '50px',
+                  width: '50px',
+                  objectFit: 'cover',
+                  minWidth: '50px'
+                }}
+              />
+            </div>
           </Link>
         </div>
-
+        {post.categories ? (
+          <CategoryContainer category={post.categories} />
+        ) : null}
         <img
           src={post.imageUrl}
           alt='avatar'
@@ -159,67 +164,21 @@ export const Card = ({ post }: Props) => {
                 <span className='material-icons'>save</span>
               </button>
             </fetcher.Form>
-            {/* <ul>{listItems}</ul> */}
-            {comments.map((parent) => (
-              <div key={parent.parentId}>
-                <h2 className='font-bold'>{parent.message}</h2>
-              </div>
-            ))}
 
-            <div className='flex flex-col justify-between'>
-              <div className='flex flex-row items-center justify-end space-x-2'>
-                {post.imageUrl ? (
-                  <>
-                    <img
-                      src={post.imageUrl}
-                      alt='avatar'
-                      className='h-5 w-5 rounded-full'
-                    />
-                    <div>
-                      {' '}
-                      {post.createdBy}{' '}
-                      {format(new Date(post.createdAt), 'MMM dd ')}
-                    </div>
-                    <div></div>
-                  </>
-                ) : (
-                  <div className='h-10 w-10 rounded-full bg-gray-300'>
-                    <UserPlaceHolder />
-                  </div>
-                )}
-                <Form
-                  method='post'
-                  action={`/blog/${post.id}/${post.id}/delete`}
-                >
-                  <button type='submit' className='flex flex-row gap-2'>
-                    <span className='material-icons'>delete</span>
-                  </button>
-                </Form>
-                <CommentActionBox
-                  postId={post.id}
-                  commentId={post?.comments?.map((comment) => {
-                    return comment.id
-                  })}
-                />
-              </div>
-            </div>
+
+          <CommentBox post={post} comments={comments} />
+
+
           </div>
         )}
       </div>
+
+
     </>
   )
 }
 
-export type CommentProps = {
-  comments: Partial<Comment>[]
-}
 
-function List(comments: CommentProps) {
-  const listItems = comments.comments.map((i: any) => (
-    <li key={i.id}>{i.message}</li>
-  ))
-  return <ul>{listItems}</ul>
-}
 
 export type CommentCardProps = {
   post: {
@@ -240,43 +199,4 @@ export type CommentCardProps = {
     avatarUrl: string
   }
 }[]
-export function CommentCard({ post }: CommentCardProps) {
-  return (
-    <>
-      <ul
-        key={post.postId}
-        className='m-5 rounded-sm border-2 border-black/20 ring-indigo-300 hover:ring-2 dark:hover:ring-gray-400'
-      >
-        <li className='pl-4 indent-4'>{post.message}</li>
-      </ul>
-      <div className='flex flex-col justify-between'>
-        <div className='flex flex-row items-center justify-end space-x-2'>
-          {post.avatarUrl ? (
-            <>
-              <img
-                src={post.avatarUrl}
-                alt='avatar'
-                className='h-5 w-5 rounded-full'
-              />
-              <div>
-                {' '}
-                {post.userName} {format(new Date(post.createdAt), 'MMM dd ')}
-              </div>
-              <div></div>
-            </>
-          ) : (
-            <div className='h-10 w-10 rounded-full bg-gray-300'>
-              <UserPlaceHolder />
-            </div>
-          )}
-          <Form method='post' action={`/blog/${post.postId}/${post.id}/delete`}>
-            <button type='submit' className='flex flex-row gap-2'>
-              <span className='material-icons'>delete</span>
-            </button>
-          </Form>
-          <CommentActionBox postId={post.postId} commentId={post.id} />
-        </div>
-      </div>
-    </>
-  )
-}
+
