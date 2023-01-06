@@ -24,7 +24,8 @@ export const meta: MetaFunction = () => ({
   viewport: 'width=device-width,initial-scale=1'
 })
 
-export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles },
+{rel: 'preconnect', href: 'https://fonts.gstatic.com',crossOrigin:"anonymous" },]
 
 export async function loader({ request }: LoaderArgs) {
   const themeSession = await getThemeSession(request)
@@ -35,7 +36,7 @@ export async function loader({ request }: LoaderArgs) {
 function LayoutWrapper() {
   return (
     <Layout>
-      {process.env.NODE_ENV == 'development' && <RemixInspector defaultOpen={true} />}
+      {process.env.NODE_ENV == 'development' && <RemixInspector />}
 
       <Outlet />
       <ScrollRestoration />

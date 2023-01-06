@@ -11,8 +11,18 @@
     "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css",
     "format": "prettier \"app/**/*.ts\" \"app/**/*.tsx\" --write . "
   },
+  "watch": {
+    "icons": {
+      "patterns": [
+        "icons"
+      ],
+      "extensions": "svg",
+      "quiet": false
+    }
+  },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
+    "@heroicons/react": "^2.0.13",
     "@prisma/client": "^4.8.0",
     "@remix-run/node": "^1.9.0",
     "@remix-run/react": "^1.9.0",
@@ -24,9 +34,11 @@
     "cloudinary": "^1.33.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
+    "esbuild": "^0.16.14",
     "esbuild-register": "^3.4.2",
     "framer-motion": "^8.0.2",
     "isbot": "^3.6.5",
+    "mdx-bundler": "^9.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-json-tree": "^0.18.0",

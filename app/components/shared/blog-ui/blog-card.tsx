@@ -1,6 +1,6 @@
 import { Link, useFetcher } from '@remix-run/react'
 import { useState } from 'react'
-import type { serializedQueriedPost } from '~/models/post.server'
+import type { ReturnedPost, serializedQueriedPost } from '~/models/post.server'
 import { useOptionalUser } from '~/utils/utils'
 import FavoriteContainer from './favorite-button'
 import { ImagePlaceHolder } from '../icons'
@@ -9,13 +9,12 @@ import PostOptions from '../post-options'
 import { ShareButton } from './share-button'
 import BlogActions from './blog-actions'
 import CommentActionBox from '../comment/comment-actions'
-import CommentList from '../comment/comment-list'
 
 export type BlogCardProps = {
-  posts: serializedQueriedPost
+  posts: ReturnedPost
 }
 
-export const BlogCard = ({ posts }: BlogCardProps) => {
+export const BlogCard = ( posts: BlogCardProps) => {
   const user = useOptionalUser()
   const fetcher = useFetcher()
   const [formData, setFormData] = useState({

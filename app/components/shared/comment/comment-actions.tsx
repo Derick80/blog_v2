@@ -1,3 +1,4 @@
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import { Form } from 'react-router-dom'
 import { useOptionalUser } from '~/utils/utils'
@@ -23,27 +24,28 @@ export default function CommentActionBox({
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (
-          <span className='material-icons'>expand_more</span>
-        ) : (
-          <>
-            <span className='material-icons'>expand_less</span>
-            <div className='flex flex-row gap-4'>
-              <LinkMaker
-                link={{
-                  name: 'Edit',
-                  href: `/blog/${postId}/${commentId}/edit`,
-                  icon_name: 'edit'
-                }}
-              />
+         <div className='flex items-center flex-col'>
+          <ChevronUpIcon className='h-5 w-5 transform rotate-180' />   <div className='flex items-center flex-col gap-4'>
+          <LinkMaker
+            link={{
+              name: 'Edit',
+              href: `/blog/${postId}/${commentId}/edit`,
+              icon_name: 'edit'
+            }}
+          />
 
-              <LinkMaker
-                link={{
-                  name: 'Reply',
-                  href: `/blog/${postId}/${commentId}/reply`,
-                  icon_name: 'reply'
-                }}
-              />
-            </div>
+          <LinkMaker
+            link={{
+              name: 'Reply',
+              href: `/blog/${postId}/${commentId}/reply`,
+              icon_name: 'reply'
+            }}
+          />
+        </div>
+         </div>   ) : (
+          <>
+            <ChevronUpIcon className='h-5 w-5' />
+
           </>
         )}
       </button>

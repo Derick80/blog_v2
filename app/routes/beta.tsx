@@ -1,14 +1,14 @@
-import { ActionArgs, LoaderArgs, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useFetcher, useLoaderData } from '@remix-run/react'
-import React, { useEffect } from 'react'
-import { Card } from '~/components/shared/blog-ui/card'
-import { Select, SelectOption } from '~/components/shared/selection'
-import { flash, flashAndCommit } from '~/models/auth/session.server'
+import { useLoaderData } from '@remix-run/react'
+import React from 'react'
+import type { SelectOption } from '~/components/shared/selection'
+import { Select } from '~/components/shared/selection'
 import getAllCategories from '~/models/categories.server'
-import { getCommentsAndUserData } from '~/models/comments.server'
 import { getPosts } from '~/models/post.server'
-export async function loader ({ request }: LoaderArgs) {
+
+export async function loader({ request }: LoaderArgs) {
   const results = await getPosts()
   const categories = await getAllCategories()
   const result = results.posts[0]
@@ -17,19 +17,13 @@ export async function loader ({ request }: LoaderArgs) {
   return json({ categories, result, cats })
 }
 
-export async function action ({ request, params }: ActionArgs) {
-
+export async function action({ request, params }: ActionArgs) {
   const formData = await request.formData()
   const categories = formData.getAll('categories')
 
-
-
   return redirect('/blog')
-
-
-
 }
-export default function BlogIndex () {
+export default function BlogIndex() {
   const data = useLoaderData<typeof loader>()
 
   const [selected, setSelected] = React.useState<SelectOption[]>(
@@ -38,23 +32,18 @@ export default function BlogIndex () {
 
   return (
     <div className='mx-auto flex w-fit flex-col gap-5'>
+      <div></div>
       <form>
-        <input
-          type='hidden'
-          name='categories'
-          value={ selected.value
-          }
-        />
+        <input type='hidden' name='categories' value={selected.value} />
 
         <Select
           multiple
-          value={ selected }
-          options={ data.categories }
-          onChange={ o => setSelected(o) }
-
+          value={selected}
+          options={data.categories}
+          onChange={(o) => setSelected(o)}
         />
 
-        <button type="submit" >Submit</button>
+        <button type='submit'>Submit</button>
       </form>
     </div>
   )

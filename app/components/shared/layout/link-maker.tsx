@@ -7,11 +7,13 @@ export type LinkMakerProps = {
     icon_name: string
   }
   toggle?: () => void
+  children?: React.ReactNode
 }
 
 export default function LinkMaker({
   link: { name, href, icon_name },
-  toggle
+  toggle,
+  children
 }: LinkMakerProps) {
   return (
     <li key={name} className='flex items-center'>
@@ -30,6 +32,7 @@ export default function LinkMaker({
         <span className='material-symbols-outlined'>{icon_name}</span>
 
         {name}
+        {children}
       </NavLink>
     </li>
   )

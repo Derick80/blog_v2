@@ -137,12 +137,6 @@ export default function NewPost() {
 
         <label htmlFor='body'>Post Content</label>
 
-        <ClientOnly
-          fallback={<div style={{ width: 500, height: 300 }}>hmm</div>}
-        >
-          {() => <Quill value={formData.body} name='body' />}
-        </ClientOnly>
-
         <FormField
           name='body'
           type='textarea'

@@ -5,7 +5,9 @@ module.exports = {
 darkMode:   'class', // or 'media' or 'class'
   theme: {
     extend: {
-
+      fontFamily:{
+        body:['Oswald', 'sans-serif'],
+      }
     },
   },
   plugins: [],

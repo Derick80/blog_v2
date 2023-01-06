@@ -177,6 +177,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
         userId: user.id,
         imageTitle: urls.imageTitle,
         imageDescription: urls.imageDescription,
+
         album: 'NYC',
         city:'New York City',
         year:'2022'
@@ -186,12 +187,36 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
     )
   }
 
+  await prisma.project.create({
+    data: {
+        title: "Personal Blog 1.0 ",
+        description: "A personal blog built with Remix and Typescript",
+        projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/blog.png",
+
+        projectUrl: "https://blog-nine-tau-49.vercel.app/",
+        githubUrl:'https://github.com/Derick80/blog_social_media',
+        userId: user.id,
+          categories: {
+    connectOrCreate: [
+        {
+        where: { value: 'Prisma' },
+        create: { label: 'Prisma',value: 'Prisma' }
+        },
+        {
+        where: {value: 'Remix-run' },
+        create: { label: 'Remix-run',value: 'Remix-run' }
+        }
+    ]
+    }
+    }
+})
 
     await prisma.project.create({
         data: {
             title: "Memory Game",
             description: "A simple memory game built with React and Typescript",
-            projectImg: "https://blogphotosbucket.s3.us-east-2.amazonaws.com/postimages/post_two_memory_game.png",
+            projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/post_two_memory_game.png",
+
             projectUrl: "https://codesandbox.io/s/wow-memory-game-02b34",
             githubUrl:'https://github.com/Derick80/mindgame',
             userId: user.id,
@@ -210,28 +235,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
         }
     })
 
-    await prisma.project.create({
-        data: {
-            title: "Personal Blog 1.0 ",
-            description: "A personal blog built with Remix and Typescript",
-            projectImg: "https://res.cloudinary.com/dch-photo/image/upload/v1672019067/stock/blogapp_xx4zq3.png",
-            projectUrl: "https://blog-nine-tau-49.vercel.app/",
-            githubUrl:'https://github.com/Derick80/blog_social_media',
-            userId: user.id,
-              categories: {
-        connectOrCreate: [
-            {
-            where: { value: 'Prisma' },
-            create: { label: 'Prisma',value: 'Prisma' }
-            },
-            {
-            where: {value: 'Remix-run' },
-            create: { label: 'Remix-run',value: 'Remix-run' }
-            }
-        ]
-        }
-        }
-    })
+
 
     const post1= await prisma.post.create({
         data: {

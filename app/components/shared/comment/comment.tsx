@@ -1,3 +1,4 @@
+import { TrashIcon } from '@heroicons/react/24/solid'
 import { Comment, User } from '@prisma/client'
 import { Link } from '@remix-run/react'
 import { PostAndComments } from '~/models/post.server'
@@ -38,8 +39,7 @@ export default function CommentContent({ comment, user }: CommentProps) {
             action={`/blog/${comment.postId}/${comment.id}/delete`}
           >
             <button type='submit'>
-              {' '}
-              <span className='material-symbols-outlined'>delete</span>
+           <TrashIcon className='rounded-full' />
             </button>
           </form>
           <Link to={`/blog/${comment.postId}/${comment.id}`}>Edit</Link>

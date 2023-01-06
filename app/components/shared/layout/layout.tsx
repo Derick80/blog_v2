@@ -13,13 +13,15 @@ import { BrandIcon, MoonIcon, SunIcon, Twitter } from '../icons'
 import LinkMaker from './link-maker'
 import Footer from './footer'
 import NavBar from './nav-bar'
-import Sidebar from './sidebar'
+import AdminMaker from './admin-maker'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
   return (
     <>
       <NavBar>
+
+
         <div className='flex flex-row items-center p-2'>
           <div className='flex h-24 w-24 items-center rounded md:h-24 md:w-24'>
             <BrandIcon />
@@ -31,12 +33,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
         <NavLinks />
         <SiteActions />
-      </NavBar>
-      <main className='flex grow flex-row'>
 
+      </NavBar>
+      {user?.role === 'ADMIN' && (
+          <div className='fixed bottom-0 right-5 md:right-5'>
+            <AdminMaker />
+          </div>
+        )}
+      <main className='flex grow flex-col justify-items-center'>
 
         {children}
+
       </main>
+
       <Footer>
         <ul className='flex flex-row items-center justify-center space-x-3 text-sm text-zinc-900 dark:text-slate-100'>
           <li>
@@ -83,6 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <li>{/* add more socials */}</li>
         </ul>
       </Footer>
+
     </>
   )
 }
@@ -93,7 +103,7 @@ function NavLinks() {
   const user = useOptionalUser()
 
   return (
-    <nav className='hidden md:flex'>
+    <nav className='flex p-2 md:p-4'>
       <ul className='flex space-x-5'>
         {user ? (
           <>

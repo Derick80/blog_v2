@@ -37,17 +37,16 @@ export default function Users() {
   const data = useLoaderData<typeof loader>()
   const users = data.users as ReturnType<typeof getUsers>
   return (
-    <div className='flex  flex-col mb-2 md:mb-5 mx-auto mt-2 md:mt-5 h-fit rounded-2xl p-2'>
-            <h1 className='mh1 mx-auto'>Users</h1>
+    <div className='mx-auto  mb-2 mt-2 flex h-fit flex-col rounded-2xl p-2 md:mb-5 md:mt-5'>
+      <h1 className='mh1 mx-auto'>Users</h1>
 
-<div className='flex h-fit flex-wrap'>
+      <div className='flex h-fit flex-wrap'>
+        {data.users.map((user: UserProps) => (
+          <UserCard key={user.id} user={user} />
+        ))}
 
-      {data.users.map((user: UserProps) => (
-        <UserCard key={user.id} user={user} />
-      ))}
-
-      <Outlet />
-    </div>
+        <Outlet />
       </div>
+    </div>
   )
 }

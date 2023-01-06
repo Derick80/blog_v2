@@ -1,7 +1,6 @@
-import { json, LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import Sidebar from '~/components/shared/layout/sidebar'
-import { getMyPosts } from '~/models/post.server'
 import { getMyPostsByEmail } from '~/models/user.server'
 import { useOptionalUser } from '~/utils/utils'
 
@@ -18,8 +17,8 @@ export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
     <>
-      <div className='flex flex-col gap-5 p-2 md:flex-row'>
-        <div className='flex grow basis-5/6 flex-col rounded-lg bg-zinc-200 dark:bg-zinc-400'>
+      <div className='mx-auto flex flex-col gap-5 p-2 md:w-1/2 md:flex-row'>
+        <div className='mx-auto flex grow flex-col rounded-lg bg-zinc-200 dark:bg-zinc-400'>
           <div>Hero Post</div>
           <div>About me post</div>
           My stats number of posts {data.blogPostCount}, number of comments,

@@ -1,4 +1,4 @@
-import { Category, SerializedPost } from './post.server'
+import type { PostAndCategories} from './post.server';
 import { prisma } from './prisma.server'
 
 export default async function getAllCategories() {
@@ -9,7 +9,7 @@ export default async function getAllCategories() {
 }
 
 export async function getPostsByCategoryNameId(value: string) {
-  const category = await prisma.category
+  const categories = await prisma.category
     .findUnique({
       where: {
         value: value
@@ -21,5 +21,10 @@ export async function getPostsByCategoryNameId(value: string) {
       }
     })
 
-  return category
+  return categories
 }
+
+
+
+
+

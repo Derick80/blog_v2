@@ -39,16 +39,19 @@ export const AuthForm = ({ authType }: Props) => {
   }, [action])
 
   return (
-
-    <Form className='mx-auto flex-col flex justify-center w-full items-center' method='post' action={url}>
+    <Form
+      className='mx-auto flex w-full flex-col items-center justify-center'
+      method='post'
+      action={url}
+    >
       <input type='hidden' name='redirectTo' value={redirectTo || '/'} />
       <input type='hidden' name='token' value={token || ''} />
 
       {authType !== 'confirm' && (
         <>
-          <label
-          className='text-sm text-zinc-900 dark:text-slate-200'
-          >Email</label>
+          <label className='text-sm text-zinc-900 dark:text-slate-200'>
+            Email
+          </label>
           <input
             className='form-field-primary'
             id='email'

@@ -16,6 +16,25 @@ export const defaultSelect = {
   passwordHash: false
 }
 
+export const PostSelect = {
+  id: true,
+  title: true,
+  description: true,
+  imageUrl: true,
+  body: true,
+  published: true,
+  createdAt: true,
+  updatedAt: true,
+  createdBy: true,
+  categories: true,
+  likes: true,
+  comments: true,
+  user: true,
+  userId: true,
+  favorites: true,
+  _count: true
+
+}
 export type CategoryForm = {
   value: string
 }[]
@@ -26,6 +45,17 @@ export type Category = {
   label: string
 }
 
+export type Categories ={
+  id: string
+  value: string
+  label: string
+
+}[]
+
+export type PostAndCategories = Omit<Post, "categories"> & {
+  categories: Categories
+}
+
 type QueriedPost = Post & {
   likes?: Like[]
   favorites?: Favorite[]
@@ -34,6 +64,10 @@ type QueriedPost = Post & {
     likes?: number
     favorites?: number
   }
+}
+
+export type ReturnedPost ={
+  posts: PostAndCategories[]
 }
 export type PostAndComments = QueriedPost & {
   comments: {
@@ -333,3 +367,20 @@ export async function getPostsAndComments() {
       })
     })
 }
+export async function getPostByCategoryValue(value: string) {
+  const posts = prisma.post.findMany({
+      where:{
+          categories:{
+              some:{
+                  value: value
+
+      }
+    }
+  },
+    select: PostSelect,
+
+  })
+
+      return posts
+
+  }

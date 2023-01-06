@@ -15,14 +15,14 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 export default function Drafts() {
-  const data = useLoaderData<typeof onloadeddata>()
+  const data = useLoaderData<typeof loader>()
 
   return (
-    <>
+    <div className='mx-auto'>
       <h1>Drafts</h1>
       {data.drafts.map((draft) => (
         <BlogCard key={draft.id} posts={draft} />
       ))}
-    </>
+    </div>
   )
 }

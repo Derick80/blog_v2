@@ -9,12 +9,13 @@ import { createComment } from '~/models/comments.server'
 import { getPosts } from '~/models/post.server'
 import { validateText } from '../validators.server'
 
-export async function loader() {
+export async function loader({ request }: LoaderArgs) {
+  const user = await isAuthenticated(request)
   const { posts, commentsByParentId, postsWithComments } = await getPosts()
 
   const comments = posts.map((item) => item.comments)
 
-  return json({ posts, comments, commentsByParentId, postsWithComments })
+  return json({ posts, comments, commentsByParentId, postsWithComments, user })
 }
 export async function action({ request, params }: ActionArgs) {
   const user = await isAuthenticated(request)
@@ -75,12 +76,12 @@ export async function action({ request, params }: ActionArgs) {
 export default function BlogRoute() {
   const data = useLoaderData<typeof loader>()
   return (
-    <div className='mx-auto flex w-fit flex-col gap-5'>
+    <article className='mx-auto min-h-screen items-center justify-center py-2'>
       {data.posts.map((post) => (
         <Card key={post.id} post={post} />
       ))}
 
       <Outlet />
-    </div>
+    </article>
   )
 }

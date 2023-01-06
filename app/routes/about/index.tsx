@@ -20,7 +20,7 @@ export async function loader({ request }: LoaderArgs) {
 export default function Page() {
   const data = useLoaderData<typeof loader>()
   return (
-    <div className='mx-auto mt-2 md:mt-5 h-fit rounded-2xl p-2'>
+    <div className='mx-auto mt-2 h-fit rounded-2xl p-2 md:mt-5'>
       {data.about.map((about) => (
         <MyProfile key={about.id} about={about} />
       ))}

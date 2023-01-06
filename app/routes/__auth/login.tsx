@@ -53,26 +53,22 @@ export const action: ActionFunction = async ({ request }) => {
 }
 export default function Login() {
   return (
-    <div className='flex flex-col mx-auto shadow-2xl h-fit w-1/4 mt-10 md:mt-20'>
+    <div className='mx-auto mt-10 flex h-fit w-1/4 flex-col shadow-2xl md:mt-20'>
+      <AuthForm authType='login' />
+      <div className='mt-2 mb-2 flex h-full flex-col items-center justify-center md:mt-5 md:mb-5'>
+        <h3 className='mh3'>OR</h3>
+        <p className='text-sm italic'>Login with your social account</p>
+      </div>
+      <SocialLoginForm provider='discord'>
+        <button className=''>Discord </button>
+      </SocialLoginForm>
+      <SocialLoginForm provider='github'>
+        <button className=''>Github</button>
+      </SocialLoginForm>
 
-        <AuthForm authType='login' />
-        <div className='h-full mt-2 md:mt-5 mb-2 md:mb-5 flex flex-col items-center justify-center'>
-          <h3 className='mh3'>OR</h3>
-          <p className='text-sm italic'>Login with your social account</p>
-        </div>
-        <SocialLoginForm provider='discord'>
-          <button className=''>
-Discord          </button>
-        </SocialLoginForm>
-        <SocialLoginForm provider='github'>
-          <button className=''>
-Github
-          </button>
-        </SocialLoginForm>
-
-        <div className='flex flex-col mt-2 md:mt-5 mb-2 md:mb-5 items-center justify-center'>
-          <Link to='/register'>New to the site?? ..Register Here</Link>
-        </div>
+      <div className='mt-2 mb-2 flex flex-col items-center justify-center md:mt-5 md:mb-5'>
+        <Link to='/register'>New to the site?? ..Register Here</Link>
+      </div>
     </div>
   )
 }

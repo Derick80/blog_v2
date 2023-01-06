@@ -1,12 +1,21 @@
 import { prisma } from './prisma.server'
 
+export type ProjectCategories = {
+  id: number
+  value: string
+  label: string
+}
 export async function getProjects() {
-  const res = await prisma.project.findMany({
+  const projects = await prisma.project.findMany({
     include: {
       categories: true,
       user: true
     }
   })
 
-  return res
+  const categories = projects.map((project) => project.categories)
+
+  const cats = categories.map((cat) => cat)
+
+  return { projects, cats }
 }
