@@ -1,14 +1,18 @@
 import { format } from 'date-fns'
 import type { SerializedPost } from '~/models/post.server'
-import { useOptionalUser } from '~/utils/utils'
+import type { Post } from '~/utils/schemas/post-schema'
+import type { User, UserType } from '~/utils/schemas/user-schema'
 import { Divider } from '../layout/divider'
 import PostOptions from '../post-options'
+import CommentForm from './comment-form'
 import FavoriteContainer from './favorite-button'
 import LikeContainer from './like-container'
+import ListComments from './list-comments'
 import { ShareButton } from './share-button'
 
 export type ManyPostProps = {
-  post: SerializedPost
+  post: Post
+  user: User
 }
 
 export type BasicCardProps = {
@@ -17,17 +21,19 @@ export type BasicCardProps = {
   showComments?: boolean
   showShare?: boolean
   showOptions?: boolean
-} & (ManyPostProps | { post: SerializedPost })
+} & (ManyPostProps | { post: SerializedPost; user: UserType })
 
 export const Card = ({
   post,
+  user,
   showComments,
   showLikes,
   showFavorites,
   showShare,
   showOptions
 }: BasicCardProps) => {
-  const user = useOptionalUser()
+  const users = user?.userName
+  console.log(users, 'users')
 
   return (
     <>
@@ -55,15 +61,16 @@ export const Card = ({
         <div className='relative flex flex-row justify-between'>
           <div className='flex flex-row'>
             {/* this is where likes, comments, etc should go */}
-            {showLikes && (
+            {showLikes && post.id && post.likes && (
               <LikeContainer
                 postId={post.id}
-                post={post}
+                likes={post.likes}
+                likeCounts={post._count?.likes}
                 currentUser={user?.id}
               />
             )}
 
-            {showFavorites && (
+            {showFavorites && post.id && (
               <FavoriteContainer
                 postId={post.id}
                 post={post}
@@ -71,8 +78,8 @@ export const Card = ({
               />
             )}
 
-            {showShare && <ShareButton post={post} />}
-            {showOptions && <PostOptions post={post} />}
+            {showShare && post.id && <ShareButton id={post.id} />}
+            {showOptions && post && <PostOptions post={post} />}
           </div>
 
           {user ? (
@@ -80,16 +87,15 @@ export const Card = ({
               <AvatarCircle
                 avatarUrl={user?.avatarUrl}
                 userName={user?.userName}
-                createdBy={post.createdBy}
-                createdAt={post.createdAt}
-                updatedAt={post.updatedAt}
+                createdBy={post?.createdBy}
+                createdAt={post?.createdAt}
+                updatedAt={post?.updatedAt}
               />
             ) : null
           ) : null}
         </div>
-
-
-
+        {showComments && <ListComments comments={post.comments} />}
+        <CommentForm />
       </div>
     </>
   )
@@ -105,8 +111,8 @@ function AvatarCircle({
   avatarUrl: string
   userName: string
   createdBy: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
 }) {
   return (
     <div className='flex flex-row'>
@@ -163,5 +169,3 @@ function AvatarCircle({
 //     )}
 //   )
 // }
-
-

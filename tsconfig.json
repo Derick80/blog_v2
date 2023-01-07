@@ -19,5 +19,5 @@
     // Remix takes care of building everything in `remix build`.
     "noEmit": true
   },
-  "exclude": ["node_modules", "build", "public", "archive", ]
+  "exclude": ["node_modules", "build", "public", ]
 }

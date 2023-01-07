@@ -1,31 +1,33 @@
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons'
 import type { FormMethod } from '@remix-run/react'
 import { NavLink, useFetcher } from '@remix-run/react'
-import { useRef, useState } from 'react'
-import type { serializedQueriedPost } from '~/models/post.server'
+import { useState } from 'react'
+import type { Like } from '~/utils/schemas/like-schema'
 
 export type LikeContainerProps = {
-  post: serializedQueriedPost
+  likes: Like[]
+  likeCounts: number
   currentUser: string
   postId: string
 }
 
 export default function LikeContainer({
-  post,
+  likes,
+  likeCounts,
   currentUser,
   postId
 }: LikeContainerProps) {
   const fetcher = useFetcher()
-  const userLikedPost = post?.likes?.find(
-    ({ userId }) => userId === currentUser
-  )
+  const userLikedPost = likes?.find(({ userId }) => {
+    return userId === currentUser
+  })
     ? true
     : false
+  console.log(currentUser, 'currentUser')
 
-  const [likeCount, setLikeCount] = useState(post.likesCount || 0)
+  const [likeCount, setLikeCount] = useState(likeCounts || 0)
   const [isLiked, setIsLiked] = useState(userLikedPost)
-  const iconRef = useRef<null | SVGSVGElement>(null)
-  const iconButtonRef = useRef<null | HTMLButtonElement>(null)
+
   const toggleLike = async () => {
     let method: FormMethod = 'delete'
     if (userLikedPost) {
@@ -48,7 +50,6 @@ export default function LikeContainer({
     <>
       {currentUser ? (
         <button
-          ref={iconButtonRef}
           type='button'
           className='hover:bg-slate-100 disabled:hover:bg-transparent dark:hover:bg-slate-700 relative flex items-center gap-2 rounded-lg p-2 transition'
           onClick={toggleLike}

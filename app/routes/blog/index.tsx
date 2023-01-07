@@ -1,4 +1,4 @@
-import type { ActionArgs, LoaderArgs} from '@remix-run/node';
+import { ActionArgs, LoaderArgs, SerializeFrom } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
@@ -10,12 +10,12 @@ import { createComment } from '~/models/comments.server'
 import { getPosts } from '~/models/post.server'
 import { validateText } from '../validators.server'
 
-export async function loader({ request }: LoaderArgs) {
-  const user = await isAuthenticated(request)
-  const  posts   = await getPosts()
+export async function loader() {
+  const posts = await getPosts()
 
+  if (!posts) return badRequest({ message: 'Invalid post' })
 
-  return json({ posts,    user })
+  return json({ posts })
 }
 export async function action({ request, params }: ActionArgs) {
   const user = await isAuthenticated(request)
@@ -74,21 +74,27 @@ export async function action({ request, params }: ActionArgs) {
 }
 
 export default function BlogRoute() {
-  const data = useLoaderData<typeof loader>()
+  const data = useLoaderData<SerializeFrom<typeof loader>>()
+
   return (
     <div className='grid-cols-repeat(minmax(300px, 1fr)) grid justify-items-center gap-4'>
-      {' '}
-      {data.posts.map((post) => (
-        <Card
-          key={post.id}
-          post={post}
-          showComments={true}
-          showFavorites={true}
-          showLikes={true}
-          showShare={true}
-          showOptions={true}
-        />
-      ))}
+      {data.posts.map((post) => {
+        console.log(post, 'post')
+
+        return (
+          <Card
+            key={post.id}
+            post={post}
+            user={post.user}
+            showComments={true}
+            showFavorites={true}
+            showLikes={true}
+            showShare={true}
+            showOptions={true}
+          />
+        )
+      })}
+
       <Outlet />
     </div>
   )

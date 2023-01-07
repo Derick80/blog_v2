@@ -4,18 +4,6 @@ import type { Like } from '~/utils/schemas/like-schema'
 import type { Post } from '~/utils/schemas/post-schema'
 import { UserType } from '~/utils/utils'
 import { prisma } from './prisma.server'
-export const defaultSelect = {
-  id: true,
-  username: true,
-  email: true,
-  emailVerified: true,
-  displayName: true,
-  displayImage: true,
-  role: true,
-  weeklyDigestEmail: true,
-  createdAt: false,
-  passwordHash: false
-}
 
 export const PostSelect = {
   id: true,
@@ -57,24 +45,14 @@ type QueriedPost = Post & {
     likes?: number
     favorites?: number
   }
-  user?: UserType
+  user: UserType
 }
 
-export type PostAndComments = QueriedPost & {
-  comments: {
-    id: string
-    postId: string
-    userId: string
-    message: string
-    createdBy: string
-    user: {
-      id: string
-      username: string
-      avatarUrl: string
-      createdBy: string
-    }
-  }
+export type PostAndCommentsToSerial = QueriedPost & {
+  comments: Comment
 }
+
+export type PostAndComments = SerializeFrom<PostAndCommentsToSerial>
 
 export type serializedQueriedPost = SerializeFrom<QueriedPost>
 export type SerializedCategory = SerializeFrom<Category>
@@ -109,6 +87,11 @@ export async function getUserPosts(userId: string) {
     },
     include: {
       categories: true,
+      user: {
+        include: {
+          _count: true
+        }
+      },
       likes: true,
       comments: {
         include: {
@@ -121,7 +104,7 @@ export async function getUserPosts(userId: string) {
 }
 
 export async function getPosts() {
-  const initialPosts = await prisma.post.findMany({
+  return await prisma.post.findMany({
     where: {
       published: true
     },
@@ -132,42 +115,30 @@ export async function getPosts() {
           user: true
         }
       },
+      user: true,
       categories: true,
       _count: true,
       likes: true,
       favorites: true
     }
   })
-  const res = initialPosts.map((post) => {
-    const { _count, comments, ...rest } = post
-    return {
-      ...rest,
-      commentsCount: _count.comments,
-      likesCount: _count.likes,
-      comments,
-    }
-  })
-  const posts = res.map((post) => {
-    return {
-      ...post,
-      comments: post.comments.map((comment) => {
-        const { user, ...rest } = comment
-        return {
-          ...rest
-        }
-      })
-    }
-  })
-
-
-
-
-  return  posts
 }
 
 export async function getPostById(id: string) {
   const post = await prisma.post.findUnique({
-    where: { id }
+    where: { id },
+    include: {
+      comments: {
+        include: {
+          user: true
+        }
+      },
+      user: true,
+      categories: true,
+      _count: true,
+      likes: true,
+      favorites: true
+    }
   })
   return post as QueriedPost
 }

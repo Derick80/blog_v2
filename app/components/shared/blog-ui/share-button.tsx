@@ -1,23 +1,17 @@
 import { useState, useRef } from 'react'
-import { SerializedPost } from '~/models/post.server'
 import { Divider } from '../layout/divider'
-import { iconAttrs } from '../icons'
-import Footer from '../layout/footer'
 import { Modal } from '../layout/modal'
 import { useToast } from '../toaster'
 import {
   CopyIcon,
-  Cross2Icon,
-  DiscIcon,
   DiscordLogoIcon,
   InstagramLogoIcon,
   Share1Icon,
-  Share2Icon,
   TwitterLogoIcon
 } from '@radix-ui/react-icons'
 
 type Props = {
-  id: string | number
+  id: string
 }
 
 const iconClassName =

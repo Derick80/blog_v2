@@ -9,7 +9,7 @@ import type { Post, SerializedPost } from '~/utils/schemas/post-schema'
 import TipTap from '../tip-tap'
 
 export type EditPostProps = {
-  post: Partial<Post>
+  post: Post
 }
 
 export default function Edit({ post }: EditPostProps) {

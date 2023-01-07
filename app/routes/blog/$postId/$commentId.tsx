@@ -3,14 +3,8 @@ import { useLoaderData } from '@remix-run/react'
 import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
-import CommentContent from '~/components/shared/comment/comment'
-import { Modal } from '~/components/shared/layout/modal'
 import { isAuthenticated } from '~/models/auth/auth.server'
-import {
-  deleteComment,
-  editComment,
-  editPostComment
-} from '~/models/comments.server'
+import { editPostComment } from '~/models/comments.server'
 import { prisma } from '~/models/prisma.server'
 import { validateText } from '~/routes/validators.server'
 
