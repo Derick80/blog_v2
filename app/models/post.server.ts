@@ -2,6 +2,7 @@ import { Favorite } from '@prisma/client'
 import type { SerializeFrom } from '@remix-run/node'
 import type { Like } from '~/utils/schemas/like-schema'
 import type { Post } from '~/utils/schemas/post-schema'
+import { UserType } from '~/utils/utils'
 import { prisma } from './prisma.server'
 export const defaultSelect = {
   id: true,
@@ -44,12 +45,6 @@ export type Category = {
   label: string
 }
 
-export type Categories = {
-  id: string
-  value: string
-  label: string
-}[]
-
 export type PostAndCategories = Omit<Post, 'categories'> & {
   categories: Category
 }
@@ -62,6 +57,7 @@ type QueriedPost = Post & {
     likes?: number
     favorites?: number
   }
+  user?: UserType
 }
 
 export type PostAndComments = QueriedPost & {
@@ -197,18 +193,9 @@ export async function getPosts() {
 
 export async function getPostById(id: string) {
   const post = await prisma.post.findUnique({
-    where: { id },
-    include: {
-      likes: true,
-      _count: true,
-      comments: {
-        include: {
-          user: true
-        }
-      }
-    }
+    where: { id }
   })
-  return post
+  return post as QueriedPost
 }
 
 export type PostInput = {

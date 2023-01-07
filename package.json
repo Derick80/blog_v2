@@ -24,6 +24,7 @@
     "@headlessui/react": "^1.7.7",
     "@heroicons/react": "^2.0.13",
     "@prisma/client": "^4.8.0",
+    "@radix-ui/react-aspect-ratio": "^1.0.1",
     "@radix-ui/react-icons": "^1.1.1",
     "@radix-ui/react-toolbar": "^1.0.1",
     "@remix-run/node": "^1.9.0",

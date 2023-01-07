@@ -1,4 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
+import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { useState } from 'react'
 import { Form } from 'react-router-dom'
 import { useOptionalUser } from '~/utils/utils'
@@ -14,7 +15,7 @@ export default function CommentActionBox({
   commentId,
   postId
 }: CommentActionBoxProps) {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
@@ -25,7 +26,7 @@ export default function CommentActionBox({
       >
         {isOpen ? (
           <div className='flex flex-col items-center'>
-            <ChevronUpIcon className='h-5 w-5 rotate-180 transform' />{' '}
+           <ChatBubbleIcon />
             <div className='flex flex-col items-center gap-4'>
               <LinkMaker
                 link={{
@@ -46,7 +47,7 @@ export default function CommentActionBox({
           </div>
         ) : (
           <>
-            <ChevronUpIcon className='h-5 w-5' />
+            <ChatBubbleIcon />
           </>
         )}
       </button>

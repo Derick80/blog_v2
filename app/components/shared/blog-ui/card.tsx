@@ -1,4 +1,5 @@
 import { Post } from '.prisma/client'
+import * as AspectRatio from '@radix-ui/react-aspect-ratio'
 import { SerializeFrom } from '@remix-run/node'
 import { Form, Link, useFetcher, useMatches } from '@remix-run/react'
 import { format } from 'date-fns'
@@ -10,169 +11,153 @@ import CategoryContainer from '../category-container'
 import CommentActionBox from '../comment/comment-actions'
 import CommentBox from '../comment/comment-box'
 import { UserPlaceHolder } from '../icons'
+import { Divider } from '../layout/divider'
 import PostOptions from '../post-options'
 import BlogActions from './blog-actions'
 import FavoriteContainer from './favorite-button'
 import LikeContainer from './like-container'
 import { ShareButton } from './share-button'
 
-export type Props = {
+export type ManyPostProps = {
   post: SerializedPost
 }
 
-export const Card = ({ post }: Props) => {
+export type BasicCardProps = {
+  showLikes?: boolean
+  showFavorites?: boolean
+  showComments?: boolean
+  showShare?: boolean
+  showOptions?: boolean
+} & (ManyPostProps | { post: SerializedPost })
+
+export const Card = ({
+  post,
+  showComments,
+  showLikes,
+  showFavorites,
+  showShare,
+  showOptions
+}: BasicCardProps) => {
   const user = useOptionalUser()
   const parentData = useMatches().find((match) => match.pathname === '/blog')
     ?.data as CommentAndUserData[]
 
-  const [comments] = parentData.comments
-
-  const myComments = comments.map((c) => {
-    return {
-      id: c.id,
-      message: c.message,
-      postId: c.postId,
-      parentId: c.parentId
-    }
-  })
-
-  const [isOpen, setIsOpen] = useState(true)
-  const fetcher = useFetcher()
-  const [formData, setFormData] = useState({
-    message: ''
-  })
-
-  const listItems = comments.map((i: any) => (
-    <li key={i.id}>
-      <div>{i.message}</div>
-      <BlogActions commentId={i.id} postId={i.postId} />
-    </li>
-  ))
-
   return (
     <>
+      {' '}
       <div
         key={post.id}
-        className='ring-indigo-300 dark:hover:ring-gray-400 max-w-prose rounded-lg p-2 shadow-2xl hover:ring-1 dark:bg-crimson2'
+        className='ring-indigo-300 border-bg-crimson6 shadow-3xl flex max-w-prose flex-col overflow-hidden rounded-lg border-2 p-2 hover:ring-1 dark:bg-crimson2 dark:hover:bg-crimson4'
       >
-        <div className='items- flex flex-row justify-between'>
-          {' '}
-          <h1 className='mh2'>{post.title}</h1>
-          <Link className='hover:animate-pulse' to={`/users/${post.userId}`}>
-            <div className='relative'>
-              <p className='text-white absolute left-2 text-xs'>
-                {post.createdBy?.[0]}
-              </p>
-              <img
-                src={post.imageUrl}
-                alt='avatar'
-                className='h-10 w-10 rounded-full'
-                style={{
-                  height: '50px',
-                  width: '50px',
-                  objectFit: 'cover',
-                  minWidth: '50px'
-                }}
-              />
-            </div>
-          </Link>
-        </div>
-        {post.categories ? (
-          <CategoryContainer category={post.categories} />
-        ) : null}
-        <img
-          src={post.imageUrl}
-          alt='avatar'
-          className='float-left mt-5 mb-5 h-10 w-10 rounded-full'
-          style={{ height: '250px', width: '250px', objectFit: 'cover' }}
-        />
+        <div className='mb-2 p-2 pb-0 text-2xl'>
+          {post.title}
 
-        <div className='mt-10 flex flex-row pl-2 italic'>
-          {post.description}
-        </div>
-        <div className='float-right mt-10 flex flex-row pl-2 italic'>
-          <p>Published: </p>
-          {format(new Date(post.createdAt), 'MMM dd ')}
-        </div>
-        <div className='float-right mt-10 flex flex-row pl-2 italic'>
-          <p>Written by: </p>
-          {post.createdBy}
+          <img
+            src={post.imageUrl}
+            className='block w-full scale-125 transform overflow-hidden object-center p-0 transition duration-200 ease-in-out'
+            alt={post.title}
+          />
         </div>
 
-        <div dangerouslySetInnerHTML={{ __html: post.body }} />
-        <div className='flex flex-row items-center justify-end space-x-2'>
-          {user && post.id ? (
-            <div className='flex flex-row items-center justify-start'>
-              <>
-                <LikeContainer
-                  post={post}
-                  currentUser={user.id}
-                  postId={post.id}
-                />
-                {/* not sure what's up with favs */}
-                <FavoriteContainer
-                  postId={post.id}
-                  currentUser={user.id}
-                  post={post.favorites}
-                />
-                <PostOptions id={post.id} published={post.published} />
-              </>
-
-              <ShareButton id={post.id} />
-            </div>
-          ) : (
-            <div className='flex flex-row justify-between'>
-              <div className='flex flex-row space-x-2'>
-                Sign up or Register to comment, share, and like posts
-              </div>
-            </div>
-          )}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className='flex flex-row space-x-2'
-          >
-            <span className='material-icons'>comment</span>
-            {isOpen ? 'Close' : 'Comment'}
-          </button>
+        <div></div>
+        <div className='pt-4 text-xs'>
+          <p className='indent-2 text-xs italic'>{post.description}</p>
+          <p className='text-xs'>{post.body}</p>
         </div>
-        {isOpen && (
-          <div className='rounded-lg'>
-            <fetcher.Form
-              method='post'
-              action={`/blog/${post.id}/comment`}
-              className='flex flex-col items-end space-y-1'
-            >
-              <input type='hidden' name='userId' value={user?.id} />
-              <input type='hidden' name='postId' value={post.id} />
-              <input type='hidden' name='createdBy' value={user?.userName} />
-              <textarea
-                rows={1}
-                cols={50}
-                id='message'
-                className='border-blue-300 bg-zinc-200 text-zinc-900 dark:bg-zinc-400 dark:text-slate-200 w-full rounded-md border'
-                name='message'
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-              />
-              <button
-                className='btn-base btn-solid-success w-fit'
-                type='submit'
-              >
-                Save
-                <span className='material-icons'>save</span>
-              </button>
-            </fetcher.Form>
+        <Divider></Divider>
+       <div className='flex flex-row justify-between'>
+       <div className='flex flex-row'>
+        {/* this is where likes, comments, etc should go */}
+{showLikes &&
+        <LikeContainer
+          postId={post.id}
+          post={post}
+          currentUser={user?.id}
+          />
+}
 
-            <CommentBox post={post} comments={comments} />
-          </div>
-        )}
+{showFavorites &&
+        <FavoriteContainer
+          postId={post.id}
+          post={post}
+          currentUser={user?.id}
+          />
+}
+
+{showShare && <ShareButton post={post} />}
+{showOptions && <PostOptions post={post} />
+}
+{showComments && <CommentActionBox post={post} />}
+
+
+        </div>
+
+  {user ? post ?  (
+    <AvatarCircle avatarUrl={user?.avatarUrl} userName={user?.userName} createdBy={post.createdBy} createdAt={post.createdAt} updatedAt={post.updatedAt} />
+  ): null : null}
+
+        </div>
       </div>
     </>
   )
 }
 
+function AvatarCircle({avatarUrl, userName, createdBy, createdAt, updatedAt}: {avatarUrl: string, userName: string, createdBy: string, createdAt: Date, updatedAt: Date}) {
+  return <div className='flex flex-row'>
+  <img
+    src={avatarUrl}
+    alt={userName}
+    className='h-6 w-6 rounded-full'
+    style={{ width: '2rem', height: '2rem' }}
+  />
+  <div className='text-xs'>
+  <p>
+              written by {createdBy} on{' '}
+             {createdAt ? (<> {format(new Date(createdAt), 'PPpp')}</>): null }
+
+            </p>
+            {updatedAt && (         <p>updated: {format(new Date(updatedAt), 'PPpp')}</p> )}
+  </div>
+</div>
+}
+
+// function CommentField(){
+//   return (
+//     {isOpen && (
+//       <div className='rounded-lg'>
+//         <fetcher.Form
+//           method='post'
+//           action={`/blog/${post.id}/comment`}
+//           className='flex flex-col items-end space-y-1'
+//         >
+//           <input type='hidden' name='userId' value={user?.id} />
+//           <input type='hidden' name='postId' value={post.id} />
+//           <input type='hidden' name='createdBy' value={user?.userName} />
+//           <textarea
+//             rows={1}
+//             cols={50}
+//             id='message'
+//             className='border-blue-300 bg-zinc-200 text-zinc-900 dark:bg-zinc-400 dark:text-slate-200 w-full rounded-md border'
+//             name='message'
+//             value={formData.message}
+//             onChange={(e) =>
+//               setFormData({ ...formData, message: e.target.value })
+//             }
+//           />
+//           <button
+//             className='btn-base btn-solid-success w-fit'
+//             type='submit'
+//           >
+//             Save
+//             <span className='material-icons'>save</span>
+//           </button>
+//         </fetcher.Form>
+
+//         <CommentBox post={post} comments={comments} />
+//       </div>
+//     )}
+//   )
+// }
 export type CommentCardProps = {
   post: {
     postId: string

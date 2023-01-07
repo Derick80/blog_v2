@@ -42,7 +42,7 @@ export async function loader({ request }: LoaderArgs) {
 function LayoutWrapper() {
   return (
     <Layout>
-      {process.env.NODE_ENV == 'development' && <RemixInspector />}
+      {/* {process.env.NODE_ENV == 'development' && <RemixInspector />} */}
 
       <Outlet />
       <ScrollRestoration />
@@ -63,7 +63,7 @@ function App() {
         <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} />
       </head>
 
-      <body className='flex min-h-screen flex-col bg-slate1 text-mauve2 dark:bg-crimson1 dark:text-slate2'>
+      <body className='flex min-h-screen flex-col items-center bg-slate1 text-mauve2 dark:bg-crimson1 dark:text-slate2'>
         <LayoutWrapper />
       </body>
     </html>

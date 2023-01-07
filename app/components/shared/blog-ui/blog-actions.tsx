@@ -1,4 +1,5 @@
 import { Link } from '@remix-run/react'
+import { useState } from 'react'
 
 export type BlogActionProps = {
   commentId: string
@@ -6,26 +7,27 @@ export type BlogActionProps = {
 }
 
 export default function BlogActions({ commentId, postId }: BlogActionProps) {
+  const [open, setOpen] = useState(false)
   return (
-    <div className='flex flex-col justify-start'>
-      <div className='flex flex-col justify-center space-y-2'>
-        <button>
-          <Link
-            className='btn-base btn-solid-info'
-            to={`/blog/${postId}/${commentId}/edit`}
-          >
-            <span className='material-symbols-outlined'>edit</span>
-            Edit
-          </Link>
-        </button>
-        <Link
-          className='btn-base btn-solid-danger'
-          to={`/blog/${postId}/${commentId}/delete`}
-        >
-          <span className='material-symbols-outlined'>delete</span>
-          Delete
-        </Link>
-      </div>
-    </div>
+    <button
+      onClick={() => setOpen(!open)}
+      className='flex flex-1 flex-col items-center rounded-full bg-crimson6  hover:bg-crimson4'
+    >
+      <Link
+        className='btn-base btn-solid-info'
+        to={`/blog/${postId}/${commentId}/edit`}
+      >
+        <span className='material-symbols-outlined'>edit</span>
+        Edit
+      </Link>
+
+      <Link
+        className='btn-base btn-solid-danger'
+        to={`/blog/${postId}/${commentId}/delete`}
+      >
+        <span className='material-symbols-outlined'>delete</span>
+        Delete
+      </Link>
+    </button>
   )
 }

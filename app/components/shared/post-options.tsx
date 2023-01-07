@@ -1,3 +1,4 @@
+import { DotsVerticalIcon } from '@radix-ui/react-icons'
 import { Form } from '@remix-run/react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -15,7 +16,11 @@ export default function PostOptions({ id, published }: OptionProps) {
   return (
     <div className='flex flex-col items-center justify-center'>
       <button onClick={() => setExpand(!expand)}>
-        <span className='material-symbols-outlined'>more_vert</span>
+        {!expand ? (
+          <DotsVerticalIcon />
+        ) : (
+          <DotsVerticalIcon className='rotate-90 transform ' />
+        )}
       </button>
 
       <Dialog isOpen={expand} handleClose={() => setExpand(false)}>

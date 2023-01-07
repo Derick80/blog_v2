@@ -1,6 +1,7 @@
 import { LoaderArgs, json, ActionArgs, redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
+import { Card } from '~/components/shared/blog-ui/card'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { flashAndCommit } from '~/models/auth/session.server'
 import { createComment } from '~/models/comments.server'
@@ -77,9 +78,10 @@ export async function action({ request, params }: ActionArgs) {
 }
 
 export default function Index() {
+  const data = useLoaderData<typeof loader>()
   return (
-    <>
-      <h1>Index</h1>
-    </>
+    <div className='grid-cols-repeat(minmax(300px, 1fr)) grid items-start gap-4'>
+      <Card post={data.post} />
+    </div>
   )
 }
