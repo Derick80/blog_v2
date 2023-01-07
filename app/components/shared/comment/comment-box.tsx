@@ -9,15 +9,19 @@ import { UserPlaceHolder } from '../icons'
 type CommentBoxProps = {
   postId?: string
   parentId?: string
+  comments: Comment[]
 
 }
-export default function CommentBox({ postId, parentId }: CommentBoxProps) {
+export default function CommentBox({ postId, parentId , comments}: CommentBoxProps) {
   const [isOpen, setIsOpen] = useState(false)
   const fetcher = useFetcher()
   console.log(fetcher, 'fetcher')
   console.log(postId, 'postId');
 
-
+const parents = comments.filter((isParent)=> isParent.parentId === null)
+console.log(parents, 'parents');
+const children = comments.filter((isChild)=> isChild.parentId !== null)
+console.log(children, 'children');
   const user = useOptionalUser()
   useEffect(() => {
     if (fetcher.type === 'init') {
@@ -25,7 +29,7 @@ export default function CommentBox({ postId, parentId }: CommentBoxProps) {
     }
   }, [fetcher, postId])
 
-  const comments = fetcher.data?.data?.comments.flat() as Comment[]
+  const fetcherComments = fetcher.data?.data?.comments.flat() as Comment[]
 
   return (
     <>
@@ -39,7 +43,7 @@ export default function CommentBox({ postId, parentId }: CommentBoxProps) {
 
           <div className='flex-col items-center'>
             <ChevronDownIcon />
-            { comments.map((parent: Comment) => (
+            { parents.map((parent: Comment) => (
         <div
           className='border-black mb-1 flex flex-col space-y-2 rounded-xl border-2 p-2 shadow-lg'
           key={parent.id}

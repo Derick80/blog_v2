@@ -88,7 +88,7 @@ export const Card = ({
             ) : null
           ) : null}
         </div>
-        {showComments && <CommentBox postId={post.id}/>}
+        {showComments && <CommentBox postId={post.id} comments={post.comments}/>}
 
       </div>
     </>
