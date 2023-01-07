@@ -6,11 +6,11 @@ type Props = {
 export const Divider = ({ bgColor, children }: Props) => (
   <div className='relative my-5'>
     <div className='absolute inset-0 flex items-center'>
-      <div className='w-full border-t border-slate-300 dark:border-slate-600' />
+      <div className='border-slate-300 dark:border-slate-600 w-full border-t' />
     </div>
     <div className='relative flex justify-center text-sm'>
       <span
-        className={`px-2 text-slate-500 ${
+        className={`text-slate-500 px-2 ${
           bgColor || 'bg-slate-50 dark:bg-slate-800'
         }`}
       >

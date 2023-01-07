@@ -18,7 +18,7 @@ export default function Index() {
   return (
     <>
       <div className='mx-auto flex flex-col gap-5 p-2 md:w-1/2 md:flex-row'>
-        <div className='mx-auto flex grow flex-col rounded-lg bg-zinc-200 dark:bg-zinc-400'>
+        <div className='bg-zinc-200 dark:bg-zinc-400 mx-auto flex grow flex-col rounded-lg'>
           <div>Hero Post</div>
           <div>About me post</div>
           My stats number of posts {data.blogPostCount}, number of comments,

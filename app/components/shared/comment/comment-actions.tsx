@@ -20,7 +20,7 @@ export default function CommentActionBox({
     <>
       <button
         type='button'
-        className='rounded-lg p-2 text-zinc-900 transition  dark:text-slate-200 dark:hover:bg-slate-500'
+        className='text-zinc-900 dark:text-slate-200 dark:hover:bg-slate-500 rounded-lg  p-2 transition'
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (

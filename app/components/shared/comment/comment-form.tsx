@@ -27,7 +27,7 @@ export default function CommentForm() {
         <input
           placeholder='write your comment here...'
           id='message'
-          className='rounded-md border border-gray-300 bg-slate-200 text-zinc-900 dark:bg-zinc-600 dark:text-slate-200'
+          className='border-gray-300 bg-slate-200 text-zinc-900 dark:bg-zinc-600 dark:text-slate-200 rounded-md border'
           name='message'
           type='text'
           value={formData.message}

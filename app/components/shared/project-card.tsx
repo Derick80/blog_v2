@@ -8,7 +8,7 @@ export const ProjectCard = ({ project, categories }: any) => {
     <>
       <div
         key={project.id}
-        className='text-zing-900 m-1 mx-auto rounded border-4 border-zinc-600 bg-fixed opacity-90 shadow-md dark:text-slate-100'
+        className='text-zing-900 border-zinc-600 dark:text-slate-100 m-1 mx-auto rounded border-4 bg-fixed opacity-90 shadow-md'
       >
         <h1 className='mh1'>{project.title}</h1>
         <p className='p-2 indent-2 text-sm italic'>{project.description}</p>
@@ -19,25 +19,25 @@ export const ProjectCard = ({ project, categories }: any) => {
           ))}
         </div>
         <div className='flex items-center justify-end space-x-2 p-2 text-xs md:mb-2 md:text-base'>
-          <Link
-            to={project.githubUrl}
+          <a
+            href={project.githubUrl}
             className='flex items-center space-x-1'
             target='_blank'
             rel='noreferrer'
           >
             <p>View Code</p>
             <ArrowTopRightOnSquareIcon className='h-5 w-5' />
-          </Link>
+          </a>
 
-          <Link
-            to={project.projectUrl}
+          <a
+            href={project.projectUrl}
             className='flex items-center space-x-1'
             target='_blank'
             rel='noreferrer'
           >
             <p>Visit Project</p>
             <ArrowTopRightOnSquareIcon className='h-5 w-5' />{' '}
-          </Link>
+          </a>
         </div>
         <div className='h-40 md:h-60'>
           <img

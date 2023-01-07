@@ -1,7 +1,7 @@
-import { FormMethod, useFetcher } from '@remix-run/react'
+import type { FormMethod } from '@remix-run/react'
+import { useFetcher } from '@remix-run/react'
 import { useState, useRef } from 'react'
-import { SerializedPost, serializedQueriedPost } from '~/models/post.server'
-import { BookMark } from '../icons'
+import type { serializedQueriedPost } from '~/models/post.server'
 
 export type FavoriteContainerProps = {
   currentUser: string
@@ -44,7 +44,7 @@ export default function FavoriteContainer({
       <button
         ref={iconButtonRef}
         type='button'
-        className='relative flex items-center gap-2 rounded-lg p-2 transition hover:bg-slate-100 disabled:hover:bg-transparent'
+        className='hover:bg-slate-100 disabled:hover:bg-transparent relative flex items-center gap-2 rounded-lg p-2 transition'
         onClick={toggleFavorite}
       >
         <svg

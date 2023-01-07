@@ -1,7 +1,7 @@
 import { TravelLog } from '@prisma/client'
 import { json, LoaderArgs, redirect } from '@remix-run/node'
 import { useLoaderData, Outlet, Link } from '@remix-run/react'
-import { ImageSlider } from '~/components/shared/image-slider'
+import { ImageSlider } from '~/components/shared/carousel/image-slider'
 import { CitiesAndAlbums, getAlbums } from '~/models/travel.server'
 
 export async function loader({ request, params }: LoaderArgs) {

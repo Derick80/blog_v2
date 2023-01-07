@@ -1,10 +1,12 @@
+import { UserCircleIcon } from '@heroicons/react/24/outline'
 import {
-  PlusIcon,
-  PencilSquareIcon,
-  ArrowsRightLeftIcon,
-  ArrowRightOnRectangleIcon,
-  UserCircleIcon
-} from '@heroicons/react/24/outline'
+  EnterIcon,
+  ExitIcon,
+  GearIcon,
+  Pencil2Icon,
+  PlusCircledIcon
+} from '@radix-ui/react-icons'
+import { Form } from '@remix-run/react'
 import ColorMode from '~/components/shared/layout/color-mode'
 
 export const siteLinks = [
@@ -17,8 +19,8 @@ export const siteLinks = [
 ]
 
 export const nonUserLinks = [
-  { name: 'Login', href: '/login', icon_name: 'login' },
-  { name: 'Register', href: '/register', icon_name: 'person_add' }
+  { text: 'Login', link: '/login', children: <EnterIcon /> },
+  { text: 'Register', link: '/register', children: <UserCircleIcon /> }
 ]
 
 // can probably remove this type of link and just use the nonUserLinks
@@ -29,22 +31,31 @@ export const adminLinks = [
   {
     text: 'New post',
     link: '/blog/new',
-    children: <PlusIcon className='rounded-full' />
+    children: <PlusCircledIcon />
   },
   {
     text: 'Drafts',
     link: '/blog/drafts',
-    children: <PencilSquareIcon className='rounded-full' />
+    children: <Pencil2Icon />
   },
   {
     text: 'Preferences',
     link: '/preferences',
-    children: <UserCircleIcon className='rounded-full' />
+    children: <GearIcon />
   },
   { text: 'Admin', link: '/admin', children: <ColorMode /> },
   {
     text: 'Logout',
     link: '/logout',
-    children: <ArrowRightOnRectangleIcon className='rounded-full' />
+    children: (
+      <>
+        <Form method='post' action='/logout'>
+          <button type='submit'>
+            {' '}
+            <ExitIcon />
+          </button>
+        </Form>
+      </>
+    )
   }
 ]

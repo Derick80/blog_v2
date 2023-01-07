@@ -12,7 +12,7 @@ export default function MyProfile({ about }: AboutProps) {
 
   return (
     <article className='mx-auto mt-5 mb-5 flex min-h-full w-fit max-w-prose flex-col overflow-hidden rounded-md shadow-xl transition-shadow  duration-200 ease-in-out hover:shadow-2xl md:w-fit'>
-      <h1 className='my-3 border-b-2 border-black text-left text-3xl'>
+      <h1 className='border-black my-3 border-b-2 text-left text-3xl'>
         {about.firstName} {about.lastName}, PhD
       </h1>
       <p className='mb-2 indent-4 text-sm italic'> {about.occupation}</p>

@@ -31,7 +31,7 @@ export const ShareButton = ({ id }: Props) => {
     <>
       <button
         type='button'
-        className='rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700'
+        className='text-slate-500 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700 rounded-lg p-2 transition'
         onClick={() => {
           if (navigator.share) {
             navigator.share({
@@ -113,7 +113,7 @@ export const ShareButton = ({ id }: Props) => {
           <input
             id='share'
             type='text'
-            className='w-full rounded border-0 bg-slate-100 transition dark:bg-slate-600'
+            className='bg-slate-100 dark:bg-slate-600 w-full rounded border-0 transition'
             value={postUrl}
             onClick={copyLink}
             ref={ref}
@@ -121,7 +121,7 @@ export const ShareButton = ({ id }: Props) => {
           />
           <button
             type='button'
-            className='hover:text-primary-dark dark:hover:text-primary-light absolute right-3 top-1 bg-slate-100 p-2 transition dark:bg-slate-600'
+            className='hover:text-primary-dark dark:hover:text-primary-light bg-slate-100 dark:bg-slate-600 absolute right-3 top-1 p-2 transition'
             onClick={copyLink}
           >
             <svg {...iconAttrs}>

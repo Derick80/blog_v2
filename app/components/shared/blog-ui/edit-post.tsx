@@ -4,12 +4,12 @@ import { ClientOnly } from 'remix-utils'
 import { Select } from '~/components/shared/box/select-box'
 import FormField from '~/components/shared/form-field'
 import { ImageUploader } from '~/components/shared/image-uploader'
-import Quill from '~/components/shared/quill-client'
 import type { loader } from '~/root'
-import type { SerializedPost } from '~/utils/schemas/post-schema'
+import type { Post, SerializedPost } from '~/utils/schemas/post-schema'
+import TipTap from '../tip-tap'
 
 export type EditPostProps = {
-  post: SerializedPost
+  post: Partial<Post>
 }
 
 export default function Edit({ post }: EditPostProps) {
@@ -28,10 +28,10 @@ export default function Edit({ post }: EditPostProps) {
 
   //   form data for the post
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    body: '',
-    imageUrl: '',
+    title: post.title,
+    description: post.description,
+    body: post.body,
+    imageUrl: post.imageUrl,
     categories: [] as string[]
   })
 
@@ -69,22 +69,23 @@ export default function Edit({ post }: EditPostProps) {
 
   return (
     <div className='flex w-full items-center justify-center '>
-      <form method='post' action='/blog/new' className='w-full'>
+      <form method='post' action={`/blog/${post.id}/edit`} className='w-full'>
         <label htmlFor='title'>Title</label>
         <input
           className='form-field-primary'
           type='text'
           name='title'
           id='title'
-          value={formData.title}
+          value={post.post.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
         <label htmlFor='description'>Description</label>
+        <div>{post.description}</div>
         <input
           type='text'
           name='description'
           id='description'
-          value={formData.description}
+          value={post.post.description}
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
           }
@@ -93,17 +94,8 @@ export default function Edit({ post }: EditPostProps) {
         <label htmlFor='body'>Post Content</label>
 
         <div className='flex flex-col items-center justify-center'>
-          <ClientOnly
-            fallback={<div style={{ width: 500, height: 300 }}></div>}
-          >
-            {() => (
-              <Quill
-                defaultValue={post.body}
-                value={formData.body}
-                name='body'
-              />
-            )}
-          </ClientOnly>
+          <TipTap name={'body'} content={post.post.body} />
+          <input type='hidden' name='body' value={formData.body} />
         </div>
 
         {/* <FormField
@@ -118,14 +110,14 @@ export default function Edit({ post }: EditPostProps) {
             type='hidden'
             name='imageUrl'
             id='imageUrl'
-            value={formData.imageUrl}
+            value={post.imageUrl}
             onChange={(e) =>
               setFormData({ ...formData, imageUrl: e.target.value })
             }
           />
 
-          <div className='flex w-96 flex-col bg-slate-100 pt-2 text-zinc-800 dark:bg-zinc-800 dark:text-slate-100'>
-            <div className='flex w-full rounded-md bg-red-300'>
+          <div className='bg-slate-100 text-zinc-800 dark:bg-zinc-800 dark:text-slate-100 flex w-96 flex-col pt-2'>
+            <div className='bg-red-300 flex w-full rounded-md'>
               {formData.categories.map((item) => (
                 <div key={item} className='flex items-center'>
                   <p>{item}</p>

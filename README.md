@@ -2,6 +2,10 @@
 
 - [Remix Docs](https://remix.run/docs)
 
+## Resources
+
+Colors, some UI, some Icons, https://www.radix-ui.com/colors
+
 ## Development
 
 From your terminal:

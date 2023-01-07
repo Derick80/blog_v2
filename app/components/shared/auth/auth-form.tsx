@@ -49,7 +49,7 @@ export const AuthForm = ({ authType }: Props) => {
 
       {authType !== 'confirm' && (
         <>
-          <label className='text-sm text-zinc-900 dark:text-slate-200'>
+          <label className='text-zinc-900 dark:text-slate-200 text-sm'>
             Email
           </label>
           <input

@@ -9,43 +9,7 @@
 @tailwind utilities;
 
 @layer components {
-  .mh1 {
-    @apply text-3xl md:text-4xl font-bold text-zinc-900 dark:text-slate-100
-  }
-  .mh2 {
-    @apply text-2xl md:text-3xl font-bold text-zinc-900 dark:text-slate-100
-  }
 
-  .mh3 {
-    @apply text-xl md:text-2xl font-bold text-zinc-900 dark:text-slate-100
-  }
-
-  .btn-base {
-    @apply inline-flex items-center border justify-center rounded-xl px-2 py-1 font-medium leading-4 transition duration-300 ease-in-out hover:-translate-y-1 focus:outline-none focus:ring-2 disabled:cursor-not-allowed
-  }
-
-  .btn-solid {
-    @apply bg-slate-600 border shadow-sm text-slate-300 dark:text-slate-200 dark:border-none border-slate-700 hover:bg-slate-800
-  }
-
-  .btn-solid-success {
-    @apply bg-green-500 shadow-sm text-slate-900 dark:text-slate-100  hover:bg-green-600
-  }
-
-  .btn-solid-warn {
-    @apply bg-orange-400 shadow-sm text-slate-900 dark:text-slate-100  hover:bg-yellow-600
-  }
-
-.btn-solid-danger {
-    @apply bg-red-500 shadow-sm text-slate-900 dark:text-slate-100  hover:bg-red-600
-  }
-.form-primary {
-    @apply flex flex-col rounded-2xl shadow-2xl items-center justify-center  text-zinc-900 dark:text-slate-300
-  }
-
-  .form-field-primary {
-    @apply mb-6 w-11/12 resize rounded-xl border-2 border-black p-2  focus:border-slate-700 focus:outline-none focus:ring-1 dark:border-slate-300 dark:bg-zinc-600 text-zinc-900 dark:text-slate-300;
-  }
 
 }
 

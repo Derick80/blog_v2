@@ -31,7 +31,7 @@ export const Modal: React.FC<props> = ({
       ></div>
       <div className='pointer-events-none fixed inset-0 flex max-h-screen items-center justify-center overflow-scroll'>
         <div
-          className={`${className}pointer-events-auto dark:bg-zine-900 relative inline-block h-full max-h-screen w-full max-w-2xl transform overflow-y-auto border-2 border-white bg-white p-4 align-middle shadow-xl transition-all dark:text-slate-200 md:h-auto md:rounded-xl`}
+          className={`${className}pointer-events-auto dark:bg-zine-900 border-white bg-white dark:text-slate-200 relative inline-block h-full max-h-screen w-full max-w-2xl transform overflow-y-auto border-2 p-4 align-middle shadow-xl transition-all md:h-auto md:rounded-xl`}
         >
           {/* This is where the modal content is rendered  */}
           {children}

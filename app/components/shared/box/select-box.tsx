@@ -25,7 +25,7 @@ export const Select = ({
         value={value}
         onChange={onChange}
         size={options.length}
-        className='w-96 rounded-xl py-2 text-gray-400'
+        className='text-gray-400 w-96 rounded-xl py-2'
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

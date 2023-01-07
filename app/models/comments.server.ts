@@ -80,7 +80,6 @@ export async function deleteComment(commentId: string) {
   return deleted
 }
 
-
 export type CommentAndUserData = {
   id: string
   message: string

@@ -59,7 +59,7 @@ export function Twitter() {
     <>
       <svg
         xmlns='http://www.w3.org/2000/svg'
-        className='fill-black text-base dark:fill-white'
+        className='fill-black dark:fill-white text-base'
         viewBox='0 0 248 204'
       >
         <g id='Logo_1_'>
@@ -206,7 +206,7 @@ export function ImagePlaceHolder() {
 export function UserPlaceHolder() {
   return (
     <svg
-      className='absolute -left-1 h-12 w-12 text-gray-400'
+      className='text-gray-400 absolute -left-1 h-12 w-12'
       fill='currentColor'
       viewBox='0 0 20 20'
       xmlns='http://www.w3.org/2000/svg'

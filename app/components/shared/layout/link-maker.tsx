@@ -22,15 +22,13 @@ export default function LinkMaker({
         className={({ isActive }) =>
           ` ${
             isActive
-              ? 'flex flex-col items-center border-b-2 border-black'
+              ? 'border-black flex flex-col items-center border-b-2'
               : 'flex flex-col items-center'
           }`
         }
         onClick={toggle}
         prefetch='intent'
       >
-        <span className='material-symbols-outlined'>{icon_name}</span>
-
         {name}
         {children}
       </NavLink>

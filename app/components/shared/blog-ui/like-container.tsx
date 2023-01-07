@@ -49,7 +49,7 @@ export default function LikeContainer({
         <button
           ref={iconButtonRef}
           type='button'
-          className='relative flex items-center gap-2 rounded-lg p-2 transition hover:bg-slate-100 disabled:hover:bg-transparent dark:hover:bg-slate-700'
+          className='hover:bg-slate-100 disabled:hover:bg-transparent dark:hover:bg-slate-700 relative flex items-center gap-2 rounded-lg p-2 transition'
           onClick={toggleLike}
         >
           <svg

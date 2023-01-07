@@ -53,14 +53,14 @@ export const Card = ({ post }: Props) => {
     <>
       <div
         key={post.id}
-        className='max-w-prose rounded-lg p-2 shadow-2xl ring-indigo-300 hover:ring-1 dark:hover:ring-gray-400'
+        className='ring-indigo-300 dark:hover:ring-gray-400 max-w-prose rounded-lg p-2 shadow-2xl hover:ring-1 dark:bg-crimson2'
       >
         <div className='items- flex flex-row justify-between'>
           {' '}
           <h1 className='mh2'>{post.title}</h1>
           <Link className='hover:animate-pulse' to={`/users/${post.userId}`}>
             <div className='relative'>
-              <p className='absolute left-2 text-xs text-white'>
+              <p className='text-white absolute left-2 text-xs'>
                 {post.createdBy?.[0]}
               </p>
               <img
@@ -99,7 +99,7 @@ export const Card = ({ post }: Props) => {
           {post.createdBy}
         </div>
 
-        <div className='clear-left indent-6 text-base'>{post.body}</div>
+        <div dangerouslySetInnerHTML={{ __html: post.body }} />
         <div className='flex flex-row items-center justify-end space-x-2'>
           {user && post.id ? (
             <div className='flex flex-row items-center justify-start'>
@@ -149,7 +149,7 @@ export const Card = ({ post }: Props) => {
                 rows={1}
                 cols={50}
                 id='message'
-                className='w-full rounded-md border border-blue-300 bg-zinc-200 text-zinc-900 dark:bg-zinc-400 dark:text-slate-200'
+                className='border-blue-300 bg-zinc-200 text-zinc-900 dark:bg-zinc-400 dark:text-slate-200 w-full rounded-md border'
                 name='message'
                 value={formData.message}
                 onChange={(e) =>
@@ -165,20 +165,13 @@ export const Card = ({ post }: Props) => {
               </button>
             </fetcher.Form>
 
-
-          <CommentBox post={post} comments={comments} />
-
-
+            <CommentBox post={post} comments={comments} />
           </div>
         )}
       </div>
-
-
     </>
   )
 }
-
-
 
 export type CommentCardProps = {
   post: {
@@ -199,4 +192,3 @@ export type CommentCardProps = {
     avatarUrl: string
   }
 }[]
-

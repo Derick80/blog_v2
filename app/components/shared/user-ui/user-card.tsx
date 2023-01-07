@@ -15,7 +15,7 @@ export default function UserCard({ user }: UserCardProps) {
         >
           <div
             // main content
-            className='flex flex-row border-b-2 border-b-red-300 pb-2'
+            className='border-b-red-300 flex flex-row border-b-2 pb-2'
           >
             {user?.avatarUrl ? (
               <img
@@ -26,7 +26,7 @@ export default function UserCard({ user }: UserCardProps) {
                 className='h-10 w-10 rounded-full'
               />
             ) : (
-              <div className='relative h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600'>
+              <div className='bg-gray-100 dark:bg-gray-600 relative h-10 w-10 overflow-hidden rounded-full'>
                 <UserPlaceHolder />
               </div>
             )}

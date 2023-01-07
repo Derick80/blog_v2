@@ -8,6 +8,7 @@ import { Select } from '~/components/shared/box/select-box'
 import FormField from '~/components/shared/form-field'
 import { ImageUploader } from '~/components/shared/image-uploader'
 import Quill from '~/components/shared/quill-client'
+import TipTap from '~/components/shared/tip-tap'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import getAllCategories from '~/models/categories.server'
 import type { CategoryForm } from '~/models/post.server'
@@ -136,10 +137,10 @@ export default function NewPost() {
         />
 
         <label htmlFor='body'>Post Content</label>
-
+        <TipTap name={'body'} />
         <FormField
           name='body'
-          type='textarea'
+          type='hidden'
           value={formData.body}
           onChange={(e) => setFormData({ ...formData, body: e.target.value })}
         />
@@ -155,8 +156,8 @@ export default function NewPost() {
             }
           />
 
-          <div className='flex w-96 flex-col bg-slate-100 pt-2 text-zinc-800 dark:bg-zinc-800 dark:text-slate-100'>
-            <div className='flex w-full rounded-md bg-red-300'>
+          <div className='bg-slate-100 text-zinc-800 dark:bg-zinc-800 dark:text-slate-100 flex w-96 flex-col pt-2'>
+            <div className='bg-red-300 flex w-full rounded-md'>
               {formData.categories.map((item) => (
                 <div key={item} className='flex items-center'>
                   <p>{item}</p>

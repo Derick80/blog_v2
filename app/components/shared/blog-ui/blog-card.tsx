@@ -87,7 +87,7 @@ export const BlogCard = (posts: BlogCardProps) => {
           <label htmlFor='message'>Comment</label>
           <textarea
             id='message'
-            className='rounded-md border border-gray-300 bg-slate-200 text-zinc-900 dark:bg-zinc-600 dark:text-slate-200'
+            className='border-gray-300 bg-slate-200 text-zinc-900 dark:bg-zinc-600 dark:text-slate-200 rounded-md border'
             name='message'
             rows={3}
             value={formData.message}

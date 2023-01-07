@@ -39,9 +39,9 @@ export const ImageUploader = ({ onChange, imageUrl }: props) => {
         ref={dropRef}
         className={`${
           draggingOver
-            ? 'border-rounded border-4 border-dashed border-yellow-300'
+            ? 'border-rounded border-yellow-300 border-4 border-dashed'
             : ''
-        } group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full bg-gray-400 transition duration-300 ease-in-out hover:bg-gray-500`}
+        } bg-gray-400 hover:bg-gray-500 group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full transition duration-300 ease-in-out`}
         style={{
           backgroundSize: 'cover',
           ...(imageUrl ? { backgroundImage: `url(${imageUrl})` } : {})
@@ -56,10 +56,10 @@ export const ImageUploader = ({ onChange, imageUrl }: props) => {
         onClick={() => fileInputRef.current?.click()}
       >
         {imageUrl && (
-          <div className='absolute h-full w-full rounded-full bg-blue-400 opacity-50 transition duration-300 ease-in-out group-hover:opacity-0' />
+          <div className='bg-blue-400 absolute h-full w-full rounded-full opacity-50 transition duration-300 ease-in-out group-hover:opacity-0' />
         )}
         {
-          <p className='pointer-events-none z-10 cursor-pointer select-none text-4xl font-extrabold text-gray-200 transition duration-300 ease-in-out group-hover:opacity-0'>
+          <p className='text-gray-200 pointer-events-none z-10 cursor-pointer select-none text-4xl font-extrabold transition duration-300 ease-in-out group-hover:opacity-0'>
             +
           </p>
         }

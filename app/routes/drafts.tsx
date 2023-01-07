@@ -2,6 +2,7 @@ import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { BlogCard } from '~/components/shared/blog-ui/blog-card'
+import { Card } from '~/components/shared/blog-ui/card'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { getUserDrafts } from '~/models/post.server'
 export async function loader({ request }: LoaderArgs) {
@@ -20,9 +21,6 @@ export default function Drafts() {
   return (
     <div className='mx-auto'>
       <h1>Drafts</h1>
-      {data.drafts.map((draft) => (
-        <BlogCard key={draft.id} posts={draft} />
-      ))}
     </div>
   )
 }

@@ -39,7 +39,7 @@ export function Select({
 
   return (
     <div
-      className='min-h-5 relative w-96 items-center gap-2 border-2 border-black p-2 shadow-sm outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+      className='min-h-5 border-black focus:ring-indigo-500 relative w-96 items-center gap-2 border-2 p-2 shadow-sm outline-none focus:ring-2 focus:ring-offset-2'
       onBlur={() => setOpen(false)}
       onClick={() => setOpen((prev) => !prev)}
       tabIndex={0}
@@ -49,7 +49,7 @@ export function Select({
           <button
             key={item.id}
             type='button'
-            className='flex cursor-pointer items-center gap-2 rounded  border-2 border-black bg-none px-1 py-2 text-sm shadow-sm outline-none dark:border-slate-200'
+            className='border-black dark:border-slate-200 flex cursor-pointer items-center  gap-2 rounded border-2 bg-none px-1 py-2 text-sm shadow-sm outline-none'
             onClick={(e) => {
               e.stopPropagation()
               selectOption(item)
@@ -62,7 +62,7 @@ export function Select({
       </span>
       <div></div>
       <ul
-        className={`list-style-none max-h-15 z-index-50 absolute left-0 m-0 w-full overflow-y-auto rounded-lg border-2 border-black bg-white p-0 ${
+        className={`list-style-none max-h-15 z-index-50 border-black bg-white absolute left-0 m-0 w-full overflow-y-auto rounded-lg border-2 p-0 ${
           open ? 'block' : 'hidden'
         }`}
       >

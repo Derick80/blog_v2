@@ -1,7 +1,5 @@
 import { TrashIcon } from '@heroicons/react/24/solid'
-import { Comment, User } from '@prisma/client'
 import { Link } from '@remix-run/react'
-import { PostAndComments } from '~/models/post.server'
 
 export type CommentProps = {
   comment: {
@@ -54,23 +52,4 @@ type UserCommentBoxProps = {
   userName: string
   avatarUrl: string
   createdAt: string
-}
-
-function UserCommentBox({
-  id,
-  userName,
-  avatarUrl,
-  createdAt
-}: UserCommentBoxProps) {
-  return (
-    <div className='relative'>
-      <div key={id} className='flexf flex-row items-center justify-start'>
-        <img src={avatarUrl} alt={userName} />
-        <div className='flex flex-col'>
-          <span>{userName}</span>
-          <span>{createdAt}</span>
-        </div>
-      </div>
-    </div>
-  )
 }
