@@ -1,4 +1,5 @@
-import { ActionArgs, LoaderArgs, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs} from '@remix-run/node';
+import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
@@ -11,11 +12,10 @@ import { validateText } from '../validators.server'
 
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
-  const { posts, commentsByParentId, postsWithComments } = await getPosts()
+  const  posts   = await getPosts()
 
-  const comments = posts.map((item) => item.comments).flat
 
-  return json({ posts, comments, commentsByParentId, postsWithComments, user })
+  return json({ posts,    user })
 }
 export async function action({ request, params }: ActionArgs) {
   const user = await isAuthenticated(request)

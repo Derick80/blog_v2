@@ -4,7 +4,7 @@ import { useFetcher } from '@remix-run/react'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useOptionalUser } from '~/utils/utils'
-import { UserPlaceHolder } from '../icons'
+import { UserPlaceHolder } from '../../app/components/shared/icons'
 
 type CommentBoxProps = {
   postId?: string
@@ -17,11 +17,9 @@ export default function CommentBox({ postId, parentId , comments}: CommentBoxPro
   const fetcher = useFetcher()
   console.log(fetcher, 'fetcher')
   console.log(postId, 'postId');
+console.log(comments, 'comments');
 
-const parents = comments.filter((isParent)=> isParent.parentId === null)
-console.log(parents, 'parents');
-const children = comments.filter((isChild)=> isChild.parentId !== null)
-console.log(children, 'children');
+
   const user = useOptionalUser()
   useEffect(() => {
     if (fetcher.type === 'init') {
@@ -30,7 +28,8 @@ console.log(children, 'children');
   }, [fetcher, postId])
 
   const fetcherComments = fetcher.data?.data?.comments.flat() as Comment[]
-
+const parents = comments.filter((comment) => comment.parentId === null)
+console.log(parents, 'parents');
   return (
     <>
      <button

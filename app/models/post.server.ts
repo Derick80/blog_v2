@@ -125,6 +125,7 @@ export async function getPosts() {
     where: {
       published: true
     },
+
     include: {
       comments: {
         include: {
@@ -141,10 +142,9 @@ export async function getPosts() {
     const { _count, comments, ...rest } = post
     return {
       ...rest,
-      comments,
-
       commentsCount: _count.comments,
-      likesCount: _count.likes
+      likesCount: _count.likes,
+      comments,
     }
   })
   const posts = res.map((post) => {
@@ -159,36 +159,10 @@ export async function getPosts() {
     }
   })
 
-  const commentsByParentId = posts.reduce((acc, post) => {
-    const comments = post.comments.reduce((acc, comment) => {
-      const { id, ...rest } = comment
-      return {
-        ...acc,
-        [id]: rest
-      }
-    }, {})
-    return {
-      ...acc,
-      [post.id]: comments
-    }
-  }, {})
-  const postsWithComments = posts.map((post) => {
-    const comments = post.comments.map((comment) => {
-      const { id, ...rest } = comment
-      return {
-        ...rest,
-        id,
-        comments: commentsByParentId[id]
-      }
-    })
 
-    return {
-      ...post,
-      comments
-    }
-  })
 
-  return { posts, commentsByParentId, postsWithComments }
+
+  return  posts
 }
 
 export async function getPostById(id: string) {

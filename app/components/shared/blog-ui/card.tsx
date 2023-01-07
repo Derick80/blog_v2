@@ -1,7 +1,6 @@
 import { format } from 'date-fns'
 import type { SerializedPost } from '~/models/post.server'
 import { useOptionalUser } from '~/utils/utils'
-import CommentBox from '../comment/comment-box'
 import { Divider } from '../layout/divider'
 import PostOptions from '../post-options'
 import FavoriteContainer from './favorite-button'
@@ -88,7 +87,8 @@ export const Card = ({
             ) : null
           ) : null}
         </div>
-        {showComments && <CommentBox postId={post.id} comments={post.comments}/>}
+
+
 
       </div>
     </>
@@ -159,8 +159,9 @@ function AvatarCircle({
 //           </button>
 //         </fetcher.Form>
 
-//         <CommentBox post={post} comments={comments} />
 //       </div>
 //     )}
 //   )
 // }
+
+

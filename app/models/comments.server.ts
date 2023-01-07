@@ -20,7 +20,7 @@ export async function getChildCommentsByParentId({
 }) {
   const comments = await prisma.comment.findMany({
     where: {
-      parentId
+      parentId : parentId
     }
   })
   return comments

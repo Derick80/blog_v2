@@ -1,14 +1,13 @@
 import { Link, useFetcher } from '@remix-run/react'
 import { useState } from 'react'
 import type { ReturnedPost, serializedQueriedPost } from '~/models/post.server'
-import { useOptionalUser } from '~/utils/utils'
-import FavoriteContainer from './favorite-button'
-import { ImagePlaceHolder } from '../icons'
-import LikeContainer from './like-container'
-import PostOptions from '../post-options'
-import { ShareButton } from './share-button'
-import BlogActions from './blog-actions'
-import CommentActionBox from '../comment/comment-actions'
+import FavoriteContainer from '../app/components/shared/blog-ui/favorite-button'
+import { ImagePlaceHolder } from '../app/components/shared/icons'
+import LikeContainer from '../app/components/shared/blog-ui/like-container'
+import PostOptions from '../app/components/shared/post-options'
+import { ShareButton } from '../app/components/shared/blog-ui/share-button'
+import BlogActions from '../app/components/shared/blog-ui/blog-actions'
+import CommentActionBox from './comment/comment-actions'
 
 export type BlogCardProps = {
   posts: ReturnedPost
