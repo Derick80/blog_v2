@@ -48,7 +48,11 @@ export default function FavoriteContainer({
         className='hover:bg-slate-100 disabled:hover:bg-transparent relative flex items-center gap-2 rounded-lg p-2 transition'
         onClick={toggleFavorite}
       >
-        {isFavorite ? <BookmarkFilledIcon className='text-crimson10' /> : <BookmarkIcon />}
+        {isFavorite ? (
+          <BookmarkFilledIcon className='text-crimson10' />
+        ) : (
+          <BookmarkIcon />
+        )}
       </button>
     </>
   )

@@ -7,7 +7,7 @@ export type BlogActionProps = {
 }
 
 export default function BlogActions({ commentId, postId }: BlogActionProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
   return (
     <button
       onClick={() => setOpen(!open)}

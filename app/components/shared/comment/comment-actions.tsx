@@ -1,9 +1,5 @@
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { useState } from 'react'
-import { Form } from 'react-router-dom'
-import { useOptionalUser } from '~/utils/utils'
-import { iconAttrs } from '../icons'
 import LinkMaker from '../layout/link-maker'
 
 export type CommentActionBoxProps = {
@@ -26,7 +22,7 @@ export default function CommentActionBox({
       >
         {isOpen ? (
           <div className='flex flex-col items-center'>
-           <ChatBubbleIcon />
+            <ChatBubbleIcon />
             <div className='flex flex-col items-center gap-4'>
               <LinkMaker
                 link={{

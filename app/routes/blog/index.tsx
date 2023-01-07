@@ -13,7 +13,7 @@ export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   const { posts, commentsByParentId, postsWithComments } = await getPosts()
 
-  const comments = posts.map((item) => item.comments)
+  const comments = posts.map((item) => item.comments).flat
 
   return json({ posts, comments, commentsByParentId, postsWithComments, user })
 }
@@ -76,10 +76,12 @@ export async function action({ request, params }: ActionArgs) {
 export default function BlogRoute() {
   const data = useLoaderData<typeof loader>()
   return (
-    <div className='grid-cols-repeat(minmax(300px, 1fr)) grid items-start gap-4'>
+    <div className='grid-cols-repeat(minmax(300px, 1fr)) grid justify-items-center gap-4'>
       {' '}
       {data.posts.map((post) => (
-        <Card key={post.id} post={post}
+        <Card
+          key={post.id}
+          post={post}
           showComments={true}
           showFavorites={true}
           showLikes={true}

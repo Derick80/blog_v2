@@ -1,8 +1,10 @@
-import { TravelLog } from '@prisma/client'
-import { json, LoaderArgs, redirect } from '@remix-run/node'
+import type { TravelLog } from '@prisma/client'
+import type { LoaderArgs} from '@remix-run/node';
+import { json, redirect } from '@remix-run/node'
 import { useLoaderData, Outlet, Link } from '@remix-run/react'
 import { ImageSlider } from '~/components/shared/carousel/image-slider'
-import { CitiesAndAlbums, getAlbums } from '~/models/travel.server'
+import type { CitiesAndAlbums} from '~/models/travel.server';
+import { getAlbums } from '~/models/travel.server'
 
 export async function loader({ request, params }: LoaderArgs) {
   const albums = (await getAlbums()) as CitiesAndAlbums

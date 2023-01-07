@@ -57,8 +57,7 @@ export default function LikeContainer({
             <HeartFilledIcon className='text-crimson10' />
           ) : (
             <HeartIcon />
-          )
-          }
+          )}
 
           <span className='min-w-[0.75rem]'>{likeCount}</span>
         </button>

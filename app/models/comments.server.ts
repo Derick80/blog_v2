@@ -2,6 +2,30 @@
 import { Comment, Prisma } from '@prisma/client'
 import { prisma } from './prisma.server'
 
+export type QueriedComments = {}
+export async function getRootCommentsByPostId({ postId }: { postId: string }) {
+  const comments = await prisma.comment.findMany({
+    where: {
+      postId,
+      parentId: null
+    }
+  })
+  return comments
+}
+
+export async function getChildCommentsByParentId({
+  parentId
+}: {
+  parentId: string
+}) {
+  const comments = await prisma.comment.findMany({
+    where: {
+      parentId
+    }
+  })
+  return comments
+}
+
 export type CreateCommentInput = {
   message: string
   userId: string

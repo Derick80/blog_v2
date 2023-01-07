@@ -1,19 +1,9 @@
-import { Post } from '.prisma/client'
-import * as AspectRatio from '@radix-ui/react-aspect-ratio'
-import { SerializeFrom } from '@remix-run/node'
-import { Form, Link, useFetcher, useMatches } from '@remix-run/react'
 import { format } from 'date-fns'
-import { useState } from 'react'
-import { CommentAndUserData } from '~/models/comments.server'
-import { SerializedPost, serializedQueriedPost } from '~/models/post.server'
+import type { SerializedPost } from '~/models/post.server'
 import { useOptionalUser } from '~/utils/utils'
-import CategoryContainer from '../category-container'
-import CommentActionBox from '../comment/comment-actions'
 import CommentBox from '../comment/comment-box'
-import { UserPlaceHolder } from '../icons'
 import { Divider } from '../layout/divider'
 import PostOptions from '../post-options'
-import BlogActions from './blog-actions'
 import FavoriteContainer from './favorite-button'
 import LikeContainer from './like-container'
 import { ShareButton } from './share-button'
@@ -39,8 +29,6 @@ export const Card = ({
   showOptions
 }: BasicCardProps) => {
   const user = useOptionalUser()
-  const parentData = useMatches().find((match) => match.pathname === '/blog')
-    ?.data as CommentAndUserData[]
 
   return (
     <>
@@ -65,60 +53,78 @@ export const Card = ({
           <p className='text-xs'>{post.body}</p>
         </div>
         <Divider></Divider>
-       <div className='flex flex-row justify-between'>
-       <div className='flex flex-row'>
-        {/* this is where likes, comments, etc should go */}
-{showLikes &&
-        <LikeContainer
-          postId={post.id}
-          post={post}
-          currentUser={user?.id}
-          />
-}
+        <div className='relative flex flex-row justify-between'>
+          <div className='flex flex-row'>
+            {/* this is where likes, comments, etc should go */}
+            {showLikes && (
+              <LikeContainer
+                postId={post.id}
+                post={post}
+                currentUser={user?.id}
+              />
+            )}
 
-{showFavorites &&
-        <FavoriteContainer
-          postId={post.id}
-          post={post}
-          currentUser={user?.id}
-          />
-}
+            {showFavorites && (
+              <FavoriteContainer
+                postId={post.id}
+                post={post}
+                currentUser={user?.id}
+              />
+            )}
 
-{showShare && <ShareButton post={post} />}
-{showOptions && <PostOptions post={post} />
-}
-{showComments && <CommentActionBox post={post} />}
+            {showShare && <ShareButton post={post} />}
+            {showOptions && <PostOptions post={post} />}
+          </div>
 
-
+          {user ? (
+            post ? (
+              <AvatarCircle
+                avatarUrl={user?.avatarUrl}
+                userName={user?.userName}
+                createdBy={post.createdBy}
+                createdAt={post.createdAt}
+                updatedAt={post.updatedAt}
+              />
+            ) : null
+          ) : null}
         </div>
+        {showComments && <CommentBox postId={post.id}/>}
 
-  {user ? post ?  (
-    <AvatarCircle avatarUrl={user?.avatarUrl} userName={user?.userName} createdBy={post.createdBy} createdAt={post.createdAt} updatedAt={post.updatedAt} />
-  ): null : null}
-
-        </div>
       </div>
     </>
   )
 }
 
-function AvatarCircle({avatarUrl, userName, createdBy, createdAt, updatedAt}: {avatarUrl: string, userName: string, createdBy: string, createdAt: Date, updatedAt: Date}) {
-  return <div className='flex flex-row'>
-  <img
-    src={avatarUrl}
-    alt={userName}
-    className='h-6 w-6 rounded-full'
-    style={{ width: '2rem', height: '2rem' }}
-  />
-  <div className='text-xs'>
-  <p>
-              written by {createdBy} on{' '}
-             {createdAt ? (<> {format(new Date(createdAt), 'PPpp')}</>): null }
-
-            </p>
-            {updatedAt && (         <p>updated: {format(new Date(updatedAt), 'PPpp')}</p> )}
-  </div>
-</div>
+function AvatarCircle({
+  avatarUrl,
+  userName,
+  createdBy,
+  createdAt,
+  updatedAt
+}: {
+  avatarUrl: string
+  userName: string
+  createdBy: string
+  createdAt: Date
+  updatedAt: Date
+}) {
+  return (
+    <div className='flex flex-row'>
+      <img
+        src={avatarUrl}
+        alt={userName}
+        className='h-6 w-6 rounded-full'
+        style={{ width: '2rem', height: '2rem' }}
+      />
+      <div className='text-xs'>
+        <p>
+          written by {createdBy} on{' '}
+          {createdAt ? <> {format(new Date(createdAt), 'PPpp')}</> : null}
+        </p>
+        {updatedAt && <p>updated: {format(new Date(updatedAt), 'PPpp')}</p>}
+      </div>
+    </div>
+  )
 }
 
 // function CommentField(){
@@ -158,22 +164,3 @@ function AvatarCircle({avatarUrl, userName, createdBy, createdAt, updatedAt}: {a
 //     )}
 //   )
 // }
-export type CommentCardProps = {
-  post: {
-    postId: string
-    title: string
-    body: string
-    message: string
-    id: string
-    comment: string
-    createdAt: string
-    updatedAt: string
-    published: boolean
-    userId: string
-    userName: string
-    description: string
-    email: string
-    imageUrl: string
-    avatarUrl: string
-  }
-}[]
