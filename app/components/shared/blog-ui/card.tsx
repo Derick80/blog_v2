@@ -113,7 +113,6 @@ export const Card = ({
           ) : null}
         </div>
         <Divider></Divider>
-        {_count.comments}
         {showComments && (
           <CommentSection comments={comments} postComments={_count.comments} />
         )}

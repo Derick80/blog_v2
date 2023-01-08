@@ -1,9 +1,6 @@
 import React from 'react'
-import { CommentWithChildren } from '~/utils/schemas/comment-schema'
+import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import CommentForm from './comment-form'
-import { Box, Paper } from '@mantine/core'
-import { useFetcher } from '@remix-run/react'
-import { useMatchesData } from '~/utils/utils'
 import { AvatarCircle } from './card'
 
 function CommentActions({

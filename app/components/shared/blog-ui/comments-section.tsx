@@ -14,7 +14,7 @@ export function CommentSection({
   comments,
   postComments
 }: CommentSectionProps) {
-  const [isOpen, setIsOpen] = React.useState(true)
+  const [isOpen, setIsOpen] = React.useState(false)
   const comment = comments.map((comment) => comment)
 
   return (
