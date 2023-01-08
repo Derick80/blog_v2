@@ -58,7 +58,7 @@ export const Card = ({
 
           <img
             src={imageUrl}
-            className='block w-full scale-125 transform overflow-hidden object-center p-0 transition duration-200 ease-in-out'
+            className='block w-full transform overflow-hidden object-center p-0 transition duration-200 ease-in-out'
             alt={title}
           />
         </div>

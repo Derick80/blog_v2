@@ -7,7 +7,7 @@ import type { Post } from '~/utils/schemas/post-schema'
 import TipTap from '../tip-tap'
 
 export type EditPostProps = {
-  post: Post
+  post: Partial<Post>
 }
 
 export default function Edit({ post }: EditPostProps) {
@@ -27,7 +27,7 @@ export default function Edit({ post }: EditPostProps) {
   const [formData, setFormData] = useState({
     title: post.title,
     description: post.description,
-    body: post.body,
+    body: post.body || '',
     imageUrl: post.imageUrl,
     categories: [] as string[]
   })
@@ -65,11 +65,11 @@ export default function Edit({ post }: EditPostProps) {
   }
 
   return (
-    <div className='flex w-full items-center justify-center '>
-      <form method='post' action={`/blog/${post.id}/edit`} className='w-full'>
+    <div className='md:grid p-5 grid-cols-6 gap-5 bg-crimson3 '>
+      <form method='post' action={`/blog/${post.id}/edit`} className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'>
         <label htmlFor='title'>Title</label>
         <input
-          className='form-field-primary'
+          className='text-slate12 rounded-xl bg-crimson12'
           type='text'
           name='title'
           id='title'
@@ -79,6 +79,8 @@ export default function Edit({ post }: EditPostProps) {
         <label htmlFor='description'>Description</label>
         <div>{post.description}</div>
         <input
+                  className='text-slate12 rounded-xl bg-crimson12'
+
           type='text'
           name='description'
           id='description'
@@ -91,7 +93,7 @@ export default function Edit({ post }: EditPostProps) {
         <label htmlFor='body'>Post Content</label>
 
         <div className='flex flex-col items-center justify-center'>
-          {post.body && <TipTap name={'body'} content={post.body} />}
+          {post.body && <TipTap name={'body'} content={formData.body} />}
           <input type='hidden' name='body' value={formData.body} />
         </div>
 

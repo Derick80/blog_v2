@@ -2,7 +2,7 @@ import type { Category } from '@prisma/client'
 import { Cross2Icon, EyeOpenIcon } from '@radix-ui/react-icons'
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { useFetcher } from '@remix-run/react'
+import { Form, useFetcher } from '@remix-run/react'
 import React, { useEffect, useState } from 'react'
 import { ClientOnly } from 'remix-utils'
 import { Select } from '~/components/shared/box/select-box'
@@ -138,12 +138,7 @@ export default function NewPost() {
               setFormData({ ...formData, imageUrl: e.target.value })
             }
           />
-      <FormField
-          name='body'
-          type='hidden'
-          value={formData.body}
-          onChange={(e) => setFormData({ ...formData, body: e.target.value })}
-        />
+
         <label htmlFor='title'>Title</label>
         <input
           className='text-slate12 rounded-xl bg-crimson12'
@@ -166,11 +161,13 @@ export default function NewPost() {
           }
         />
 
-        <label htmlFor='body'>Post Content</label>
-        <TipTap name={ 'body' } content={ '' }
+     <div>
+     <label htmlFor='body'>Post Content</label>
+        <TipTap name={ 'body' }
 
         />
-
+  <input type='hidden' name='body' value={formData.body} />
+     </div>
        <div className='pt-5 flex flex-col bg-crimson3'>
             <div className='bg-red-300 flex w-full flex-wrap rounded-md'>
               {formData.categories.map((item) => (

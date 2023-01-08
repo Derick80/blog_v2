@@ -12,7 +12,7 @@ import * as Toolbar from '@radix-ui/react-toolbar'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
-const TipTap = ({ name, content }: { name: string; content: string }) => {
+const TipTap = ({ name, content }: { name: string; content?: string }) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
