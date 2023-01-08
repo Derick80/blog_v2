@@ -14,11 +14,13 @@ export function CommentSection({
   comments,
   postComments
 }: CommentSectionProps) {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(true)
   const comment = comments.map((comment) => comment)
 
   return (
-    <Box>
+    <div
+    className='bg-crimson2'
+    >
       <CommentForm comments={formatComments(comments || [])} />
 
       <div className='mt-2 flex w-full flex-row justify-end'>
@@ -27,7 +29,7 @@ export function CommentSection({
           type='button'
           onClick={() => setIsOpen(!isOpen)}
         >
-          +
+
           <ChatBubbleIcon />
           <div className='flex flex-col'>
             <p className='text-xs'>{postComments}</p>
@@ -38,6 +40,6 @@ export function CommentSection({
       {isOpen ? (
         <ListComments comments={formatComments(comments || [])} />
       ) : null}
-    </Box>
+    </div>
   )
 }
