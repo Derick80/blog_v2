@@ -1,78 +1,113 @@
 import {
   AvatarIcon,
   ChatBubbleIcon,
-  ChevronDownIcon
+  ChevronDownIcon,
+  PersonIcon
 } from '@radix-ui/react-icons'
 import { json } from '@remix-run/node'
 import { format } from 'date-fns'
 import React from 'react'
+import {
+  Comment as CommentType,
+  CommentWithChildren
+} from '~/utils/schemas/comment-schema'
 import CommentForm from './comment-form'
-
-function CommentActions({ commentId, replyCount }) {
-  const [replying, setReplying] = React.useState(false)
+import { Box } from '@mantine/core'
+function CommentActions({ commentId, userId, postId, createdBy }: { commentId: string, userId: string, postId: string, createdBy: string }) {
+  const [replying, setReplying] = React.useState(true)
 
   return (
-    <div className='flex items-center justify-between'>
-      <p> {replyCount}</p>
-      <button onClick={() => setReplying(!replying)}>
-        {replying && <CommentForm parentId={commentId} />}
-        <></>
-      </button>
+    <Box>
+
+    <div className='flex flex-row items-center '>
+      <button type='button' onClick={() => setReplying(!replying)}>
+        <p className='text-xs'>Reply</p>
+        <PersonIcon />
+        </button>
+
+      <div>
+
+      {replying ? <CommentForm parentId={commentId}  userId={userId}
+      postId={postId} createdBy={createdBy}
+      /> : <></>}
+      </div>
+
     </div>
+    </Box>
   )
 }
-function Comment({ comment }: any) {
+function Comment({ comment }: { comment: CommentType }) {
   const users = comment.user
   console.log(users, 'users')
 
   return (
     <>
       <div
-        className='border-black mb-1 flex flex-col space-y-2 rounded-xl border-2 p-2 shadow-lg'
+        className='mb-1 mt-2 flex h-fit w-full space-y-2 rounded-xl border-2 p-2 shadow-lg'
         key={comment.id}
       >
-        <h2 className='text-right'>{comment.message}</h2>
-        <CommentForm />
+        <div className='text w-full'>{comment.message}</div>
 
         {comment.user?.avatarUrl ? (
-          <div className='relative'>
-            <img
-              src={comment.user.avatarUrl}
-              alt='avatar'
-              className='h-5 w-5 rounded-full'
-            />
-            <p className='text-gray-500 absolute top-0 right-5 text-xs'>
-              {comment.createdBy[0]}
-            </p>{' '}
-            {format(new Date(comment.createdAt), 'MMM dd ')}
-            <div></div>
-          </div>
-        ) : (
-          <div className='bg-gray-300 h-10 w-10 rounded-full'>
-            <AvatarIcon />
-          </div>
-        )}
+          <img
+            src={comment.user.avatarUrl}
+            alt='avatar'
+            className='h-5 w-5 rounded-full'
+          />
+        ) : null}
+        <div className='text-right text-xs'>
+          {comment.createdBy && (
+            <>
+              <p className='italic'>Written by: {comment.createdBy}</p>
+            </>
+          )}
+          {comment.createdAt && (
+            <span className='inline-flex space-x-1'>
+              {' '}
+              <p className='italic'>Posted:</p>{' '}
+              <p>{format(new Date(comment.createdAt), 'MMM dd yy')}</p>
+            </span>
+          )}
+          {comment.updatedAt && (
+            <p className='italic'>
+              Updated: {format(new Date(comment.updatedAt), 'MMM dd yy')}
+            </p>
+          )}
+
+          <CommentActions commentId={comment.id}  userId={users.id}
+            postId={comment.postId}
+            createdBy={comment.createdBy}  />
+          <CommentForm
+
+            parentId={comment.parentId}
+          />
+        </div>
       </div>
     </>
   )
 }
 
-export default function ListComments({ comments }: any) {
-  const [isOpen, setIsOpen] = React.useState(false)
+export default function ListComments({
+  comments
+}: {
+  comments: CommentWithChildren[]
+}) {
+  const [isOpen, setIsOpen] = React.useState(true)
 
   return (
-    <div>
+    <div className='flex flex-row-reverse'>
       <button type='button' className='' onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? (
-          <div className='flex-col items-center'>
-            {comments?.map((comment) => {
-              return <Comment comment={comment} key={comment.id} />
-            })}
-          </div>
-        ) : (
-          <ChatBubbleIcon />
-        )}
+        {' '}
+        <ChatBubbleIcon />
       </button>
+
+      {isOpen ? (
+        <div className='flex flex-col space-y-2'>
+          {comments.map((comment) => {
+            return <Comment comment={comment} key={comment.id} />
+          })}
+        </div>
+      ) : null}
     </div>
   )
 }

@@ -1,28 +1,5 @@
-import { Favorite } from '@prisma/client'
-import type { SerializeFrom } from '@remix-run/node'
-import type { Like } from '~/utils/schemas/like-schema'
-import type { Post } from '~/utils/schemas/post-schema'
-import { UserType } from '~/utils/utils'
 import { prisma } from './prisma.server'
 
-export const PostSelect = {
-  id: true,
-  title: true,
-  description: true,
-  imageUrl: true,
-  body: true,
-  published: true,
-  createdAt: true,
-  updatedAt: true,
-  createdBy: true,
-  categories: true,
-  likes: true,
-  comments: true,
-  user: true,
-  userId: true,
-  favorites: true,
-  _count: true
-}
 export type CategoryForm = {
   value: string
 }[]
@@ -32,32 +9,6 @@ export type Category = {
   value: string
   label: string
 }
-
-export type PostAndCategories = Omit<Post, 'categories'> & {
-  categories: Category
-}
-
-type QueriedPost = Post & {
-  likes?: Like[]
-  favorites?: Favorite[]
-  _count: {
-    comments?: number
-    likes?: number
-    favorites?: number
-  }
-  user: UserType
-}
-
-export type PostAndCommentsToSerial = QueriedPost & {
-  comments: Comment
-}
-
-export type PostAndComments = SerializeFrom<PostAndCommentsToSerial>
-
-export type serializedQueriedPost = SerializeFrom<QueriedPost>
-export type SerializedCategory = SerializeFrom<Category>
-
-export type SerializedPost = SerializeFrom<Post>
 
 export async function getMyPosts(email: string) {
   const posts = await prisma.post.findMany({
@@ -112,7 +63,12 @@ export async function getPosts() {
     include: {
       comments: {
         include: {
-          user: true
+          user: true,
+          children: {
+            include: {
+              user: true
+            }
+          }
         }
       },
       user: true,
@@ -130,7 +86,12 @@ export async function getPostById(id: string) {
     include: {
       comments: {
         include: {
-          user: true
+          user: true,
+          children: {
+            include: {
+              user: true
+            }
+          }
         }
       },
       user: true,
@@ -140,7 +101,7 @@ export async function getPostById(id: string) {
       favorites: true
     }
   })
-  return post as QueriedPost
+  return post
 }
 
 export type PostInput = {
@@ -257,35 +218,6 @@ export async function unPublishPost(id: string) {
   return post
 }
 
-export async function getPostsAndComments() {
-  const posts = await prisma.post
-    .findMany({
-      where: {
-        published: true
-      },
-
-      include: {
-        likes: true,
-        categories: true,
-        _count: true
-      }
-    })
-    .then((posts) => {
-      return posts.map((post) => {
-        return {
-          ...post,
-          comments: prisma.comment.findMany({
-            where: {
-              postId: post.id
-            },
-            include: {
-              user: true
-            }
-          })
-        }
-      })
-    })
-}
 export async function getPostByCategoryValue(value: string) {
   const results = await prisma.post.findMany({
     where: {

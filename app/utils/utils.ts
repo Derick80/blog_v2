@@ -1,21 +1,6 @@
 import { useMatches } from '@remix-run/react'
 import { useMemo } from 'react'
-
-export type UserType = {
-  id: string
-  email: string
-  userName: string
-  avatarUrl: string
-  role: string
-  _count: {
-    accounts: number
-    tokens: number
-    posts: number
-    comments: number
-    likes: number
-    projects: number
-  }
-}
+import { UserType } from './schemas/user-schema'
 
 const DEFAULT_REDIRECT = '/'
 

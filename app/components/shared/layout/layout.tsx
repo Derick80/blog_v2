@@ -6,7 +6,7 @@ import {
   nonUserLinks,
   siteLinks,
   userLinks
-} from '~/utils/schemas/constants/links'
+} from '~/utils/constants/links'
 import { useOptionalUser } from '~/utils/utils'
 import ColorMode from './color-mode'
 import { BrandIcon } from '../icons'

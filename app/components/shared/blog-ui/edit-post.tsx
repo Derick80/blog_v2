@@ -1,11 +1,9 @@
 import { useFetcher, useLoaderData } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { ClientOnly } from 'remix-utils'
 import { Select } from '~/components/shared/box/select-box'
-import FormField from '~/components/shared/form-field'
 import { ImageUploader } from '~/components/shared/image-uploader'
 import type { loader } from '~/root'
-import type { Post, SerializedPost } from '~/utils/schemas/post-schema'
+import type { Post } from '~/utils/schemas/post-schema'
 import TipTap from '../tip-tap'
 
 export type EditPostProps = {
@@ -13,7 +11,6 @@ export type EditPostProps = {
 }
 
 export default function Edit({ post }: EditPostProps) {
-  const data = useLoaderData<typeof loader>()
   //   fetcher works! Grab all the categories from the database and display them in the select box. Use fetcher to ping the database and grab the categories.
   const fetcher = useFetcher()
   useEffect(() => {
@@ -76,7 +73,7 @@ export default function Edit({ post }: EditPostProps) {
           type='text'
           name='title'
           id='title'
-          value={post.post.title}
+          value={post.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
         <label htmlFor='description'>Description</label>
@@ -85,7 +82,7 @@ export default function Edit({ post }: EditPostProps) {
           type='text'
           name='description'
           id='description'
-          value={post.post.description}
+          value={post.description}
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
           }
@@ -94,7 +91,7 @@ export default function Edit({ post }: EditPostProps) {
         <label htmlFor='body'>Post Content</label>
 
         <div className='flex flex-col items-center justify-center'>
-          <TipTap name={'body'} content={post.post.body} />
+          {post.body && <TipTap name={'body'} content={post.body} />}
           <input type='hidden' name='body' value={formData.body} />
         </div>
 

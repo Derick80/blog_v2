@@ -1,4 +1,4 @@
-import { ActionArgs, json, LoaderArgs } from '@remix-run/node'
+import { ActionArgs, json, LoaderArgs, redirect } from '@remix-run/node'
 import { Form, useLoaderData } from '@remix-run/react'
 import React from 'react'
 import { badRequest } from 'remix-utils'
@@ -11,8 +11,7 @@ import { createComment } from '~/models/comments.server'
 export async function loader({ request, params }: LoaderArgs) {
   const postId = params?.postId
   if (!postId) return badRequest({ message: 'Invalid post' })
-  const commentId = params?.commentId
-  invariant(commentId, 'Invalid comment')
+
   const user = await isAuthenticated(request)
   if (!user) return badRequest({ message: 'Invalid user' })
 
@@ -25,7 +24,7 @@ export async function action({ request, params }: ActionArgs) {
   const message = formData.get('message')
   const postId = formData.get('postId')
   const userId = formData.get('userId')
-  const createdBy = user?.userName
+  const createdBy = formData.get('createdBy')
 
   invariant(postId, 'Invalid post')
   console.log('message', postId)
@@ -53,7 +52,7 @@ export async function action({ request, params }: ActionArgs) {
 
     const headers = await flashAndCommit(request, 'Your comment has been added')
 
-    return json({ success: true }, { headers })
+    return redirect('/blog', { headers })
   } catch (error) {
     if (error instanceof Error) {
       return badRequest({ message: error.message })

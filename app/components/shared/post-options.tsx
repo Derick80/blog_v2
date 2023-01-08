@@ -2,7 +2,6 @@ import { DotsVerticalIcon } from '@radix-ui/react-icons'
 import { Form } from '@remix-run/react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { iconAttrs, VerticalDots } from './icons'
 import { Dialog } from './layout/dialog'
 import { Modal } from './layout/modal'
 

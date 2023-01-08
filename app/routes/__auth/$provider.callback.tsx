@@ -1,5 +1,5 @@
 // app/routes/auth/$provider.callback.tsx
-import { LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { authenticator } from '~/models/auth/auth.server'
 
 export let loader = ({ request, params }: LoaderArgs) => {

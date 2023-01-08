@@ -1,16 +1,13 @@
 import { BookmarkFilledIcon, BookmarkIcon } from '@radix-ui/react-icons'
+import { SerializeFrom } from '@remix-run/node'
 import type { FormMethod } from '@remix-run/react'
 import { useFetcher } from '@remix-run/react'
 import { useState, useRef } from 'react'
-import type {
-  PostAndComments,
-  serializedQueriedPost
-} from '~/models/post.server'
-
+import type { Post, SerializedPost } from '~/utils/schemas/post-schema'
 export type FavoriteContainerProps = {
   currentUser: string
   postId: string
-  post: serializedQueriedPost
+  post: SerializedPost
 }
 
 export default function FavoriteContainer({

@@ -23,6 +23,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.7",
     "@heroicons/react": "^2.0.13",
+    "@mantine/core": "^5.10.0",
     "@prisma/client": "^4.8.0",
     "@radix-ui/react-aspect-ratio": "^1.0.1",
     "@radix-ui/react-icons": "^1.1.1",

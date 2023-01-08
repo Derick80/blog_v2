@@ -1,7 +1,7 @@
 import { ChevronUpIcon } from '@radix-ui/react-icons'
 import { NavLink } from '@remix-run/react'
 import { useState } from 'react'
-import { adminLinks } from '~/utils/schemas/constants/links'
+import { adminLinks } from '~/utils/constants/links'
 import { useOptionalUser } from '~/utils/utils'
 
 export type AdminMakerProps = {

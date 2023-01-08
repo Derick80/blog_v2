@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PrismaClient } from '@prisma/client'
-import { fuji, kyoto, shimo, shinJuku } from '~/utils/schemas/constants/japan-links'
-import { nyc } from '~/utils/schemas/constants/nycurls'
+import { fuji, kyoto, shimo, shinJuku } from '~/utils/constants/japan-links'
+import { nyc } from '~/utils/constants/nycurls'
 
 
 
