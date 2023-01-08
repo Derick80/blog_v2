@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger-with-children */
 import { format } from 'date-fns'
 import type { SerializedPost } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
@@ -66,7 +67,16 @@ export const Card = ({
         <div></div>
         <div className='pt-4 text-xs'>
           <p className='indent-2 text-xs italic'>{description}</p>
-          <p className='text-xs'>{body}</p>
+
+{body && (
+
+ <p
+ dangerouslySetInnerHTML={{ __html: body }} className='text-xs'></p>
+)}
+
+
+
+
         </div>
         <Divider></Divider>
         <div className='relative flex flex-row justify-between'>
