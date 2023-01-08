@@ -22,7 +22,7 @@ const TipTap = ({ name, content }: { name: string; content: string }) => {
     editorProps: {
       attributes: {
         class:
-          'flex-1 prose prose-sm mx-auto sm:prose lg:prose-lg xl:prose-2xl m-5 dark:prose-invert focus:outline-none'
+          'flex-1 bg-crimson12 h-24 mx-auto text-slate1 dark:text-slate12 m-5 focus:outline-none rounded-xl mt-0'
       }
     },
     content: content
@@ -31,7 +31,7 @@ const TipTap = ({ name, content }: { name: string; content: string }) => {
   return (
     <div className='w-full space-x-2'>
       {editor && (
-        <Toolbar.Root className='flex flex-row' aria-label='Formatting options'>
+        <Toolbar.Root className='flex flex-row ml-3 rounded-xl mb-0' aria-label='Formatting options'>
           <Toolbar.ToggleGroup
             className='flex'
             type='multiple'
@@ -195,7 +195,7 @@ const TipTap = ({ name, content }: { name: string; content: string }) => {
           <div className='flex space-x-2 px-2'></div>
         </Toolbar.Root>
       )}
-      <div className='bg-white h-80 overflow-auto rounded-md'>
+      <div className='bg-crimson12 overflow-auto rounded-md'>
         <EditorContent editor={editor} className='outline-none' />
       </div>
       <input type='hidden' name={name} value={editor?.getHTML()} />

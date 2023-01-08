@@ -1,4 +1,5 @@
 import type { Category } from '@prisma/client'
+import { Cross2Icon, EyeOpenIcon } from '@radix-ui/react-icons'
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { useFetcher } from '@remix-run/react'
@@ -59,6 +60,7 @@ export async function action({ request }: ActionArgs) {
 }
 
 export default function NewPost() {
+  const [isOpen, setIsOpen] = useState(false)
   //   fetcher works! Grab all the categories from the database and display them in the select box. Use fetcher to ping the database and grab the categories.
   const fetcher = useFetcher()
   useEffect(() => {
@@ -113,11 +115,38 @@ export default function NewPost() {
   }
 
   return (
-    <div className='flex items-center justify-center '>
-      <form method='post' action='/blog/new' className='form-primary'>
+    <div className='md:grid p-5 grid-cols-6 gap-5 bg-crimson3 '>
+        <div
+          className='col-span-1 col-start-5 flex justify-center flex-row mx-auto'
+        >
+        <button
+          className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+          type='button'
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <EyeOpenIcon />
+          </button>
+        </div>
+
+      <form method='post' action='/blog/new' className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'>
+      <input
+            type='hidden'
+            name='imageUrl'
+            id='imageUrl'
+            value={formData.imageUrl}
+            onChange={(e) =>
+              setFormData({ ...formData, imageUrl: e.target.value })
+            }
+          />
+      <FormField
+          name='body'
+          type='hidden'
+          value={formData.body}
+          onChange={(e) => setFormData({ ...formData, body: e.target.value })}
+        />
         <label htmlFor='title'>Title</label>
         <input
-          className='form-field-primary'
+          className='text-slate12 rounded-xl bg-crimson12'
           type='text'
           name='title'
           id='title'
@@ -127,6 +156,8 @@ export default function NewPost() {
         <label htmlFor='description'>Description</label>
         <input
           type='text'
+          className='text-slate12 rounded-xl bg-crimson12'
+
           name='description'
           id='description'
           value={formData.description}
@@ -136,31 +167,17 @@ export default function NewPost() {
         />
 
         <label htmlFor='body'>Post Content</label>
-        <TipTap name={'body'} />
-        <FormField
-          name='body'
-          type='hidden'
-          value={formData.body}
-          onChange={(e) => setFormData({ ...formData, body: e.target.value })}
+        <TipTap name={ 'body' } content={ '' }
+
         />
 
-        <div className='flex flex-row items-center justify-center'>
-          <input
-            type='hidden'
-            name='imageUrl'
-            id='imageUrl'
-            value={formData.imageUrl}
-            onChange={(e) =>
-              setFormData({ ...formData, imageUrl: e.target.value })
-            }
-          />
-
-          <div className='bg-slate-100 text-zinc-800 dark:bg-zinc-800 dark:text-slate-100 flex w-96 flex-col pt-2'>
-            <div className='bg-red-300 flex w-full rounded-md'>
+       <div className='pt-5 flex flex-col bg-crimson3'>
+            <div className='bg-red-300 flex w-full flex-wrap rounded-md'>
               {formData.categories.map((item) => (
-                <div key={item} className='flex items-center'>
-                  <p>{item}</p>
+                <div key={item} className='inline-flex items-center rounded-xl bg-crimson5 w-fit space-x-2 space-y-2 hover:bg-crimson4 border-bg-crimson4'>
+                  <p className='bg-crimson5 text-sm p-2 rounded-xl'>{item}</p>
                   <button
+                   className='border-transparent inline-flex items-center space-x-1.5 rounded-xl  bg-crimson5 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
                     type='button'
                     onClick={() => {
                       setFormData((prev) => ({
@@ -171,14 +188,16 @@ export default function NewPost() {
                       }))
                     }}
                   >
-                    X
+                  <Cross2Icon />
                   </button>
                 </div>
               ))}
             </div>
+            <div className='bg-crimson3'>
             <Select
               options={cata}
               multiple={true}
+              className='bg-crimson3 pt-5 mt-4 text-bg-crimson12'
               label='Categories'
               name='categories'
               value={formData.categories}
@@ -195,6 +214,9 @@ export default function NewPost() {
           Save
         </button>
       </form>
+     {isOpen &&  <div className='col-span-1 col-start-6'>
+        <h1 className='text-3xl'>Preview</h1>
+        </div>}
     </div>
   )
 }

@@ -9,12 +9,11 @@ export async function loader({ request, params }: LoaderArgs) {
   const postId = params?.postId
   if (!postId) return badRequest({ message: 'Invalid post' })
 
-  const user = await isAuthenticated(request)
-  if (!user) return badRequest({ message: 'Invalid user' })
+
 
   const post = await getPostById(postId)
 
-  return json({ postId, user, post })
+  return json({ postId, post })
 }
 
 export default function Index() {

@@ -3,7 +3,7 @@ import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { useParams } from '@remix-run/react'
 import React from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
-import { useUser } from '~/utils/utils'
+import { useOptionalUser, useUser } from '~/utils/utils'
 import CommentForm from './comment-form'
 import formatComments from './format-comments'
 import ListComments from './list-comments'
@@ -23,12 +23,12 @@ const params = useParams()
 console.log(params,'params');
 
   const comment = comments.map((comment) => comment)
-const user = useUser()
+const user = useOptionalUser()
   return (
     <div
     className='bg-crimson2'
     >
-      <CommentForm userId={user.id} createdBy={user.userName}  postId={postId} comments={formatComments(comments || [])} />
+      <CommentForm userId={user?.id} createdBy={user?.userName}  postId={postId} comments={formatComments(comments || [])} />
 
       <div className='mt-2 flex w-full flex-row justify-end'>
         <button

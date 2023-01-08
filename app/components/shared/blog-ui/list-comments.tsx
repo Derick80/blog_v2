@@ -2,6 +2,9 @@ import React from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import CommentForm from './comment-form'
 import { AvatarCircle } from './card'
+import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
+import { Form } from '@remix-run/react'
+import { NavLink } from 'react-router-dom'
 
 function CommentActions({
   commentId,
@@ -42,6 +45,20 @@ function CommentActions({
           >
             <p className='text-xs'>Reply</p>
           </button>
+
+           <Form action={`/blog/${postId}/${commentId}/delete`} method="post">
+            <button type="submit" className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'>
+              <TrashIcon />
+              <p className='text-xs'>Delete</p>
+
+            </button>
+            </Form>
+            <NavLink to={`/blog/${postId}/${commentId}/edit`}>
+            <button className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'>
+              <p className='text-xs'>Edit</p>
+              <Pencil1Icon />
+            </button>
+            </NavLink>
         </div>
       </div>
     </>

@@ -39,9 +39,9 @@ export const ImageUploader = ({ onChange, imageUrl }: props) => {
         ref={dropRef}
         className={`${
           draggingOver
-            ? 'border-rounded border-yellow-300 border-4 border-dashed'
+            ? 'border-rounded border-black border-yellow-300 border-4 border-dashed'
             : ''
-        } bg-gray-400 hover:bg-gray-500 group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full transition duration-300 ease-in-out`}
+        } bg-crimson12 border-rounded border-black hover:bg-gray-500 group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full transition duration-300 ease-in-out`}
         style={{
           backgroundSize: 'cover',
           ...(imageUrl ? { backgroundImage: `url(${imageUrl})` } : {})
@@ -56,10 +56,10 @@ export const ImageUploader = ({ onChange, imageUrl }: props) => {
         onClick={() => fileInputRef.current?.click()}
       >
         {imageUrl && (
-          <div className='bg-blue-400 absolute h-full w-full rounded-full opacity-50 transition duration-300 ease-in-out group-hover:opacity-0' />
+          <div className='bg-blue-300 absolute h-full w-full rounded-full opacity-50 transition duration-300 ease-in-out group-hover:opacity-0' />
         )}
         {
-          <p className='text-gray-200 pointer-events-none z-10 cursor-pointer select-none text-4xl font-extrabold transition duration-300 ease-in-out group-hover:opacity-0'>
+          <p className='text-bg-crimson12 pointer-events-none z-10 cursor-pointer select-none text-4xl font-extrabold transition duration-300 ease-in-out group-hover:opacity-0'>
             +
           </p>
         }

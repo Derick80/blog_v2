@@ -25,10 +25,12 @@ export const Select = ({
         value={value}
         onChange={onChange}
         size={options.length}
-        className='text-gray-400 w-96 rounded-xl py-2'
+        className='text-bg-crimson12 bg-crimson3 w-full rounded-md flex flex-col-reverse'
       >
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option
+            className='bg-crimson3 pt-5 mt-4 text-bg-crimson12'
+          key={option.value} value={option.value}>
             {option.label}
           </option>
         ))}

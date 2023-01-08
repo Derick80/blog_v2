@@ -75,6 +75,16 @@ export async function createChildComment(input: CreateCommentInput) {
   })
   return comment
 }
+
+export async function getCommentById(commentId: string) {
+  const comment = await prisma.comment.findUnique({
+    where: {
+      id: commentId
+    }
+  })
+  return comment
+}
+
 type editCommentInput = {
   commentId: string
   message: string
