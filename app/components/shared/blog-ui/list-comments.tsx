@@ -12,102 +12,108 @@ import {
   CommentWithChildren
 } from '~/utils/schemas/comment-schema'
 import CommentForm from './comment-form'
-import { Box } from '@mantine/core'
-function CommentActions({ commentId, userId, postId, createdBy }: { commentId: string, userId: string, postId: string, createdBy: string }) {
-  const [replying, setReplying] = React.useState(true)
+import { Avatar, Box, Button, Group, Paper, Text } from '@mantine/core'
+import { useFetcher } from '@remix-run/react'
+import { useMatchesData } from '~/utils/utils'
+
+
+function CommentActions({ commentId, userId, postId, createdBy, replyCount }: { commentId: string, userId: string, postId: string, createdBy: string , replyCount: number}) {
+  const [replying, setReplying] = React.useState(false)
+
+  const fetcher = useFetcher()
+
+  const matches= useMatchesData('/blog')
+console.log(matches, 'matches');
+
+const comments = matches?.post?.comments.find((comment) => comment.parentId === commentId)
+
+console.log(comments, 'comments');
+
+
 
   return (
-    <Box>
-
-    <div className='flex flex-row items-center '>
-      <button type='button' onClick={() => setReplying(!replying)}>
+    <Group position="apart" mt="md">
+<Text >{replyCount}</Text>
+      <Button type='button' onClick={() => setReplying(!replying)}>
         <p className='text-xs'>Reply</p>
         <PersonIcon />
-        </button>
+        </Button>
 
-      <div>
+
 
       {replying ? <CommentForm parentId={commentId}  userId={userId}
       postId={postId} createdBy={createdBy}
       /> : <></>}
-      </div>
 
-    </div>
-    </Box>
+
+
+
+    </Group>
   )
 }
-function Comment({ comment }: { comment: CommentType }) {
+
+
+
+function Comment({ comment }: { comment: CommentWithChildren }) {
   const users = comment.user
   console.log(users, 'users')
 
   return (
     <>
-      <div
-        className='mb-1 mt-2 flex h-fit w-full space-y-2 rounded-xl border-2 p-2 shadow-lg'
-        key={comment.id}
+         <Paper withBorder radius="md" mb="md" p="md">
+
+         <Box
+        sx={() => ({
+          display: "flex",
+        })}
       >
-        <div className='text w-full'>{comment.message}</div>
+        <Avatar />
 
-        {comment.user?.avatarUrl ? (
-          <img
-            src={comment.user.avatarUrl}
-            alt='avatar'
-            className='h-5 w-5 rounded-full'
-          />
-        ) : null}
-        <div className='text-right text-xs'>
-          {comment.createdBy && (
-            <>
-              <p className='italic'>Written by: {comment.createdBy}</p>
-            </>
-          )}
-          {comment.createdAt && (
-            <span className='inline-flex space-x-1'>
-              {' '}
-              <p className='italic'>Posted:</p>{' '}
-              <p>{format(new Date(comment.createdAt), 'MMM dd yy')}</p>
-            </span>
-          )}
-          {comment.updatedAt && (
-            <p className='italic'>
-              Updated: {format(new Date(comment.updatedAt), 'MMM dd yy')}
-            </p>
-          )}
+        <Box
+          pl="md"
+          sx={() => ({
+            display: "flex",
+            flexDirection: "column",
+          })}
+        >
+          <Group>
+            <Text>{comment.user.userName}</Text>
+            <Text>{comment.createdAt.toString()}</Text>
+          </Group>
 
-          <CommentActions commentId={comment.id}  userId={users.id}
-            postId={comment.postId}
-            createdBy={comment.createdBy}  />
-          <CommentForm
+          {comment.message}
+        </Box>
+      </Box>
 
-            parentId={comment.parentId}
-          />
-        </div>
-      </div>
+      <CommentActions
+        commentId={comment.id || ''}
+        replyCount={comment.children.length}
+        userId={comment.user.id}
+        postId={comment.postId}
+        createdBy={comment.createdBy}
+
+      />
+
+      {comment.children && comment.children.length >0  && (
+
+          <ListComments key={comment.parentId} comments={comment.children} />
+        )
+
+
+      }
+    </Paper>
+
     </>
   )
 }
-
-export default function ListComments({
-  comments
-}: {
-  comments: CommentWithChildren[]
-}) {
-  const [isOpen, setIsOpen] = React.useState(true)
-
+function ListComments({ comments }: { comments: Array<CommentWithChildren> }) {
   return (
-    <div className='flex flex-row-reverse'>
-      <button type='button' className='' onClick={() => setIsOpen(!isOpen)}>
-        {' '}
-        <ChatBubbleIcon />
-      </button>
-
-      {isOpen ? (
-        <div className='flex flex-col space-y-2'>
-          {comments.map((comment) => {
-            return <Comment comment={comment} key={comment.id} />
-          })}
-        </div>
-      ) : null}
-    </div>
-  )
+    <Box>
+      {comments.map((comment) => {
+        return <Comment key={comment.id} comment={comment} />;
+      })}
+    </Box>
+  );
 }
+
+export default ListComments;

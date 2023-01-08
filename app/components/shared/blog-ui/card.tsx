@@ -114,7 +114,6 @@ export const Card = ({
             ) : null
           ) : null}
         </div>
-        <CommentForm postId={id} userId={user.id} createdBy={createdBy} />
         {showComments && <CommentSection comments={comments} />}
       </div>
     </>

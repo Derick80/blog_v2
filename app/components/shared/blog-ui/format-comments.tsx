@@ -1,26 +1,31 @@
-import { CommentWithChildren } from '~/utils/schemas/comment-schema'
-import { Comment } from '~/utils/schemas/comment-schema'
+import { Comments,Comment, CommentWithChildren } from '~/utils/schemas/comment-schema'
 
-export default function FormatComments(comments: Array<Comment>) {
-  const map = new Map()
-  const roots: Array<CommentWithChildren> = []
+function formComments(comments: Array<Comment>) {
+    const map = new Map();
 
-  for (let i = 0; i < comments.length; i++) {
-    const commentId = comments[i]?.id
+    const roots: Array<CommentWithChildren> = [];
 
-    map.set(commentId, i)
+    for (let i = 0; i < comments.length; i++) {
+      const commentId = comments[i]?.id;
 
-    ;(comments[i] as unknown as CommentWithChildren).children = []
+      map.set(commentId, i);
 
-    if (typeof comments[i].parentId === 'string') {
-      const parentCommentIndex: number = map
-        .get(comments[i]?.parentId)
-        (comments[parentCommentIndex] as unknown as CommentWithChildren)
-        .children.push(comments[i] as unknown as CommentWithChildren)
+      (comments[i] as CommentWithChildren).children = [];
 
-      continue
+      if (typeof comments[i]?.parentId === "string") {
+        const parentCommentIndex: number = map.get(comments[i]?.parentId);
+
+        (comments[parentCommentIndex] as CommentWithChildren).children.push(
+          comments[i] as CommentWithChildren
+        );
+
+        continue;
+      }
+
+      roots.push(comments[i] as CommentWithChildren);
     }
-    roots.push(comments[i] as unknown as CommentWithChildren)
+
+    return roots;
   }
-  return roots
-}
+
+  export default formComments;
