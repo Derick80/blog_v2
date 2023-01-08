@@ -114,7 +114,7 @@ export const Card = ({
         </div>
         <Divider></Divider>
         {showComments && (
-          <CommentSection comments={comments} postComments={_count.comments} />
+          <CommentSection comments={comments} postComments={_count.comments}  postId={id}/>
         )}
       </div>
     </>

@@ -20,12 +20,13 @@ export default function CommentForm({
 }: CommentFormProps) {
   const [formData, setFormData] = useState({
     message: '',
-    userId: userId || null || undefined,
+    userId: userId || null || undefined || '',
     postId: postId || null || undefined,
     createdBy: createdBy || null || undefined,
     parentId: parentId || null || undefined
   })
 
+console.log(postId,'postId');
 
   return (
     <>

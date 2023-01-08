@@ -1,7 +1,9 @@
 import { Box } from '@mantine/core'
 import { ChatBubbleIcon } from '@radix-ui/react-icons'
+import { useParams } from '@remix-run/react'
 import React from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
+import { useUser } from '~/utils/utils'
 import CommentForm from './comment-form'
 import formatComments from './format-comments'
 import ListComments from './list-comments'
@@ -9,19 +11,24 @@ import ListComments from './list-comments'
 type CommentSectionProps = {
   comments?: Array<CommentWithChildren>
   postComments?: number
+  postId: string
 }
 export function CommentSection({
   comments,
-  postComments
+  postComments,
+  postId
 }: CommentSectionProps) {
   const [isOpen, setIsOpen] = React.useState(false)
-  const comment = comments.map((comment) => comment)
+const params = useParams()
+console.log(params,'params');
 
+  const comment = comments.map((comment) => comment)
+const user = useUser()
   return (
     <div
     className='bg-crimson2'
     >
-      <CommentForm comments={formatComments(comments || [])} />
+      <CommentForm userId={user.id} createdBy={user.userName}  postId={postId} comments={formatComments(comments || [])} />
 
       <div className='mt-2 flex w-full flex-row justify-end'>
         <button
