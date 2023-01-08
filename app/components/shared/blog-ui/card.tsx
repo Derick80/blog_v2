@@ -1,13 +1,11 @@
 import { format } from 'date-fns'
-import type { Post, SerializedPost } from '~/utils/schemas/post-schema'
-import type { User, UserType } from '~/utils/schemas/user-schema'
+import type { SerializedPost } from '~/utils/schemas/post-schema'
+import type { User } from '~/utils/schemas/user-schema'
 import { Divider } from '../layout/divider'
 import PostOptions from '../post-options'
-import CommentForm from './comment-form'
 import { CommentSection } from './comments-section'
 import FavoriteContainer from './favorite-button'
 import LikeContainer from './like-container'
-import ListComments from './list-comments'
 import { ShareButton } from './share-button'
 
 export type ManyPostProps = {
@@ -114,13 +112,17 @@ export const Card = ({
             ) : null
           ) : null}
         </div>
-        {showComments && <CommentSection comments={comments} />}
+        <Divider></Divider>
+        {_count.comments}
+        {showComments && (
+          <CommentSection comments={comments} postComments={_count.comments} />
+        )}
       </div>
     </>
   )
 }
 
-function AvatarCircle({
+export function AvatarCircle({
   avatarUrl,
   userName,
   createdBy,

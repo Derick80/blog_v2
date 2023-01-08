@@ -25,23 +25,23 @@ export default function CommentForm({
     createdBy: createdBy || null || undefined,
     parentId: parentId || null || undefined
   })
-  console.log(parentId, 'parentId')
+
 
   return (
     <>
-    <Box mt="md" mb="md">
+      <div className='mt-2 flex w-full flex-col rounded-l-3xl'>
         <form
-          className='text-black border-bg-crimson6 flex w-full flex-row items-center justify-center rounded-lg'
+          className='text-black border-bg-crimson6 flex w-full flex-row items-center rounded-lg'
           method='post'
-          action='/actions/comment'a
+          action='/actions/comment'
         >
           <input type='hidden' name='_action' />
           <input type='hidden' name='userId' value={formData.userId} />
           <input type='hidden' name='postId' value={formData.postId} />
           <input type='hidden' name='createdBy' value={formData.createdBy} />
           <input type='hidden' name='parentId' value={formData.parentId} />
-          {/* <textarea
-            className='border-bg-crimson6 bg-zinc-200 text-zinc-900 dark:text-black w-full rounded-md border dark:bg-crimson1'
+          <textarea
+            className='border-bg-crimson6 bg-zinc-200 text-zinc-900 dark:text-black rounded-md border dark:bg-crimson1'
             rows={1}
             cols={50}
             id='message'
@@ -50,42 +50,30 @@ export default function CommentForm({
             onChange={(e) =>
               setFormData({ ...formData, message: e.target.value })
             }
-          /> */}
-        <Textarea
-        className='border-bg-crimson6 bg-zinc-200 text-zinc-900 dark:text-black w-full rounded-md border dark:bg-crimson1'
-        required
-      name='message'
-      value={formData.message}
-      onChange={(e) =>
-        setFormData({ ...formData, message: e.target.value })
-      }
-      />
+          />
 
-<Group position="right" mt="md">
-            {parentId ? (
-              <>
-                <button
-                  className='text-white flex items-center space-x-2 rounded-lg bg-crimson6 p-2'
-                  type='submit'
-                >
-                  <p>Reply</p>
-                  <PaperPlaneIcon className='-rotate-90 transform' />
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  className='text-white flex items-center space-x-2 rounded-lg bg-crimson6 p-2'
-                  type='submit'
-                >
-                  <p>Comment</p>
-                  <PaperPlaneIcon />
-                </button>
-              </>
-            )}
-</Group>
+          {parentId ? (
+            <>
+              <button
+                className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+                type='submit'
+              >
+                <p>Reply</p>
+                <PaperPlaneIcon className='-rotate-90 transform' />
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+                type='submit'
+              >
+                <PaperPlaneIcon />
+              </button>
+            </>
+          )}
         </form>
-      </Box>
+      </div>
     </>
   )
 }

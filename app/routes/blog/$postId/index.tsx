@@ -20,7 +20,7 @@ export async function loader({ request, params }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
-    <div className='grid grid-cols-6 gap-4 place-items-center'>
+    <div className='grid grid-cols-6 place-items-center gap-4'>
       {data.post && (
         <div className='col-span-4 col-start-2'>
           <Card
