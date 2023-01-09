@@ -35,7 +35,7 @@ export async function action({ request }: ActionArgs) {
   const title = formData.get('title') as string
   const description = formData.get('description') as string
   const body = formData.get('body') as string
-  const imageUrl = formData.get('imageUrl') as string
+  const imageUrl = formData.get('imageUrl')
   const categories = formData.getAll('categories')
 
   const correctedCategories = categories.map((item) => {
@@ -59,7 +59,6 @@ export async function action({ request }: ActionArgs) {
 }
 
 export default function NewPost() {
-  const fomer = useFetcher()
   const [isOpen, setIsOpen] = useState(false)
   //   fetcher works! Grab all the categories from the database and display them in the select box. Use fetcher to ping the database and grab the categories.
   const fetcher = useFetcher()
@@ -125,23 +124,52 @@ export default function NewPost() {
           <EyeOpenIcon />
         </button>
       </div>
+<fetcher.Form
+        name='forma'
+        method='post'
+        action='/actions/image'
+        encType='multipart/form-data'
+        className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+        id='form'
+      >
+        <label htmlFor='imageUrl'>Image to upload</label>
+        <input
+          id='imageUrl'
+          className='rounded-xl bg-crimson12 text-slate12'
+          type='file'
+          name='imageUrl'
+          accept='image/*'
+        />
+        <button
+          className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+          type='submit'
+        >
+          Upload
+        </button>
+
+      </fetcher.Form>
 
       <form
         name='forma'
         method='post'
-        action='/blog/new'
         className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
         id='form'
       >
-        <input
-          type='hidden'
-          name='imageUrl'
-          id='imageUrl'
-          value={formData.imageUrl}
+        {fetcher.data ? (
+        <>
+          <div>
+            File has been uploaded to S3 and is available under the following
+            URL (if the bucket has public access enabled):
+          </div>
+          <input type='hidden' name='imageUrl' value={fetcher.data.imageUrl} />
+          {fetcher?.data?.imageUrl}
           onChange={(e) =>
             setFormData({ ...formData, imageUrl: e.target.value })
           }
-        />
+
+          <img src={fetcher.data.imageUrl} alt={'#'} />
+        </>
+      ) : null}
 
         <label htmlFor='title'>Title</label>
         <input
@@ -206,9 +234,10 @@ export default function NewPost() {
           <br />
         </div>
 
-        <Uploader />
 
-        <button type='submit' className='btn-base btn-solid-success'>
+        <button type='submit'
+
+        className='btn-base btn-solid-success'>
           Save
         </button>
       </form>
