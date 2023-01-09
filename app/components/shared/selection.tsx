@@ -12,12 +12,14 @@ export type MultiSelectProps = {
   value: SelectOption[]
   options: SelectOption[]
   id?: SelectOption[]
+  index?: number
   onChange: (value: SelectOption[]) => void
 }
 
 export function Select({
   multiple,
   value,
+  index,
   onChange,
   options
 }: MultiSelectProps) {

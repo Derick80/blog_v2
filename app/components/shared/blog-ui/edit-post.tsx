@@ -1,7 +1,7 @@
 import { useFetcher } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { Select } from '~/components/shared/box/select-box'
-import { ImageUploader } from '~/components/shared/image-uploader'
+
 import type {
   PrismaPost,
   SerializedEditPost
