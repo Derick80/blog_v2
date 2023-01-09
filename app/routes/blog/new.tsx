@@ -2,11 +2,9 @@ import type { Category } from '@prisma/client'
 import { Cross2Icon, EyeOpenIcon } from '@radix-ui/react-icons'
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Form, useFetcher } from '@remix-run/react'
+import { useFetcher } from '@remix-run/react'
 import React, { useEffect, useState } from 'react'
-import { ClientOnly } from 'remix-utils'
 import { Select } from '~/components/shared/box/select-box'
-import FormField from '~/components/shared/form-field'
 import { ImageUploader } from '~/components/shared/image-uploader'
 import TipTap from '~/components/shared/tip-tap'
 import { isAuthenticated } from '~/models/auth/auth.server'
@@ -60,6 +58,7 @@ export async function action({ request }: ActionArgs) {
 }
 
 export default function NewPost() {
+
   const [isOpen, setIsOpen] = useState(false)
   //   fetcher works! Grab all the categories from the database and display them in the select box. Use fetcher to ping the database and grab the categories.
   const fetcher = useFetcher()
@@ -207,7 +206,9 @@ export default function NewPost() {
           onChange={handleFileUpload}
           imageUrl={formData.imageUrl}
         />
-        <button type='submit' className='btn-base btn-solid-success'>
+        <button type='submit'
+
+        className='btn-base btn-solid-success'>
           Save
         </button>
       </form>

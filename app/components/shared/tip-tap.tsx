@@ -4,17 +4,24 @@ import {
   FontBoldIcon,
   FontItalicIcon,
   HeadingIcon,
+  Link2Icon,
   PilcrowIcon,
   StrikethroughIcon,
-  TextAlignCenterIcon
+  TextAlignCenterIcon,
+
 } from '@radix-ui/react-icons'
 import * as Toolbar from '@radix-ui/react-toolbar'
+import Link from '@tiptap/extension-link'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import { useCallback } from 'react'
 
 const TipTap = ({ name, content }: { name: string; content?: string }) => {
   const editor = useEditor({
     extensions: [
+      Link.configure({
+        openOnClick: false,
+      }),
       StarterKit.configure({
         history: false
       })
@@ -27,6 +34,31 @@ const TipTap = ({ name, content }: { name: string; content?: string }) => {
     },
     content: content
   })
+  const setLink = useCallback(() => {
+    const previousUrl = editor?.getAttributes('link').href
+    const url = window.prompt('URL', previousUrl)
+
+    // cancelled
+    if (url === null) {
+      return
+    }
+
+    // empty
+    if (url === '') {
+      editor?.chain().focus().extendMarkRange('link').unsetLink()
+        .run()
+
+      return
+    }
+
+    // update link
+    editor?.chain().focus().extendMarkRange('link').setLink({ href: url })
+      .run()
+  }, [editor])
+
+  if (!editor) {
+    return null
+  }
 
   return (
     <div className='w-full space-x-2'>
@@ -190,12 +222,26 @@ const TipTap = ({ name, content }: { name: string; content?: string }) => {
             >
               <HeadingIcon /> <p>6</p>
             </Toolbar.ToggleItem>
+            <Toolbar.ToggleItem
+              type='button'
+              aria-label='link'
+              value='link'
+              onClick={setLink}
+              className={editor.isActive('link') ? 'is-active' : ''}
+              disabled={!editor.can().chain().focus().unsetAllMarks().run()}
+
+
+            >
+<Link2Icon />
+            </Toolbar.ToggleItem>
           </Toolbar.ToggleGroup>
 
           <div className='flex space-x-2 px-2'></div>
         </Toolbar.Root>
       )}
       <div className='bg-crimson12 overflow-auto rounded-md'>
+
+
         <EditorContent editor={editor} className='outline-none' />
       </div>
       <input type='hidden' name={name} value={editor?.getHTML()} />

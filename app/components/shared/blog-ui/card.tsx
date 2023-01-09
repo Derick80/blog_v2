@@ -1,19 +1,34 @@
 /* eslint-disable react/no-danger-with-children */
+import { Category } from 'aws-sdk/clients/signer'
 import { format } from 'date-fns'
-import type { SerializedPost } from '~/utils/schemas/post-schema'
+import type {  SerializedEditPost, SerializedPost } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import { Divider } from '../layout/divider'
-import PostOptions from '../post-options'
+import PostOptions from './post-options'
 import { CommentSection } from './comments-section'
 import FavoriteContainer from './favorite-button'
 import LikeContainer from './like-container'
 import { ShareButton } from './share-button'
-
+import type{ Comment } from '~/utils/schemas/comment-schema'
 export type ManyPostProps = {
-  post: SerializedPost
-  user: User
+  post: SerializedPost & {
+    comments: Comment[]
+  }
+  user: User | null
+
 }
 
+export type EditPostCardProps = {
+  post: SerializedEditPost
+  user: User | null
+}
+export type TheBasicCardProps = {
+  showLikes: boolean
+  showFavorites: boolean
+  showComments: boolean
+  showShare: boolean
+  showOptions: boolean
+} & EditPostCardProps
 export type BasicCardProps = {
   showLikes: boolean
   showFavorites: boolean
@@ -21,6 +36,7 @@ export type BasicCardProps = {
   showShare: boolean
   showOptions: boolean
 } & ManyPostProps
+
 
 export const Card = ({
   post,
@@ -30,7 +46,7 @@ export const Card = ({
   showFavorites,
   showShare,
   showOptions
-}: BasicCardProps) => {
+}: BasicCardProps | TheBasicCardProps) => {
   const users = user?.userName
   console.log(users, 'users')
   const {

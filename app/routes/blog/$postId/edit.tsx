@@ -5,10 +5,9 @@ import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import Edit from '~/components/shared/blog-ui/edit-post'
-import type { CategoryForm } from '~/models/post.server'
+import { CategoryForm, getPostToEdit } from '~/models/post.server'
 import {
   deletePost,
-  getPostById,
   publishPost,
   savePost,
   unPublishPost
@@ -18,7 +17,8 @@ import { validateText } from '~/routes/validators.server'
 export async function loader({ params, request }: LoaderArgs) {
   const postId = params.postId
   invariant(postId, 'postId is required')
-  const post = await getPostById(postId)
+  const post = await getPostToEdit(postId)
+  invariant(post, 'post is required')
 
   return json({ post })
 }
@@ -112,7 +112,8 @@ export async function action({ params, request }: ActionArgs) {
 }
 
 export default function EditPost() {
-  const post = useLoaderData<typeof loader>()
+  const data = useLoaderData<typeof loader>()
+  const post = data.post
 
   return <Edit post={post} />
 }

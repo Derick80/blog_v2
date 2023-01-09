@@ -26,6 +26,7 @@ model User {
   favorites   Favorite[]
   projects    Project[]
     comments   Comment[]
+    images ImageTest[]
 
 }
 
@@ -204,6 +205,14 @@ model Account {
   @@index([userId])
 }
 
+
+model ImageTest {
+  id  Int @id @unique @default(autoincrement())
+  imageUrl String
+  title String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId   String
+}
 enum Role {
   ADMIN
   USER

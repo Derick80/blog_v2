@@ -1,13 +1,11 @@
-import { useFetcher, useLoaderData } from '@remix-run/react'
+import { useFetcher } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { Select } from '~/components/shared/box/select-box'
 import { ImageUploader } from '~/components/shared/image-uploader'
-import type { loader } from '~/root'
-import type { Post } from '~/utils/schemas/post-schema'
+import type {  PrismaPost, SerializedEditPost } from '~/utils/schemas/post-schema'
 import TipTap from '../tip-tap'
-
 export type EditPostProps = {
-  post: Partial<Post>
+  post: SerializedEditPost
 }
 
 export default function Edit({ post }: EditPostProps) {
@@ -29,7 +27,7 @@ export default function Edit({ post }: EditPostProps) {
     description: post.description,
     body: post.body || '',
     imageUrl: post.imageUrl,
-    categories: [] as string[]
+    categories: post.categories.map((item) => item.value)
   })
 
   const handleFileUpload = async (file: File) => {

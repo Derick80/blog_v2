@@ -4,33 +4,6 @@ export type CategoryForm = {
   value: string
 }[]
 
-export type Category = {
-  id: string
-  value: string
-  label: string
-}
-
-export async function getMyPosts(email: string) {
-  const posts = await prisma.post.findMany({
-    where: {
-      user: {
-        email
-      }
-    },
-
-    include: {
-      _count: true,
-      categories: true,
-      likes: true,
-      comments: {
-        include: {
-          user: true
-        }
-      }
-    }
-  })
-  return posts
-}
 export async function getUserPosts(userId: string) {
   const posts = await prisma.post.findMany({
     where: {
@@ -76,6 +49,9 @@ export async function getPosts() {
       _count: true,
       likes: true,
       favorites: true
+    },
+    orderBy: {
+      createdAt: 'desc'
     }
   })
 }
@@ -104,6 +80,42 @@ export async function getPostById(id: string) {
   return post
 }
 
+export async function getMyPosts(email: string) {
+  const posts = await prisma.post.findMany({
+    where: {
+      user: {
+        email
+      }
+    },
+
+    include: {
+      _count: true,
+      categories: true,
+      likes: true,
+      comments: {
+        include: {
+          user: true
+        }
+      }
+    }
+  })
+  return posts
+}
+
+//  typesafe getPostToEdit function
+export async function getPostToEdit(id:string){
+  const post = await prisma.post.findUnique({
+    where: { id },
+    include: {
+      categories: true,
+      user: true
+    }
+
+  })
+  return post
+}
+
+// creation functions
 export type PostInput = {
   title: string
   description: string
@@ -151,13 +163,8 @@ export async function getUserDrafts(userId: string) {
     },
     include: {
       categories: true,
-      likes: true,
-      comments: {
-        include: {
-          user: true
-        }
-      }
-    }
+      user: true,
+  }
   })
   return posts
 }

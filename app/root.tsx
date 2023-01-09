@@ -77,3 +77,22 @@ export default function AppWithThemeProvider() {
     </ThemeProvider>
   )
 }
+
+export function ErrorBoundary({ error }) {
+  console.error(error);
+  return (
+    <html>
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+{error && <div> {error.message}</div>
+
+
+}        <Scripts />
+      </body>
+    </html>
+  );
+}

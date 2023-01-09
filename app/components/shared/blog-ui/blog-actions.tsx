@@ -9,25 +9,28 @@ export type BlogActionProps = {
 export default function BlogActions({ commentId, postId }: BlogActionProps) {
   const [open, setOpen] = useState(true)
   return (
-    <button
+   <div>
+
+<button
       onClick={() => setOpen(!open)}
       className='flex flex-1 flex-col items-center rounded-full bg-crimson6  hover:bg-crimson4'
     >
+
+</button>
       <Link
-        className='btn-base btn-solid-info'
-        to={`/blog/${postId}/${commentId}/edit`}
+  className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'        to={`/blog/${postId}/${commentId}/edit`}
       >
         <span className='material-symbols-outlined'>edit</span>
         Edit
       </Link>
 
       <Link
-        className='btn-base btn-solid-danger'
-        to={`/blog/${postId}/${commentId}/delete`}
+  className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'        to={`/blog/${postId}/${commentId}/delete`}
       >
         <span className='material-symbols-outlined'>delete</span>
         Delete
       </Link>
-    </button>
+
+   </div>
   )
 }

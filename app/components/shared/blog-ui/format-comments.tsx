@@ -1,8 +1,8 @@
-import {
-  Comments,
+import type {
   Comment,
   CommentWithChildren
-} from '~/utils/schemas/comment-schema'
+} from '~/utils/schemas/comment-schema';
+
 
 function formComments(comments: Array<Comment>) {
   const map = new Map()
