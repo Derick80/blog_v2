@@ -11,6 +11,7 @@ import { isAuthenticated } from '~/models/auth/auth.server'
 import getAllCategories from '~/models/categories.server'
 import type { CategoryForm } from '~/models/post.server'
 import { createPost } from '~/models/post.server'
+import Uploader from '../beta'
 
 export type CatFetcher = {
   categories: Pick<Category, 'value' | 'label'>[]
@@ -58,7 +59,7 @@ export async function action({ request }: ActionArgs) {
 }
 
 export default function NewPost() {
-
+const fomer = useFetcher()
   const [isOpen, setIsOpen] = useState(false)
   //   fetcher works! Grab all the categories from the database and display them in the select box. Use fetcher to ping the database and grab the categories.
   const fetcher = useFetcher()
@@ -71,6 +72,8 @@ export default function NewPost() {
   //   grab the categories from the fetcher
   const cata =
     fetcher.data && fetcher.data.data ? fetcher.data.data.categories : []
+
+
 
   //   form data for the post
   const [formData, setFormData] = useState({
@@ -127,7 +130,13 @@ export default function NewPost() {
           </button>
         </div>
 
-      <form method='post' action='/blog/new' className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'>
+      <fomer.Form
+
+      name='forma'
+      method='post' action='/blog/new' className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+      id='form'
+
+      >
       <input
             type='hidden'
             name='imageUrl'
@@ -202,16 +211,15 @@ export default function NewPost() {
           </div>
           <br />
         </div>
-        <ImageUploader
-          onChange={handleFileUpload}
-          imageUrl={formData.imageUrl}
-        />
+
+       <Uploader />
+
         <button type='submit'
 
         className='btn-base btn-solid-success'>
           Save
         </button>
-      </form>
+      </fomer.Form>
      {isOpen &&  <div className='col-span-1 col-start-6'>
         <h1 className='text-3xl'>Preview</h1>
         </div>}

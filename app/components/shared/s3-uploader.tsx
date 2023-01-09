@@ -5,8 +5,8 @@ import {
   unstable_createMemoryUploadHandler as createMemoryUploadHandler,
   unstable_parseMultipartFormData as parseMultipartFormData
 } from '@remix-run/node'
-import { useFetcher } from '@remix-run/react'
-import { useEffect } from 'react'
+import { useFetcher, useSubmit } from '@remix-run/react'
+import { useEffect, useRef, useState } from 'react'
 import { s3UploadHandler } from '~/models/s3.server'
 
 type ActionData = {
@@ -33,46 +33,76 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Uploader() {
   const fetcher = useFetcher<ActionData>()
+const submit = useSubmit()
+const [draggingOver, setDraggingOver] = useState(false)
+const fileInputRef = useRef<HTMLInputElement | null>(null)
+const dropRef = useRef(null)
+
+const preventDefaults = (e: React.DragEvent<HTMLDivElement>) => {
+  e.preventDefault()
+  e.stopPropagation()
+}
+
+const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  if (event.currentTarget.files && event.currentTarget.files[0]) {
+    onChange(event.currentTarget.files[0])
+  }
+}
 
   useEffect(() => {
     console.log(fetcher.data)
   }, [fetcher])
-  const onClick = () =>
-    fetcher.submit(
-      {
-        imageUrl: 'imageUrl'
-      },
-      {
-        method: 'post',
-        action: '/actions/image',
-        encType: 'multipart/form-data'
-      }
-    )
+
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    preventDefaults(e)
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      onChange(e.dataTransfer.files[0])
+      e.dataTransfer.clearData()
+    }
+  }
+
+
 
   return (
     <>
-      <fetcher.Form
-        method='post'
-        encType='multipart/form-data'
-        onChange={onClick}
+    <div
+        ref={dropRef}
+        className={`${
+          draggingOver
+            ? 'border-rounded border-black border-yellow-300 border-4 border-dashed'
+            : ''
+        } bg-crimson12 border-rounded border-black hover:bg-gray-500 group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full transition duration-300 ease-in-out`}
+        style={{
+          backgroundSize: 'cover',
+          ...(imageUrl ? { backgroundImage: `url(${imageUrl})` } : {})
+        }}
+        onDragEnter={() => setDraggingOver(true)}
+        onDragLeave={() => setDraggingOver(false)}
+        onDrag={preventDefaults}
+        onDragStart={preventDefaults}
+        onDragEnd={preventDefaults}
+        onDragOver={preventDefaults}
+        onDrop={handleDrop}
+        onClick={() => fileInputRef.current?.click()}
       >
-        <label htmlFor='imageUrl'>Image to upload</label>
-        <input id='imageUrl' type='file' name='imageUrl' accept='image/*' />
-      </fetcher.Form>
-      {fetcher.type === 'done' ? (
-        fetcher.data.errorMsg ? (
-          <h2>{fetcher.data.errorMsg}</h2>
-        ) : (
-          <>
-            <div>
-              File has been uploaded to S3 and is available under the following
-              URL (if the bucket has public access enabled):
-            </div>
-            <div>{fetcher.data.imageUrl}</div>
-            <img src={fetcher.data.imageUrl} alt={'Uploaded  from S3'} />
-          </>
-        )
-      ) : null}
+        {imageUrl && (
+          <div className='bg-blue-300 absolute h-full w-full rounded-full opacity-50 transition duration-300 ease-in-out group-hover:opacity-0' />
+        )}
+        {
+          <p className='text-bg-crimson12 pointer-events-none z-10 cursor-pointer select-none text-4xl font-extrabold transition duration-300 ease-in-out group-hover:opacity-0'>
+            +
+          </p>
+        }
+        <input
+          id='imageUrl'
+          name='imageUrl'
+          type='file'
+          ref={fileInputRef}
+          onChange={handleChange}
+          className='hidden'
+        />
+      </div>
     </>
   )
 }
