@@ -59,7 +59,7 @@ export async function action({ request }: ActionArgs) {
 }
 
 export default function NewPost() {
-const fomer = useFetcher()
+  const fomer = useFetcher()
   const [isOpen, setIsOpen] = useState(false)
   //   fetcher works! Grab all the categories from the database and display them in the select box. Use fetcher to ping the database and grab the categories.
   const fetcher = useFetcher()
@@ -72,8 +72,6 @@ const fomer = useFetcher()
   //   grab the categories from the fetcher
   const cata =
     fetcher.data && fetcher.data.data ? fetcher.data.data.categories : []
-
-
 
   //   form data for the post
   const [formData, setFormData] = useState({
@@ -117,39 +115,37 @@ const fomer = useFetcher()
   }
 
   return (
-    <div className='md:grid p-5 grid-cols-6 gap-5 bg-crimson3 '>
-        <div
-          className='col-span-1 col-start-5 flex justify-center flex-row mx-auto'
-        >
+    <div className='grid-cols-6 gap-5 bg-crimson3 p-5 md:grid '>
+      <div className='col-span-1 col-start-5 mx-auto flex flex-row justify-center'>
         <button
           className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
           type='button'
           onClick={() => setIsOpen(!isOpen)}
         >
           <EyeOpenIcon />
-          </button>
-        </div>
+        </button>
+      </div>
 
-      <fomer.Form
-
-      name='forma'
-      method='post' action='/blog/new' className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
-      id='form'
-
+      <form
+        name='forma'
+        method='post'
+        action='/blog/new'
+        className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+        id='form'
       >
-      <input
-            type='hidden'
-            name='imageUrl'
-            id='imageUrl'
-            value={formData.imageUrl}
-            onChange={(e) =>
-              setFormData({ ...formData, imageUrl: e.target.value })
-            }
-          />
+        <input
+          type='hidden'
+          name='imageUrl'
+          id='imageUrl'
+          value={formData.imageUrl}
+          onChange={(e) =>
+            setFormData({ ...formData, imageUrl: e.target.value })
+          }
+        />
 
         <label htmlFor='title'>Title</label>
         <input
-          className='text-slate12 rounded-xl bg-crimson12'
+          className='rounded-xl bg-crimson12 text-slate12'
           type='text'
           name='title'
           id='title'
@@ -159,8 +155,7 @@ const fomer = useFetcher()
         <label htmlFor='description'>Description</label>
         <input
           type='text'
-          className='text-slate12 rounded-xl bg-crimson12'
-
+          className='rounded-xl bg-crimson12 text-slate12'
           name='description'
           id='description'
           value={formData.description}
@@ -169,40 +164,39 @@ const fomer = useFetcher()
           }
         />
 
-     <div>
-     <label htmlFor='body'>Post Content</label>
-        <TipTap name={ 'body' }
-
-        />
-  <input type='hidden' name='body' value={formData.body} />
-     </div>
-       <div className='pt-5 flex flex-col bg-crimson3'>
-            <div className='bg-red-300 flex w-full flex-wrap rounded-md'>
-              {formData.categories.map((item) => (
-                <div key={item} className='inline-flex items-center rounded-xl bg-crimson5 w-fit space-x-2 space-y-2 hover:bg-crimson4 border-bg-crimson4'>
-                  <p className='bg-crimson5 text-sm p-2 rounded-xl'>{item}</p>
-                  <button
-                   className='border-transparent inline-flex items-center space-x-1.5 rounded-xl  bg-crimson5 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-                    type='button'
-                    onClick={() => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        categories: prev.categories.filter(
-                          (cat) => cat !== item
-                        )
-                      }))
-                    }}
-                  >
+        <div>
+          <label htmlFor='body'>Post Content</label>
+          <TipTap name={'body'} />
+          <input type='hidden' name='body' value={formData.body} />
+        </div>
+        <div className='flex flex-col bg-crimson3 pt-5'>
+          <div className='bg-red-300 flex w-full flex-wrap rounded-md'>
+            {formData.categories.map((item) => (
+              <div
+                key={item}
+                className='border-bg-crimson4 inline-flex w-fit items-center space-x-2 space-y-2 rounded-xl bg-crimson5 hover:bg-crimson4'
+              >
+                <p className='rounded-xl bg-crimson5 p-2 text-sm'>{item}</p>
+                <button
+                  className='border-transparent inline-flex items-center space-x-1.5 rounded-xl  bg-crimson5 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+                  type='button'
+                  onClick={() => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      categories: prev.categories.filter((cat) => cat !== item)
+                    }))
+                  }}
+                >
                   <Cross2Icon />
-                  </button>
-                </div>
-              ))}
-            </div>
-            <div className='bg-crimson3'>
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className='bg-crimson3'>
             <Select
               options={cata}
               multiple={true}
-              className='bg-crimson3 pt-5 mt-4 text-bg-crimson12'
+              className='text-bg-crimson12 mt-4 bg-crimson3 pt-5'
               label='Categories'
               name='categories'
               value={formData.categories}
@@ -212,17 +206,17 @@ const fomer = useFetcher()
           <br />
         </div>
 
-       <Uploader />
+        <Uploader />
 
-        <button type='submit'
-
-        className='btn-base btn-solid-success'>
+        <button type='submit' className='btn-base btn-solid-success'>
           Save
         </button>
-      </fomer.Form>
-     {isOpen &&  <div className='col-span-1 col-start-6'>
-        <h1 className='text-3xl'>Preview</h1>
-        </div>}
+      </form>
+      {isOpen && (
+        <div className='col-span-1 col-start-6'>
+          <h1 className='text-3xl'>Preview</h1>
+        </div>
+      )}
     </div>
   )
 }

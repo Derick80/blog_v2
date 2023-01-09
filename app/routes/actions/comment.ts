@@ -16,7 +16,6 @@ export async function action({ request, params }: ActionArgs) {
     return json({ error: 'Not authenticated' }, { status: 401 })
   }
 
-
   const formData = await request.formData()
   const postId = formData.get('postId')
   const parentId = formData.get('parentId')

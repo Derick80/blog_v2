@@ -22,11 +22,9 @@ export type Post = Partial<PrismaPost> & {
 
 export type SerializedPost = SerializeFrom<Post>
 
-
-type EditPosts = PrismaPost &{
+type EditPosts = PrismaPost & {
   categories: Category[]
   user: User
 }
 
 export type SerializedEditPost = SerializeFrom<EditPosts>
-

@@ -103,14 +103,13 @@ export async function getMyPosts(email: string) {
 }
 
 //  typesafe getPostToEdit function
-export async function getPostToEdit(id:string){
+export async function getPostToEdit(id: string) {
   const post = await prisma.post.findUnique({
     where: { id },
     include: {
       categories: true,
       user: true
     }
-
   })
   return post
 }
@@ -163,8 +162,8 @@ export async function getUserDrafts(userId: string) {
     },
     include: {
       categories: true,
-      user: true,
-  }
+      user: true
+    }
   })
   return posts
 }

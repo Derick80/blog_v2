@@ -21,11 +21,9 @@ function CommentActions({
 }) {
   const [replying, setReplying] = React.useState(false)
 
-
-
   return (
     <>
-      <div className='mt-2 flex-col w-full rounded-l-3xl hover:bg-crimson6 '>
+      <div className='mt-2 w-full flex-col rounded-l-3xl hover:bg-crimson6 '>
         {replying ? (
           <CommentForm
             parentId={commentId}
@@ -46,19 +44,21 @@ function CommentActions({
             <p className='text-xs'>Reply</p>
           </button>
 
-           <Form action={`/blog/${postId}/${commentId}/delete`} method="post">
-            <button type="submit" className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'>
+          <Form action={`/blog/${postId}/${commentId}/delete`} method='post'>
+            <button
+              type='submit'
+              className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+            >
               <TrashIcon />
               <p className='text-xs'>Delete</p>
-
             </button>
-            </Form>
-            <NavLink to={`/blog/${postId}/${commentId}/edit`}>
+          </Form>
+          <NavLink to={`/blog/${postId}/${commentId}/edit`}>
             <button className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'>
               <p className='text-xs'>Edit</p>
               <Pencil1Icon />
             </button>
-            </NavLink>
+          </NavLink>
         </div>
       </div>
     </>
@@ -71,33 +71,32 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
 
   return (
     <>
-      <div className='hover:bg-crimson6 flex flex-row-reverse items-center justify-between'>
-
-
-          {comment.user.avatarUrl && (
-            <AvatarCircle
-              avatarUrl={comment.user.avatarUrl}
-              userName={users.userName}
-              createdBy={comment.createdBy}
-              createdAt={comment.createdAt}
-              updatedAt={comment.updatedAt}
-            />
-          )}
-          <p className='border-bg-crimson5 border-transparent text-base indent-4'>{comment.message}</p>
-          </div>
-
-        <CommentActions
-          commentId={comment.id || ''}
-          replyCount={comment.children.length}
-          userId={comment.user.id}
-          postId={comment.postId}
-          createdBy={comment.createdBy}
-        />
-
-        {comment.children && comment.children.length > 0 && (
-          <ListComments key={comment.parentId} comments={comment.children} />
+      <div className='flex flex-row-reverse items-center justify-between hover:bg-crimson6'>
+        {comment.user.avatarUrl && (
+          <AvatarCircle
+            avatarUrl={comment.user.avatarUrl}
+            userName={users.userName}
+            createdBy={comment.createdBy}
+            createdAt={comment.createdAt}
+            updatedAt={comment.updatedAt}
+          />
         )}
+        <p className='border-bg-crimson5 border-transparent indent-4 text-base'>
+          {comment.message}
+        </p>
+      </div>
 
+      <CommentActions
+        commentId={comment.id || ''}
+        replyCount={comment.children.length}
+        userId={comment.user.id}
+        postId={comment.postId}
+        createdBy={comment.createdBy}
+      />
+
+      {comment.children && comment.children.length > 0 && (
+        <ListComments key={comment.parentId} comments={comment.children} />
+      )}
     </>
   )
 }

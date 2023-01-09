@@ -1,8 +1,7 @@
 import type {
   Comment,
   CommentWithChildren
-} from '~/utils/schemas/comment-schema';
-
+} from '~/utils/schemas/comment-schema'
 
 function formComments(comments: Array<Comment>) {
   const map = new Map()
@@ -13,7 +12,6 @@ function formComments(comments: Array<Comment>) {
     const commentId = comments[i]?.id
 
     map.set(commentId, i)
-
     ;(comments[i] as CommentWithChildren).children = []
 
     if (typeof comments[i]?.parentId === 'string') {

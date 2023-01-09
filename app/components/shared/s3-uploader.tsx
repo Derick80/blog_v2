@@ -33,26 +33,25 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Uploader() {
   const fetcher = useFetcher<ActionData>()
-const submit = useSubmit()
-const [draggingOver, setDraggingOver] = useState(false)
-const fileInputRef = useRef<HTMLInputElement | null>(null)
-const dropRef = useRef(null)
+  const submit = useSubmit()
+  const [draggingOver, setDraggingOver] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const dropRef = useRef(null)
 
-const preventDefaults = (e: React.DragEvent<HTMLDivElement>) => {
-  e.preventDefault()
-  e.stopPropagation()
-}
-
-const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  if (event.currentTarget.files && event.currentTarget.files[0]) {
-    onChange(event.currentTarget.files[0])
+  const preventDefaults = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
   }
-}
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.currentTarget.files && event.currentTarget.files[0]) {
+      onChange(event.currentTarget.files[0])
+    }
+  }
 
   useEffect(() => {
     console.log(fetcher.data)
   }, [fetcher])
-
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     preventDefaults(e)
@@ -62,17 +61,15 @@ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     }
   }
 
-
-
   return (
     <>
-    <div
+      <div
         ref={dropRef}
         className={`${
           draggingOver
             ? 'border-rounded border-black border-yellow-300 border-4 border-dashed'
             : ''
-        } bg-crimson12 border-rounded border-black hover:bg-gray-500 group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full transition duration-300 ease-in-out`}
+        } border-rounded border-black hover:bg-gray-500 group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full bg-crimson12 transition duration-300 ease-in-out`}
         style={{
           backgroundSize: 'cover',
           ...(imageUrl ? { backgroundImage: `url(${imageUrl})` } : {})

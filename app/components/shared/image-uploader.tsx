@@ -41,7 +41,7 @@ export const ImageUploader = ({ onChange, imageUrl }: props) => {
           draggingOver
             ? 'border-rounded border-black border-yellow-300 border-4 border-dashed'
             : ''
-        } bg-crimson12 border-rounded border-black hover:bg-gray-500 group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full transition duration-300 ease-in-out`}
+        } border-rounded border-black hover:bg-gray-500 group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full bg-crimson12 transition duration-300 ease-in-out`}
         style={{
           backgroundSize: 'cover',
           ...(imageUrl ? { backgroundImage: `url(${imageUrl})` } : {})

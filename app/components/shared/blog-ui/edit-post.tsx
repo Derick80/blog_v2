@@ -2,7 +2,10 @@ import { useFetcher } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { Select } from '~/components/shared/box/select-box'
 import { ImageUploader } from '~/components/shared/image-uploader'
-import type {  PrismaPost, SerializedEditPost } from '~/utils/schemas/post-schema'
+import type {
+  PrismaPost,
+  SerializedEditPost
+} from '~/utils/schemas/post-schema'
 import TipTap from '../tip-tap'
 export type EditPostProps = {
   post: SerializedEditPost
@@ -63,11 +66,15 @@ export default function Edit({ post }: EditPostProps) {
   }
 
   return (
-    <div className='md:grid p-5 grid-cols-6 gap-5 bg-crimson3 '>
-      <form method='post' action={`/blog/${post.id}/edit`} className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'>
+    <div className='grid-cols-6 gap-5 bg-crimson3 p-5 md:grid '>
+      <form
+        method='post'
+        action={`/blog/${post.id}/edit`}
+        className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+      >
         <label htmlFor='title'>Title</label>
         <input
-          className='text-slate12 rounded-xl bg-crimson12'
+          className='rounded-xl bg-crimson12 text-slate12'
           type='text'
           name='title'
           id='title'
@@ -77,8 +84,7 @@ export default function Edit({ post }: EditPostProps) {
         <label htmlFor='description'>Description</label>
         <div>{post.description}</div>
         <input
-                  className='text-slate12 rounded-xl bg-crimson12'
-
+          className='rounded-xl bg-crimson12 text-slate12'
           type='text'
           name='description'
           id='description'

@@ -1,7 +1,10 @@
 /* eslint-disable react/no-danger-with-children */
 import { Category } from 'aws-sdk/clients/signer'
 import { format } from 'date-fns'
-import type {  SerializedEditPost, SerializedPost } from '~/utils/schemas/post-schema'
+import type {
+  SerializedEditPost,
+  SerializedPost
+} from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import { Divider } from '../layout/divider'
 import PostOptions from './post-options'
@@ -9,13 +12,12 @@ import { CommentSection } from './comments-section'
 import FavoriteContainer from './favorite-button'
 import LikeContainer from './like-container'
 import { ShareButton } from './share-button'
-import type{ Comment } from '~/utils/schemas/comment-schema'
+import type { Comment } from '~/utils/schemas/comment-schema'
 export type ManyPostProps = {
   post: SerializedPost & {
     comments: Comment[]
   }
   user: User | null
-
 }
 
 export type EditPostCardProps = {
@@ -36,7 +38,6 @@ export type BasicCardProps = {
   showShare: boolean
   showOptions: boolean
 } & ManyPostProps
-
 
 export const Card = ({
   post,
@@ -84,15 +85,12 @@ export const Card = ({
         <div className='pt-4 text-xs'>
           <p className='indent-2 text-xs italic'>{description}</p>
 
-{body && (
-
- <p
- dangerouslySetInnerHTML={{ __html: body }} className='text-xs'></p>
-)}
-
-
-
-
+          {body && (
+            <p
+              dangerouslySetInnerHTML={{ __html: body }}
+              className='text-xs'
+            ></p>
+          )}
         </div>
         <Divider></Divider>
         <div className='relative flex flex-row justify-between'>
@@ -140,7 +138,11 @@ export const Card = ({
         </div>
         <Divider></Divider>
         {showComments && (
-          <CommentSection comments={comments} postComments={_count.comments}  postId={id}/>
+          <CommentSection
+            comments={comments}
+            postComments={_count.comments}
+            postId={id}
+          />
         )}
       </div>
     </>

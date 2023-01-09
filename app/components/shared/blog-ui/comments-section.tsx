@@ -19,16 +19,19 @@ export function CommentSection({
   postId
 }: CommentSectionProps) {
   const [isOpen, setIsOpen] = React.useState(false)
-const params = useParams()
-console.log(params,'params');
+  const params = useParams()
+  console.log(params, 'params')
 
   const comment = comments.map((comment) => comment)
-const user = useOptionalUser()
+  const user = useOptionalUser()
   return (
-    <div
-    className='bg-crimson2'
-    >
-      <CommentForm userId={user?.id} createdBy={user?.userName}  postId={postId} comments={formatComments(comments || [])} />
+    <div className='bg-crimson2'>
+      <CommentForm
+        userId={user?.id}
+        createdBy={user?.userName}
+        postId={postId}
+        comments={formatComments(comments || [])}
+      />
 
       <div className='mt-2 flex w-full flex-row justify-end'>
         <button
@@ -36,7 +39,6 @@ const user = useOptionalUser()
           type='button'
           onClick={() => setIsOpen(!isOpen)}
         >
-
           <ChatBubbleIcon />
           <div className='flex flex-col'>
             <p className='text-xs'>{postComments}</p>

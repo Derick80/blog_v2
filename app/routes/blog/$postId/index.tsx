@@ -9,8 +9,6 @@ export async function loader({ request, params }: LoaderArgs) {
   const postId = params?.postId
   if (!postId) return badRequest({ message: 'Invalid post' })
 
-
-
   const post = await getPostById(postId)
 
   return json({ postId, post })

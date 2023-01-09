@@ -26,14 +26,14 @@ export default function CommentForm({
     parentId: parentId || null || undefined
   })
 
-console.log(postId,'postId');
+  console.log(postId, 'postId')
 
   return (
     <>
-    {/* control form list color here */}
-      <div className='mt-2 flex w-full flex-col bg-crimson2 hover:bg-crimson6 rounded-l-3xl'>
+      {/* control form list color here */}
+      <div className='mt-2 flex w-full flex-col rounded-l-3xl bg-crimson2 hover:bg-crimson6'>
         <form
-          className='text-black flex w-full bg-crimson2 hover:bg-crimson6 flex-row items-center justify-around rounded-lg'
+          className='text-black flex w-full flex-row items-center justify-around rounded-lg bg-crimson2 hover:bg-crimson6'
           method='post'
           action='/actions/comment'
         >

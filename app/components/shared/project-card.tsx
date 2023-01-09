@@ -3,7 +3,6 @@ import { Link } from '@remix-run/react'
 import { ProjectCategories } from '~/models/project.server'
 import CategoryContainer from './category-container'
 
-
 export const ProjectCard = ({ project, categories }: any) => {
   return (
     <>

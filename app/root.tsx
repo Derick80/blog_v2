@@ -79,7 +79,7 @@ export default function AppWithThemeProvider() {
 }
 
 export function ErrorBoundary({ error }) {
-  console.error(error);
+  console.error(error)
   return (
     <html>
       <head>
@@ -88,11 +88,8 @@ export function ErrorBoundary({ error }) {
         <Links />
       </head>
       <body>
-{error && <div> {error.message}</div>
-
-
-}        <Scripts />
+        {error && <div> {error.message}</div>} <Scripts />
       </body>
     </html>
-  );
+  )
 }

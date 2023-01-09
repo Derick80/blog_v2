@@ -18,25 +18,27 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 export default function Drafts() {
-  const {drafts, user } = useLoaderData<{user:SerializeFrom<typeof isAuthenticated>, drafts:SerializedEditPost[]}>()
+  const { drafts, user } = useLoaderData<{
+    user: SerializeFrom<typeof isAuthenticated>
+    drafts: SerializedEditPost[]
+  }>()
   return (
-   <>
-    <div className='mx-auto'>
-      <h1>Drafts</h1>
-      {drafts.map((draft:SerializedEditPost) => (
-        <Card key={draft.id}
-        post={draft}
-          showComments={false}
-          showShare={false}
-          showOptions={true}
-          showFavorites={false}
-          showLikes={false}
-          user={user}
-
-        />
-     ))}
-
-    </div>
-   </>
+    <>
+      <div className='mx-auto'>
+        <h1>Drafts</h1>
+        {drafts.map((draft: SerializedEditPost) => (
+          <Card
+            key={draft.id}
+            post={draft}
+            showComments={false}
+            showShare={false}
+            showOptions={true}
+            showFavorites={false}
+            showLikes={false}
+            user={user}
+          />
+        ))}
+      </div>
+    </>
   )
 }

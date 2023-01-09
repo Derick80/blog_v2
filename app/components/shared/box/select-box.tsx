@@ -25,12 +25,14 @@ export const Select = ({
         value={value}
         onChange={onChange}
         size={options.length}
-        className='text-bg-crimson12 bg-crimson3 w-full rounded-md flex flex-col-reverse'
+        className='text-bg-crimson12 flex w-full flex-col-reverse rounded-md bg-crimson3'
       >
         {options.map((option) => (
           <option
-            className='bg-crimson3 pt-5 mt-4 text-bg-crimson12'
-          key={option.value} value={option.value}>
+            className='text-bg-crimson12 mt-4 bg-crimson3 pt-5'
+            key={option.value}
+            value={option.value}
+          >
             {option.label}
           </option>
         ))}
