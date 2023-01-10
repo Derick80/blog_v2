@@ -1,246 +1,139 @@
-import { FileInput, MultiSelect, TextInput } from '@mantine/core'
-import type { Category } from '@prisma/client'
-import { Cross2Icon, EyeOpenIcon } from '@radix-ui/react-icons'
-import type { ActionArgs, LoaderArgs } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
-import { useFetcher, useLoaderData } from '@remix-run/react'
-import { IconUpload } from '@tabler/icons'
-import React, { useEffect, useRef, useState } from 'react'
-import { Select } from '~/components/shared/box/select-box'
-import TipTap from '~/components/shared/tip-tap'
-import { UploadMe } from '~/components/shared/upload'
+import type { ActionFunction } from '@remix-run/node'
+import { json } from '@remix-run/node'
+import { useFetcher } from '@remix-run/react'
+import { useEffect } from 'react'
 import { isAuthenticated } from '~/models/auth/auth.server'
-import getAllCategories from '~/models/categories.server'
-import type { CategoryForm } from '~/models/post.server'
-import { createPost } from '~/models/post.server'
+import { prisma } from '~/models/prisma.server'
 
-export type CatFetcher = {
-  categories: Pick<Category, 'value' | 'label'>[]
-}
-export async function loader({ request }: LoaderArgs) {
-  const user = await isAuthenticated(request)
-  if (!user) {
-    return { redirect: '/auth/login' }
-  }
-  const categories = await getAllCategories()
-console.log(categories, 'categories');
-
-  return json({ user, categories })
+type ActionData = {
+  imageUrl?: string
 }
 
-export async function action({ request }: ActionArgs) {
+export const action: ActionFunction = async ({ request }) => {
   const user = await isAuthenticated(request)
   if (!user) {
-    return { redirect: '/auth/login' }
+    return json({ error: 'Not authenticated' }, { status: 401 })
   }
+
   const formData = await request.formData()
+
+  const imageUrl = formData.get('imageUrl') as string
   const title = formData.get('title') as string
   const description = formData.get('description') as string
   const body = formData.get('body') as string
-  const imageUrl = formData.get('imageUrl')
-  const categories = formData.getAll('categories')
 
-  const correctedCategories = categories.map((item) => {
-    return { value: item }
-  }) as CategoryForm
+  console.log(imageUrl, 'imageUrl')
 
-  const data = {
-    title,
-    description,
-    body,
-    imageUrl,
-    correctedCategories,
-    userId: user.id,
-    createdBy: user.userName
+  if (!imageUrl) {
+    return json({
+      errorMsg: 'Something went wrong while uploading'
+    })
   }
 
-  //
-  return redirect('/blog')
+  if (!title) {
+    return json({
+      errorMsg: 'Something went wrong while uploading'
+    })
+  }
+
+  await prisma.post.create({
+    data: {
+      imageUrl: imageUrl,
+      title: title,
+      userId: user.id,
+      description,
+      body,
+      createdBy:user.userName
+
+    }
+  })
+
+  return json({
+    imageUrl
+  })
 }
 
-export default function NewPost() {
-  const data = useLoaderData<typeof loader>()
-  const ref = useRef<HTMLInputElement>(null);
+export default function Uploader() {
+  const fetcher = useFetcher<ActionData>()
 
-  const [value, setValue] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
-  //   fetcher works! Grab all the categories from the database and display them in the select box. Use fetcher to ping the database and grab the categories.
-  const fetcher = useFetcher()
   useEffect(() => {
-    if (fetcher.state === 'idle' && !fetcher.data) {
-      fetcher.load('/postTags')
-    }
+    console.log(fetcher.state)
   }, [fetcher])
 
-  const fileInputRef = useRef<HTMLInputElement | null>(null)
-
-  //   grab the categories from the fetcher
-  const cata =
-    fetcher.data && fetcher.data.data ? fetcher.data.data.categories : []
-
-  //   form data for the post
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    body: '',
-    imageUrl: '',
-    categories: []
+  const onClick = async () =>
+    fetcher.submit({
+      imageUrl: 'imageUrl',
+      key: 'imageUrl',
+      action: '/actions/image'
     })
-    const handleFileUpload = async (file: File) => {
-      const inputFormData = new FormData()
-      inputFormData.append('imageUrl', file)
-      const response = await fetch('/actions/image', {
-        method: 'POST',
-        body: inputFormData
-      })
-
-      const { imageUrl } = await response.json()
-
-      setFormData({
-        ...formData,
-        imageUrl: imageUrl
-      })
-    }
-
-
-
-
-
 
   return (
-    <div className='grid-cols-6 gap-5 bg-crimson3 p-5 md:grid '>
-      <div className='col-span-1 col-start-5 mx-auto flex flex-row justify-center'>
-        <button
-          className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-          type='button'
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <EyeOpenIcon />
-        </button>
-      </div>
+    <>
       <fetcher.Form
         method='post'
-        action='/actions/image'
         encType='multipart/form-data'
-        onChange={(event) => {
-          onChange(event)
-          fetcher.submit(event.currentTarget, { replace: true })
-        }}
-        onClick={() => fileInputRef.current?.click()}
-      >
-        <div className='btn-primary btn-sold'>
-          Update Photo
-          <input
-            type='file'
-            name='imageUrl'
-            id='imageUrl'
-            accept='image/*'
-            ref={fileInputRef}
-            className='hidden'
-          />
-        </div>
-      </fetcher.Form>
-
-      <form
-        name='forma'
-        method='post'
+        action='/actions/image'
+        onClick={onClick}
         className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
-        id='form'
       >
-        {fetcher.data ? (
-          <>
-
-            {fetcher?.data?.imageUrl}
-            <input
-              type='text'
-              name='imageUrl'
-              value={fetcher.data.imageUrl}
-              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-              />
-            <img src={fetcher.data.imageUrl} alt={'#'} />
-          </>
-        ) : null}
-
-<TextInput
-      placeholder="Your name"
-      label="Title"
-      description="Please enter a title for your post"
-      radius="md"
-      withAsterisk
-      value={formData.title}
-      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-
-    />
-
-        <TextInput
-      placeholder="Your name"
-      label="Description"
-      description="Please enter a short descriptive summary"
-      radius="md"
-      withAsterisk
-      value={formData.title}
-      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-    />
-
-
-        <div>
-          <label htmlFor='body'>Post Content</label>
-          <TipTap name={'body'} />
-          <input type='hidden' name='body' value={formData.body} />
-        </div>
-        <div className='flex flex-col bg-crimson3 pt-5'>
-          <div className='bg-red-300 flex w-full flex-wrap rounded-md'>
-            {formData.categories.map((item) => (
-              <div
-                key={item}
-                className='border-bg-crimson4 inline-flex w-fit items-center space-x-2 space-y-2 rounded-xl bg-crimson5 hover:bg-crimson4'
-              >
-                <p className='rounded-xl bg-crimson5 p-2 text-sm'>{item}</p>
-                <button
-                  className='border-transparent inline-flex items-center space-x-1.5 rounded-xl  bg-crimson5 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-                  type='button'
-                  onClick={() => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      categories: prev.categories.filter((cat) => cat !== item)
-                    }))
-                  }}
-                >
-                  <Cross2Icon />
-                </button>
-              </div>
-            ))}
+        <label htmlFor='imageUrl'>Image to upload</label>
+        <input
+          id='imageUrl'
+          className='rounded-xl bg-crimson12 text-slate12'
+          type='file'
+          name='imageUrl'
+          accept='image/*'
+        />
+        <button type='submit'>Upload</button>
+      </fetcher.Form>
+      {fetcher.data ? (
+        <>
+          <div>
+            File has been uploaded to S3 and is available under the following
+            URL (if the bucket has public access enabled):
           </div>
-          <div className='bg-crimson3'>
-            <MultiSelect
-            ref={ref}
-            name='categories'
-              data={data.categories}
-              label='Categories'
-              value={formData.categories}
-              onChange={(e) => {
-                setFormData({ ...formData, categories: e })
+          <input type='hidden' name='imageUrl' value={fetcher.data.imageUrl} />
+          {fetcher?.data?.imageUrl}
 
-              }
-              }
-              nothingFound='No categories found'
-              clearable
-/>
+          <img src={fetcher.data.imageUrl} alt={'#'} />
+        </>
+      ) : null}
+      <form
+        className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+        method='post'
+      >
+        <label htmlFor='imageUrl'>Image</label>
+        <input
+          type='text'
+          className='rounded-xl bg-crimson12 text-slate12'
+          name='imageUrl'
+          value={fetcher?.data?.imageUrl}
+          onChange={(e) => console.log(e.target.value)}
+        />
+        <label htmlFor='title'>Title</label>
+        <input
+          type='text'
+          className='rounded-xl bg-crimson12 text-slate12'
+          name='title'
+          onChange={(e) => console.log(e.target.value)}
+        />
 
-          </div>
-          <br />
-        </div>
 
-        <button type='submit' className='btn-base btn-solid-success'>
-          Save
-        </button>
+
+        <textarea
+          className='rounded-xl bg-crimson12 text-slate12'
+          name='description'
+          onChange={(e) => console.log(e.target.value)}
+        />
+        <textarea
+          className='rounded-xl bg-crimson12 text-slate12'
+          name='body'
+          onChange={(e) => console.log(e.target.value)}
+        />
+
+
+        <button type='submit'>Save post</button>
       </form>
-      {isOpen && (
-        <div className='col-span-1 col-start-6'>
-          <h1 className='text-3xl'>Preview</h1>
-        </div>
-      )}
-    </div>
+    </>
   )
 }
-//    <ul className={`${styles.options} ${isOpen ? styles.show : ""}`}>
