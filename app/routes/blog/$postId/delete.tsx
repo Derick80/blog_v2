@@ -1,6 +1,6 @@
-import { ActionArgs, LoaderArgs, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs} from '@remix-run/node';
+import { redirect } from '@remix-run/node'
 import { badRequest } from 'remix-utils'
-import { deleteComment } from '~/models/comments.server'
 import { deletePost } from '~/models/post.server'
 
 export async function action({ request, params }: ActionArgs) {

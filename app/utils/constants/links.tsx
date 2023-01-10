@@ -1,4 +1,4 @@
-import { UserCircleIcon } from '@heroicons/react/24/outline'
+import { Avatar } from '@mantine/core'
 import {
   EnterIcon,
   ExitIcon,
@@ -20,7 +20,7 @@ export const siteLinks = [
 
 export const nonUserLinks = [
   { text: 'Login', link: '/login', children: <EnterIcon /> },
-  { text: 'Register', link: '/register', children: <UserCircleIcon /> }
+  { text: 'Register', link: '/register', children: <Avatar /> }
 ]
 
 // can probably remove this type of link and just use the nonUserLinks

@@ -37,8 +37,8 @@ export const UploadMe = ({ onChange }: UploadMeProps) => {
           Update Photo
           <input
             type='file'
-            name='postImg'
-            id='postImg'
+            name='imageUrl'
+            id='imageUrl'
             accept='image/*'
             ref={fileInputRef}
             className='hidden'

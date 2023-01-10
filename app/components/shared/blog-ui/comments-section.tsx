@@ -19,7 +19,6 @@ export function CommentSection({
   postId
 }: CommentSectionProps) {
   const [isOpen, setIsOpen] = React.useState(false)
-  const params = useParams()
 
   const comment = comments?.map((comment) => comment)
   const user = useOptionalUser()

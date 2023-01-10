@@ -1,10 +1,12 @@
-import { CitiesAndAlbums } from '~/models/travel.server'
+import * as dateFns from 'date-fns'
 
-export async function reduceTextArray(array: CitiesAndAlbums, key: string) {
-  return await array.reduce((acc: any, item: any) => {
-    if (!acc.includes(item[key])) {
-      acc.push(item[key])
-    }
-    return acc
-  }, [])
+
+
+// {format(new Date(createdAt), 'MMM dd yy')}
+export function formatDate(dateString:string | Date, format = 'MMM dd yy') {
+ if(typeof dateString !== 'string'){
+  dateString= dateString.toString()
+ }
+ return dateFns.format(new Date(dateString), format)
 }
+

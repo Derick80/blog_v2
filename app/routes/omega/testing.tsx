@@ -5,8 +5,10 @@ import { isAuthenticated } from '~/models/auth/auth.server'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
-    return { redirect: '/auth/login' }
+    return { redirect: '/login' }
   }
+
+
   return json({ user })
 }
 export default function Index() {

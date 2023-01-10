@@ -11,11 +11,12 @@ export async function loader({ request, params }: LoaderArgs) {
 
   const post = await getPostById(postId)
 
-  return json({ postId, post })
+  return json({  post })
 }
 
 export default function Index() {
   const data = useLoaderData<typeof loader>()
+  const post = data.post
   return (
     <div className='grid grid-cols-6 place-items-center gap-4'>
       {data.post && (

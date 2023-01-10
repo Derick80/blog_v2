@@ -1,6 +1,6 @@
 import type { ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useFetcher } from '@remix-run/react'
+import { useFetcher, useNavigation } from '@remix-run/react'
 import { useEffect } from 'react'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { prisma } from '~/models/prisma.server'
@@ -48,7 +48,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Uploader() {
   const fetcher = useFetcher<ActionData>()
-
+const navigation = useNavigation()
   useEffect(() => {
     console.log(fetcher.state)
   }, [fetcher])
@@ -77,7 +77,8 @@ export default function Uploader() {
           name='imageUrl'
           accept='image/*'
         />
-        <button type='submit'>Upload</button>
+        <button type='submit'>          {navigation.state === 'submitting' ? 'Submitting...' : navigation.state === "loading" ? "Saved!": 'Upload'}
+</button>
       </fetcher.Form>
       {fetcher.data ? (
         <>
@@ -111,7 +112,9 @@ export default function Uploader() {
           onChange={(e) => console.log(e.target.value)}
         />
 
-        <button type='submit'>Save post</button>
+        <button type='submit'>
+          {navigation.state === 'submitting' ? 'Submitting...' : navigation.state === "loading" ? "Saved!": 'Submit'}
+        </button>
       </form>
     </>
   )

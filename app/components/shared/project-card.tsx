@@ -1,4 +1,4 @@
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid'
+import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import { Link } from '@remix-run/react'
 import { ProjectCategories } from '~/models/project.server'
 import CategoryContainer from './category-container'
@@ -26,7 +26,7 @@ export const ProjectCard = ({ project, categories }: any) => {
             rel='noreferrer'
           >
             <p>View Code</p>
-            <ArrowTopRightOnSquareIcon className='h-5 w-5' />
+            <ExternalLinkIcon />
           </a>
 
           <a
@@ -36,7 +36,7 @@ export const ProjectCard = ({ project, categories }: any) => {
             rel='noreferrer'
           >
             <p>Visit Project</p>
-            <ArrowTopRightOnSquareIcon className='h-5 w-5' />{' '}
+            <ExternalLinkIcon />{' '}
           </a>
         </div>
         <div className='h-40 md:h-60'>
