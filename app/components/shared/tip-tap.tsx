@@ -1,19 +1,11 @@
 import { RichTextEditor } from '@mantine/tiptap'
-import {
-  CodeIcon,
-  FontBoldIcon,
-  FontItalicIcon,
-  HeadingIcon,
-  Link2Icon,
-  PilcrowIcon,
-  StrikethroughIcon} from '@radix-ui/react-icons'
 import * as Toolbar from '@radix-ui/react-toolbar'
 import Link from '@tiptap/extension-link'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useCallback } from 'react'
 
-const TipTap = ({ name, content }: { name: string; content?: string }) => {
+const TipTap = () => {
   const editor = useEditor({
     extensions: [
       Link.configure({
@@ -29,7 +21,6 @@ const TipTap = ({ name, content }: { name: string; content?: string }) => {
           'flex-1 bg-crimson12 h-24 mx-auto text-slate1 dark:text-slate12 m-5 focus:outline-none rounded-xl mt-0'
       }
     },
-    content
   })
   const setLink = useCallback(() => {
     const previousUrl = editor?.getAttributes('link').href
@@ -56,6 +47,7 @@ const TipTap = ({ name, content }: { name: string; content?: string }) => {
   }
 
   return (
+    <>
     <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar sticky stickyOffset={60}>
         <RichTextEditor.ControlsGroup>
@@ -99,6 +91,9 @@ const TipTap = ({ name, content }: { name: string; content?: string }) => {
 
       <RichTextEditor.Content />
     </RichTextEditor>
+
+    <input type='hidden' name='body' value={editor?.getHTML()} />
+    </>
   )
 }
 

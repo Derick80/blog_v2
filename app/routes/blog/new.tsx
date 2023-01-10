@@ -1,7 +1,9 @@
+import { Box, Center, Container, TextInput } from '@mantine/core'
 import type { ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useFetcher } from '@remix-run/react'
 import { useEffect } from 'react'
+import TipTap from '~/components/shared/tip-tap'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { prisma } from '~/models/prisma.server'
 
@@ -68,7 +70,9 @@ export default function Uploader() {
     })
 
   return (
-    <>
+  <Center>
+            <Container size="xs" px="xs">
+
       <fetcher.Form
         method='post'
         encType='multipart/form-data'
@@ -110,30 +114,30 @@ export default function Uploader() {
           value={fetcher?.data?.imageUrl}
           onChange={(e) => console.log(e.target.value)}
         />
-        <label htmlFor='title'>Title</label>
-        <input
-          type='text'
-          className='rounded-xl bg-crimson12 text-slate12'
+
+
+<TextInput
+          label='Title'
           name='title'
           onChange={(e) => console.log(e.target.value)}
         />
 
-
-
-        <textarea
-          className='rounded-xl bg-crimson12 text-slate12'
+<TextInput
+          label='Description'
           name='description'
           onChange={(e) => console.log(e.target.value)}
         />
-        <textarea
-          className='rounded-xl bg-crimson12 text-slate12'
-          name='body'
-          onChange={(e) => console.log(e.target.value)}
-        />
+
+
+
+      <TipTap />
 
 
         <button type='submit'>Save post</button>
       </form>
-    </>
+      </Container >
+
+  </Center>
   )
 }
+
