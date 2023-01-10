@@ -49,9 +49,7 @@ export async function action({ request }: ActionArgs) {
     userId: user.id,
     createdBy: user.userName
   }
-  console.log('data', categories)
 
-  await createPost(data)
   //
   return redirect('/blog')
 }
@@ -88,7 +86,6 @@ export default function NewPost() {
     })
 
     const { imageUrl } = await response.json()
-    console.log('imageUrl', imageUrl)
 
     setFormData({
       ...formData,
@@ -154,10 +151,6 @@ export default function NewPost() {
       >
         {fetcher.data ? (
           <>
-            <div>
-              File has been uploaded to S3 and is available under the following
-              URL (if the bucket has public access enabled):
-            </div>
             <input
               type='hidden'
               name='imageUrl'

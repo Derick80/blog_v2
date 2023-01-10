@@ -21,7 +21,6 @@ export async function loader({ request, params }: LoaderArgs) {
   const albumNames = albums
     .map((obj) => obj.album)
     .filter((v, i, a) => a.indexOf(v) === i)
-  console.log('albumNames', albumNames)
 
   const [NYC, Japan] = Object.values(byGroup)
 

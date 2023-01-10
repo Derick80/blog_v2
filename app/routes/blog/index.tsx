@@ -24,8 +24,6 @@ export default function BlogRoute() {
   return (
     <div className='grid-cols-repeat(minmax(300px, 1fr)) grid justify-items-center gap-4'>
       {data.posts.map((post) => {
-        console.log(post, 'post')
-
         return (
           <Card
             key={post.id}

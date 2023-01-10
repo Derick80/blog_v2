@@ -42,7 +42,6 @@ export default function Edit({ post }: EditPostProps) {
     })
 
     const { imageUrl } = await response.json()
-    console.log('imageUrl', imageUrl)
 
     setFormData({
       ...formData,

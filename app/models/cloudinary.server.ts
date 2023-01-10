@@ -39,7 +39,6 @@ export async function uploadImage(data: AsyncIterable<Uint8Array>) {
   return uploadPromise
 }
 
-// console.log('configs', cloudinary.v2.config())
 export const uploadHandler: UploadHandler = unstable_composeUploadHandlers(
   async ({ name, contentType, data, filename }) => {
     if (name !== 'postImg') {

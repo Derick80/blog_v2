@@ -26,8 +26,6 @@ export default function CommentForm({
     parentId: parentId || null || undefined
   })
 
-  console.log(postId, 'postId')
-
   return (
     <>
       {/* control form list color here */}

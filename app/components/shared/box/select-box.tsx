@@ -42,36 +42,35 @@ export const Select = ({
 
   return (
     <>
-
-      <div className='flex flex-col border-2 h-10'>
+      <div className='flex h-10 flex-col gap-5 border-2'>
         <div className='flex flex-row justify-between'>
-          <div
-          className='flex flex-row justify-between flex-wrap'
+          <div className='flex flex-row flex-wrap justify-between'>
+            {formData.categories.map((item, index) => (
+              <CategoryContainer value={item} index={index} key={index} />
+            ))}
+          </div>
+          <span
+            onClick={() => setIsOpen(!isOpen)}
+            className='mb-3 flex flex-row'
           >
-           {formData.categories.map((item, index) => (
-              <CategoryContainer value={item} index={index} key={index}/>
-            ))
-            }
-          </div>
-          <span onClick={() => setIsOpen(!isOpen)} className='flex flex-row'>
-
-{isOpen ?
-            <ChevronDownIcon
-              /> : <ChevronDownIcon className='transform rotate-90'/>}
-            </span>
-
-          </div>
+            {isOpen ? (
+              <ChevronDownIcon />
+            ) : (
+              <ChevronDownIcon className='rotate-90 transform' />
+            )}
+          </span>
         </div>
+      </div>
       <select
         multiple={multiple}
         value={value}
-            onChange={handleSelects}
+        onChange={handleSelects}
         size={options.length}
-            className='text-bg-crimson12 flex w-full flex-col-reverse items-center rounded-md bg-crimson3'
+        className='text-bg-crimson12 flex w-1/2 flex-col-reverse rounded-md bg-crimson4'
       >
         {options.map((option) => (
           <option
-                className='text-bg-crimson12 mt-4 flex items-center bg-crimson3 pt-5'
+            className='text-bg-crimson12  mt-4 scroll-smooth bg-crimson4 pt-5 text-right text-xs font-semibold'
             key={option.value}
             value={option.value}
           >

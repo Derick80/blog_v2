@@ -49,7 +49,6 @@ export const Card = ({
   showOptions
 }: BasicCardProps | TheBasicCardProps) => {
   const users = user?.userName
-  console.log(users, 'users')
   const {
     id,
     title,

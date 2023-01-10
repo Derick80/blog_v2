@@ -1,17 +1,10 @@
 import type { LoaderArgs } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import invariant from 'tiny-invariant'
-import { BlogCard } from '~/components/shared/blog-ui/blog-card'
 import { Card } from '~/components/shared/blog-ui/card'
 import { isAuthenticated } from '~/models/auth/auth.server'
-import {
-  getPostByCategoryValue,
-  PostAndCategories,
-  ReturnedPost
-} from '~/models/post.server'
-import { prisma } from '~/models/prisma.server'
-import { SerializedPost } from '~/utils/schemas/post-schema'
+import { getPostByCategoryValue } from '~/models/post.server'
 
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
@@ -21,7 +14,6 @@ export async function loader({ request, params }: LoaderArgs) {
 
   const categoryId = params.categoryId
   invariant(categoryId, 'categoryId is required')
-  console.log(categoryId, 'categoryId')
 
   const posts = await getPostByCategoryValue(categoryId)
   const post = await posts.map((post) => {
@@ -30,7 +22,6 @@ export async function loader({ request, params }: LoaderArgs) {
       categories: post.categories
     }
   })
-  console.log(post, 'post')
 
   return json({ posts })
 }

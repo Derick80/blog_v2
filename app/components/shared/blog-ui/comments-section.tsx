@@ -20,9 +20,8 @@ export function CommentSection({
 }: CommentSectionProps) {
   const [isOpen, setIsOpen] = React.useState(false)
   const params = useParams()
-  console.log(params, 'params')
 
-  const comment = comments.map((comment) => comment)
+  const comment = comments?.map((comment) => comment)
   const user = useOptionalUser()
   return (
     <div className='bg-crimson2'>

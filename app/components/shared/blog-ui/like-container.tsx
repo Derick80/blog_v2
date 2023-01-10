@@ -23,7 +23,6 @@ export default function LikeContainer({
   })
     ? true
     : false
-  console.log(currentUser, 'currentUser')
 
   const [likeCount, setLikeCount] = useState(likeCounts || 0)
   const [isLiked, setIsLiked] = useState(userLikedPost)
@@ -38,7 +37,6 @@ export default function LikeContainer({
       setLikeCount(likeCount + 1)
       setIsLiked(true)
     }
-    console.log('likeCount', likeCount)
 
     fetcher.submit(
       { userId: currentUser, postId },

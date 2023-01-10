@@ -12,9 +12,9 @@ export default function CategoryContainer({
 }: CategoryContainerProps) {
   return (
     <>
-      <div key={index} className='mx-1 mt-2  space-x-2 flex md:mt-4'>
+      <div key={index} className='flex space-x-4 rounded-md'>
         <label
-          className='border-black dark:border-white h-fit max-w-full border-2 p-1 text-center text-xs hover:cursor-pointer md:text-sm md:tracking-wide'
+          className='border-black dark:border-white border-1 h-fit max-w-full space-x-2 rounded p-1 text-center text-xs hover:cursor-pointer md:text-sm md:tracking-wide'
           key={index}
         >
           <Link prefetch='intent' to={`/blog/categories/${value}`}>

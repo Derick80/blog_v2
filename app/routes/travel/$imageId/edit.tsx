@@ -29,7 +29,6 @@ export async function action({ request, params }: ActionArgs) {
   const imageDescription = formData.get('imageDescription')
   const album = formData.get('album')
   const year = formData.get('year')
-  console.log('formData', imageDescription)
 
   if (
     typeof id !== 'number' ||
