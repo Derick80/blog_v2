@@ -1,4 +1,4 @@
-import type { ActionArgs, LoaderArgs} from '@remix-run/node';
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { badRequest } from 'remix-utils'
 import { deletePost } from '~/models/post.server'

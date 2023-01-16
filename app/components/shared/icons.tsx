@@ -82,7 +82,6 @@ export function BrandIcon() {
   )
 }
 
-
 export function UserPlaceHolder() {
   return (
     <svg
@@ -99,4 +98,3 @@ export function UserPlaceHolder() {
     </svg>
   )
 }
-

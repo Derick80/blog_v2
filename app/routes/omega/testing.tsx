@@ -8,7 +8,6 @@ export async function loader({ request }: LoaderArgs) {
     return { redirect: '/login' }
   }
 
-
   return json({ user })
 }
 export default function Index() {

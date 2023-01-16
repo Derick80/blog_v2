@@ -11,7 +11,7 @@ export async function loader({ request, params }: LoaderArgs) {
 
   const post = await getPostById(postId)
 
-  return json({  post })
+  return json({ post })
 }
 
 export default function Index() {

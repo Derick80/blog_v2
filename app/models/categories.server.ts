@@ -1,4 +1,3 @@
-import type { PostAndCategories } from './post.server'
 import { prisma } from './prisma.server'
 
 export default async function getAllCategories() {
