@@ -8,6 +8,8 @@ import PostOptions from './post-options'
 import LikeContainer from './like-container'
 import FavoriteContainer from './favorite-container'
 import { ShareButton } from './share-button'
+import { Category } from '~/utils/schemas/catagory-schema'
+import CategoryContainer from '../category-container'
 
 export type ManyPostProps = {
   data: Post & {
@@ -15,6 +17,7 @@ export type ManyPostProps = {
   } & {
     favorites: Favorite[]
   }
+
   user: User | null
 }
 
@@ -24,6 +27,7 @@ export type EditPostCardProps = {
   } & {
     favorites: Favorite[]
   }
+
   user: User | null
 }
 export type TheBasicCardProps = {
@@ -32,6 +36,7 @@ export type TheBasicCardProps = {
   showComments: boolean
   showShare: boolean
   showOptions: boolean
+  showCategories: boolean
 } & EditPostCardProps
 export type BasicCardProps = {
   showLikes: boolean
@@ -39,11 +44,13 @@ export type BasicCardProps = {
   showComments: boolean
   showShare: boolean
   showOptions: boolean
+  showCategories: boolean
 } & ManyPostProps
 
 export const PostCard = ({
   data,
   user,
+  showCategories,
   showComments,
   showLikes,
   showFavorites,
@@ -63,7 +70,8 @@ export const PostCard = ({
     published,
     createdBy,
     comments,
-    favorites
+    favorites,
+    categories
   } = data
 
   return (
@@ -92,7 +100,17 @@ export const PostCard = ({
       </Card.Section>
 
         <Group spacing='md'>
-
+{showCategories && categories && categories.length > 0 && (
+            <Group position='left' spacing='md'>
+              {data.categories.map((category, index) => (
+                <CategoryContainer
+                  key={category.id}
+                 value={category.value}
+                 index={index}
+                />
+              ))}
+            </Group>
+          )}
 
       </Group>
       <Group position='left' spacing='md'>

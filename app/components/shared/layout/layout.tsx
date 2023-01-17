@@ -17,7 +17,7 @@ import {
   GitHubLogoIcon,
   LinkedInLogoIcon
 } from '@radix-ui/react-icons'
-import { Box, Navbar, Footer } from '@mantine/core'
+import { Box, Navbar, Footer, Center, Text } from '@mantine/core'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
@@ -27,19 +27,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         sx={{
           display: 'flex',
           flexDirection: 'row',
+          justifyContent: 'space-between',
           height: '100%',
           gap: '1rem'
         }}
       >
-        <Navbar.Section mt='xs'>
-          <p>1</p>
+        <Navbar.Section grow mt='md'>
+          <Text
+          size='xl' weight={700}>
+          Derick C. Hoskinson PhD
+          </Text>
         </Navbar.Section>
+
         <Navbar.Section grow mt='md'>
           <NavLinks />
         </Navbar.Section>
-        <Navbar.Section mt='xs'>
-          <p>3</p>
-        </Navbar.Section>
+
       </Navbar>
       {/* <NavBar>
        <Box
@@ -55,7 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           <h1 className='text-zinc-900 dark:text-slate-100 text-2xl font-bold md:text-3xl'>
-            Derick C. Hoskinson PhD
+
           </h1>
         </Box>
         <NavLinks />
@@ -94,10 +97,11 @@ function NavLinks() {
   const user = useOptionalUser()
 
   return (
-    <Box
+   <Center>
+     <Box
       sx={{
         display: 'flex',
-        gap: '1rem'
+        gap: '1rem',
       }}
     >
       {user ? (
@@ -118,5 +122,6 @@ function NavLinks() {
         </>
       )}
     </Box>
+   </Center>
   )
 }

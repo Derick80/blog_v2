@@ -28,6 +28,7 @@ export default function BlogRoute() {
     <Stack>
       {data.posts.map((post) => (
         <PostCard key={post.id} data={post}
+          showCategories={true}
           showComments={true}
           showLikes={true}
           showFavorites={true}
