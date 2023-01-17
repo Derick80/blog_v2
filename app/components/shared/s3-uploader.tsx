@@ -7,7 +7,7 @@ import {
 } from '@remix-run/node'
 import { useFetcher, useSubmit } from '@remix-run/react'
 import { useEffect, useRef, useState } from 'react'
-import { s3UploadHandler } from '~/models/s3.server'
+import { s3UploadHandler } from '~/utils/server/s3.server'
 
 type ActionData = {
   errorMsg?: string

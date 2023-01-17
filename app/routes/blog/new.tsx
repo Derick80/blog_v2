@@ -4,9 +4,9 @@ import { json } from '@remix-run/node'
 import { useFetcher, useOutletContext } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import TipTap from '~/components/shared/tip-tap'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import { CategoryForm } from '~/models/post.server'
-import { prisma } from '~/models/prisma.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import { CategoryForm } from '~/utils/server/post.server'
+import { prisma } from '~/utils/server/prisma.server'
 import { Categories } from '../postTags'
 
 const cts = [

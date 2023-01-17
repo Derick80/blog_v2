@@ -1,30 +1,6 @@
 import type { User, Prisma } from '@prisma/client'
 import { prisma } from './prisma.server'
 
-export const getLikeList = async (user: User | null) => {
-  const list = await prisma.like.findMany({
-    where: {
-      userId: user?.id
-    },
-    orderBy: {
-      createdAt: 'desc'
-    }
-  })
-
-  return list
-}
-
-export const getPostLike = async (
-  input: Prisma.LikePostIdUserIdCompoundUniqueInput
-) => {
-  const like = await prisma.like.findUnique({
-    where: {
-      postId_userId: input
-    }
-  })
-
-  return like
-}
 export const createLike = async (input: Prisma.LikeCreateInput) => {
   const created = await prisma.like.create({
     data: input

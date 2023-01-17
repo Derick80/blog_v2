@@ -1,7 +1,7 @@
 import { LoaderArgs, json } from '@remix-run/node'
 import invariant from 'tiny-invariant'
-import { getCommentById } from '~/models/comments.server'
-import { getPostById } from '~/models/post.server'
+import { getCommentById } from '~/utils/server/comments.server'
+import { getPostById } from '~/utils/server/post.server'
 
 export async function loader({ params, request }: LoaderArgs) {
   const commentId = params.commentId

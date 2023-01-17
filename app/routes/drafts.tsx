@@ -3,8 +3,8 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { Card } from '~/components/shared/blog-ui/card'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import { getUserDrafts } from '~/models/post.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import { getUserDrafts } from '~/utils/server/post.server'
 import type { SerializedEditPost } from '~/utils/schemas/post-schema'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)

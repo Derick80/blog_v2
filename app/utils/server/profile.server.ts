@@ -25,4 +25,3 @@ export async function getUserProfile(userId: string) {
   })
   return profile
 }
-

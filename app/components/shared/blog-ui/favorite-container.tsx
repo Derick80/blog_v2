@@ -1,10 +1,8 @@
 import { BookmarkFilledIcon, BookmarkIcon } from '@radix-ui/react-icons'
-import { SerializeFrom } from '@remix-run/node'
 import type { FormMethod } from '@remix-run/react'
 import { useFetcher } from '@remix-run/react'
-import { useState, useRef } from 'react'
-import { Favorite } from '~/utils/schemas/favorite.schema'
-import type { Post, SerializedPost } from '~/utils/schemas/post-schema'
+import { useState } from 'react'
+import type { Favorite } from '~/utils/schemas/favorite.schema'
 export type FavoriteContainerProps = {
   currentUser: string
   postId: string
@@ -24,6 +22,9 @@ export default function FavoriteContainer({
     : false
 
   const [isFavorite, setIsFavorite] = useState(userFavoritedPost)
+  console.log(userFavoritedPost, 'userFavoritedPost')
+
+  console.log('favorites', favorites)
 
   const toggleFavorite = async () => {
     let method: FormMethod = 'delete'

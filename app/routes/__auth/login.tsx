@@ -4,7 +4,7 @@ import { Link } from '@remix-run/react'
 import { badRequest, serverError } from 'remix-utils'
 import { AuthForm } from '~/components/shared/auth/auth-form'
 import { SocialLoginForm } from '~/components/shared/auth/social-login-form'
-import { isAuthenticated, authenticator } from '~/models/auth/auth.server'
+import { isAuthenticated, authenticator } from '~/utils/server/auth/auth.server'
 
 export const meta: MetaFunction = () => {
   return {

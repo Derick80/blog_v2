@@ -3,7 +3,7 @@ import {
   unstable_parseMultipartFormData
 } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { s3UploadHandler } from '~/models/s3.server'
+import { s3UploadHandler } from '~/utils/server/s3.server'
 
 export const action: ActionFunction = async ({ request, params }) => {
   async function uploadImage(request: Request) {

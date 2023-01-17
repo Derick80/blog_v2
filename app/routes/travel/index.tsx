@@ -3,8 +3,8 @@ import type { LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { useLoaderData, Outlet, Link } from '@remix-run/react'
 import { ImageSlider } from '~/components/shared/carousel/image-slider'
-import type { CitiesAndAlbums } from '~/models/travel.server'
-import { getAlbums } from '~/models/travel.server'
+import type { CitiesAndAlbums } from '~/utils/server/travel.server'
+import { getAlbums } from '~/utils/server/travel.server'
 
 export async function loader({ request, params }: LoaderArgs) {
   const albums = (await getAlbums()) as CitiesAndAlbums

@@ -1,5 +1,5 @@
 import { GitHubStrategy } from 'remix-auth-socials'
-import { createUser } from '~/models/user.server'
+import { createUser } from '~/utils/server/user.server'
 import { getAccount } from './accountService.server'
 
 const ghClientId = process.env.GITHUB_CLIENT_ID as string

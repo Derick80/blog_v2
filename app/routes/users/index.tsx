@@ -2,9 +2,9 @@ import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { NavLink, Outlet, useLoaderData, useMatches } from '@remix-run/react'
 import UserCard from '~/components/shared/user-ui/user-card'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import type { UserProps } from '~/models/user.server'
-import { getUsers } from '~/models/user.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import type { UserProps } from '~/utils/server/user.server'
+import { getUsers } from '~/utils/server/user.server'
 import { User } from '~/utils/schemas/user-schema'
 
 export type TestUser = {

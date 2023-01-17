@@ -1,7 +1,7 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { badRequest } from 'remix-utils'
-import { deletePost } from '~/models/post.server'
+import { deletePost } from '~/utils/server/post.server'
 
 export async function action({ request, params }: ActionArgs) {
   const postId = params?.postId

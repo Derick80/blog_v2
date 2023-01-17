@@ -1,7 +1,7 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import { createFavorite, deleteFavorite } from '~/models/favorite.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import { createFavorite, deleteFavorite } from '~/utils/server/favorite.server'
 
 export async function loader({ request, params }: LoaderArgs) {
   throw new Response("This page doesn't exists.", { status: 404 })

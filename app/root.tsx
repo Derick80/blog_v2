@@ -9,14 +9,14 @@ import {
   useLoaderData
 } from '@remix-run/react'
 import Layout from './components/shared/layout/layout'
-import { isAuthenticated } from './models/auth/auth.server'
+import { isAuthenticated } from './utils/server/auth/auth.server'
 import styles from './styles/app.css'
 import {
   NonFlashOfWrongThemeEls,
   ThemeProvider,
   useTheme
 } from './utils/theme-provider'
-import { getThemeSession } from './utils/theme.server'
+import { getThemeSession } from './utils/server/theme.server'
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
   title: 'New Remix App',

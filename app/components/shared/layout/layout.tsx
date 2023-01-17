@@ -7,7 +7,7 @@ import {
   siteLinks,
   userLinks
 } from '~/utils/constants/links'
-import { useOptionalUser } from '~/utils/utils'
+import { useOptionalUser } from '~/utils/utilities'
 import ColorMode from './color-mode'
 import { BrandIcon } from '../icons'
 import LinkMaker from './link-maker'
@@ -42,7 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <AdminMaker array={adminLinks} />
         </div>
       )}
-      <main className='flex-1'>{children}</main>
+      <main className='grid flex-1 grid-cols-3'>{children}</main>
 
       <Footer>
         <ul className='border-bg-crimson6 border-1 flex flex-row items-center justify-center space-x-3 text-sm'>

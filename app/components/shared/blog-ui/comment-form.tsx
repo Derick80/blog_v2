@@ -1,8 +1,10 @@
-import { Box, Group, Textarea } from '@mantine/core'
+import { Box, Button as Btn, Textarea, TextInput } from '@mantine/core'
 import { PaperPlaneIcon } from '@radix-ui/react-icons'
 import { Form } from '@remix-run/react'
+import { IconSend } from '@tabler/icons'
 import { useState } from 'react'
 import { CommentWithChildren } from '~/utils/schemas/comment-schema'
+import { Button } from '../button'
 
 type CommentFormProps = {
   parentId?: string | null
@@ -27,23 +29,24 @@ export default function CommentForm({
   })
 
   return (
-    <>
+    <Box>
       {/* control form list color here */}
-      <div className='mt-2 flex w-full flex-col rounded-l-3xl bg-s hover:bg-crimson6'>
-        <form
-          className='text-black flex w-full flex-row items-center justify-around rounded-lg bg-crimson2 hover:bg-crimson6'
-          method='post'
-          action='/actions/comment'
-        >
-          <input type='hidden' name='_action' />
-          <input type='hidden' name='userId' value={formData.userId} />
-          <input type='hidden' name='postId' value={formData.postId} />
-          <input type='hidden' name='createdBy' value={formData.createdBy} />
-          <input type='hidden' name='parentId' value={formData.parentId} />
-          <textarea
-            className='border-bg-crimson6 bg-zinc-200 text-zinc-900 dark:text-black rounded-md border dark:bg-crimson1'
-            rows={1}
-            cols={50}
+
+      <form
+        className='grow rounded-xl border-2 p-2'
+        method='post'
+        action='/actions/comment'
+      >
+        <input type='hidden' name='_action' />
+        <input type='hidden' name='userId' value={formData.userId} />
+        <input type='hidden' name='postId' value={formData.postId} />
+        <input type='hidden' name='createdBy' value={formData.createdBy} />
+        <input type='hidden' name='parentId' value={formData.parentId} />
+        <div className='flex flex-row items-center space-x-2 p-2'>
+          <Textarea
+            autosize={true}
+            label='Comment'
+            radius='md'
             id='message'
             name='message'
             value={formData.message}
@@ -51,29 +54,16 @@ export default function CommentForm({
               setFormData({ ...formData, message: e.target.value })
             }
           />
-
-          {parentId ? (
-            <>
-              <button
-                className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-                type='submit'
-              >
-                <p>Reply</p>
-                <PaperPlaneIcon className='-rotate-90 transform' />
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-                type='submit'
-              >
-                <PaperPlaneIcon />
-              </button>
-            </>
-          )}
-        </form>
-      </div>
-    </>
+          <button className='flex items-center space-x-2' type='submit'>
+            <IconSend stroke={1.5} size={20} />
+            {parentId ? (
+              <p className='text-xs'>Reply</p>
+            ) : (
+              <p className='text-xs'>Comment</p>
+            )}
+          </button>
+        </div>
+      </form>
+    </Box>
   )
 }

@@ -1,5 +1,5 @@
 import { Link, NavLink } from '@remix-run/react'
-import type { ProjectCategories } from '~/models/project.server'
+import type { ProjectCategories } from '~/utils/server/project.server'
 
 export interface CategoryContainerProps {
   value: string[]

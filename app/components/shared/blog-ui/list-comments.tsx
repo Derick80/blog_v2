@@ -1,10 +1,13 @@
 import React from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import CommentForm from './comment-form'
-import { AvatarCircle } from './card'
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
 import { Form } from '@remix-run/react'
 import { NavLink } from 'react-router-dom'
+import PostUserInfo from './avatar-circle'
+import { IconArrowBearLeft, IconTrash } from '@tabler/icons'
+import { Group, Button, Avatar, Box, Paper, Text } from '@mantine/core'
+import { format } from 'date-fns'
 
 function CommentActions({
   commentId,
@@ -22,91 +25,84 @@ function CommentActions({
   const [replying, setReplying] = React.useState(false)
 
   return (
-    <>
-      <div className='mt-2 w-full flex-col rounded-l-3xl hover:bg-crimson6 '>
+    <Group position='apart' mt='md'>
+
+      <div className=' '>
         {replying ? (
-          <CommentForm
-            parentId={commentId}
-            userId={userId}
-            postId={postId}
-            createdBy={createdBy}
-          />
-        ) : (
-          <></>
-        )}
+          <>
+              <Button onClick={ () => setReplying(!replying) }>
+                { ' ' }
+                <IconArrowBearLeft stroke={ 1.5 } size={ 20 } />
+                <p className='text-xs'>Reply</p>
+              </Button>
+              <Form action={ `/blog/${postId}/${commentId}/delete` } method='post'>
+                <button type='submit' className=''>
+                  <IconTrash stroke={ 1.5 } size={ 20 } />
+                  <p className='text-xs'>Delete</p>
+                </button>
+              </Form>
 
-        <div className='flex w-full flex-row-reverse items-center justify-between p-2'>
-          <button
-            className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-            type='button'
-            onClick={() => setReplying(!replying)}
-          >
-            <p className='text-xs'>Reply</p>
-          </button>
-
-          <Form action={`/blog/${postId}/${commentId}/delete`} method='post'>
-            <button
-              type='submit'
-              className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-            >
-              <TrashIcon />
-              <p className='text-xs'>Delete</p>
-            </button>
-          </Form>
-          <NavLink to={`/blog/${postId}/${commentId}/edit`}>
-            <button className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'>
-              <p className='text-xs'>Edit</p>
-              <Pencil1Icon />
-            </button>
-          </NavLink>
-        </div>
+        </>
+        ) : null }
       </div>
-    </>
+
+    </Group>
   )
 }
 
 function Comment({ comment }: { comment: CommentWithChildren }) {
-  const users = comment.user
-  console.log(users, 'users')
 
   return (
     <>
-      <div className='flex flex-row-reverse items-center justify-between hover:bg-crimson6'>
-        {comment.user.avatarUrl && (
-          <AvatarCircle
-            avatarUrl={comment.user.avatarUrl}
-            userName={users.userName}
-            createdBy={comment.createdBy}
-            createdAt={comment.createdAt}
-            updatedAt={comment.updatedAt}
-          />
-        )}
-        <p className='border-bg-crimson5 border-transparent indent-4 text-base'>
+     <Paper withBorder radius="md" mb="md" p="md">
+
+
+        <div
+        className='flex flex-row items-center space-x-2 p-2'
+        >
+ <div
+ className='flex flex-col'>
+            <div>
+            {comment.user.avatarUrl ? (
+        <img
+              src={ comment.user.avatarUrl }
+              alt={ comment.user.userName }
+              className='h-6 w-6 rounded-full'
+              style={ { width: '1.5rem', height: '1.5rem' } } />
+
+
+
+      ) : null}
+  <Text>{ comment.user.userName }</Text><Text>{ format(new Date(comment.createdAt), 'MMM dd,') }</Text>
+            </div>
+          </div>
           {comment.message}
-        </p>
-      </div>
+          </div>
 
       <CommentActions
-        commentId={comment.id || ''}
-        replyCount={comment.children.length}
         userId={comment.user.id}
         postId={comment.postId}
         createdBy={comment.createdBy}
+
+        commentId={comment.id}
+        replyCount={comment.children.length}
       />
 
       {comment.children && comment.children.length > 0 && (
-        <ListComments key={comment.parentId} comments={comment.children} />
+        <ListComments comments={comment.children} />
       )}
+    </Paper>
     </>
   )
 }
 function ListComments({ comments }: { comments: Array<CommentWithChildren> }) {
   return (
-    <div className='hover:bg-crimson6'>
+    <Box
+    >
       {comments.map((comment) => {
         return <Comment key={comment.id} comment={comment} />
       })}
-    </div>
+    </Box>
   )
 }
 

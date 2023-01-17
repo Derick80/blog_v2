@@ -1,9 +1,9 @@
-import { LoaderArgs, json } from '@remix-run/node'
+import { LoaderArgs, json, SerializeFrom } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import { Card } from '~/components/shared/blog-ui/card'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import { getPostById } from '~/models/post.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import { getPostById } from '~/utils/server/post.server'
 
 export async function loader({ request, params }: LoaderArgs) {
   const postId = params?.postId
@@ -15,16 +15,20 @@ export async function loader({ request, params }: LoaderArgs) {
 }
 
 export default function Index() {
-  const data = useLoaderData<typeof loader>()
+  const data = useLoaderData<{
+    post: SerializeFrom<typeof getPostById>
+  }>()
+
   const post = data.post
+
   return (
-    <div className='grid grid-cols-6 place-items-center gap-4'>
-      {data.post && (
+    <div className='col-start-2'>
+      {post && (
         <div className='col-span-4 col-start-2'>
           <Card
-            key={data.post.id}
-            post={data.post}
-            user={data.post.user}
+            key={post.id}
+            data={post}
+            user={post.user}
             showComments={true}
             showFavorites={true}
             showLikes={true}

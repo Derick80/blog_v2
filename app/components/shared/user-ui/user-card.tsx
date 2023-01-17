@@ -1,5 +1,5 @@
 import { NavLink } from '@remix-run/react'
-import { UserProps } from '~/models/user.server'
+import { UserProps } from '~/utils/server/user.server'
 import { UserPlaceHolder } from '../icons'
 
 export type UserCardProps = {

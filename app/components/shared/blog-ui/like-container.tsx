@@ -1,6 +1,7 @@
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons'
 import type { FormMethod } from '@remix-run/react'
 import { NavLink, useFetcher } from '@remix-run/react'
+import { IconLogin } from '@tabler/icons'
 import { useState } from 'react'
 import type { Like } from '~/utils/schemas/like-schema'
 
@@ -66,8 +67,7 @@ export default function LikeContainer({
             <span className='min-w-[0.75rem]'>Liked by: {likeCount}</span>
           </small>
           <NavLink to='/login' className='flex items-center'>
-            <span className='material-symbols-outlined'>login</span>
-            <p className='hidden md:block'>Sign In to Like</p>
+            <IconLogin />
           </NavLink>
         </>
       )}

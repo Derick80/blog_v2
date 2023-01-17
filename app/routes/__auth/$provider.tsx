@@ -1,7 +1,7 @@
 // app/routes/auth/$provider.tsx
 import type { ActionArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { authenticator } from '~/models/auth/auth.server'
+import { authenticator } from '~/utils/server/auth/auth.server'
 
 export let loader = () => redirect('/login')
 

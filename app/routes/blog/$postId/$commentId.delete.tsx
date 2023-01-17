@@ -1,6 +1,6 @@
 import { ActionArgs, LoaderArgs, redirect } from '@remix-run/node'
 import { badRequest } from 'remix-utils'
-import { deleteComment } from '~/models/comments.server'
+import { deleteComment } from '~/utils/server/comments.server'
 
 export async function action({ request, params }: ActionArgs) {
   const commentId = params?.commentId

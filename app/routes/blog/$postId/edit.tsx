@@ -1,22 +1,27 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { Link, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
-import { isAuthenticated } from '~/models/auth/auth.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import Edit from '~/components/shared/blog-ui/edit-post'
-import type { CategoryForm } from '~/models/post.server'
-import { getPostToEdit } from '~/models/post.server'
+import type { CategoryForm } from '~/utils/server/post.server'
+import { getPostToEdit } from '~/utils/server/post.server'
 import {
   deletePost,
   publishPost,
   savePost,
   unPublishPost
-} from '~/models/post.server'
+} from '~/utils/server/post.server'
 import { validateText } from '~/utils/validators.server'
+import { Modal } from '~/components/shared/layout/modal'
+import { IconEdit } from '@tabler/icons'
+import { id } from 'date-fns/locale'
 
 export async function loader({ params, request }: LoaderArgs) {
   const postId = params.postId
+  console.log(params, 'params')
+
   invariant(postId, 'postId is required')
   const post = await getPostToEdit(postId)
   invariant(post, 'post is required')
@@ -114,7 +119,16 @@ export async function action({ params, request }: ActionArgs) {
 
 export default function EditPost() {
   const data = useLoaderData<typeof loader>()
-  const post = data.post
 
-  return <Edit post={post} />
+  return (
+    <Modal isOpen={true}>
+      <Link
+        className='border-transparent flex w-full items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+        to={`/blog/${id}/edit`}
+      >
+        <IconEdit />
+        <p>Edit</p>
+      </Link>
+    </Modal>
+  )
 }

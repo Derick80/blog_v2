@@ -3,15 +3,18 @@ import { useEffect, useState } from 'react'
 import { Select } from '~/components/shared/box/select-box'
 
 import type {
+  Post,
   PrismaPost,
   SerializedEditPost
 } from '~/utils/schemas/post-schema'
+import { Modal } from '../layout/modal'
 import TipTap from '../tip-tap'
 export type EditPostProps = {
-  post: SerializedEditPost
+  post: Post
 }
 
 export default function Edit({ post }: EditPostProps) {
+  const { id, title, description, body, imageUrl, categories } = post
   //   fetcher works! Grab all the categories from the database and display them in the select box. Use fetcher to ping the database and grab the categories.
   const fetcher = useFetcher()
   useEffect(() => {
@@ -33,22 +36,6 @@ export default function Edit({ post }: EditPostProps) {
     categories: post.categories.map((item) => item.value)
   })
 
-  const handleFileUpload = async (file: File) => {
-    const inputFormData = new FormData()
-    inputFormData.append('imageUrl', file)
-    const response = await fetch('/actions/image', {
-      method: 'POST',
-      body: inputFormData
-    })
-
-    const { imageUrl } = await response.json()
-
-    setFormData({
-      ...formData,
-      imageUrl: imageUrl
-    })
-  }
-
   function handleSelects(event: React.ChangeEvent<HTMLSelectElement>) {
     const { value } = event.target
     if (formData.categories.includes(value)) {
@@ -65,10 +52,10 @@ export default function Edit({ post }: EditPostProps) {
   }
 
   return (
-    <div className='grid-cols-6 gap-5 bg-crimson3 p-5 md:grid '>
+    <Modal isOpen={true}>
       <form
         method='post'
-        action={`/blog/${post.id}/edit`}
+        action={`/blog/${id}/edit`}
         className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
       >
         <label htmlFor='title'>Title</label>
@@ -77,26 +64,26 @@ export default function Edit({ post }: EditPostProps) {
           type='text'
           name='title'
           id='title'
-          value={post.title}
+          value={title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
         <label htmlFor='description'>Description</label>
-        <div>{post.description}</div>
+        <div>{description}</div>
         <input
           className='rounded-xl bg-crimson12 text-slate12'
           type='text'
           name='description'
           id='description'
-          value={post.description}
+          value={description}
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
           }
         />
 
-        <label htmlFor='body'>Post Content</label>
+        <label htmlFor='body'>Content</label>
 
         <div className='flex flex-col items-center justify-center'>
-          {post.body && <TipTap name={'body'} content={formData.body} />}
+          {post.body && <TipTap />}
           <input type='hidden' name='body' value={formData.body} />
         </div>
 
@@ -150,10 +137,7 @@ export default function Edit({ post }: EditPostProps) {
           </div>
           <br />
         </div>
-        <ImageUploader
-          onChange={handleFileUpload}
-          imageUrl={formData.imageUrl}
-        />
+
         <button
           type='submit'
           className='btn-base btn-solid-primary'
@@ -190,6 +174,6 @@ export default function Edit({ post }: EditPostProps) {
           Delete
         </button>
       </form>
-    </div>
+    </Modal>
   )
 }

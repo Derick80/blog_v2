@@ -3,7 +3,11 @@ import invariant from 'tiny-invariant'
 
 import bcrypt from 'bcryptjs'
 import { AuthInput } from '~/utils/schemas/auth-schema'
-import { createUser, getUser, getUserPasswordHash } from '~/models/user.server'
+import {
+  createUser,
+  getUser,
+  getUserPasswordHash
+} from '~/utils/server/user.server'
 
 export const registerStrategy = new FormStrategy(async ({ form }) => {
   const email = form.get('email')

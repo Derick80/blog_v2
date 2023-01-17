@@ -3,8 +3,8 @@ import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import { Card } from '~/components/shared/blog-ui/card'
-import getAllCategories from '~/models/categories.server'
-import { getPosts } from '~/models/post.server'
+import getAllCategories from '~/utils/server/categories.server'
+import { getPosts } from '~/utils/server/post.server'
 
 export async function loader() {
   const posts = await getPosts()
@@ -17,23 +17,24 @@ export async function loader() {
 }
 
 export default function BlogRoute() {
-  const data = useLoaderData<{ posts: SerializeFrom<typeof getPosts>, categories: SerializeFrom<typeof getAllCategories> }>()
+  const data = useLoaderData<{
+    posts: SerializeFrom<typeof getPosts>
+    categories: SerializeFrom<typeof getAllCategories>
+  }>()
 
   return (
-    <div className='grid-cols-repeat(minmax(300px, 1fr)) grid justify-items-center gap-4'>
+    <div className='col-start-2'>
       {data.posts.map((post) => (
-<Card key={post.id} data={post}
-user={post.user}
-  showLikes={true}
-  showComments={true}
-        showFavorites={true}
-        showOptions={true}
-        showShare={true}
-
-  />
-
-
-
+        <Card
+          key={post.id}
+          data={post}
+          user={post.user}
+          showLikes={true}
+          showComments={true}
+          showFavorites={true}
+          showOptions={true}
+          showShare={true}
+        />
       ))}
 
       <Outlet context={data.categories} />

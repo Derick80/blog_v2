@@ -5,9 +5,9 @@ import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import FormField from '~/components/shared/form-field'
 import { Modal } from '~/components/shared/layout/modal'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import { getJImageById, updateJImage } from '~/models/j-images.server'
-import { getTravelLogById, updateTravelLog } from '~/models/travel.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import { getJImageById, updateJImage } from '~/utils/server/j-images.server'
+import { getTravelLogById, updateTravelLog } from '~/utils/server/travel.server'
 
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)

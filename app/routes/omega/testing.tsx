@@ -1,7 +1,7 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { useLoaderData, Outlet } from '@remix-run/react'
-import { isAuthenticated } from '~/models/auth/auth.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {

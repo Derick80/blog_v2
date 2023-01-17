@@ -1,8 +1,8 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { getMyPostsByEmail } from '~/models/user.server'
-import { useOptionalUser } from '~/utils/utils'
+import { getMyPostsByEmail } from '~/utils/server/user.server'
+import { useOptionalUser } from '~/utils/utilities'
 
 export async function loader({ request }: LoaderArgs) {
   const posts = await getMyPostsByEmail('iderick@gmail.com')

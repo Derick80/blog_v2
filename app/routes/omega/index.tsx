@@ -6,10 +6,10 @@ import invariant from 'tiny-invariant'
 import { Select } from '~/components/shared/box/select-box'
 import CategoryContainer from '~/components/shared/category-container'
 import TipTap from '~/components/shared/tip-tap'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import getAllCategories from '~/models/categories.server'
-import { CategoryForm, createPost } from '~/models/post.server'
-import { getMyPostsByEmail } from '~/models/user.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import getAllCategories from '~/utils/server/categories.server'
+import { CategoryForm, createPost } from '~/utils/server/post.server'
+import { getMyPostsByEmail } from '~/utils/server/user.server'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   const categories = await getAllCategories()

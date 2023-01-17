@@ -2,8 +2,8 @@ import type { ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useFetcher } from '@remix-run/react'
 import { useEffect } from 'react'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import { prisma } from '~/models/prisma.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import { prisma } from '~/utils/server/prisma.server'
 
 type ActionData = {
   imageUrl?: string

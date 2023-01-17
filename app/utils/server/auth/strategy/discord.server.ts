@@ -6,7 +6,7 @@ import { DiscordStrategy } from 'remix-auth-discord'
 import { sessionStorage } from '../session.server'
 import { AuthInput } from '~/utils/schemas/auth-schema'
 import { getAccount } from './accountService.server'
-import { createUser } from '~/models/user.server'
+import { createUser } from '~/utils/server/user.server'
 
 export interface DiscordUser {
   id: DiscordProfile['id']

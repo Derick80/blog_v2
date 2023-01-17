@@ -1,11 +1,11 @@
 import { ActionArgs, json, LoaderArgs } from '@remix-run/node'
 import { redirect } from 'react-router'
-import { isAuthenticated } from '~/models/auth/auth.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import {
   createChildComment,
   createComment,
   getChildCommentsByParentId
-} from '~/models/comments.server'
+} from '~/utils/server/comments.server'
 
 export async function loader({ request }: LoaderArgs) {
   const comments = await getChildCommentsByParentId({ parentId })

@@ -1,6 +1,6 @@
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import { Link } from '@remix-run/react'
-import { ProjectCategories } from '~/models/project.server'
+import { ProjectCategories } from '~/utils/server/project.server'
 import CategoryContainer from './category-container'
 
 export const ProjectCard = ({ project, categories }: any) => {

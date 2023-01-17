@@ -12,8 +12,8 @@ import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import FormField from '~/components/shared/form-field'
 import Uploader from '~/components/shared/s3-uploader'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import { createTravelLog } from '~/models/travel.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import { createTravelLog } from '~/utils/server/travel.server'
 import { validateText } from '~/utils/validators.server'
 
 type ActionData = {

@@ -1,7 +1,7 @@
 import type { About } from '@prisma/client'
 import type { SerializeFrom } from '@remix-run/node'
 import { Link } from '@remix-run/react'
-import { useOptionalUser } from '~/utils/utils'
+import { useOptionalUser } from '~/utils/utilities'
 
 export type AboutProps = {
   about: Partial<SerializeFrom<About>>

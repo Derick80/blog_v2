@@ -1,10 +1,10 @@
-import type { LoaderArgs} from '@remix-run/node';
+import type { LoaderArgs } from '@remix-run/node'
 import { json, Response } from '@remix-run/node'
 import { useCatch, useMatches, useParams } from '@remix-run/react'
 import invariant from 'tiny-invariant'
-import type { Profile } from '~/models/profile.server';
-import { getProfiles, getUserProfile } from '~/models/profile.server'
-import { getUserById } from '~/models/user.server'
+import type { Profile } from '~/utils/server/profile.server'
+import { getProfiles, getUserProfile } from '~/utils/server/profile.server'
+import { getUserById } from '~/utils/server/user.server'
 
 export async function loader({ params, request }: LoaderArgs) {
   const userId = params.userId
@@ -19,8 +19,7 @@ export async function loader({ params, request }: LoaderArgs) {
   return json({
     profiles,
     user: users,
-    profile: userProfile,
-
+    profile: userProfile
   })
 }
 
@@ -40,21 +39,20 @@ export default function UserProfileRoute() {
   }
   return (
     <div>
-      {
-        profile && <>
-          <div className='flex flex-col items-center'
-            key={profile.id}>
+      {profile && (
+        <>
+          <div className='flex flex-col items-center' key={profile.id}>
             <div className='flex flex-col items-center'>
               <img
-                className='rounded-full w-32 h-32'
+                className='h-32 w-32 rounded-full'
                 src={profile?.profilePicture}
                 alt={profile.userName}
               />
               <h1 className='text-2xl font-bold'>{profile.userName}</h1>
-              </div>
-              </div>
+            </div>
+          </div>
         </>
-      }
+      )}
     </div>
   )
 }

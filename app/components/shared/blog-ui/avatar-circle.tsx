@@ -1,21 +1,19 @@
-
 import { format } from 'date-fns'
 
 export type PostUserInfoPropsProps = {
-    avatarUrl: string
-    userName: string
-    createdAt?: string
-    updatedAt?: string
-    createdBy?: string
+  avatarUrl: string
+  userName: string
+  createdAt?: string
+  updatedAt?: string
+  createdBy?: string
 }
 
-
 export default function PostUserInfo({
-    avatarUrl,
-    userName,
-    createdAt,
-    updatedAt,
-    createdBy,
+  avatarUrl,
+  userName,
+  createdAt,
+  updatedAt,
+  createdBy
 }: PostUserInfoPropsProps) {
   return (
     <div className='flex flex-row items-center justify-end'>

@@ -4,9 +4,9 @@ import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import { Modal } from '~/components/shared/layout/modal'
-import { isAuthenticated } from '~/models/auth/auth.server'
-import { flashAndCommit } from '~/models/auth/session.server'
-import { createComment } from '~/models/comments.server'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import { flashAndCommit } from '~/utils/server/auth/session.server'
+import { createComment } from '~/utils/server/comments.server'
 
 export async function loader({ request, params }: LoaderArgs) {
   const postId = params?.postId

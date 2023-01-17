@@ -7,8 +7,8 @@ import {
 } from '@radix-ui/react-icons'
 import { Link, NavLink } from '@remix-run/react'
 import { useState } from 'react'
-import { CitiesAndAlbums } from '~/models/travel.server'
-import { useOptionalUser, UserType } from '~/utils/utils'
+import { CitiesAndAlbums } from '~/utils/server/travel.server'
+import { useOptionalUser, UserType } from '~/utils/utilities'
 // https://github.com/zioan/react-slider/blob/master/src/components/Slider2.jsx
 export type CarouselProps = {
   data: CitiesAndAlbums
