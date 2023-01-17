@@ -1,6 +1,12 @@
+import { Group, Menu, ActionIcon } from '@mantine/core'
 import { DotsVerticalIcon } from '@radix-ui/react-icons'
 import { Form, NavLink } from '@remix-run/react'
-import { IconEdit, IconFileMinus, IconTrash } from '@tabler/icons'
+import {
+  IconDotsVertical,
+  IconEdit,
+  IconFileMinus,
+  IconTrash
+} from '@tabler/icons'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../button'
@@ -15,60 +21,62 @@ export default function PostOptions({ id, published }: OptionProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className='flex flex-row items-center justify-center space-y-2'>
-      <button onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? (
-          <DotsVerticalIcon className='rotate-90 transform ' />
-        ) : (
-          <DotsVerticalIcon />
-        )}
-      </button>
-      {isOpen && (
-        <Modal
-          className='h-40 w-fit'
-          isOpen={isOpen}
-          onClick={() => setIsOpen(false)}
-        >
-          <div className=''>
-            {published ? (
-              <>
-                <Link
-                  className='border-transparent flex w-full items-center space-x-1.5 rounded bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-                  to={`/blog/${id}/unpublish`}
-                >
-                  <IconFileMinus />
-                  <p>Unpublish</p>
-                </Link>
-              </>
-            ) : (
-              <Link
+    <Group noWrap spacing={0}>
+      <Menu transition='pop' position='bottom-end'>
+        <Menu.Target>
+          <ActionIcon variant='filled' size={36}>
+            <IconDotsVertical size={20} stroke={1.5} />
+          </ActionIcon>
+        </Menu.Target>
+        <Menu.Dropdown>
+          {published ? (
+            <Menu.Item icon={<IconFileMinus size={16} stroke={1.5} />}>
+              <Form
+                name='unpublish'
+                method='post'
                 className='border-transparent flex w-full items-center space-x-1.5 rounded bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-                to={`/blog/${id}/publish`}
+                action={`/blog/${id}/publish`}
               >
-                Publish
-              </Link>
-            )}
-
-            <Button className='border-transparent flex w-full items-center space-x-1.5 rounded bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'>
-              <NavLink
-                className='border-transparent flex w-full items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-                to={`/blog/${id}/edit`}
+                <button type='submit' name='_action' value='unpublish'>
+                  Unpublish
+                </button>
+              </Form>
+            </Menu.Item>
+          ) : (
+            <>
+              <Form
+                name='publish'
+                method='post'
+                className='border-transparent flex w-full items-center space-x-1.5 rounded bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+                action={`/blog/${id}/publish`}
               >
-                <IconEdit />
-                <p>Edit</p>
-              </NavLink>
-            </Button>
+                <button type='submit' name='_action' value='publish'>
+                  publish
+                </button>
+              </Form>
+            </>
+          )}
+          <Menu.Item icon={<IconEdit size={16} stroke={1.5} />}>
+            <NavLink
+              className='border-transparent flex w-full items-center space-x-1.5 rounded bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+              to={`/blog/${id}/edit`}
+            >
+              <p>Edit</p>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item icon={<IconTrash size={16} stroke={1.5} />}>
             <Form
               className='border-transparent flex w-full items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
               method='post'
-              action={`/blog/${id}/delete`}
+              action={`/blog/${id}/publish`}
             >
-              <IconTrash />
-              <p>Delete</p>
+              <button type='submit' name='_action' value='delete'>
+                Delete
+              </button>
             </Form>
-          </div>
-        </Modal>
-      )}
-    </div>
+          </Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </Group>
   )
 }

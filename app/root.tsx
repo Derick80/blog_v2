@@ -60,7 +60,7 @@ function App() {
         <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} />
       </head>
 
-      <body className='flex min-h-screen flex-col bg-slate1 text-mauve2 dark:bg-crimson8 dark:text-slate2'>
+      <body className=''>
         <LayoutWrapper />
       </body>
     </html>

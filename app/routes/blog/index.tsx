@@ -2,7 +2,7 @@ import type { SerializeFrom } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
-import { Card } from '~/components/shared/blog-ui/card'
+import { PostCard } from '~/components/shared/blog-ui/post-card'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPosts } from '~/utils/server/post.server'
 
@@ -23,12 +23,13 @@ export default function BlogRoute() {
   }>()
 
   return (
-    <div className='col-start-2'>
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-2'>
       {data.posts.map((post) => (
-        <Card
+        <PostCard
           key={post.id}
           data={post}
           user={post.user}
+          showCategories={true}
           showLikes={true}
           showComments={true}
           showFavorites={true}

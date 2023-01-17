@@ -1,11 +1,6 @@
 /* eslint-disable react/no-danger-with-children */
-import { Category } from 'aws-sdk/clients/signer'
 import { format } from 'date-fns'
-import type {
-  SerializedEditPost,
-  Post,
-  SerializedPost
-} from '~/utils/schemas/post-schema'
+import type { SerializedEditPost, Post } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import { Divider } from '../layout/divider'
 import PostOptions from './post-options'
@@ -14,10 +9,10 @@ import FavoriteContainer from './favorite-container'
 import LikeContainer from './like-container'
 import { ShareButton } from './share-button'
 import type { Comment } from '~/utils/schemas/comment-schema'
-import PostUserInfo from './avatar-circle'
-import { Favorite } from '~/utils/schemas/favorite.schema'
+import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { Link } from '@remix-run/react'
 import { IconMessage2 } from '@tabler/icons'
+import CategoryContainer from '../category-container'
 export type ManyPostProps = {
   data: Post & {
     comments: Comment[]
@@ -41,6 +36,7 @@ export type TheBasicCardProps = {
   showComments: boolean
   showShare: boolean
   showOptions: boolean
+  showCategories: boolean
 } & EditPostCardProps
 export type BasicCardProps = {
   showLikes: boolean
@@ -48,16 +44,18 @@ export type BasicCardProps = {
   showComments: boolean
   showShare: boolean
   showOptions: boolean
+  showCategories: boolean
 } & ManyPostProps
 
-export const Card = ({
+export const PostCard = ({
   data,
   user,
   showComments,
   showLikes,
   showFavorites,
   showShare,
-  showOptions
+  showOptions,
+  showCategories
 }: BasicCardProps | TheBasicCardProps) => {
   const {
     id,
@@ -66,20 +64,18 @@ export const Card = ({
     body,
     imageUrl,
     createdAt,
-    updatedAt,
     published,
-    createdBy,
+    categories,
     likes,
     _count,
     favorites,
-    comments,
-    users
+    comments
   } = data
 
   function CardHeader() {
     return (
       <>
-        <div className='flex flex-col justify-between md:flex-row'>
+        <div className='mds:flex-row flex flex-row justify-between'>
           <div className='flex flex-col'>
             <Link
               to={`/blog/${id}`}
@@ -106,7 +102,7 @@ export const Card = ({
             </div>
             <div>
               <p className='text-xs italic'>
-                {format(new Date(createdAt), 'MMMM dd, yyyy')}
+                {format(new Date(createdAt), 'MMMM dd')}
               </p>
             </div>
           </div>
@@ -118,6 +114,20 @@ export const Card = ({
   function CardBody() {
     return (
       <>
+        {showCategories && categories && (
+          <div
+            className='flex flex-row space-x-2'
+            style={{ width: 'fit-content' }}
+          >
+            {categories.map((category, index) => (
+              <CategoryContainer
+                key={index}
+                index={index}
+                value={category.value}
+              />
+            ))}
+          </div>
+        )}
         {imageUrl && (
           <>
             <img
@@ -174,7 +184,7 @@ export const Card = ({
   }
   return (
     <>
-      <div key={id} className='flex flex-col'>
+      <div key={id} className='flex w-full flex-col'>
         {/* flex-row header container */}
         <CardHeader />
         <CardBody />
