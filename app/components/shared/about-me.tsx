@@ -7,7 +7,7 @@ export type AboutProps = {
   about: Partial<SerializeFrom<About>>
 }
 
-export default function MyProfile({ about }: AboutProps) {
+export default function AboutMe({ about }: AboutProps) {
   const user = useOptionalUser()
 
   return (

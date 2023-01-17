@@ -1,4 +1,5 @@
 import { Link } from '@remix-run/react'
+import { IconEdit } from '@tabler/icons'
 import { useState } from 'react'
 
 export type BlogActionProps = {
@@ -30,5 +31,30 @@ export default function BlogActions({ commentId, postId }: BlogActionProps) {
         Delete
       </Link>
     </div>
+  )
+}
+
+function BlogActionBox({ commentId, postId }: BlogActionProps) {
+
+
+  return (
+    <>
+     <Link
+        className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+        to={`/blog/${postId}/${commentId}/edit`}
+      >
+<IconEdit>
+  Edit
+  </IconEdit>        Edit
+      </Link>
+
+      <Link
+        className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+        to={`/blog/${postId}/${commentId}/delete`}
+      >
+        <span className='material-symbols-outlined'>delete</span>
+        Delete
+      </Link>
+    </>
   )
 }

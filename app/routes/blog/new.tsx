@@ -152,7 +152,7 @@ export default function Uploader() {
           <>
             <div>
               File has been uploaded to S3 and is available under the following
-              URL (if the bucket has public access enabled):
+              URL:
             </div>
             <input
               type='hidden'

@@ -14,7 +14,7 @@ import FormField from '~/components/shared/form-field'
 import Uploader from '~/components/shared/s3-uploader'
 import { isAuthenticated } from '~/models/auth/auth.server'
 import { createTravelLog } from '~/models/travel.server'
-import { validateText } from '~/routes/validators.server'
+import { validateText } from '~/utils/validators.server'
 
 type ActionData = {
   errorMsg?: string

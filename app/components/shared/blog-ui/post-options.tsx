@@ -1,7 +1,9 @@
 import { DotsVerticalIcon } from '@radix-ui/react-icons'
 import { Form } from '@remix-run/react'
+import { IconEdit, IconFileMinus, IconTrash } from '@tabler/icons'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Button } from '../button'
 import { Dialog } from '../layout/dialog'
 import { Modal } from '../layout/modal'
 
@@ -13,52 +15,64 @@ export default function PostOptions({ id, published }: OptionProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div
+    className='flex flex-row items-center justify-center space-y-2'
+    >
       <button onClick={() => setIsOpen(!isOpen)}>
-        {!isOpen ? (
-          <DotsVerticalIcon />
+{isOpen ? (
+          <DotsVerticalIcon className='rotate-90 transform ' />
         ) : (
-          <>
-            <DotsVerticalIcon className='rotate-90 transform ' />
-            <div className='flex flex-col items-center'>
+          <DotsVerticalIcon />
+        )}
+        </button>
+        {isOpen && (
+                <Modal
+                className='w-fit h-40'
+                isOpen={isOpen} onClick={() => setIsOpen(false)}>
+
+            <div className=''>
               {published ? (
                 <>
-                  <button className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'>
                     <Link
-                      className='btn-base btn-solid-warn'
-                      to={`/blog/${id}/unpublish`}
+                className='border-transparent flex w-full items-center space-x-1.5 rounded bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+                to={`/blog/${id}/unpublish`}
                     >
-                      Unpublish
+                    <IconFileMinus />
+                      <p>Unpublish</p>
                     </Link>
-                  </button>
                 </>
               ) : (
-                <div>
-                  <Link
-                    className='btn-base btn-solid-success'
-                    to={`/blog/${id}/publish`}
+
+
+                <Link
+                className='border-transparent flex w-full items-center space-x-1.5 rounded bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+                   to={`/blog/${id}/publish`}
                   >
                     Publish
                   </Link>
-                </div>
+
+
               )}
-              <button className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'>
+
+
                 <Link
-                  className='btn-base btn-solid-info'
-                  to={`/blog/${id}/edit`}
+                className='border-transparent flex w-full items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+
+                to={`/blog/${id}/edit`}
                 >
-                  Edit
+                 <IconEdit />
+               <p>Edit</p>
                 </Link>
-              </button>
-              <Form method='post' action={`/blog/${id}/delete`}>
-                <button className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'>
-                  Delete
-                </button>
+              <Form
+                className='border-transparent flex w-full items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+
+              method='post' action={`/blog/${id}/delete`}>
+               <IconTrash />
+                <p>Delete</p>
               </Form>
             </div>
-          </>
+          </Modal>
         )}
-      </button>
     </div>
   )
 }

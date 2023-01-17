@@ -3,20 +3,21 @@ import { SerializeFrom } from '@remix-run/node'
 import type { FormMethod } from '@remix-run/react'
 import { useFetcher } from '@remix-run/react'
 import { useState, useRef } from 'react'
+import { Favorite } from '~/utils/schemas/favorite.schema'
 import type { Post, SerializedPost } from '~/utils/schemas/post-schema'
 export type FavoriteContainerProps = {
   currentUser: string
   postId: string
-  post: SerializedPost
+  favorites: Favorite[]
 }
 
 export default function FavoriteContainer({
   currentUser,
   postId,
-  post
+  favorites
 }: FavoriteContainerProps) {
   const fetcher = useFetcher()
-  const userFavoritedPost = post?.favorites?.find(
+  const userFavoritedPost = favorites?.find(
     ({ userId }) => userId === currentUser
   )
     ? true

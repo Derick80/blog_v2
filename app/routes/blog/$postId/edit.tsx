@@ -13,7 +13,7 @@ import {
   savePost,
   unPublishPost
 } from '~/models/post.server'
-import { validateText } from '~/routes/validators.server'
+import { validateText } from '~/utils/validators.server'
 
 export async function loader({ params, request }: LoaderArgs) {
   const postId = params.postId

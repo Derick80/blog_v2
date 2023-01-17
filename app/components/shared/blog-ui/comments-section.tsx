@@ -1,9 +1,7 @@
-import { Box } from '@mantine/core'
 import { ChatBubbleIcon } from '@radix-ui/react-icons'
-import { useParams } from '@remix-run/react'
 import React from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
-import { useOptionalUser, useUser } from '~/utils/utils'
+import { useOptionalUser } from '~/utils/utils'
 import CommentForm from './comment-form'
 import formatComments from './format-comments'
 import ListComments from './list-comments'
@@ -20,7 +18,6 @@ export function CommentSection({
 }: CommentSectionProps) {
   const [isOpen, setIsOpen] = React.useState(false)
 
-  const comment = comments?.map((comment) => comment)
   const user = useOptionalUser()
   return (
     <div className='bg-crimson2'>

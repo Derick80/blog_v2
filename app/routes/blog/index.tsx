@@ -9,31 +9,32 @@ import { getPosts } from '~/models/post.server'
 export async function loader() {
   const posts = await getPosts()
 
-  if (!posts) return badRequest({ message: 'Invalid post' })
+  if (!posts) return badRequest({ message: 'There are no Posts' })
+  // get all Categoiries for posts use this for useMatches, etc
   const categories = await getAllCategories()
 
   return json({ posts, categories })
 }
 
 export default function BlogRoute() {
-  const data = useLoaderData<{ posts: SerializeFrom<typeof getPosts> }>()
+  const data = useLoaderData<{ posts: SerializeFrom<typeof getPosts>, categories: SerializeFrom<typeof getAllCategories> }>()
 
   return (
     <div className='grid-cols-repeat(minmax(300px, 1fr)) grid justify-items-center gap-4'>
-      {data.posts.map((post) => {
-        return (
-          <Card
-            key={post.id}
-            post={post}
-            user={post.user}
-            showComments={true}
-            showFavorites={true}
-            showLikes={true}
-            showShare={true}
-            showOptions={true}
-          />
-        )
-      })}
+      {data.posts.map((post) => (
+<Card key={post.id} data={post}
+user={post.user}
+  showLikes={true}
+  showComments={true}
+        showFavorites={true}
+        showOptions={true}
+        showShare={true}
+
+  />
+
+
+
+      ))}
 
       <Outlet context={data.categories} />
     </div>

@@ -3,6 +3,7 @@ import { Category } from 'aws-sdk/clients/signer'
 import { format } from 'date-fns'
 import type {
   SerializedEditPost,
+  Post,
   SerializedPost
 } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
@@ -13,15 +14,16 @@ import FavoriteContainer from './favorite-button'
 import LikeContainer from './like-container'
 import { ShareButton } from './share-button'
 import type { Comment } from '~/utils/schemas/comment-schema'
+import PostUserInfo from './avatar-circle'
 export type ManyPostProps = {
-  post: SerializedPost & {
+  data: Post & {
     comments: Comment[]
   }
   user: User | null
 }
 
 export type EditPostCardProps = {
-  post: SerializedEditPost
+  data: SerializedEditPost
   user: User | null
 }
 export type TheBasicCardProps = {
@@ -40,7 +42,7 @@ export type BasicCardProps = {
 } & ManyPostProps
 
 export const Card = ({
-  post,
+  data,
   user,
   showComments,
   showLikes,
@@ -48,7 +50,6 @@ export const Card = ({
   showShare,
   showOptions
 }: BasicCardProps | TheBasicCardProps) => {
-  const users = user?.userName
   const {
     id,
     title,
@@ -59,10 +60,13 @@ export const Card = ({
     updatedAt,
     published,
     createdBy,
-    comments,
     likes,
-    _count
-  } = post
+    _count,
+    favorites,
+    comments,
+    users
+  } = data
+  const currentUserName = user?.userName || ''
   return (
     <>
       {' '}
@@ -100,15 +104,15 @@ export const Card = ({
                 postId={id}
                 likes={likes}
                 likeCounts={_count?.likes}
-                currentUser={user?.id}
+                currentUser={currentUserName}
               />
             )}
 
             {showFavorites && id && (
               <FavoriteContainer
                 postId={id}
-                post={post}
-                currentUser={user?.id}
+                post={favorites}
+                currentUser={currentUserName}
               />
             )}
 
@@ -121,19 +125,14 @@ export const Card = ({
             )}
           </div>
 
-          {user ? (
-            post && user.avatarUrl ? (
-              <div className='block w-1/2'>
-                <AvatarCircle
-                  avatarUrl={user.avatarUrl}
-                  userName={user.userName}
-                  createdBy={createdBy}
-                  createdAt={createdAt}
-                  updatedAt={updatedAt}
-                />
-              </div>
-            ) : null
-          ) : null}
+         <PostUserInfo
+            avatarUrl={user?.avatarUrl || ''}
+            userName={user?.userName || ''}
+            createdBy={createdBy}
+            createdAt={createdAt}
+            updatedAt={updatedAt}
+          />
+
         </div>
         <Divider></Divider>
         {showComments && (
@@ -147,86 +146,3 @@ export const Card = ({
     </>
   )
 }
-
-export function AvatarCircle({
-  avatarUrl,
-  userName,
-  createdBy,
-  createdAt,
-  updatedAt
-}: {
-  avatarUrl: string
-  userName: string
-  createdBy: string | undefined
-  createdAt: string | Date | undefined
-  updatedAt: string | Date | undefined
-}) {
-  return (
-    <div className='flex flex-row items-center justify-end'>
-      {avatarUrl ? (
-        <img
-          src={avatarUrl}
-          alt={userName}
-          className='h-6 w-6 rounded-full'
-          style={{ width: '1.5rem', height: '1.5rem' }}
-        />
-      ) : null}
-      <div className='text-right text-xs'>
-        {createdBy && (
-          <>
-            <p className='italic'>Written by: {createdBy}</p>
-          </>
-        )}
-        {createdAt && (
-          <span className='inline-flex space-x-1'>
-            {' '}
-            <p className='italic'>Posted:</p>{' '}
-            <p>{format(new Date(createdAt), 'MMM dd yy')}</p>
-          </span>
-        )}
-        {updatedAt && (
-          <p className='italic'>
-            Updated: {format(new Date(updatedAt), 'MMM dd yy')}
-          </p>
-        )}
-      </div>
-    </div>
-  )
-}
-
-// function CommentField(){
-//   return (
-//     {isOpen && (
-//       <div className='rounded-lg'>
-//         <fetcher.Form
-//           method='post'
-//           action={`/blog/${post.id}/comment`}
-//           className='flex flex-col items-end space-y-1'
-//         >
-//           <input type='hidden' name='userId' value={user?.id} />
-//           <input type='hidden' name='postId' value={post.id} />
-//           <input type='hidden' name='createdBy' value={user?.userName} />
-//           <textarea
-//             rows={1}
-//             cols={50}
-//             id='message'
-//             className='border-blue-300 bg-zinc-200 text-zinc-900 dark:bg-zinc-400 dark:text-slate-200 w-full rounded-md border'
-//             name='message'
-//             value={formData.message}
-//             onChange={(e) =>
-//               setFormData({ ...formData, message: e.target.value })
-//             }
-//           />
-//           <button
-//             className='btn-base btn-solid-success w-fit'
-//             type='submit'
-//           >
-//             Save
-//             <span className='material-icons'>save</span>
-//           </button>
-//         </fetcher.Form>
-
-//       </div>
-//     )}
-//   )
-// }

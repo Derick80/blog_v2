@@ -1,6 +1,6 @@
 import { json, LoaderArgs, MetaFunction, redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import MyProfile from '~/components/shared/profile'
+import MyProfile from '~/components/shared/about-me'
 import { getAbout } from '~/models/about.server'
 import { isAuthenticated } from '~/models/auth/auth.server'
 

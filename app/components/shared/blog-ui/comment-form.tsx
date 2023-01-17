@@ -29,7 +29,7 @@ export default function CommentForm({
   return (
     <>
       {/* control form list color here */}
-      <div className='mt-2 flex w-full flex-col rounded-l-3xl bg-crimson2 hover:bg-crimson6'>
+      <div className='mt-2 flex w-full flex-col rounded-l-3xl bg-s hover:bg-crimson6'>
         <form
           className='text-black flex w-full flex-row items-center justify-around rounded-lg bg-crimson2 hover:bg-crimson6'
           method='post'
