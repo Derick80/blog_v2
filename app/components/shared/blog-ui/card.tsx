@@ -1,23 +1,14 @@
 /* eslint-disable react/no-danger-with-children */
-import { Category } from 'aws-sdk/clients/signer'
-import { format } from 'date-fns'
-import type {
-  SerializedEditPost,
-  Post,
-  SerializedPost
-} from '~/utils/schemas/post-schema'
+import type { SerializedEditPost, Post } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
-import { Divider } from '../layout/divider'
-import PostOptions from './post-options'
-import { CommentSection } from './comments-section'
-import FavoriteContainer from './favorite-container'
-import LikeContainer from './like-container'
-import { ShareButton } from './share-button'
 import type { Comment } from '~/utils/schemas/comment-schema'
-import PostUserInfo from './avatar-circle'
-import { Favorite } from '~/utils/schemas/favorite.schema'
-import { Link } from '@remix-run/react'
-import { IconMessage2 } from '@tabler/icons'
+import type { Favorite } from '~/utils/schemas/favorite.schema'
+import { Card, Group, Image, Text } from '@mantine/core'
+import PostOptions from './post-options'
+import LikeContainer from './like-container'
+import FavoriteContainer from './favorite-container'
+import { ShareButton } from './share-button'
+
 export type ManyPostProps = {
   data: Post & {
     comments: Comment[]
@@ -50,7 +41,7 @@ export type BasicCardProps = {
   showOptions: boolean
 } & ManyPostProps
 
-export const Card = ({
+export const PostCard = ({
   data,
   user,
   showComments,
@@ -65,90 +56,86 @@ export const Card = ({
     description,
     body,
     imageUrl,
+    _count,
+    likes,
     createdAt,
     updatedAt,
     published,
     createdBy,
-    likes,
-    _count,
-    favorites,
     comments,
-    users
+    favorites
   } = data
 
-  function CardHeader() {
-    return (
-      <>
-        <div className='flex flex-col justify-between md:flex-row'>
-          <div className='flex flex-col'>
-            <Link
-              to={`/blog/${id}`}
-              className='text-gray-900 text-lg font-bold'
-            >
-              <h3 className='text-xl font-bold capitalize'>{title}</h3>
-            </Link>
-            <p className='indent-2 text-xs italic'>{description}</p>
-          </div>
-          <div className='flex flex-col'>
-            <div className='flex flex-row items-center justify-around'>
-              {user?.avatarUrl && (
-                <>
-                  <p className='text-xs'>by:</p>
-                  <img
-                    src={user?.avatarUrl}
-                    alt={user?.userName}
-                    className='h-6 w-6 rounded-full'
-                    style={{ width: '1.5rem', height: '1.5rem' }}
-                  />
-                  <p className='text-xs italic'>{user?.userName}</p>
-                </>
-              )}
-            </div>
-            <div>
-              <p className='text-xs italic'>
-                {format(new Date(createdAt), 'MMMM dd, yyyy')}
-              </p>
-            </div>
-          </div>
-        </div>
-      </>
-    )
-  }
+  return (
+    <Card
+      shadow='sm'
+      radius='md'
+     withBorder
+    >
 
-  function CardBody() {
-    return (
-      <>
-        {imageUrl && (
-          <>
-            <img
-              src={imageUrl}
-              alt={title}
-              className='h-64 w-full object-cover'
-            />
-          </>
-        )}
-        {body && (
-          <p dangerouslySetInnerHTML={{ __html: body }} className='text-xs'></p>
-        )}
-      </>
-    )
-  }
+      <Card.Section>
+      <Text
+        size="xl"
+        weight="bold"
+        sx={{
+          textTransform: 'capitalize',
+          overflow: 'hidden',
+        }}
 
-  function CardFooter() {
-    return (
-      <>
-        <div className='flex flex-row'>
-          {/* this is where likes, comments, etc should go */}
-          {showLikes && id && likes && _count && user && (
-            <LikeContainer
-              postId={id}
-              likes={likes}
-              likeCounts={_count?.likes}
-              currentUser={user.id}
-            />
-          )}
 
-          {showFavorites && user && id && (
+      >{title}</Text>
+      <Text
+        size="sm"
+        italic
+
+      >{description}</Text>
+      </Card.Section>
+
+        <Group spacing='md'>
+
+
+      </Group>
+      <Group position='left' spacing='md'>
+      <Card.Section>
+      <Image
+          src={imageUrl}
+          alt={title}
+          height={300}
+          width={300}
+          radius='md'
+        />
+
+      </Card.Section>
+      <Card.Section>
+      {body &&   <Text
+        size='md'
+
+      sx={{
+        padding: '1.0rem',
+        overflow: 'hidden',
+      }}
+
+        dangerouslySetInnerHTML={{ __html: body }}
+        />}
+      </Card.Section>
+
+      </Group>
+      <Card.Section>
+      <Group position='left' spacing='md'>
+        { showLikes && id && user &&
+
+          <LikeContainer
+            likeCounts={_count?.likes}
+            likes={likes}
+            postId={id}
+            currentUser={user.id}
+          />
+
+
+
+        }
+
+{showFavorites && user && id && (
             <FavoriteContainer
               postId={id}
               favorites={favorites}
@@ -157,40 +144,17 @@ export const Card = ({
           )}
 
           {showShare && id && <ShareButton id={id} />}
-          {showOptions && id && (
-            <PostOptions
-              id={id}
-              published={published === true ? true : false}
-            />
-          )}
 
-          <div className='flex flex-row items-center justify-around'>
-            <IconMessage2 size={20} stroke={1.5} />
-            <p className='pt-5 text-xs'>{_count.comments}</p>
-          </div>
-        </div>
-      </>
-    )
-  }
-  return (
-    <>
-      <div key={id} className='flex flex-col'>
-        {/* flex-row header container */}
-        <CardHeader />
-        <CardBody />
-        <div className='pt-4 text-xs'></div>
+    { showOptions && id &&  <PostOptions
 
-        <div className='relative flex flex-row justify-between'></div>
-        <CardFooter />
-        <Divider></Divider>
-        {showComments && comments && id && (
-          <CommentSection
-            comments={comments}
-            postComments={_count.comments}
-            postId={id}
-          />
-        )}
-      </div>
-    </>
-  )
+     id={id}
+     published={published}
+
+    />}
+
+
+      </Group>
+      </Card.Section>
+
+    </Card>  )
 }

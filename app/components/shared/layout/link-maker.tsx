@@ -16,8 +16,9 @@ export default function LinkMaker({
   children
 }: LinkMakerProps) {
   return (
-    <li key={name} className='flex items-center'>
+    <>
       <NavLink
+        key={name}
         to={href}
         className={({ isActive }) =>
           ` ${
@@ -32,6 +33,6 @@ export default function LinkMaker({
         {name}
         {children}
       </NavLink>
-    </li>
+    </>
   )
 }

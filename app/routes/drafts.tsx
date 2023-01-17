@@ -2,10 +2,10 @@ import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import invariant from 'tiny-invariant'
-import { Card } from '~/components/shared/blog-ui/card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getUserDrafts } from '~/utils/server/post.server'
 import type { SerializedEditPost } from '~/utils/schemas/post-schema'
+import { PostCard } from '~/components/shared/blog-ui/card'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
@@ -27,7 +27,7 @@ export default function Drafts() {
       <div className='mx-auto'>
         <h1>Drafts</h1>
         {drafts.map((draft: SerializedEditPost) => (
-          <Card
+          <PostCard
             key={draft.id}
             post={draft}
             showComments={false}

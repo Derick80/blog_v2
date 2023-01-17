@@ -1,3 +1,4 @@
+import { Box } from '@mantine/core'
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
@@ -16,10 +17,8 @@ export default function Index() {
 
   const data = useLoaderData<typeof loader>()
   return (
-    <>
-      <div className='mx-auto flex flex-col gap-5 p-2 md:w-1/2 md:flex-row'>
-        <div className='bg-zinc-200 dark:bg-zinc-400 mx-auto flex grow flex-col rounded-lg'>
-          {user && <div>elcome {user.userName}</div>}
+    <Box>
+     {user && <div>elcome {user.userName}</div>}
           <div>Hero Post</div>
           <div>About me post</div>
           My stats number of posts {data.blogPostCount}, number of comments,
@@ -27,33 +26,8 @@ export default function Index() {
           projects in progress, etc. Lorem ipsum dolor sit amet consectetur
           adipisicing elit. Corporis ullam, exercitationem necessitatibus animi
           debitis est perspiciatis unde, voluptate eligendi rerum vel et ad
-          cumque commodi quo recusandae consequuntur consequatur veritatis. My
-          stats number of posts {data.blogPostCount}, number of comments, number
-          of likes, trips taken, trips planned, projects completed, projects in
-          progress, etc. Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Corporis ullam, exercitationem necessitatibus animi debitis est
-          perspiciatis unde, voluptate eligendi rerum vel et ad cumque commodi
-          quo recusandae consequuntur consequatur veritatis. My stats number of
-          posts {data.blogPostCount}, number of comments, number of likes, trips
-          taken, trips planned, projects completed, projects in progress, etc.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-          ullam, exercitationem necessitatibus animi debitis est perspiciatis
-          unde, voluptate eligendi rerum vel et ad cumque commodi quo recusandae
-          consequuntur consequatur veritatis. My stats number of posts{' '}
-          {data.blogPostCount}, number of comments, number of likes, trips
-          taken, trips planned, projects completed, projects in progress, etc.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-          ullam, exercitationem necessitatibus animi debitis est perspiciatis
-          unde, voluptate eligendi rerum vel et ad cumque commodi quo recusandae
-          consequuntur consequatur veritatis. My stats number of posts{' '}
-          {data.blogPostCount}, number of comments, number of likes, trips
-          taken, trips planned, projects completed, projects in progress, etc.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-          ullam, exercitationem necessitatibus animi debitis est perspiciatis
-          unde, voluptate eligendi rerum vel et ad cumque commodi quo recusandae
-          consequuntur consequatur veritatis.
-        </div>
-      </div>
-    </>
+          cumque commodi quo recusandae consequuntur consequatur veritatis.
+
+    </Box>
   )
 }
