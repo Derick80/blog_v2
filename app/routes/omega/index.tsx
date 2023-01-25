@@ -1,6 +1,7 @@
-import { EyeOpenIcon, Cross2Icon } from '@radix-ui/react-icons'
-import { LoaderArgs, json, ActionArgs, redirect } from '@remix-run/node'
-import { Outlet, useFetcher, useLoaderData } from '@remix-run/react'
+import { MultiSelect } from '@mantine/core'
+import { EyeOpenIcon } from '@radix-ui/react-icons'
+import { LoaderArgs, json, ActionArgs } from '@remix-run/node'
+import { useFetcher, useLoaderData } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import invariant from 'tiny-invariant'
 import { Select } from '~/components/shared/box/select-box'
@@ -9,7 +10,7 @@ import TipTap from '~/components/shared/tip-tap'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import getAllCategories from '~/utils/server/categories.server'
 import { CategoryForm, createPost } from '~/utils/server/post.server'
-import { getMyPostsByEmail } from '~/utils/server/user.server'
+import { Categories } from '../postTags'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   const categories = await getAllCategories()
@@ -55,7 +56,7 @@ export async function action({ request }: ActionArgs) {
 export default function Index() {
   const data = useLoaderData<typeof loader>()
 
-  const fetcher = useFetcher()
+  const fetcher = useFetcher<Categories>()
 
   const [isOpen, setIsOpen] = useState(false)
   //   form data for the post
@@ -64,19 +65,18 @@ export default function Index() {
     description: '',
     body: '',
     imageUrl: '',
-    categories: [] as string[]
+    categories: []
   })
-
+const [selected, setSelected] = useState<string[]>([])
   useEffect(() => {
     if (fetcher.state === 'idle' && !fetcher.data) {
       fetcher.load('/postTags')
     }
   }, [fetcher])
 
-  const cata =
-    fetcher.data && fetcher.data.data ? fetcher.data.data.categories : []
+  const  categories  = fetcher.data || { categories: [] }
 
-  const options = cata.map((item) => {
+  const options = categories.map((item) => {
     return item.value
   })
 
@@ -90,17 +90,17 @@ export default function Index() {
     } else {
       setFormData((prev) => ({
         ...prev,
-        categories: [...prev.categories, value]
+
       }))
     }
   }
 
   return (
     <>
-      <div className='grid-cols-6 gap-5 bg-crimson3 p-5 md:grid '>
+      <div className='grid-cols-6 gap-5w-full  p-5 md:grid col-start-1 col-span-3 '>
         <div className='col-span-1 col-start-5 mx-auto flex flex-row justify-center'>
           <button
-            className='border-transparent inline-flex items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
+            className='border-transparent inline-flex items-center space-x-1.5 rounded border  p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
             type='button'
             onClick={() => setIsOpen(!isOpen)}
           >
@@ -179,25 +179,24 @@ export default function Index() {
 
           <div>
             <label htmlFor='body'>Post Content</label>
-            <TipTap name={'body'} />
+            <TipTap/>
             <input type='hidden' name='body' value={formData.body} />
           </div>
-          <div className='flex flex-col bg-crimson3 pt-5'>
-            <div className='bg-red-300 flex w-full flex-wrap rounded-md'>
+          <div className='flex flex-col bg-d pt-5'>
+            <div className='bg-black-300 flex w-full flex-wrap rounded-md'>
               {formData.categories.map((item, index) => (
-                <CategoryContainer key={index} category={item} />
+                <CategoryContainer key={index}
+                value={item} index={index} />
               ))}
             </div>
-            <div className='bg-crimson3'>
-              <Select
-                options={cata}
-                multiple={true}
-                className='text-bg-crimson12 mt-4 bg-crimson3 pt-5'
-                label='Categories'
-                name='categories'
-                value={formData.categories}
-                onChange={(event) => handleSelects(event)}
-              />
+            <div className='bg-crims3'>
+            <MultiSelect
+            label='Categories'
+            name='categories'
+            data={categories}
+            onChange={(value) => setSelected(value)}
+            value={selected}
+          />
             </div>
             <br />
           </div>
@@ -208,7 +207,9 @@ export default function Index() {
         </form>
         {isOpen && (
           <div className='col-span-1 col-start-6'>
-            <h1 className='text-3xl'>Preview</h1>
+            <h1 className='text-3xl'>
+              {formData.title} {formData.description} {formData.body}
+            </h1>
           </div>
         )}
       </div>

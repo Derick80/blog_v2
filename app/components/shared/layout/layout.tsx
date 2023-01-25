@@ -35,6 +35,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </h1>
         </div>
         <NavLinks />
+
         {!user && <AdminMaker array={nonUserLinks} />}
       </NavBar>
       {user?.role === 'ADMIN' && (
@@ -45,7 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main className='grid flex-1 grid-cols-3'>{children}</main>
 
       <Footer>
-        <ul className='border-bg-crimson6 border-1 flex flex-row items-center justify-center space-x-3 text-sm'>
+        <ul className='border-1 flex flex-row items-center justify-center space-x-3 text-sm'>
           <li>
             <a
               href='https://www.github.com/Derick80'

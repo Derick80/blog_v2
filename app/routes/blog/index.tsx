@@ -16,7 +16,7 @@ export async function loader() {
   return json({ posts, categories })
 }
 
-export default function BlogRoute() {
+export default function Index() {
   const data = useLoaderData<{
     posts: SerializeFrom<typeof getPosts>
     categories: SerializeFrom<typeof getAllCategories>

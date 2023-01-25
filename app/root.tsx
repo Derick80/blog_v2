@@ -17,6 +17,7 @@ import {
   useTheme
 } from './utils/theme-provider'
 import { getThemeSession } from './utils/server/theme.server'
+import getAllCategories from './utils/server/categories.server'
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
   title: 'New Remix App',
@@ -35,8 +36,9 @@ export const links: LinksFunction = () => [
 export async function loader({ request }: LoaderArgs) {
   const themeSession = await getThemeSession(request)
   const user = await isAuthenticated(request)
+  const categories = await getAllCategories()
 
-  return { theme: themeSession, user }
+  return { theme: themeSession, user, categories }
 }
 function LayoutWrapper() {
   return (
@@ -75,7 +77,7 @@ export default function AppWithThemeProvider() {
   )
 }
 
-export function ErrorBoundary({ error }) {
+export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error)
   return (
     <html>

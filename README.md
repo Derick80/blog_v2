@@ -6,6 +6,8 @@
 
 Colors, some UI, some Icons, https://www.radix-ui.com/colors
 
+###
+- new.tsx underblog has working category selection
 ## Development
 
 From your terminal:

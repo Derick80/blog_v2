@@ -121,14 +121,9 @@ export default function EditPost() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <Modal isOpen={true}>
-      <Link
-        className='border-transparent flex w-full items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-        to={`/blog/${id}/edit`}
-      >
-        <IconEdit />
-        <p>Edit</p>
-      </Link>
-    </Modal>
+    <div className='col-start-2'>
+
+   <Edit post={data.post} />
+    </div>
   )
 }

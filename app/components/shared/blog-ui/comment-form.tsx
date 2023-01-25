@@ -32,7 +32,7 @@ export default function CommentForm({
     <Box>
       {/* control form list color here */}
 
-      <form
+      <Form
         className='grow rounded-xl border-2 p-2'
         method='post'
         action='/actions/comment'
@@ -63,7 +63,7 @@ export default function CommentForm({
             )}
           </button>
         </div>
-      </form>
+      </Form>
     </Box>
   )
 }

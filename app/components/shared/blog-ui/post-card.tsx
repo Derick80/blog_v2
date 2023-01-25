@@ -73,6 +73,7 @@ export const PostCard = ({
   } = data
 
   function CardHeader() {
+
     return (
       <>
         <div className='mds:flex-row flex flex-row justify-between'>

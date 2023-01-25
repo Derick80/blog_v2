@@ -1,6 +1,6 @@
 import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { Outlet, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import { getPostById } from '~/utils/server/post.server'
@@ -36,8 +36,10 @@ export default function Index() {
             showShare={true}
             showOptions={true}
           />
+
         </div>
       )}
+      <Outlet />
     </div>
   )
 }

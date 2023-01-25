@@ -66,11 +66,11 @@ export const Select = ({
         value={value}
         onChange={handleSelects}
         size={options.length}
-        className='text-bg-crimson12 flex w-1/2 flex-col-reverse rounded-md bg-crimson4'
+        className='text-bg-d flex flex-col-reverse rounded-md'
       >
         {options.map((option) => (
           <option
-            className='text-bg-crimson12  mt-4 scroll-smooth bg-crimson4 pt-5 text-right text-xs font-semibold'
+            className='mt-4 scroll-smooth pt-5 text-right text-xs font-semibold'
             key={option.value}
             value={option.value}
           >

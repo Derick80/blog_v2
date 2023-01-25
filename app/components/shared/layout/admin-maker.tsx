@@ -13,12 +13,12 @@ export type AdminMakerProps = {
 }
 export default function AdminMaker({ array }: AdminMakerProps) {
   const [toggle, setToggle] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   return (
     <button
       onClick={() => setOpen(!open)}
-      className='flex flex-1 flex-col items-center rounded-full bg-crimson5  hover:bg-crimson6'
+      className='bottom-0 flex flex-col items-center rounded-full p-2'
     >
       {open ? (
         <ChevronUpIcon className='rotate-180 transform' />
@@ -27,7 +27,8 @@ export default function AdminMaker({ array }: AdminMakerProps) {
       )}
 
       {open && (
-        <ul className='mb-10 flex h-full w-12 flex-col items-center justify-center space-y-5 rounded-xl p-2 hover:bg-crimson6 dark:bg-crimson5'>
+       <div className='absolute items-center justify-center'>
+         <ul className='relative flex h-full w-12 flex-col items-center justify-center space-y-5 rounded-xl p-2'>
           {array.map((link) => (
             <li key={link.text} className='h-5 w-10'>
               <NavLink
@@ -41,6 +42,7 @@ export default function AdminMaker({ array }: AdminMakerProps) {
             </li>
           ))}
         </ul>
+        </div>
       )}
     </button>
   )

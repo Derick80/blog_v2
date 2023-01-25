@@ -1,64 +1,18 @@
 import { Center, Container, Grid, MultiSelect, TextInput } from '@mantine/core'
 import type { ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useFetcher, useOutletContext } from '@remix-run/react'
+import { useFetcher, useLoaderData, useMatches, useOutletContext, useRouteLoaderData } from '@remix-run/react'
 import { useEffect, useState } from 'react'
+import { useRouteData } from 'remix-utils'
 import TipTap from '~/components/shared/tip-tap'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { CategoryForm } from '~/utils/server/post.server'
 import { prisma } from '~/utils/server/prisma.server'
+import { useMatchesData } from '~/utils/utilities'
+import { loader } from '.'
 import { Categories } from '../postTags'
 
-const cts = [
-  {
-    label: 'React',
-    value: 'react'
-  },
-  {
-    label: 'Node',
-    value: 'node'
-  },
-  {
-    label: 'Next',
-    value: 'next'
-  },
-  {
-    label: 'Remix',
-    value: 'remix'
-  },
-  {
-    label: 'Typescript',
-    value: 'typescript'
-  },
-  {
-    label: 'Javascript',
-    value: 'javascript'
-  },
-  {
-    label: 'CSS',
-    value: 'css'
-  },
-  {
-    label: 'HTML',
-    value: 'html'
-  },
-  {
-    label: 'Tailwind',
-    value: 'tailwind'
-  },
-  {
-    label: 'Sass',
-    value: 'sass'
-  },
-  {
-    label: 'Less',
-    value: 'less'
-  },
-  {
-    label: 'GraphQL',
-    value: 'graphql'
-  }
-]
+
 type ActionData = {
   imageUrl?: string
 }
@@ -107,20 +61,17 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function Uploader() {
+const {categories} =  useRouteLoaderData('root') as {categories: Categories}
+
+console.log(categories, 'categories');
+
   const fetcher = useFetcher<ActionData>()
-  const fetch = useFetcher<Categories>()
 
   const [selected, setSelected] = useState<string[]>([])
 
-  useEffect(() => {
-    if (fetch.state === 'idle' && !fetch.data) {
-      fetch.load('/postTags')
-    }
-  }, [fetch])
-  //   grab the categories from the fetcher
 
-  const categories = cts
-  console.log(categories, 'tags')
+
+
   const onClick = async () =>
     fetcher.submit({
       imageUrl: 'imageUrl',
@@ -192,7 +143,6 @@ export default function Uploader() {
           />
 
           <TipTap />
-
           <MultiSelect
             label='Categories'
             name='categories'
@@ -201,10 +151,13 @@ export default function Uploader() {
             value={selected}
           />
 
+
           <button type='submit'>Save post</button>
         </form>
       </Grid.Col>
-      <Grid.Col span={6}>Preview</Grid.Col>
+      <Grid.Col span={6}>Preview
+
+      </Grid.Col>
     </Grid>
   )
 }

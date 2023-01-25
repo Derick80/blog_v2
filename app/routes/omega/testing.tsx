@@ -13,9 +13,14 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData()
   return (
-    <div>
-      {' '}
-      <h1>Index</h1> <Outlet />{' '}
-    </div>
+    <
+
+    >
+      <div
+        className='flex flex-col items-center justify-center w-full h-full'
+        >
+        {data.user.userName}
+        </div>
+    </>
   )
 }

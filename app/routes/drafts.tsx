@@ -9,7 +9,7 @@ import type { SerializedEditPost } from '~/utils/schemas/post-schema'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
-    return { redirect: '/auth/login' }
+    return { redirect: '/login' }
   }
 
   const drafts = await getUserDrafts(user.id)
@@ -29,7 +29,7 @@ export default function Drafts() {
         {drafts.map((draft: SerializedEditPost) => (
           <PostCard
             key={draft.id}
-            post={draft}
+            data={draft}
             showComments={false}
             showShare={false}
             showOptions={true}

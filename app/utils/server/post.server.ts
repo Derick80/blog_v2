@@ -162,9 +162,17 @@ export async function getUserDrafts(userId: string) {
     },
     include: {
       categories: true,
-      user: true
-    }
+      user: true,
+      _count: true,
+      likes: true,
+      comments: {
+        include: {
+          user: true
+
+
+    }}}
   })
+
   return posts
 }
 

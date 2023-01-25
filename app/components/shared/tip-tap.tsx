@@ -18,7 +18,7 @@ const TipTap = () => {
     editorProps: {
       attributes: {
         class:
-          'flex-1 bg-crimson12 h-24 mx-auto text-slate1 dark:text-slate12 m-5 focus:outline-none rounded-xl mt-0'
+          'flex-1 p-4 bg-crimson12 h-24 mx-auto text-slate1 dark:text-slate12 m-5 focus:outline-none rounded-xl mt-0'
       }
     }
   })
@@ -49,8 +49,11 @@ const TipTap = () => {
   return (
     <>
       <RichTextEditor editor={editor}>
-        <RichTextEditor.Toolbar sticky stickyOffset={60}>
-          <RichTextEditor.ControlsGroup>
+        <RichTextEditor.Toolbar sticky stickyOffset={60}
+
+        >
+         <div className='flex flex-row items-start'>
+         <RichTextEditor.ControlsGroup>
             <RichTextEditor.Bold />
             <RichTextEditor.Italic />
             <RichTextEditor.Underline />
@@ -58,35 +61,20 @@ const TipTap = () => {
             <RichTextEditor.ClearFormatting />
             <RichTextEditor.Highlight />
             <RichTextEditor.Code />
-          </RichTextEditor.ControlsGroup>
 
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.H1 />
-            <RichTextEditor.H2 />
-            <RichTextEditor.H3 />
-            <RichTextEditor.H4 />
-          </RichTextEditor.ControlsGroup>
-
-          <RichTextEditor.ControlsGroup>
             <RichTextEditor.Blockquote />
             <RichTextEditor.Hr />
-            <RichTextEditor.BulletList />
-            <RichTextEditor.OrderedList />
-            <RichTextEditor.Subscript />
-            <RichTextEditor.Superscript />
-          </RichTextEditor.ControlsGroup>
 
-          <RichTextEditor.ControlsGroup>
+
             <RichTextEditor.Link />
             <RichTextEditor.Unlink />
-          </RichTextEditor.ControlsGroup>
 
-          <RichTextEditor.ControlsGroup>
             <RichTextEditor.AlignLeft />
             <RichTextEditor.AlignCenter />
             <RichTextEditor.AlignJustify />
             <RichTextEditor.AlignRight />
           </RichTextEditor.ControlsGroup>
+          </div>
         </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content />
