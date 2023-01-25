@@ -80,6 +80,7 @@ console.log(categories, 'categories');
     })
 
   return (
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
     <Grid gutter={5} columns={24}>
       <Grid.Col span={6}>
         <fetcher.Form
@@ -159,5 +160,6 @@ console.log(categories, 'categories');
 
       </Grid.Col>
     </Grid>
+  </div>
   )
 }

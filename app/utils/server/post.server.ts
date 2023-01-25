@@ -161,16 +161,17 @@ export async function getUserDrafts(userId: string) {
       userId
     },
     include: {
+      _count: true,
       categories: true,
       user: true,
-      _count: true,
-      likes: true,
       comments: {
         include: {
           user: true
-
-
-    }}}
+        }
+      },
+      likes: true,
+      favorites: true
+    }
   })
 
   return posts

@@ -1,8 +1,6 @@
 import { ChevronUpIcon } from '@radix-ui/react-icons'
 import { NavLink } from '@remix-run/react'
 import { useState } from 'react'
-import { adminLinks } from '~/utils/constants/links'
-import { useOptionalUser } from '~/utils/utilities'
 
 export type AdminMakerProps = {
   array: {
@@ -13,7 +11,7 @@ export type AdminMakerProps = {
 }
 export default function AdminMaker({ array }: AdminMakerProps) {
   const [toggle, setToggle] = useState(false)
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   return (
     <button

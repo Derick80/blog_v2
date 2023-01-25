@@ -16,7 +16,7 @@ export default function Index() {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className='container'>
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
       {/* dropdown container */}
       <div>
         <div

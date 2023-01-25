@@ -97,7 +97,7 @@ const [selected, setSelected] = useState<string[]>([])
 
   return (
     <>
-      <div className='grid-cols-6 gap-5w-full  p-5 md:grid col-start-1 col-span-3 '>
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
         <div className='col-span-1 col-start-5 mx-auto flex flex-row justify-center'>
           <button
             className='border-transparent inline-flex items-center space-x-1.5 rounded border  p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'

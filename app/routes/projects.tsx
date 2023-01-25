@@ -12,8 +12,7 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
-    <div className='mx-auto gap-10 p-2 md:flex'>
-      {data.projects.map((project) => (
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>      {data.projects.map((project) => (
         <ProjectCard
           key={project.id}
           project={project}

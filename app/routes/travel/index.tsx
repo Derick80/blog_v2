@@ -35,8 +35,7 @@ export default function Index() {
 
   return (
     <>
-      <div className='h-full w-full overscroll-y-auto py-6 px-6'>
-        <div className='flex items-center justify-around'>
+ <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>        <div className='flex items-center justify-around'>
           <Link to='/travel/new'>New</Link>
           {/* this is not quite working */}
           {data.albumNames.map((item, index) => {

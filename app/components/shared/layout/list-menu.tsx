@@ -1,5 +1,5 @@
-import { ChevronUpIcon } from '@heroicons/react/24/outline'
 import { Link } from '@remix-run/react'
+import { IconChevronUp } from '@tabler/icons'
 import { useState } from 'react'
 
 export type ListMenuProps = {
@@ -17,9 +17,9 @@ export default function ListMenu({ link, children, id }: ListMenuProps) {
         className='flex flex-col items-center'
       >
         {open ? (
-          <ChevronUpIcon className='h-5 w-5 rotate-180 transform' />
+          <IconChevronUp className='h-5 w-5 rotate-180 transform' />
         ) : (
-          <ChevronUpIcon className='h-5 w-5' />
+          <IconChevronUp className='h-5 w-5' />
         )}
         <span>Admin</span>
         {open && (

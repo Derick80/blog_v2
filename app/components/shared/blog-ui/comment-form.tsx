@@ -1,10 +1,8 @@
-import { Box, Button as Btn, Textarea, TextInput } from '@mantine/core'
-import { PaperPlaneIcon } from '@radix-ui/react-icons'
+import { Box, Button as Btn, Textarea } from '@mantine/core'
 import { Form } from '@remix-run/react'
 import { IconSend } from '@tabler/icons'
 import { useState } from 'react'
 import { CommentWithChildren } from '~/utils/schemas/comment-schema'
-import { Button } from '../button'
 
 type CommentFormProps = {
   parentId?: string | null

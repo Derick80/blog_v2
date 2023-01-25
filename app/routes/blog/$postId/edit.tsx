@@ -121,8 +121,7 @@ export default function EditPost() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <div className='col-start-2'>
-
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
    <Edit post={data.post} />
     </div>
   )

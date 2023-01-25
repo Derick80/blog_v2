@@ -17,7 +17,7 @@ export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
     <>
-      <div className='mx-auto flex flex-col gap-5 p-2 md:w-1/2 md:flex-row'>
+     <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
         <div className='bg-zinc-200 dark:bg-zinc-400 mx-auto flex grow flex-col rounded-lg'>
           {user && <div>elcome {user.userName}</div>}
           <div>Hero Post</div>

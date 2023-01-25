@@ -5,7 +5,7 @@ import invariant from 'tiny-invariant'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getUserDrafts } from '~/utils/server/post.server'
-import type { SerializedEditPost } from '~/utils/schemas/post-schema'
+import { Center } from '@mantine/core'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
@@ -18,26 +18,47 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 export default function Drafts() {
-  const { drafts, user } = useLoaderData<{
+ const data = useLoaderData<{
     user: SerializeFrom<typeof isAuthenticated>
-    drafts: SerializedEditPost[]
+    drafts: SerializeFrom<typeof getUserDrafts>
   }>()
+
   return (
     <>
-      <div className='mx-auto'>
+      <div className='col-start-1 md:col-start-4  col-span-1 md:col-span-6'>
         <h1>Drafts</h1>
-        {drafts.map((draft: SerializedEditPost) => (
-          <PostCard
-            key={draft.id}
-            data={draft}
-            showComments={false}
-            showShare={false}
-            showOptions={true}
-            showFavorites={false}
-            showLikes={false}
-            user={user}
-          />
-        ))}
+        {data.drafts.length > 0 ? (
+          data.drafts.map((draft) => (
+            <PostCard key={draft.id} data={draft}
+                showCategories={true}
+                showComments={false}
+                showOptions={true}
+                showLikes={false}
+                showFavorites={false}
+                showShare={false}
+                user={data.user}
+
+              />
+
+//             <div key={draft.id}>
+
+//               <div className='flex flex-col'>
+// {draft.title}
+//                 <div className='flex flex-col'>
+//                   <p dangerouslySetInnerHTML={{ __html: draft.body }} />
+
+
+//                   </div>
+//                   </div>
+//               </div>
+          ))
+        ) : (
+          <Center>
+            <h2>You have no drafts</h2>
+          </Center>
+        )}
+
+
       </div>
     </>
   )

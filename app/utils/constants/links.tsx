@@ -7,7 +7,6 @@ import {
   PlusCircledIcon
 } from '@radix-ui/react-icons'
 import { Form } from '@remix-run/react'
-import ColorMode from '~/components/shared/layout/color-mode'
 
 export const siteLinks = [
   { name: 'Home', href: '/', icon_name: 'home' },
@@ -43,7 +42,6 @@ export const adminLinks = [
     link: '/preferences',
     children: <GearIcon />
   },
-  { text: 'Admin', link: '/admin', children: <ColorMode /> },
   {
     text: 'Logout',
     link: '/logout',

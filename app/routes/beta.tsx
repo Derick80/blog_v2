@@ -61,7 +61,7 @@ export default function Uploader() {
     })
 
   return (
-    <>
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
       <fetcher.Form
         method='post'
         encType='multipart/form-data'
@@ -113,6 +113,6 @@ export default function Uploader() {
 
         <button type='submit'>Save post</button>
       </form>
-    </>
+    </div>
   )
 }

@@ -38,7 +38,7 @@ export default function UserProfileRoute() {
     throw new Error('Profile not found')
   }
   return (
-    <div>
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
       {profile && (
         <>
           <div className='flex flex-col items-center' key={profile.id}>

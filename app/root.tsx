@@ -11,12 +11,7 @@ import {
 import Layout from './components/shared/layout/layout'
 import { isAuthenticated } from './utils/server/auth/auth.server'
 import styles from './styles/app.css'
-import {
-  NonFlashOfWrongThemeEls,
-  ThemeProvider,
-  useTheme
-} from './utils/theme-provider'
-import { getThemeSession } from './utils/server/theme.server'
+
 import getAllCategories from './utils/server/categories.server'
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -34,11 +29,10 @@ export const links: LinksFunction = () => [
 ]
 
 export async function loader({ request }: LoaderArgs) {
-  const themeSession = await getThemeSession(request)
   const user = await isAuthenticated(request)
   const categories = await getAllCategories()
 
-  return { theme: themeSession, user, categories }
+  return {  user, categories }
 }
 function LayoutWrapper() {
   return (
@@ -52,14 +46,12 @@ function LayoutWrapper() {
 }
 function App() {
   const data = useLoaderData<typeof loader>()
-  const [theme] = useTheme()
 
   return (
-    <html lang='en' className={`${theme}`}>
+    <html lang='en' >
       <head>
         <Meta />
         <Links />
-        <NonFlashOfWrongThemeEls ssrTheme={Boolean(data.theme)} />
       </head>
 
       <body className=''>
@@ -71,9 +63,9 @@ function App() {
 export default function AppWithThemeProvider() {
   const data = useLoaderData<typeof loader>()
   return (
-    <ThemeProvider specifiedTheme={data.theme}>
+
       <App />
-    </ThemeProvider>
+
   )
 }
 

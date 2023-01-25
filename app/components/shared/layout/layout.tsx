@@ -1,5 +1,3 @@
-import { Form } from '@remix-run/react'
-import clsx from 'clsx'
 import { useState } from 'react'
 import {
   adminLinks,
@@ -8,24 +6,23 @@ import {
   userLinks
 } from '~/utils/constants/links'
 import { useOptionalUser } from '~/utils/utilities'
-import ColorMode from './color-mode'
 import { BrandIcon } from '../icons'
 import LinkMaker from './link-maker'
 import Footer from './footer'
 import NavBar from './nav-bar'
 import AdminMaker from './admin-maker'
 import {
-  ExitIcon,
   GitHubLogoIcon,
   LinkedInLogoIcon
 } from '@radix-ui/react-icons'
+import Dropdown from '../blog-ui/dropdown'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
   return (
     <>
       <NavBar>
-        <div className='flex flex-row items-center p-2'>
+        <div className='flex flex-row items-center p-4 md:p-4'>
           <div className='flex h-24 w-24 items-center rounded md:h-24 md:w-24'>
             <BrandIcon />
           </div>
@@ -35,7 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </h1>
         </div>
         <NavLinks />
-
+        <Dropdown />
         {!user && <AdminMaker array={nonUserLinks} />}
       </NavBar>
       {user?.role === 'ADMIN' && (
@@ -43,7 +40,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <AdminMaker array={adminLinks} />
         </div>
       )}
-      <main className='grid flex-1 grid-cols-3'>{children}</main>
+      <main className='grid flex-1 grid-cols-1 gap-5 md:grid-cols-12'>{children}</main>
 
       <Footer>
         <ul className='border-1 flex flex-row items-center justify-center space-x-3 text-sm'>

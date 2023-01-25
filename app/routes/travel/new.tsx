@@ -136,8 +136,7 @@ export default function NewTravelLog() {
   }
 
   return (
-    <div className='flex flex-col items-center'>
-      <div>{}</div>
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>      <div>{}</div>
 
       <h1 className='mh1'>Upload a new PhotoLog</h1>
 

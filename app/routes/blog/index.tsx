@@ -23,7 +23,7 @@ export default function Index() {
   }>()
 
   return (
-    <div className='col-span-4 p-2 md:col-span-1 md:col-start-2'>
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
       {data.posts.map((post) => (
         <PostCard
           key={post.id}

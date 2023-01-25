@@ -2,81 +2,109 @@ import { Group, Menu, ActionIcon } from '@mantine/core'
 import { DotsVerticalIcon } from '@radix-ui/react-icons'
 import { Form, NavLink } from '@remix-run/react'
 import {
+  IconChevronDown,
   IconDotsVertical,
   IconEdit,
   IconFileMinus,
+  IconFilePlus,
   IconTrash
 } from '@tabler/icons'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '../button'
-import { Dialog } from '../layout/dialog'
-import { Modal } from '../layout/modal'
 
 export type OptionProps = {
   id: string
   published: boolean | null | undefined
 }
 export default function PostOptions({ id, published }: OptionProps) {
-  const [isOpen, setIsOpen] = useState(false)
 
+  const [open, setOpen] = useState(false)
   return (
-    <Group noWrap spacing={0}>
-      <Menu transition='pop' position='bottom-end'>
-        <Menu.Target>
-          <ActionIcon variant='filled' size={36}>
-            <IconDotsVertical size={20} stroke={1.5} />
-          </ActionIcon>
-        </Menu.Target>
-        <Menu.Dropdown>
+    <div className="flex w-fit  items-center justify-center">
+    <div className=" ">
+                <div
+                  className="flex flex-row items-center justify-around space-x-2"
+                >
+                    <button type="button" className="inline-flex justify-center w-52 py-2 text-sm font-medium text-gray-700 bg-white rounded-md  hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="options-menu" aria-expanded="true" aria-haspopup="true"
+                    onClick={() => setOpen(!open)}
+                    >
+
+                       {open ? <IconChevronDown
+  className='transform rotate-180'
+                       /> : <IconChevronDown
+                      />}
+                    </button>
+                </div>
+      {
+        open && <div
+        className="absolute mt-2 w-52 z-40 divide-y divide-gray-100 rounded-md bg-slate8 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="px- py-1 ">
+          <NavLink
+            className={({ isActive }) =>
+              ` ${
+                isActive
+                  ? 'border-black flex border-b-2 space-x-2'
+                  : 'flex flex-row items-center space-x-2'
+              }`
+            }
+            to={`/blog/${id}/edit`}
+            onClick={() => setOpen(!open)}
+          >
+            <IconEdit />
+            <p>Edit</p>
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              ` ${
+                isActive
+                  ? 'border-black flex border-b-2 space-x-2'
+                  : 'flex flex-row items-center space-x-2'
+              }`
+            }
+              to={`/blog/${id}/delete`}
+              onClick={() => setOpen(!open)}
+              >
+            <IconTrash />
+            <p>Delete</p>
+          </NavLink>
           {published ? (
-            <Menu.Item icon={<IconFileMinus size={16} stroke={1.5} />}>
-              <Form
-                name='unpublish'
-                method='post'
-                className='border-transparent flex w-full items-center space-x-1.5 rounded bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-                action={`/blog/${id}/publish`}
-              >
-                <button type='submit' name='_action' value='unpublish'>
-                  Unpublish
-                </button>
-              </Form>
-            </Menu.Item>
-          ) : (
-            <>
-              <Form
-                name='publish'
-                method='post'
-                className='border-transparent flex w-full items-center space-x-1.5 rounded bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-                action={`/blog/${id}/publish`}
-              >
-                <button type='submit' name='_action' value='publish'>
-                  publish
-                </button>
-              </Form>
-            </>
-          )}
-          <Menu.Item icon={<IconEdit size={16} stroke={1.5} />}>
             <NavLink
-              className='border-transparent flex w-full items-center space-x-1.5 rounded bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-              to={`/blog/${id}/edit`}
+              className={({ isActive }) =>
+                ` ${
+                  isActive
+                    ? 'border-black flex border-b-2 space-x-2'
+                    : 'flex flex-row items-center space-x-2'
+                }`
+              }
+              to={`/blog/${id}/unpublish`}
+              onClick={() => setOpen(!open)}
             >
-              <p>Edit</p>
+              <IconFileMinus />
+              <p>Unpublish</p>
             </NavLink>
-          </Menu.Item>
-          <Menu.Item icon={<IconTrash size={16} stroke={1.5} />}>
-            <Form
-              className='border-transparent flex w-full items-center space-x-1.5 rounded border bg-crimson6 p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
-              method='post'
-              action={`/blog/${id}/publish`}
+          ) : (
+            <NavLink
+              className={({ isActive }) =>
+                ` ${
+                  isActive
+                    ? 'border-black flex border-b-2 space-x-2'
+                    : 'flex flex-row items-center space-x-2'
+                }`
+              }
+              to={`/blog/${id}/publish`}
+              onClick={() => setOpen(!open)}
             >
-              <button type='submit' name='_action' value='delete'>
-                Delete
-              </button>
-            </Form>
-          </Menu.Item>
-        </Menu.Dropdown>
-      </Menu>
-    </Group>
+              <IconFilePlus  />
+
+              <p>Publish</p>
+            </NavLink>
+
+
+          )}
+        </div>
+      </div>
+
+      }
+      </div>
+    </div>
   )
 }

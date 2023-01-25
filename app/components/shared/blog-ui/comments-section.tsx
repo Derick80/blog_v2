@@ -1,8 +1,6 @@
-import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { IconMessage2 } from '@tabler/icons'
 import React from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
-import { useOptionalUser } from '~/utils/utilities'
 import { Button } from '../button'
 import CommentForm from './comment-form'
 import formatComments from './format-comments'
@@ -21,7 +19,7 @@ export function CommentSection({
   const [isOpen, setIsOpen] = React.useState(true)
 
   return (
-    <div className='flex flex-row-reverse'>
+    <div className='flex flex-row-reverse p-2 w-fit'>
       <Button onClick={() => setIsOpen(!isOpen)}>
         <div className='flex flex-row '>
           <IconMessage2 stroke={1.5} size={20} />

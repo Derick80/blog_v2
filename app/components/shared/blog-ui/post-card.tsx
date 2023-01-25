@@ -1,6 +1,6 @@
 /* eslint-disable react/no-danger-with-children */
 import { format } from 'date-fns'
-import type { SerializedEditPost, Post } from '~/utils/schemas/post-schema'
+import type { SerializedEditPost, Post, SerializedPost } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import { Divider } from '../layout/divider'
 import PostOptions from './post-options'
@@ -13,8 +13,9 @@ import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { Link } from '@remix-run/react'
 import { IconMessage2 } from '@tabler/icons'
 import CategoryContainer from '../category-container'
+import { AspectRatio, Image } from '@mantine/core'
 export type ManyPostProps = {
-  data: Post & {
+  data: SerializedPost & {
     comments: Comment[]
   } & {
     favorites: Favorite[]
@@ -76,12 +77,21 @@ export const PostCard = ({
 
     return (
       <>
-        <div className='mds:flex-row flex flex-row justify-between'>
+        <div className='md:flex-col flex flex-col justify-between'>
           <div className='flex flex-col'>
             <Link
               to={`/blog/${id}`}
               className='text-gray-900 text-lg font-bold'
             >
+                {imageUrl && (
+          <>
+            <AspectRatio ratio={720 / 1080} sx={{ maxWidth: 200 }} mx="auto">
+              <Image
+                src={imageUrl}
+                />
+            </AspectRatio>
+          </>
+        )}
               <h3 className='text-xl font-bold capitalize'>{title}</h3>
             </Link>
             <p className='indent-2 text-xs italic'>{description}</p>
@@ -129,15 +139,7 @@ export const PostCard = ({
             ))}
           </div>
         )}
-        {imageUrl && (
-          <>
-            <img
-              src={imageUrl}
-              alt={title}
-              className='h-64 w-full object-cover'
-            />
-          </>
-        )}
+
         {body && (
           <p dangerouslySetInnerHTML={{ __html: body }} className='text-xs'></p>
         )}
@@ -148,7 +150,7 @@ export const PostCard = ({
   function CardFooter() {
     return (
       <>
-        <div className='flex flex-row'>
+        <div className='flex flex-row items-center justify-center'>
           {/* this is where likes, comments, etc should go */}
           {showLikes && id && likes && _count && user && (
             <LikeContainer
@@ -175,25 +177,26 @@ export const PostCard = ({
             />
           )}
 
+          { showComments &&
           <div className='flex flex-row items-center justify-around'>
-            <IconMessage2 size={20} stroke={1.5} />
-            <p className='pt-5 text-xs'>{_count.comments}</p>
-          </div>
+          <IconMessage2 size={20} stroke={1.5} />
+          <p className='pt-5 text-xs'>{_count.comments}</p>
+        </div>}
         </div>
       </>
     )
   }
   return (
     <>
-      <div key={id} className='flex w-full flex-col'>
+      <div key={id} className='flex w-full flex-col border-2 overflow-auto mb-10 rounded-lg'>
         {/* flex-row header container */}
         <CardHeader />
         <CardBody />
-        <div className='pt-4 text-xs'></div>
-
+        <Divider></Divider>
         <div className='relative flex flex-row justify-between'></div>
         <CardFooter />
         <Divider></Divider>
+        <div>
         {showComments && comments && id && (
           <CommentSection
             comments={comments}
@@ -201,6 +204,7 @@ export const PostCard = ({
             postId={id}
           />
         )}
+        </div>
       </div>
     </>
   )

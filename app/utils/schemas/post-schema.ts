@@ -1,12 +1,11 @@
-import type { Category, Post as PrismaPosts } from '@prisma/client'
+import type { Category, Post as PrismaPost } from '@prisma/client'
 import type { SerializeFrom } from '@remix-run/node'
 import type { Comment } from './comment-schema'
 import type { Favorite } from './favorite.schema'
 import type { Like } from './like-schema'
 import type { User } from './user-schema'
 
-export type PrismaPost = SerializeFrom<PrismaPosts>
-export type Post = Partial<PrismaPost> & {
+export type Post = PrismaPost & {
   likes?: Like[]
   _count: {
     comments?: number
@@ -14,7 +13,7 @@ export type Post = Partial<PrismaPost> & {
     favorites: number
   }
 
-  comments: Comment
+  comments?: Comment[]
   categories: Category[]
   favorites?: Favorite[]
   user: User

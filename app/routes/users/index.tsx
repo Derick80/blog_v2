@@ -37,7 +37,7 @@ export default function Users() {
   const data = useLoaderData<typeof loader>()
   const users = data.users as ReturnType<typeof getUsers>
   return (
-    <div className='mx-auto  mb-2 mt-2 flex h-fit flex-col rounded-2xl p-2 md:mb-5 md:mt-5'>
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
       <h1 className='mh1 mx-auto'>Users</h1>
 
       <div className='flex h-fit flex-wrap'>
