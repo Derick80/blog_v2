@@ -32,7 +32,7 @@ export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   const categories = await getAllCategories()
 
-  return {  user, categories }
+  return { user, categories }
 }
 function LayoutWrapper() {
   return (
@@ -48,7 +48,7 @@ function App() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <html lang='en' >
+    <html lang='en'>
       <head>
         <Meta />
         <Links />
@@ -62,11 +62,7 @@ function App() {
 }
 export default function AppWithThemeProvider() {
   const data = useLoaderData<typeof loader>()
-  return (
-
-      <App />
-
-  )
+  return <App />
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {

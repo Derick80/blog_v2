@@ -1,3 +1,3 @@
-const hello = "Hello";
-const goodbye = "Goodbye";
-console.log(goodbye);
+const hello = 'Hello'
+const goodbye = 'Goodbye'
+console.log(goodbye)

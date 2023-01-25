@@ -35,7 +35,9 @@ export default function Index() {
 
   return (
     <>
- <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>        <div className='flex items-center justify-around'>
+      <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
+        {' '}
+        <div className='flex items-center justify-around'>
           <Link to='/travel/new'>New</Link>
           {/* this is not quite working */}
           {data.albumNames.map((item, index) => {
@@ -49,7 +51,6 @@ export default function Index() {
         <ImageSlider data={data.NYC} />
         <ImageSlider data={data.Japan} />
         {/* <ImageSlider images={data.albums} /> */}
-
         {/* {data.albums.map((item, index) => {
           return (
             <div key={index}>

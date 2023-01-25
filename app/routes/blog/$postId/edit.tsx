@@ -122,7 +122,7 @@ export default function EditPost() {
 
   return (
     <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
-   <Edit post={data.post} />
+      <Edit post={data.post} />
     </div>
   )
 }

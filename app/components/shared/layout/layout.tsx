@@ -11,10 +11,7 @@ import LinkMaker from './link-maker'
 import Footer from './footer'
 import NavBar from './nav-bar'
 import AdminMaker from './admin-maker'
-import {
-  GitHubLogoIcon,
-  LinkedInLogoIcon
-} from '@radix-ui/react-icons'
+import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import Dropdown from '../blog-ui/dropdown'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -40,7 +37,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <AdminMaker array={adminLinks} />
         </div>
       )}
-      <main className='grid flex-1 grid-cols-1 gap-5 md:grid-cols-12'>{children}</main>
+      <main className='grid flex-1 grid-cols-1 gap-5 md:grid-cols-12'>
+        {children}
+      </main>
 
       <Footer>
         <ul className='border-1 flex flex-row items-center justify-center space-x-3 text-sm'>

@@ -1,6 +1,10 @@
 /* eslint-disable react/no-danger-with-children */
 import { format } from 'date-fns'
-import type { SerializedEditPost, Post, SerializedPost } from '~/utils/schemas/post-schema'
+import type {
+  SerializedEditPost,
+  Post,
+  SerializedPost
+} from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import { Divider } from '../layout/divider'
 import PostOptions from './post-options'
@@ -74,24 +78,25 @@ export const PostCard = ({
   } = data
 
   function CardHeader() {
-
     return (
       <>
-        <div className='md:flex-col flex flex-col justify-between'>
+        <div className='flex flex-col justify-between md:flex-col'>
           <div className='flex flex-col'>
             <Link
               to={`/blog/${id}`}
               className='text-gray-900 text-lg font-bold'
             >
-                {imageUrl && (
-          <>
-            <AspectRatio ratio={720 / 1080} sx={{ maxWidth: 200 }} mx="auto">
-              <Image
-                src={imageUrl}
-                />
-            </AspectRatio>
-          </>
-        )}
+              {imageUrl && (
+                <>
+                  <AspectRatio
+                    ratio={720 / 1080}
+                    sx={{ maxWidth: 200 }}
+                    mx='auto'
+                  >
+                    <Image src={imageUrl} />
+                  </AspectRatio>
+                </>
+              )}
               <h3 className='text-xl font-bold capitalize'>{title}</h3>
             </Link>
             <p className='indent-2 text-xs italic'>{description}</p>
@@ -177,18 +182,22 @@ export const PostCard = ({
             />
           )}
 
-          { showComments &&
-          <div className='flex flex-row items-center justify-around'>
-          <IconMessage2 size={20} stroke={1.5} />
-          <p className='pt-5 text-xs'>{_count.comments}</p>
-        </div>}
+          {showComments && (
+            <div className='flex flex-row items-center justify-around'>
+              <IconMessage2 size={20} stroke={1.5} />
+              <p className='pt-5 text-xs'>{_count.comments}</p>
+            </div>
+          )}
         </div>
       </>
     )
   }
   return (
     <>
-      <div key={id} className='flex w-full flex-col border-2 overflow-auto mb-10 rounded-lg'>
+      <div
+        key={id}
+        className='mb-10 flex w-full flex-col overflow-auto rounded-lg border-2'
+      >
         {/* flex-row header container */}
         <CardHeader />
         <CardBody />
@@ -197,13 +206,13 @@ export const PostCard = ({
         <CardFooter />
         <Divider></Divider>
         <div>
-        {showComments && comments && id && (
-          <CommentSection
-            comments={comments}
-            postComments={_count.comments}
-            postId={id}
-          />
-        )}
+          {showComments && comments && id && (
+            <CommentSection
+              comments={comments}
+              postComments={_count.comments}
+              postId={id}
+            />
+          )}
         </div>
       </div>
     </>

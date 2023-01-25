@@ -1,78 +1,116 @@
-import { NavLink } from '@remix-run/react'
-import { IconChevronDown, IconEdit, IconNewSection, IconSun } from '@tabler/icons'
+import { ExitIcon } from '@radix-ui/react-icons'
+import { Form, NavLink } from '@remix-run/react'
+import {
+  IconChevronDown,
+  IconDoorExit,
+  IconEdit,
+  IconFilePencil,
+  IconLogout,
+  IconNewSection,
+  IconSun
+} from '@tabler/icons'
 import { useState } from 'react'
+import { Divider } from '../layout/divider'
 
+export default function Dropdown() {
+  const [open, setOpen] = useState(false)
 
-export default function Dropdown(){
-    const [open, setOpen] = useState(false)
-
-    return (
-        <div className="flex w-56 text-right items-center">
-            <div className="relative inline-block text-left">
-                <div>
-                    <button type="button" className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md  hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="options-menu" aria-expanded="true" aria-haspopup="true"
-                    onClick={() => setOpen(!open)}
-                    >
-                        Options
-                        <IconChevronDown
-                            className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
-                            aria-hidden="true"
-                        />
-                    </button>
-                </div>
-              {
-                open &&   <div className="absolute md:right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-slate8 shadow-lg z-20 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="px-1 py-1 ">
-                    <NavLink
-                        className={({ isActive }) =>
-                        ` ${
-                          isActive
-                            ? 'border-black flex border-b-2 space-x-2'
-                            : 'flex flex-row items-center space-x-2'
-                        }`
-                      }
-                        to="/blog/new"
-                        onClick={() => setOpen(!open)}
-                    >
-
-                        <IconNewSection />
-                        <p>New Post</p>
-                    </NavLink>
-                    <NavLink
-                         className={({ isActive }) =>
-                         ` ${
-                           isActive
-                             ? 'border-black flex border-b-2 space-x-2'
-                             : 'flex flex-row items-center space-x-2'
-                         }`
-                       }
-                        to="/drafts"
-                        onClick={() => setOpen(!open)}
-
-                    > <IconNewSection />
-                        <p>Drafts</p>
-
-                    </NavLink>
-                    <NavLink
-                       className={({ isActive }) =>
-                       ` ${
-                         isActive
-                           ? 'border-black flex border-b-2 space-x-2'
-                           : 'flex flex-row items-center space-x-2'
-                       }`
-                        }
-                        to="/blog/edit"
-                        onClick={() => setOpen(!open)}
-
-                    >
-                    <IconSun />
-                    </NavLink>
-
-                    </div>
-                    </div>
-              }
-
-            </div>
+  return (
+    <div className='flex w-fit  items-center justify-center'>
+      <div className='flex flex-row items-center justify-around space-x-2'>
+        <div>
+          <button
+            type='button'
+            className='text-gray-700 bg-white inline-flex w-fit justify-center rounded-md font-medium  '
+            id='options-menu'
+            aria-expanded='true'
+            aria-haspopup='true'
+            onClick={() => setOpen(!open)}
+          >
+            <p>More..</p>
+            {open ? (
+              <IconChevronDown className='rotate-180 transform' />
+            ) : (
+              <IconChevronDown />
+            )}
+          </button>
         </div>
-    )
+        {open && (
+          <div className='divide-gray-100 ring-black z-40 mt-2 w-52 divide-y rounded-md bg-slate8 shadow-lg ring-1 ring-opacity-5 focus:outline-none'>
+            <div className='px-1 py-1 '>
+              <NavLink
+                className={({ isActive }) =>
+                  ` ${
+                    isActive
+                      ? 'border-black flex space-x-2 border-b-2'
+                      : 'flex flex-row items-center space-x-2'
+                  }`
+                }
+                to='/blog/new'
+                onClick={() => setOpen(!open)}
+              >
+                <IconNewSection />
+                <p>New Post</p>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  ` ${
+                    isActive
+                      ? 'border-black flex space-x-2 border-b-2'
+                      : 'flex flex-row items-center space-x-2'
+                  }`
+                }
+                to='/drafts'
+                onClick={() => setOpen(!open)}
+              >
+                {' '}
+                <IconFilePencil />
+                <p>Drafts</p>
+              </NavLink>
+              <Divider></Divider>
+              <NavLink
+                className={({ isActive }) =>
+                  ` ${
+                    isActive
+                      ? 'border-black flex space-x-2 border-b-2'
+                      : 'flex flex-row items-center space-x-2'
+                  }`
+                }
+                to='/logout'
+                onClick={() => setOpen(!open)}
+              >
+                <>
+                  <Form method='post' action='/theme'>
+                    <button type='submit'>
+                      <IconSun />
+                    </button>
+                  </Form>
+                </>
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  ` ${
+                    isActive
+                      ? 'border-black flex space-x-2 border-b-2'
+                      : 'flex flex-row items-center space-x-2'
+                  }`
+                }
+                to='/logout'
+                onClick={() => setOpen(!open)}
+              >
+                <>
+                  <Form method='post' action='/logout'>
+                    <button type='submit' className='flex space-x-1'>
+                      <IconLogout />
+                      <p>Logout</p>{' '}
+                    </button>
+                  </Form>
+                </>
+              </NavLink>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
 }

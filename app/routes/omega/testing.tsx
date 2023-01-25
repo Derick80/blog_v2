@@ -15,17 +15,15 @@ export default function Index() {
   const data = useLoaderData()
   return (
     <>
-
-<div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
-<div>
-        <div className='flex flex-col items-center justify-center w-full h-full'>
-          <h1 className='text-4xl font-bold'>Welcome to the blog</h1>
-          <p className='text-xl'>This is the blog</p>
-          <Dropdown />
+      <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
+        <div>
+          <div className='flex h-full w-full flex-col items-center justify-center'>
+            <h1 className='text-4xl font-bold'>Welcome to the blog</h1>
+            <p className='text-xl'>This is the blog</p>
+            <Dropdown />
+          </div>
         </div>
-</div>
-
-        </div>
+      </div>
     </>
   )
 }

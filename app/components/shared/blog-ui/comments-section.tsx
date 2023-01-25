@@ -19,7 +19,7 @@ export function CommentSection({
   const [isOpen, setIsOpen] = React.useState(true)
 
   return (
-    <div className='flex flex-row-reverse p-2 w-fit'>
+    <div className='flex w-fit flex-row-reverse p-2'>
       <Button onClick={() => setIsOpen(!isOpen)}>
         <div className='flex flex-row '>
           <IconMessage2 stroke={1.5} size={20} />

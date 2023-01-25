@@ -25,21 +25,21 @@ export default function AdminMaker({ array }: AdminMakerProps) {
       )}
 
       {open && (
-       <div className='absolute items-center justify-center'>
-         <ul className='relative flex h-full w-12 flex-col items-center justify-center space-y-5 rounded-xl p-2'>
-          {array.map((link) => (
-            <li key={link.text} className='h-5 w-10'>
-              <NavLink
-                to={`${link.link}`}
-                className='flex flex-col items-center justify-around'
-                onClick={() => setToggle(!toggle)}
-                prefetch='intent'
-              >
-                {link.children}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+        <div className='absolute items-center justify-center'>
+          <ul className='relative flex h-full w-12 flex-col items-center justify-center space-y-5 rounded-xl p-2'>
+            {array.map((link) => (
+              <li key={link.text} className='h-5 w-10'>
+                <NavLink
+                  to={`${link.link}`}
+                  className='flex flex-col items-center justify-around'
+                  onClick={() => setToggle(!toggle)}
+                  prefetch='intent'
+                >
+                  {link.children}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </button>

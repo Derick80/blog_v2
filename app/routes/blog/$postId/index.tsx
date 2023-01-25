@@ -22,7 +22,9 @@ export default function Index() {
   const post = data.post
 
   return (
-    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>      {post && (
+    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
+      {' '}
+      {post && (
         <div className='col-span-4 col-start-2'>
           <PostCard
             key={post.id}
@@ -35,7 +37,6 @@ export default function Index() {
             showShare={true}
             showOptions={true}
           />
-
         </div>
       )}
       <Outlet />

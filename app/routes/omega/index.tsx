@@ -67,14 +67,14 @@ export default function Index() {
     imageUrl: '',
     categories: []
   })
-const [selected, setSelected] = useState<string[]>([])
+  const [selected, setSelected] = useState<string[]>([])
   useEffect(() => {
     if (fetcher.state === 'idle' && !fetcher.data) {
       fetcher.load('/postTags')
     }
   }, [fetcher])
 
-  const  categories  = fetcher.data || { categories: [] }
+  const categories = fetcher.data || { categories: [] }
 
   const options = categories.map((item) => {
     return item.value
@@ -89,15 +89,14 @@ const [selected, setSelected] = useState<string[]>([])
       }))
     } else {
       setFormData((prev) => ({
-        ...prev,
-
+        ...prev
       }))
     }
   }
 
   return (
     <>
-    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
+      <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
         <div className='col-span-1 col-start-5 mx-auto flex flex-row justify-center'>
           <button
             className='border-transparent inline-flex items-center space-x-1.5 rounded border  p-2 px-3 py-2 text-sm font-medium leading-4 shadow-sm'
@@ -179,24 +178,23 @@ const [selected, setSelected] = useState<string[]>([])
 
           <div>
             <label htmlFor='body'>Post Content</label>
-            <TipTap/>
+            <TipTap />
             <input type='hidden' name='body' value={formData.body} />
           </div>
-          <div className='flex flex-col bg-d pt-5'>
+          <div className='bg-d flex flex-col pt-5'>
             <div className='bg-black-300 flex w-full flex-wrap rounded-md'>
               {formData.categories.map((item, index) => (
-                <CategoryContainer key={index}
-                value={item} index={index} />
+                <CategoryContainer key={index} value={item} index={index} />
               ))}
             </div>
             <div className='bg-crims3'>
-            <MultiSelect
-            label='Categories'
-            name='categories'
-            data={categories}
-            onChange={(value) => setSelected(value)}
-            value={selected}
-          />
+              <MultiSelect
+                label='Categories'
+                name='categories'
+                data={categories}
+                onChange={(value) => setSelected(value)}
+                value={selected}
+              />
             </div>
             <br />
           </div>

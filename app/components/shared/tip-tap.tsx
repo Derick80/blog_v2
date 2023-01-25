@@ -49,31 +49,28 @@ const TipTap = () => {
   return (
     <>
       <RichTextEditor editor={editor}>
-        <RichTextEditor.Toolbar sticky stickyOffset={60}
+        <RichTextEditor.Toolbar sticky stickyOffset={60}>
+          <div className='flex flex-row items-start'>
+            <RichTextEditor.ControlsGroup>
+              <RichTextEditor.Bold />
+              <RichTextEditor.Italic />
+              <RichTextEditor.Underline />
+              <RichTextEditor.Strikethrough />
+              <RichTextEditor.ClearFormatting />
+              <RichTextEditor.Highlight />
+              <RichTextEditor.Code />
 
-        >
-         <div className='flex flex-row items-start'>
-         <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Bold />
-            <RichTextEditor.Italic />
-            <RichTextEditor.Underline />
-            <RichTextEditor.Strikethrough />
-            <RichTextEditor.ClearFormatting />
-            <RichTextEditor.Highlight />
-            <RichTextEditor.Code />
+              <RichTextEditor.Blockquote />
+              <RichTextEditor.Hr />
 
-            <RichTextEditor.Blockquote />
-            <RichTextEditor.Hr />
+              <RichTextEditor.Link />
+              <RichTextEditor.Unlink />
 
-
-            <RichTextEditor.Link />
-            <RichTextEditor.Unlink />
-
-            <RichTextEditor.AlignLeft />
-            <RichTextEditor.AlignCenter />
-            <RichTextEditor.AlignJustify />
-            <RichTextEditor.AlignRight />
-          </RichTextEditor.ControlsGroup>
+              <RichTextEditor.AlignLeft />
+              <RichTextEditor.AlignCenter />
+              <RichTextEditor.AlignJustify />
+              <RichTextEditor.AlignRight />
+            </RichTextEditor.ControlsGroup>
           </div>
         </RichTextEditor.Toolbar>
 
