@@ -1,3 +1,4 @@
+import { Button } from '@mantine/core'
 import { BookmarkFilledIcon, BookmarkIcon } from '@radix-ui/react-icons'
 import type { FormMethod } from '@remix-run/react'
 import { useFetcher } from '@remix-run/react'
@@ -44,17 +45,13 @@ export default function FavoriteContainer({
 
   return (
     <>
-      <button
-        type='button'
-        className='hover:bg-slate-100 disabled:hover:bg-transparent relative flex items-center gap-2 rounded-lg p-2 transition'
-        onClick={toggleFavorite}
-      >
+      <Button type='button' variant='subtle' onClick={toggleFavorite}>
         {isFavorite ? (
-          <IconBookmark className='text-crimson10' />
+          <IconBookmark style={{ color: 'red', fill: 'red' }} />
         ) : (
           <IconBookmark />
         )}
-      </button>
+      </Button>
     </>
   )
 }

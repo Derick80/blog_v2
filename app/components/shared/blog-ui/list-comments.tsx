@@ -29,7 +29,6 @@ function CommentActions({
 
   return (
     <div className='flex flex-row items-center justify-between space-x-2 p-2'>
-
       {replying ? (
         <>
           <CommentForm postId={postId} parentId={commentId} />
@@ -54,27 +53,29 @@ function CommentActions({
 function Comment({ comment }: { comment: CommentWithChildren }) {
   return (
     <>
-      <div className='flex relative flex-row items-center justify-between space-x-2 p-0'>
+      <div className='relative flex flex-row items-center justify-between space-x-2 p-0'>
         {comment.parentId ? (
-        <div className='ml-4 flex'>
-         <IconArrowBadgeRight />
-         <p className='indent-4 text-sm w-3/4 rounded-lg shadow-xl'>{comment.message}</p>
-         </div>
+          <div className='ml-4 flex'>
+            <IconArrowBadgeRight />
+            <p className='w-3/4 rounded-lg indent-4 text-sm shadow-xl'>
+              {comment.message}
+            </p>
+          </div>
         ) : (
-          <p className='text-sm border-b-2 border-dashed rounded-xl shadow-xl w-full'>{comment.message}</p>
+          <p className='w-full rounded-xl border-b-2 border-dashed text-sm shadow-xl'>
+            {comment.message}
+          </p>
         )}{' '}
-
         <CommentActions
-        postId={comment.postId}
-        commentId={comment.id}
-        replyCount={comment.children.length}
-      />
- <div className='flex flex-row items-center space-x-2 p-2'>
+          postId={comment.postId}
+          commentId={comment.id}
+          replyCount={comment.children.length}
+        />
+        <div className='flex flex-row items-center space-x-2 p-2'>
           <p>{comment.createdBy}</p>
           <p>{format(new Date(comment.createdAt), 'MMM dd,')}</p>
         </div>
       </div>
-
 
       {comment.children && comment.children.length > 0 && (
         <ListComments comments={comment.children} />

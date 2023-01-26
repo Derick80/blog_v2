@@ -1,4 +1,4 @@
-import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons'
+import { Button, Text } from '@mantine/core'
 import type { FormMethod } from '@remix-run/react'
 import { NavLink, useFetcher } from '@remix-run/react'
 import { IconHeart, IconHeartPlus, IconLogin } from '@tabler/icons'
@@ -48,25 +48,28 @@ export default function LikeContainer({
   return (
     <>
       {currentUser ? (
-        <button
-          type='button'
-          className='hover:bg-slate-100 disabled:hover:bg-transparent dark:hover:bg-slate-700 relative flex items-center gap-2 rounded-lg p-2 transition'
-          onClick={toggleLike}
-        >
+        <Button type='button' variant='subtle' onClick={toggleLike}>
           {isLiked ? (
-            <IconHeart className='text-crimson10' />
+            <>
+              <IconHeart style={{ color: 'red', fill: 'red' }} />
+              <Text>{likeCount}</Text>
+            </>
           ) : (
-            <IconHeartPlus />
+            <>
+              <IconHeartPlus />
+              <Text>{likeCount}</Text>
+            </>
           )}
-
-          <span className='min-w-[0.75rem]'>{likeCount}</span>
-        </button>
+        </Button>
       ) : (
         <>
-          <small className='flex items-center'>
-            <span className='min-w-[0.75rem]'>Liked by: {likeCount}</span>
-          </small>
-          <NavLink to='/login' className='flex items-center'>
+          <Text>
+            <Text>Liked by: {likeCount}</Text>
+          </Text>
+          <NavLink
+            to='/login'
+            style={{ textDecoration: 'none', color: 'currentcolor' }}
+          >
             <IconLogin />
           </NavLink>
         </>

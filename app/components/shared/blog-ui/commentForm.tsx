@@ -1,29 +1,24 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 type CommentFormProps = {
-    message?: string
-    autoFocus?: boolean
-    initialValue?: string
+  message?: string
+  autoFocus?: boolean
+  initialValue?: string
 }
 export function CommentForm({
   message,
   autoFocus = false,
-  initialValue = "",
+  initialValue = ''
 }: CommentFormProps) {
-
-
   return (
-    <form >
-      <div className="comment-form-row">
+    <form>
+      <div className='comment-form-row'>
         <textarea
           autoFocus={autoFocus}
           value={message}
-
-          className="message-input"
+          className='message-input'
         />
-        <button className="btn" type="submit" >
-
-        </button>
+        <button className='btn' type='submit'></button>
       </div>
     </form>
   )

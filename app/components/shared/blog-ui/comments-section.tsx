@@ -21,28 +21,22 @@ export function CommentSection({
   const fetcher = useFetcher()
 
   useEffect(() => {
-    if (fetcher.type === "init") {
-      fetcher.load("/blog");
+    if (fetcher.type === 'init') {
+      fetcher.load('/blog')
     }
-  }, [fetcher]);
+  }, [fetcher])
 
+  console.log(fetcher.data)
 
-console.log(fetcher.data);
-
-const rootComments = fetcher.data
-
-
-
+  const rootComments = fetcher.data
 
   return (
     <div className='flex flex-row-reverse p-2'>
-      <h3 className="comments-title">Comments</h3>
+      <h3 className='comments-title'>Comments</h3>
       <section>
-        <CommentForm
-
-        />
+        <CommentForm />
         {rootComments != null && rootComments.length > 0 && (
-          <div className="mt-4">
+          <div className='mt-4'>
             <CommentList comments={rootComments} />
           </div>
         )}

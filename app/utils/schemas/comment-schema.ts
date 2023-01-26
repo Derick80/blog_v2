@@ -10,5 +10,5 @@ export type Comment = SerializeFrom<Comments>
 
 export type OnlyComments = Omit<Comments, 'user'>
 export type CommentWithChildren = Comment & {
-  children: Array<CommentWithChildren>
+  children?: Array<CommentWithChildren>
 }

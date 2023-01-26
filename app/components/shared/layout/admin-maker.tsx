@@ -34,6 +34,7 @@ export default function AdminMaker({ array }: AdminMakerProps) {
                   className='flex flex-col items-center justify-around'
                   onClick={() => setToggle(!toggle)}
                   prefetch='intent'
+                  style={{ textDecoration: 'none', color: 'currentcolor' }}
                 >
                   {link.children}
                 </NavLink>
