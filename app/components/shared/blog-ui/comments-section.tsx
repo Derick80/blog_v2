@@ -1,11 +1,8 @@
 import { useFetcher } from '@remix-run/react'
-import { IconMessage2 } from '@tabler/icons'
 import React, { useEffect } from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
-import { Button } from '../button'
 import { CommentForm } from './commentForm'
 import { CommentList } from './commentList'
-import formatComments from './format-comments'
 
 type CommentSectionProps = {
   comments?: Array<CommentWithChildren>

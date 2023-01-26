@@ -17,6 +17,7 @@ import { IconMessage } from '@tabler/icons'
 import CategoryContainer from '../category-container'
 import {
   AspectRatio,
+  Avatar,
   Box,
   Card,
   Container,
@@ -28,6 +29,7 @@ import {
   Spoiler,
   Stack,
   Text,
+  Tooltip,
   TypographyStylesProvider
 } from '@mantine/core'
 import { Like } from '~/utils/schemas/like-schema'
@@ -105,20 +107,24 @@ export const PostCard = ({
   return (
     <>
       <Card key={id} shadow='sm' radius='md' withBorder className='w-[350px]'>
+        <Card.Section
+        className=''
+        >
         {imageUrl && (
-          <AspectRatio ratio={3 / 2} sx={{ maxWidth: 320 }}>
+          <AspectRatio ratio={3 / 2} sx={{ maxWidth: 350 }}>
             <Image
               src={imageUrl}
               alt={title}
               radius='md'
               style={{
                 width: '100%',
-                height: '100%'
+                height: '100%',
               }}
               fit='cover'
             />
           </AspectRatio>
         )}
+        </Card.Section>
 
         <Card.Section>
           <NavLink
@@ -166,7 +172,7 @@ export const PostCard = ({
           </div>
         </Card.Section>
 
-        <Group position='apart'>
+        <Group position='center'>
           <Flex align='center'>
             {showLikes && id && likes && _count && user && (
               <LikeContainer
@@ -192,25 +198,21 @@ export const PostCard = ({
                 published={published === true ? true : false}
               />
             )}
-          </Flex>
 
-          <Flex align='center'>
             {user?.avatarUrl && (
               <>
-                <p className='text-xs'>Posted by</p>
-                <Image
-                  src={user?.avatarUrl}
-                  alt={user?.userName}
-                  radius='xl'
-                  width={24}
-                  height={24}
+
+                <Tooltip label={user?.userName} position='top'>
+
+                <Avatar
+                src={user?.avatarUrl}
+                variant="filled" radius="xl" size="sm"
                 />
+              </Tooltip>
               </>
             )}
-            <p className='text-xs italic'>{user?.userName}</p>
-            <p className='text-xs italic'>
-              {format(new Date(createdAt), 'MMMM dd')}
-            </p>
+
+
           </Flex>
         </Group>
         <Divider />

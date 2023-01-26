@@ -86,12 +86,7 @@ export default function Edit({ post }: EditPostProps) {
         <input type='hidden' name='body' value={formData.body} />
       </div>
 
-      {/* <FormField
-          name='body'
-          type='textarea'
-          value={formData.body}
-          onChange={(e) => setFormData({ ...formData, body: e.target.value })}
-        /> */}
+
 
       <div className='flex flex-row items-center justify-center'>
         <input
