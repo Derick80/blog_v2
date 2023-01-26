@@ -1,10 +1,11 @@
+import { useFetcher } from '@remix-run/react'
 import { IconMessage2 } from '@tabler/icons'
-import React from 'react'
+import React, { useEffect } from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import { Button } from '../button'
-import CommentForm from './comment-form'
+import { CommentForm } from './commentForm'
+import { CommentList } from './commentList'
 import formatComments from './format-comments'
-import ListComments from './list-comments'
 
 type CommentSectionProps = {
   comments?: Array<CommentWithChildren>
@@ -17,24 +18,35 @@ export function CommentSection({
   postId
 }: CommentSectionProps) {
   const [isOpen, setIsOpen] = React.useState(true)
+  const fetcher = useFetcher()
+
+  useEffect(() => {
+    if (fetcher.type === "init") {
+      fetcher.load("/blog");
+    }
+  }, [fetcher]);
+
+
+console.log(fetcher.data);
+
+const rootComments = fetcher.data
+
+
+
 
   return (
-    <div className='flex w-fit flex-row-reverse p-2'>
-      <Button onClick={() => setIsOpen(!isOpen)}>
-        <div className='flex flex-row '>
-          <IconMessage2 stroke={1.5} size={20} />
-          <p className='pt-3 text-xs'>{postComments}</p>
-        </div>
-      </Button>
+    <div className='flex flex-row-reverse p-2'>
+      <h3 className="comments-title">Comments</h3>
+      <section>
+        <CommentForm
 
-      {isOpen && (
-        <div className='flex w-full flex-col'>
-          <CommentForm postId={postId} />
-          {comments && comments.length > 0 && (
-            <ListComments comments={formatComments(comments)} />
-          )}
-        </div>
-      )}
+        />
+        {rootComments != null && rootComments.length > 0 && (
+          <div className="mt-4">
+            <CommentList comments={rootComments} />
+          </div>
+        )}
+      </section>
     </div>
   )
 }

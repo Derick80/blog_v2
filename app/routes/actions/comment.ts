@@ -1,5 +1,6 @@
 import { ActionArgs, json, LoaderArgs } from '@remix-run/node'
 import { redirect } from 'react-router'
+import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import {
   createChildComment,
@@ -7,8 +8,16 @@ import {
   getChildCommentsByParentId
 } from '~/utils/server/comments.server'
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request, params }: LoaderArgs) {
+  const user = await isAuthenticated(request)
+  if (!user) {
+    return json({ error: 'Not authenticated' }, { status: 401 })
+  }
+
+  const parentId = params.parentId
+  invariant(parentId, 'parentId is required')
   const comments = await getChildCommentsByParentId({ parentId })
+  return json({ comments })
 }
 export async function action({ request, params }: ActionArgs) {
   const user = await isAuthenticated(request)
@@ -16,12 +25,13 @@ export async function action({ request, params }: ActionArgs) {
     return json({ error: 'Not authenticated' }, { status: 401 })
   }
 
+  const userId = user.id
+  const createdBy = user.userName
+
   const formData = await request.formData()
   const postId = formData.get('postId')
   const parentId = formData.get('parentId')
   const message = formData.get('message')
-  const userId = formData.get('userId')
-  const createdBy = formData.get('createdBy')
 
   if (
     typeof postId !== 'string' ||

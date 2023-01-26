@@ -1,12 +1,11 @@
-import { Avatar } from '@mantine/core'
-import {
-  EnterIcon,
-  ExitIcon,
-  GearIcon,
-  Pencil2Icon,
-  PlusCircledIcon
-} from '@radix-ui/react-icons'
 import { Form } from '@remix-run/react'
+import {
+  IconFilePencil,
+  IconLogin,
+  IconLogout,
+  IconPencilPlus,
+  IconUserCircle
+} from '@tabler/icons'
 
 export const siteLinks = [
   { name: 'Home', href: '/', icon_name: 'home' },
@@ -18,8 +17,8 @@ export const siteLinks = [
 ]
 
 export const nonUserLinks = [
-  { text: 'Login', link: '/login', children: <EnterIcon /> },
-  { text: 'Register', link: '/register', children: <Avatar /> }
+  { text: 'Login', link: '/login', children: <IconLogin /> },
+  { text: 'Register', link: '/register', children: <IconUserCircle /> }
 ]
 
 // can probably remove this type of link and just use the nonUserLinks
@@ -30,17 +29,12 @@ export const adminLinks = [
   {
     text: 'New post',
     link: '/blog/new',
-    children: <PlusCircledIcon />
+    children: <IconPencilPlus />
   },
   {
     text: 'Drafts',
     link: '/blog/drafts',
-    children: <Pencil2Icon />
-  },
-  {
-    text: 'Preferences',
-    link: '/preferences',
-    children: <GearIcon />
+    children: <IconFilePencil />
   },
   {
     text: 'Logout',
@@ -50,7 +44,7 @@ export const adminLinks = [
         <Form method='post' action='/logout'>
           <button type='submit'>
             {' '}
-            <ExitIcon />
+            <IconLogout />
           </button>
         </Form>
       </>

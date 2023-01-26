@@ -1,3 +1,4 @@
+import { Stack } from '@mantine/core'
 import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
@@ -22,10 +23,12 @@ export default function Index() {
   const post = data.post
 
   return (
-    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
-      {' '}
-      {post && (
-        <div className='col-span-4 col-start-2'>
+    <div className='col-span-4 flex p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
+          <Stack align="center" >
+
+      <div className='flex flex-row items-center justify-center'>
+        <h1 className='text-2xl'>Post</h1>
+        {post && (
           <PostCard
             key={post.id}
             data={post}
@@ -37,9 +40,10 @@ export default function Index() {
             showShare={true}
             showOptions={true}
           />
-        </div>
-      )}
-      <Outlet />
+        )}
+        <Outlet />
+      </div>
+      </Stack>
     </div>
   )
 }

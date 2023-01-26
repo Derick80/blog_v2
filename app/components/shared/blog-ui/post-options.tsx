@@ -23,7 +23,7 @@ export default function PostOptions({ id, published }: OptionProps) {
         <div className='flex flex-row items-center justify-around space-x-2'>
           <button
             type='button'
-            className='text-gray-700 bg-white hover:bg-gray-50 focus:ring-indigo-500 inline-flex w-52 justify-center rounded-md py-2  text-sm font-medium focus:outline-none focus:ring-2'
+            className='text-gray-700 bg-white hover:bg-gray-50 focus:ring-indigo-500 inline-flex w-fit justify-center rounded-md py-2  text-sm font-medium focus:outline-none focus:ring-2'
             id='options-menu'
             aria-expanded='true'
             aria-haspopup='true'

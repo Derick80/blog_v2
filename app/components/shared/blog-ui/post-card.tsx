@@ -2,7 +2,6 @@
 import { format } from 'date-fns'
 import type {
   SerializedEditPost,
-  Post,
   SerializedPost
 } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
@@ -12,26 +11,42 @@ import { CommentSection } from './comments-section'
 import FavoriteContainer from './favorite-container'
 import LikeContainer from './like-container'
 import { ShareButton } from './share-button'
-import type { Comment } from '~/utils/schemas/comment-schema'
+import type {
+  Comment,
+  CommentWithChildren
+} from '~/utils/schemas/comment-schema'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { Link } from '@remix-run/react'
-import { IconMessage2 } from '@tabler/icons'
+import { IconMessage, IconMessage2 } from '@tabler/icons'
 import CategoryContainer from '../category-container'
 import { AspectRatio, Image } from '@mantine/core'
+import { Like } from '~/utils/schemas/like-schema'
 export type ManyPostProps = {
   data: SerializedPost & {
-    comments: Comment[]
+    comments: CommentWithChildren[]
   } & {
     favorites: Favorite[]
+    likes: Like[]
+    _count: {
+      comments: number
+      favorites: number
+      likes: number
+    }
   }
   user: User | null
 }
 
 export type EditPostCardProps = {
   data: SerializedEditPost & {
-    comments: Comment[]
+    comments: CommentWithChildren[]
   } & {
     favorites: Favorite[]
+    likes: Like[]
+    _count: {
+      comments: number
+      favorites: number
+      likes: number
+    }
   }
   user: User | null
 }
@@ -80,43 +95,107 @@ export const PostCard = ({
   function CardHeader() {
     return (
       <>
-        <div className='flex flex-col justify-between md:flex-col'>
+        <div className='flex flex-col justify-between p-2 md:flex-col'>
           <div className='flex flex-col'>
             <Link
               to={`/blog/${id}`}
               className='text-gray-900 text-lg font-bold'
             >
-              {imageUrl && (
-                <>
-                  <AspectRatio
-                    ratio={720 / 1080}
-                    sx={{ maxWidth: 200 }}
-                    mx='auto'
-                  >
-                    <Image src={imageUrl} />
-                  </AspectRatio>
-                </>
-              )}
               <h3 className='text-xl font-bold capitalize'>{title}</h3>
             </Link>
-            <p className='indent-2 text-xs italic'>{description}</p>
+
+            {imageUrl && (
+              <div className='flex w-full gap-3'>
+                <div style={{ width: 240, marginRight: 'auto' }}>
+                  <Image src={imageUrl} alt={title} radius='md' />
+                </div>
+                <div className='flex flex-col justify-between p-2 md:flex-col'>
+                  {body && (
+                    <p
+                      dangerouslySetInnerHTML={{ __html: body }}
+                      className='prose prose-sm h-full'
+                    ></p>
+                  )}{' '}
+                  {showCategories && categories && (
+                    <div
+                      className='flex flex-row space-x-2 p-2'
+                      style={{ width: 'fit-content' }}
+                    >
+                      {categories.map((category, index) => (
+                        <CategoryContainer
+                          key={index}
+                          index={index}
+                          value={category.value}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <p className='text-sm italic'>{description}</p>
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  function CardFooter() {
+    return (
+      <>
+        <div className='flex flex-row justify-between p-2'>
+          <div className='flex flex-row items-center space-x-1'>
+            {/* this is where likes, comments, etc should go */}
+            {showLikes && id && likes && _count && user && (
+              <LikeContainer
+                postId={id}
+                likes={likes}
+                likeCounts={_count?.likes}
+                currentUser={user.id}
+              />
+            )}
+
+            {showFavorites && user && id && (
+              <FavoriteContainer
+                postId={id}
+                favorites={favorites}
+                currentUser={user?.id}
+              />
+            )}
+
+            {showShare && id && <ShareButton id={id} />}
+            {showOptions && id && (
+              <PostOptions
+                id={id}
+                published={published === true ? true : false}
+              />
+            )}
+
+            {showComments && (
+              <div className='flex flex-row items-center justify-around'>
+                <IconMessage />
+                <p className='pt-5 text-xs'>{_count.comments}</p>
+              </div>
+            )}
           </div>
           <div className='flex flex-col'>
-            <div className='flex flex-row items-center justify-around'>
+            <div className='flex flex-row items-center space-x-1'>
               {user?.avatarUrl && (
                 <>
-                  <p className='text-xs'>by:</p>
+                  <p className='text-xs'>Posted by</p>
                   <img
                     src={user?.avatarUrl}
                     alt={user?.userName}
                     className='h-6 w-6 rounded-full'
                     style={{ width: '1.5rem', height: '1.5rem' }}
                   />
-                  <p className='text-xs italic'>{user?.userName}</p>
                 </>
               )}
             </div>
-            <div>
+            <div className='flex space-x-1'>
+              <p className='text-xs italic'>{user?.userName}</p>
+              <p className='text-xs italic'>on </p>
               <p className='text-xs italic'>
                 {format(new Date(createdAt), 'MMMM dd')}
               </p>
@@ -126,94 +205,22 @@ export const PostCard = ({
       </>
     )
   }
-
-  function CardBody() {
-    return (
-      <>
-        {showCategories && categories && (
-          <div
-            className='flex flex-row space-x-2'
-            style={{ width: 'fit-content' }}
-          >
-            {categories.map((category, index) => (
-              <CategoryContainer
-                key={index}
-                index={index}
-                value={category.value}
-              />
-            ))}
-          </div>
-        )}
-
-        {body && (
-          <p dangerouslySetInnerHTML={{ __html: body }} className='text-xs'></p>
-        )}
-      </>
-    )
-  }
-
-  function CardFooter() {
-    return (
-      <>
-        <div className='flex flex-row items-center justify-center'>
-          {/* this is where likes, comments, etc should go */}
-          {showLikes && id && likes && _count && user && (
-            <LikeContainer
-              postId={id}
-              likes={likes}
-              likeCounts={_count?.likes}
-              currentUser={user.id}
-            />
-          )}
-
-          {showFavorites && user && id && (
-            <FavoriteContainer
-              postId={id}
-              favorites={favorites}
-              currentUser={user?.id}
-            />
-          )}
-
-          {showShare && id && <ShareButton id={id} />}
-          {showOptions && id && (
-            <PostOptions
-              id={id}
-              published={published === true ? true : false}
-            />
-          )}
-
-          {showComments && (
-            <div className='flex flex-row items-center justify-around'>
-              <IconMessage2 size={20} stroke={1.5} />
-              <p className='pt-5 text-xs'>{_count.comments}</p>
-            </div>
-          )}
-        </div>
-      </>
-    )
-  }
   return (
     <>
       <div
         key={id}
-        className='mb-10 flex w-full flex-col overflow-auto rounded-lg border-2'
+        className='m-2 mb-10 flex w-fit flex-col overflow-auto rounded-lg shadow-xl'
       >
-        {/* flex-row header container */}
         <CardHeader />
-        <CardBody />
-        <Divider></Divider>
-        <div className='relative flex flex-row justify-between'></div>
         <CardFooter />
-        <Divider></Divider>
-        <div>
-          {showComments && comments && id && (
-            <CommentSection
-              comments={comments}
-              postComments={_count.comments}
-              postId={id}
-            />
-          )}
-        </div>
+
+        {showComments && comments && id && (
+          <CommentSection
+            comments={comments}
+            postComments={_count.comments}
+            postId={id}
+          />
+        )}
       </div>
     </>
   )

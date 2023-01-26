@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <NavBar>
-        <div className='flex flex-row items-center p-4 md:p-4'>
+        <div className='text-slate11 dark:bg-black flex flex-row items-center p-4 md:p-4'>
           <div className='flex h-24 w-24 items-center rounded md:h-24 md:w-24'>
             <BrandIcon />
           </div>
@@ -32,12 +32,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Dropdown />
         {!user && <AdminMaker array={nonUserLinks} />}
       </NavBar>
-      {user?.role === 'ADMIN' && (
-        <div className='fixed bottom-0 right-5 md:right-5'>
-          <AdminMaker array={adminLinks} />
-        </div>
-      )}
-      <main className='grid flex-1 grid-cols-1 gap-5 md:grid-cols-12'>
+
+      <main className='grid grow grid-cols-1 gap-5 md:grid-cols-12'>
         {children}
       </main>
 

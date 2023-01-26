@@ -6,13 +6,12 @@ import type { Like } from './like-schema'
 import type { User } from './user-schema'
 
 export type Post = PrismaPost & {
-  likes?: Like[]
   _count: {
     comments?: number
     likes: number
     favorites: number
   }
-
+  likes?: Like[]
   comments?: Comment[]
   categories: Category[]
   favorites?: Favorite[]

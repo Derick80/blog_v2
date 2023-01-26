@@ -48,13 +48,15 @@ function App() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <html lang='en'>
+    <html lang='en'
+    className='dark'
+    >
       <head>
         <Meta />
         <Links />
       </head>
 
-      <body className=''>
+      <body className='bg-white dark:bg-black text-slate12 dark:text-white'>
         <LayoutWrapper />
       </body>
     </html>

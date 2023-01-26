@@ -1,7 +1,7 @@
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons'
 import type { FormMethod } from '@remix-run/react'
 import { NavLink, useFetcher } from '@remix-run/react'
-import { IconLogin } from '@tabler/icons'
+import { IconHeart, IconHeartPlus, IconLogin } from '@tabler/icons'
 import { useState } from 'react'
 import type { Like } from '~/utils/schemas/like-schema'
 
@@ -54,9 +54,9 @@ export default function LikeContainer({
           onClick={toggleLike}
         >
           {isLiked ? (
-            <HeartFilledIcon className='text-crimson10' />
+            <IconHeart className='text-crimson10' />
           ) : (
-            <HeartIcon />
+            <IconHeartPlus />
           )}
 
           <span className='min-w-[0.75rem]'>{likeCount}</span>

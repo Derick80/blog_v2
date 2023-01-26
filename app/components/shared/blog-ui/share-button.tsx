@@ -9,6 +9,7 @@ import {
   Share1Icon,
   TwitterLogoIcon
 } from '@radix-ui/react-icons'
+import { IconShare } from '@tabler/icons'
 
 type Props = {
   id: string
@@ -35,7 +36,7 @@ export const ShareButton = ({ id }: Props) => {
     <>
       <button
         type='button'
-        className='rounded-lg p-2 transition hover:bg-crimson5'
+        className='hover:bg-primary-bg dark:hover:bg-primary-bg rounded-lg p-2 transition'
         onClick={() => {
           if (navigator.share) {
             navigator.share({
@@ -47,7 +48,7 @@ export const ShareButton = ({ id }: Props) => {
           }
         }}
       >
-        <Share1Icon />
+        <IconShare />
       </button>
       <Modal isOpen={isOpen} onClick={() => setIsOpen(false)}>
         <div className='flex justify-center gap-5'>
@@ -83,7 +84,7 @@ export const ShareButton = ({ id }: Props) => {
           <input
             id='share'
             type='text'
-            className='slate1 w-11/12 rounded border-0 text-center transition dark:bg-crimson1'
+            className='w-11/12 rounded border-0 text-center transition dark:bg-slate9'
             value={postUrl}
             onClick={copyLink}
             ref={ref}
