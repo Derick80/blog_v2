@@ -1,21 +1,14 @@
-import { Center, Container, Grid, MultiSelect, TextInput } from '@mantine/core'
+import { Center, Container, Grid, MultiSelect, Stack, TextInput } from '@mantine/core'
 import type { ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import {
   useFetcher,
-  useLoaderData,
-  useMatches,
-  useOutletContext,
   useRouteLoaderData
 } from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import { useRouteData } from 'remix-utils'
+import { useState } from 'react'
 import TipTap from '~/components/shared/tip-tap'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import { CategoryForm } from '~/utils/server/post.server'
 import { prisma } from '~/utils/server/prisma.server'
-import { useMatchesData } from '~/utils/utilities'
-import { loader } from '.'
 import { Categories } from '../postTags'
 
 type ActionData = {
@@ -84,45 +77,16 @@ export default function Uploader() {
     })
 
   return (
-    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
-      <Grid gutter={5} columns={24}>
-        <Grid.Col span={6}>
-          <fetcher.Form
-            method='post'
-            encType='multipart/form-data'
-            action='/actions/image'
-            onClick={onClick}
-            className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
-          >
-            <label htmlFor='imageUrl'>Image to upload</label>
-            <input
-              id='imageUrl'
-              className='rounded-xl bg-crimson12 text-slate12'
-              type='file'
-              name='imageUrl'
-              accept='image/*'
-            />
-            <button type='submit'>Upload</button>
-          </fetcher.Form>
-          {fetcher.data ? (
-            <>
-              <div>
-                File has been uploaded to S3 and is available under the
-                following URL:
-              </div>
-              <input
-                type='hidden'
-                name='imageUrl'
-                value={fetcher.data.imageUrl}
-              />
-              {fetcher?.data?.imageUrl}
 
-              <img src={fetcher.data.imageUrl} alt={'#'} />
-            </>
-          ) : null}
-        </Grid.Col>
-        <Grid.Col span={12}>
-          <form
+        <Center
+
+        >
+
+
+         <Stack
+          className='w-[350px]'
+         >
+         <form
             className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
             method='post'
           >
@@ -158,9 +122,42 @@ export default function Uploader() {
 
             <button type='submit'>Save post</button>
           </form>
-        </Grid.Col>
-        <Grid.Col span={6}>Preview</Grid.Col>
-      </Grid>
-    </div>
+          <Container>
+          <fetcher.Form
+            method='post'
+            encType='multipart/form-data'
+            action='/actions/image'
+            onClick={onClick}
+            className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+          >
+            <label htmlFor='imageUrl'>Image to upload</label>
+            <input
+              id='imageUrl'
+              className='rounded-xl bg-crimson12 text-slate12'
+              type='file'
+              name='imageUrl'
+              accept='image/*'
+            />
+            <button type='submit'>Upload</button>
+          </fetcher.Form>
+          {fetcher.data ? (
+            <>
+              <div>
+                File has been uploaded to S3 and is available under the
+                following URL:
+              </div>
+              <input
+                type='hidden'
+                name='imageUrl'
+                value={fetcher.data.imageUrl}
+              />
+              {fetcher?.data?.imageUrl}
+
+              <img src={fetcher.data.imageUrl} alt={'#'} />
+            </>
+          ) : null}
+          </Container>
+         </Stack>
+     </Center>
   )
 }

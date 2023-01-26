@@ -1,3 +1,4 @@
+import { Button, Center, Flex } from '@mantine/core'
 import { useFetcher } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { Select } from '~/components/shared/box/select-box'
@@ -52,10 +53,11 @@ export default function Edit({ post }: EditPostProps) {
   }
 
   return (
-    <form
+    <Center>
+      <form
       method='post'
       action={`/blog/${id}/edit`}
-      className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+      className='w-[350px]'
     >
       <label htmlFor='title'>Title</label>
       <input
@@ -88,7 +90,7 @@ export default function Edit({ post }: EditPostProps) {
 
 
 
-      <div className='flex flex-row items-center justify-center'>
+        <Flex justify={"center"} >
         <input
           type='hidden'
           name='imageUrl'
@@ -127,44 +129,39 @@ export default function Edit({ post }: EditPostProps) {
             onChange={(event) => handleSelects(event)}
           />
         </div>
-        <br />
-      </div>
-
-      <button
+        </Flex>
+      <Button
         type='submit'
-        className='btn-base btn-solid-primary'
         name='_action'
         value='save'
       >
         Save
-      </button>
+      </Button>
       {post.published ? (
-        <button
+        <Button
           type='submit'
-          className='btn-base btn-solid-warn'
           name='_action'
           value='unpublish'
         >
           Unpublish
-        </button>
+        </Button>
       ) : (
-        <button
+        <Button
           type='submit'
-          className='btn-base btn-solid-warn'
           name='_action'
           value='publish'
         >
           Publish
-        </button>
+        </Button>
       )}
-      <button
+      <Button
         type='submit'
-        className='btn-base btn-solid-danger'
         name='_action'
         value='delete'
       >
         Delete
-      </button>
+      </Button>
     </form>
+    </Center>
   )
 }

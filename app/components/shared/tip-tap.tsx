@@ -1,3 +1,4 @@
+import { Flex } from '@mantine/core'
 import { RichTextEditor } from '@mantine/tiptap'
 import * as Toolbar from '@radix-ui/react-toolbar'
 import Link from '@tiptap/extension-link'
@@ -15,10 +16,11 @@ const TipTap = () => {
         history: false
       })
     ],
+
     editorProps: {
       attributes: {
         class:
-          'flex-1 p-4 bg-crimson12 h-24 mx-auto text-slate1 dark:text-slate12 m-5 focus:outline-none rounded-xl mt-0'
+          'flex-1 p-4 bg-crimson12 h-auto mx-auto text-slate1 dark:text-slate12 m-5 focus:outline-none rounded-xl mt-0'
       }
     }
   })
@@ -49,9 +51,14 @@ const TipTap = () => {
   return (
     <>
       <RichTextEditor editor={editor}>
-        <RichTextEditor.Toolbar sticky stickyOffset={60}>
-          <div className='flex flex-row items-start'>
-            <RichTextEditor.ControlsGroup>
+        <RichTextEditor.Toolbar sticky stickyOffset={60}
+
+        >
+
+            <RichTextEditor.ControlsGroup
+
+
+            >
               <RichTextEditor.Bold />
               <RichTextEditor.Italic />
               <RichTextEditor.Underline />
@@ -62,16 +69,19 @@ const TipTap = () => {
 
               <RichTextEditor.Blockquote />
               <RichTextEditor.Hr />
+              </RichTextEditor.ControlsGroup>
+
+              <RichTextEditor.ControlsGroup>
 
               <RichTextEditor.Link />
               <RichTextEditor.Unlink />
-
+              </RichTextEditor.ControlsGroup>
+<RichTextEditor.ControlsGroup>
               <RichTextEditor.AlignLeft />
               <RichTextEditor.AlignCenter />
               <RichTextEditor.AlignJustify />
               <RichTextEditor.AlignRight />
             </RichTextEditor.ControlsGroup>
-          </div>
         </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content />
