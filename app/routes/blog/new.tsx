@@ -1,10 +1,14 @@
-import { Center, Container, Grid, MultiSelect, Stack, TextInput } from '@mantine/core'
+import {
+  Center,
+  Container,
+  Grid,
+  MultiSelect,
+  Stack,
+  TextInput
+} from '@mantine/core'
 import type { ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import {
-  useFetcher,
-  useRouteLoaderData
-} from '@remix-run/react'
+import { useFetcher, useRouteLoaderData } from '@remix-run/react'
 import { useState } from 'react'
 import TipTap from '~/components/shared/tip-tap'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
@@ -77,52 +81,45 @@ export default function Uploader() {
     })
 
   return (
-
-        <Center
-
+    <Center>
+      <Stack className='w-[350px]'>
+        <form
+          className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+          method='post'
         >
+          <label htmlFor='imageUrl'>Image</label>
+          <input
+            type='text'
+            className='rounded-xl bg-crimson12 text-slate12'
+            name='imageUrl'
+            value={fetcher?.data?.imageUrl}
+            onChange={(e) => console.log(e.target.value)}
+          />
 
+          <TextInput
+            label='Title'
+            name='title'
+            onChange={(e) => console.log(e.target.value)}
+          />
 
-         <Stack
-          className='w-[350px]'
-         >
-         <form
-            className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
-            method='post'
-          >
-            <label htmlFor='imageUrl'>Image</label>
-            <input
-              type='text'
-              className='rounded-xl bg-crimson12 text-slate12'
-              name='imageUrl'
-              value={fetcher?.data?.imageUrl}
-              onChange={(e) => console.log(e.target.value)}
-            />
+          <TextInput
+            label='Description'
+            name='description'
+            onChange={(e) => console.log(e.target.value)}
+          />
 
-            <TextInput
-              label='Title'
-              name='title'
-              onChange={(e) => console.log(e.target.value)}
-            />
+          <TipTap />
+          <MultiSelect
+            label='Categories'
+            name='categories'
+            data={categories}
+            onChange={(value) => setSelected(value)}
+            value={selected}
+          />
 
-            <TextInput
-              label='Description'
-              name='description'
-              onChange={(e) => console.log(e.target.value)}
-            />
-
-            <TipTap />
-            <MultiSelect
-              label='Categories'
-              name='categories'
-              data={categories}
-              onChange={(value) => setSelected(value)}
-              value={selected}
-            />
-
-            <button type='submit'>Save post</button>
-          </form>
-          <Container>
+          <button type='submit'>Save post</button>
+        </form>
+        <Container>
           <fetcher.Form
             method='post'
             encType='multipart/form-data'
@@ -156,8 +153,8 @@ export default function Uploader() {
               <img src={fetcher.data.imageUrl} alt={'#'} />
             </>
           ) : null}
-          </Container>
-         </Stack>
-     </Center>
+        </Container>
+      </Stack>
+    </Center>
   )
 }

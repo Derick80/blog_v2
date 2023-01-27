@@ -9,20 +9,20 @@ import PostOptions from './post-options'
 import FavoriteContainer from './favorite-container'
 import LikeContainer from './like-container'
 import { ShareButton } from './share-button'
-import type {  CommentWithChildren } from '~/utils/schemas/comment-schema'
+import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
-import {  NavLink } from '@remix-run/react'
+import { NavLink } from '@remix-run/react'
 import CategoryContainer from '../category-container'
 import {
   AspectRatio,
   Avatar,
-
   Card,
   Container,
   Divider,
   Flex,
   Group,
   Image,
+  MediaQuery,
   Space,
   Spoiler,
   Stack,
@@ -34,8 +34,6 @@ import { Like } from '~/utils/schemas/like-schema'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
 import formatComments from './format-comments'
-
-
 
 export type ManyPostProps = {
   data: SerializedPost & {
@@ -50,7 +48,6 @@ export type ManyPostProps = {
     }
   }
   user: User | null
-
 }
 
 export type EditPostCardProps = {
@@ -66,7 +63,6 @@ export type EditPostCardProps = {
     }
   }
   user: User | null
-
 }
 export type TheBasicCardProps = {
   showLikes: boolean
@@ -93,7 +89,7 @@ export const PostCard = ({
   showFavorites,
   showShare,
   showOptions,
-  showCategories,
+  showCategories
 }: BasicCardProps | TheBasicCardProps) => {
   const {
     id,
@@ -106,32 +102,35 @@ export const PostCard = ({
     categories,
     likes,
     _count,
-    favorites,
+    favorites
   } = data
-
-
-
 
   return (
     <>
-      <Card key={id} shadow='sm' radius='md' withBorder className='w-[350px]'>
-        <Card.Section
-        className=''
-        >
-        {imageUrl && (
-          <AspectRatio ratio={3 / 2} sx={{ maxWidth: 350 }}>
-            <Image
-              src={imageUrl}
-              alt={title}
-              radius='md'
-              style={{
-                width: '100%',
-                height: '100%',
-              }}
-              fit='cover'
-            />
-          </AspectRatio>
-        )}
+      <Card
+        key={id}
+        shadow='sm'
+        radius='md'
+        withBorder
+        className='w-[350px] md:w-[650px]'
+      >
+        <Card.Section className=''>
+          {imageUrl && (
+            <MediaQuery smallerThan='md' styles={{ maxWidth: 350 }}>
+              <AspectRatio ratio={3 / 2} sx={{ maxWidth: 650 }}>
+                <Image
+                  src={imageUrl}
+                  alt={title}
+                  radius='md'
+                  style={{
+                    width: '100%',
+                    height: '100%'
+                  }}
+                  fit='cover'
+                />
+              </AspectRatio>
+            </MediaQuery>
+          )}
         </Card.Section>
 
         <Card.Section>
@@ -209,28 +208,25 @@ export const PostCard = ({
 
             {user?.avatarUrl && (
               <>
-
                 <Tooltip label={user?.userName} position='top'>
-
-                <Avatar
-                src={user?.avatarUrl}
-                variant="filled" radius="xl" size="sm"
-                />
-              </Tooltip>
+                  <Avatar
+                    src={user?.avatarUrl}
+                    variant='filled'
+                    radius='xl'
+                    size='sm'
+                  />
+                </Tooltip>
               </>
             )}
-
-
           </Flex>
         </Group>
         <Divider />
-        <Group>
-
-        <FormComments />
-    {
-      data.comments && <ListComments comments={formatComments(data.comments || [])} />
-    }
-        </Group>
+        <Flex direction={'column'}>
+          <FormComments />
+          {data.comments && (
+            <ListComments comments={formatComments(data.comments || [])} />
+          )}
+        </Flex>
       </Card>
     </>
   )

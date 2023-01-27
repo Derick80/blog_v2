@@ -9,7 +9,7 @@ import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
 import { formatComments } from '~/components/comments/format-comments'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import {   getPosts } from '~/utils/server/post.server'
+import { getPosts } from '~/utils/server/post.server'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   const posts = await getPosts()
@@ -29,7 +29,6 @@ export async function action({ request }: ActionArgs) {
     return { redirect: '/auth/login' }
   }
 
-
   return json({ user })
 }
 
@@ -47,18 +46,18 @@ export default function Index() {
   // console.log(posts,'posts');
 
   return (
-    <Flex direction={'column'} gap={5}  align='center'>
-{data.posts.map((post)=>(
-  <div key={post.id}>
-    <div> {post.title}</div>
+    <Flex direction={'column'} gap={5} align='center'>
+      {data.posts.map((post) => (
+        <div key={post.id}>
+          <div> {post.title}</div>
 
-    <FormComments />
-    {
-      data.comments && <ListComments comments={formatComments(data.comments || [])} />
-    }
-  </div>
-))}
-{/* {fetcher?.data?.posts ? (
+          <FormComments />
+          {data.comments && (
+            <ListComments comments={formatComments(data.comments || [])} />
+          )}
+        </div>
+      ))}
+      {/* {fetcher?.data?.posts ? (
   fetcher?.data?.posts.map((post)=>(
     <div key={post.id}>
     <div>{post.title}</div>
@@ -71,9 +70,6 @@ export default function Index() {
   </div>
   ))
 ):null} */}
-
-
-
     </Flex>
   )
 }

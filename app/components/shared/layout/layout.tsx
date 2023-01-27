@@ -16,7 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {!user && <AdminMaker array={nonUserLinks} />}
       </Group>
-      <Flex direction={'column'} gap={5}>
+      <Flex direction={'column'} gap={5} className='w-[350px] md:w-full'>
         {children}
       </Flex>
 

@@ -20,26 +20,25 @@ export default function Index() {
   const data = useLoaderData<{
     post: SerializeFrom<typeof getPostById>
   }>()
-const fetcher = useFetcher()
+  const fetcher = useFetcher()
 
-useEffect(() => {
-    if (fetcher.type === "init") {
-      fetcher.load("/blog");
+  useEffect(() => {
+    if (fetcher.type === 'init') {
+      fetcher.load('/blog')
     }
-  }, [fetcher]);
+  }, [fetcher])
 
   const post = data.post
-  console.log(fetcher.data);
+  console.log(fetcher.data)
   const commentsByParentId = fetcher?.data?.commentsByParentId
 
-console.log(commentsByParentId, 'fetched commentsByParentId postId');
-console.log(Array.isArray(commentsByParentId), 'postid');
+  console.log(commentsByParentId, 'fetched commentsByParentId postId')
+  console.log(Array.isArray(commentsByParentId), 'postid')
 
+  // const routeData = fetcher.data.map((item)=>item)
 
-// const routeData = fetcher.data.map((item)=>item)
-
-// const {commentsByParentId, rootComments} = routeData
-// console.log(commentsByParentId, rootComments, "combo");
+  // const {commentsByParentId, rootComments} = routeData
+  // console.log(commentsByParentId, rootComments, "combo");
 
   return (
     <div className='col-span-4 flex p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
