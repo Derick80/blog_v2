@@ -1,12 +1,12 @@
-import { Box, Text, Center, Container, Flex, Stack, Title } from '@mantine/core'
-import type { SerializeFrom } from '@remix-run/node'
+import { Text, Stack } from '@mantine/core'
 import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
-import React from 'react'
+import { useMemo } from 'react'
 import { badRequest } from 'remix-utils'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPosts } from '~/utils/server/post.server'
+import { prisma } from '~/utils/server/prisma.server'
 
 export type SimpleComments = {
   id: string
@@ -27,31 +27,17 @@ export async function loader() {
   // get all Categoiries for posts use this for useMatches, etc
   const categories = await getAllCategories()
   const comments = posts.map((post) => post.comments)
-  // console.log(comments, 'comments');
 
-  function getStuff(comments: SimpleComments[]) {
-    let group = {} as SimpleComments[]
-    comments.forEach((comment) => {
-      group[comment.parentId] ||= []
-      group[comment.parentId].push(comment)
-    })
 
-    return group
-  }
 
-  const commentsByParentId = getStuff(comments)
-  // console.log(commentsByParentId, 'commentsByParentId');
 
-  const rootComments = commentsByParentId[null]
-
-  return json({ posts, categories, commentsByParentId, rootComments })
+  return json({ posts, categories,comments })
 }
 
 export default function Index() {
-  const data = useLoaderData<{
-    posts: SerializeFrom<typeof getPosts>
-    categories: SerializeFrom<typeof getAllCategories>
-  }>()
+const data = useLoaderData()
+
+
 
   return (
     <Stack align='center'>
@@ -68,9 +54,10 @@ export default function Index() {
           showFavorites={true}
           showOptions={true}
           showShare={true}
+
         />
       ))}
-      <Outlet context={data.categories} />
+      {/* <Outlet context={data.categories} /> */}
     </Stack>
   )
 }

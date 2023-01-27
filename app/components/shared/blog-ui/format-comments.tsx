@@ -15,9 +15,9 @@ function formComments(comments: Array<Comment>) {
     ;(comments[i] as CommentWithChildren).children = []
 
     if (typeof comments[i]?.parentId === 'string') {
-      const parentCommentIndex: number = map.get(comments[i]?.parentId)
+      const parentCommentIndex: number = map.get(comments[i]?.parentId);
 
-      ;(comments[parentCommentIndex] as CommentWithChildren).children.push(
+      (comments[parentCommentIndex] as CommentWithChildren).children.push(
         comments[i] as CommentWithChildren
       )
 

@@ -6,19 +6,17 @@ import type {
 } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import PostOptions from './post-options'
-import { CommentSection } from './comments-section'
 import FavoriteContainer from './favorite-container'
 import LikeContainer from './like-container'
 import { ShareButton } from './share-button'
-import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
+import type {  CommentWithChildren } from '~/utils/schemas/comment-schema'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
-import { Link, NavLink } from '@remix-run/react'
-import { IconMessage } from '@tabler/icons'
+import {  NavLink } from '@remix-run/react'
 import CategoryContainer from '../category-container'
 import {
   AspectRatio,
   Avatar,
-  Box,
+
   Card,
   Container,
   Divider,
@@ -33,6 +31,12 @@ import {
   TypographyStylesProvider
 } from '@mantine/core'
 import { Like } from '~/utils/schemas/like-schema'
+import FormComments from '~/components/comments/com-form'
+import ListComments from '~/components/comments/comList'
+import formatComments from './format-comments'
+
+
+
 export type ManyPostProps = {
   data: SerializedPost & {
     comments: CommentWithChildren[]
@@ -46,6 +50,7 @@ export type ManyPostProps = {
     }
   }
   user: User | null
+
 }
 
 export type EditPostCardProps = {
@@ -61,6 +66,7 @@ export type EditPostCardProps = {
     }
   }
   user: User | null
+
 }
 export type TheBasicCardProps = {
   showLikes: boolean
@@ -87,7 +93,7 @@ export const PostCard = ({
   showFavorites,
   showShare,
   showOptions,
-  showCategories
+  showCategories,
 }: BasicCardProps | TheBasicCardProps) => {
   const {
     id,
@@ -101,8 +107,10 @@ export const PostCard = ({
     likes,
     _count,
     favorites,
-    comments
   } = data
+
+
+
 
   return (
     <>
@@ -217,13 +225,11 @@ export const PostCard = ({
         </Group>
         <Divider />
         <Group>
-          {showComments && comments && id && (
-            <CommentSection
-              comments={comments}
-              postComments={_count.comments}
-              postId={id}
-            />
-          )}
+
+        <FormComments />
+    {
+      data.comments && <ListComments comments={formatComments(data.comments || [])} />
+    }
         </Group>
       </Card>
     </>

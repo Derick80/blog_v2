@@ -24,9 +24,7 @@ export default function FavoriteContainer({
     : false
 
   const [isFavorite, setIsFavorite] = useState(userFavoritedPost)
-  console.log(userFavoritedPost, 'userFavoritedPost')
 
-  console.log('favorites', favorites)
 
   const toggleFavorite = async () => {
     let method: FormMethod = 'delete'
