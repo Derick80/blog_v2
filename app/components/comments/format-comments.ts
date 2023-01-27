@@ -12,7 +12,6 @@ export async function formatComments(comments: Comment[]) {
     const commentId = comments[i]?.id
 
     map.set(commentId, i)
-
     ;(comments[i] as CommentWithChildren).children = []
 
     if (typeof comments[i]?.parentId === 'string') {

@@ -3,37 +3,35 @@ import { nonUserLinks, siteLinks, userLinks } from '~/utils/constants/links'
 import { useOptionalUser } from '~/utils/utilities'
 import LinkMaker from './link-maker'
 import AdminMaker from './admin-maker'
-import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import Dropdown from '../blog-ui/dropdown'
-import { Text, Flex, Group, Title, Container, Center } from '@mantine/core'
+import { Flex, Group, Title } from '@mantine/core'
+import { BrandIcon } from '../icons'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
   return (
-    <Flex direction='column'>
-      <Group position='center'>
+    <Flex direction='column' gap={2}>
+      <Group position='center' spacing='xl' align='center'>
+        <div className='h-20 w-20'>
+          <BrandIcon />
+        </div>
+        <Title> Derick C. Hoskinson PhD</Title>
+
         <NavLinks />
 
         {!user && <AdminMaker array={nonUserLinks} />}
-      </Group>
-      <Flex direction={'column'} gap={5} className='w-[350px] md:w-full'>
-        {children}
-      </Flex>
-
-      <Group position='center'>
-        <Flex direction={'row'} align='center' justify='space-between' gap={5}>
+        <Group position='center'>
+          {/* <Flex direction={'row'} align='center' justify='space-between' gap={5}>
           <Text>
             <a
               href='https://www.github.com/Derick80'
               className='social'
               aria-label='GitHub'
             >
-              <GitHubLogoIcon />
+              <IconBrandGithub />
             </a>
           </Text>
-          <Text>
-            <p className='mr-4'> copyright &copy; {new Date().getFullYear()}</p>
-          </Text>
+
           <Text>
             <a
               href='https://www.linkedin.com/in/dhoskinson'
@@ -42,11 +40,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               rel='noopener noreferrer'
               aria-label='LinkedIn'
             >
-              <LinkedInLogoIcon />
+              <IconBrandLinkedin />
             </a>
           </Text>
-        </Flex>
+        </Flex> */}
+        </Group>
       </Group>
+      <Flex direction={'column'} gap={5} className='h-full w-[350px] md:w-full'>
+        {children}
+      </Flex>
     </Flex>
   )
 }
@@ -58,7 +60,6 @@ function NavLinks() {
 
   return (
     <>
-      <Title size={6}> Derick C. Hoskinson PhD</Title>
       <Flex direction={'row'} align='center' justify='space-between' gap={5}>
         <Flex>
           {user ? (

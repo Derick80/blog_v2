@@ -16,6 +16,7 @@ import CategoryContainer from '../category-container'
 import {
   AspectRatio,
   Avatar,
+  Button,
   Card,
   Container,
   Divider,
@@ -34,6 +35,7 @@ import { Like } from '~/utils/schemas/like-schema'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
 import formatComments from './format-comments'
+import React from 'react'
 
 export type ManyPostProps = {
   data: SerializedPost & {
@@ -104,7 +106,7 @@ export const PostCard = ({
     _count,
     favorites
   } = data
-
+  const [open, setOpen] = React.useState(false)
   return (
     <>
       <Card
@@ -223,9 +225,12 @@ export const PostCard = ({
         <Divider />
         <Flex direction={'column'}>
           <FormComments />
-          {data.comments && (
+          {open && data.comments && (
             <ListComments comments={formatComments(data.comments || [])} />
           )}
+          <Button onClick={() => setOpen(!open)}>
+            {open ? 'Hide' : 'Show'} Comments
+          </Button>
         </Flex>
       </Card>
     </>

@@ -1,5 +1,7 @@
+import { Button } from '@mantine/core'
 import { ChevronUpIcon } from '@radix-ui/react-icons'
 import { NavLink } from '@remix-run/react'
+import { IconChevronDown, IconChevronUp } from '@tabler/icons'
 import { useState } from 'react'
 
 export type AdminMakerProps = {
@@ -14,15 +16,11 @@ export default function AdminMaker({ array }: AdminMakerProps) {
   const [open, setOpen] = useState(false)
 
   return (
-    <button
+    <Button
       onClick={() => setOpen(!open)}
       className='bottom-0 flex flex-col items-center rounded-full p-2'
     >
-      {open ? (
-        <ChevronUpIcon className='rotate-180 transform' />
-      ) : (
-        <ChevronUpIcon />
-      )}
+      {open ? <IconChevronUp /> : <IconChevronDown />}
 
       {open && (
         <div className='absolute items-center justify-center'>
@@ -43,6 +41,6 @@ export default function AdminMaker({ array }: AdminMakerProps) {
           </ul>
         </div>
       )}
-    </button>
+    </Button>
   )
 }

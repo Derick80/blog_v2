@@ -10,10 +10,10 @@ export const loader: LoaderFunction = () => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const user = await isAuthenticated(request)
-  invariant(user,'need  user')
+  invariant(user, 'need  user')
   const postId = params.postId
   const userId = user.id
-  console.log(userId, 'userId');
+  console.log(userId, 'userId')
 
   console.log(params, 'params')
 
