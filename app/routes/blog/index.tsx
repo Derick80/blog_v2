@@ -1,8 +1,11 @@
-import { Text, Stack } from '@mantine/core'
+import { Text, Stack, Button, Drawer, Group } from '@mantine/core'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import React from 'react'
 import { badRequest } from 'remix-utils'
+import Dropdown from '~/components/shared/blog-ui/dropdown'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
+import PostDrawer from '~/components/shared/post-drawer'
 import { Post } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPosts } from '~/utils/server/post.server'
@@ -23,21 +26,21 @@ export async function loader() {
   const posts = await getPosts()
 
   if (!posts) return badRequest({ message: 'There are no Posts' })
+
   // get all Categoiries for posts use this for useMatches, etc
   const categories = await getAllCategories()
-  const comments = posts.map((post) => post.comments)
+  // get all comments for posts use this for useMatches, etc
+  const comments = posts.map((post) => post.comments).flat()
 
   return json({ posts, categories, comments })
 }
 
 export default function Index() {
   const data = useLoaderData()
-
   return (
     <Stack align='center' className='w-full'>
-      <Text>Post</Text>
-
-      {data.posts.map((post) => (
+      <Dropdown />
+      {data.posts.map((post: Post) => (
         <PostCard
           key={post.id}
           data={post}

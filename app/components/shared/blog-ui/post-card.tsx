@@ -1,8 +1,8 @@
 /* eslint-disable react/no-danger-with-children */
 import { format } from 'date-fns'
 import type {
+  Post,
   SerializedEditPost,
-  SerializedPost
 } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import PostOptions from './post-options'
@@ -18,7 +18,6 @@ import {
   Avatar,
   Button,
   Card,
-  Container,
   Divider,
   Flex,
   Group,
@@ -31,14 +30,14 @@ import {
   Tooltip,
   TypographyStylesProvider
 } from '@mantine/core'
-import { Like } from '~/utils/schemas/like-schema'
+import type{ Like } from '~/utils/schemas/like-schema'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
 import formatComments from './format-comments'
 import React from 'react'
 
 export type ManyPostProps = {
-  data: SerializedPost & {
+  data: Post & {
     comments: CommentWithChildren[]
   } & {
     favorites: Favorite[]
@@ -116,7 +115,7 @@ export const PostCard = ({
         withBorder
         className='w-[350px] md:w-[650px]'
       >
-        <Card.Section className=''>
+        <Card.Section>
           {imageUrl && (
             <MediaQuery smallerThan='md' styles={{ maxWidth: 350 }}>
               <AspectRatio ratio={3 / 2} sx={{ maxWidth: 650 }}>

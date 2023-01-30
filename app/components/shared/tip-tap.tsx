@@ -6,21 +6,27 @@ import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useCallback } from 'react'
 
-const TipTap = () => {
+const TipTap = ({
+  content
+}:{
+  content?: string
+}) => {
   const editor = useEditor({
+    content,
     extensions: [
       Link.configure({
         openOnClick: false
       }),
       StarterKit.configure({
         history: false
-      })
+      }),
+
     ],
 
     editorProps: {
       attributes: {
         class:
-          'flex-1 p-4 bg-crimson12 h-auto mx-auto text-slate1 dark:text-slate12 m-5 focus:outline-none rounded-xl mt-0'
+          'flex-1 p-4 h-auto mx-auto text-slate1 dark:text-slate12 m-5 focus:outline-none rounded-xl mt-0'
       }
     }
   })

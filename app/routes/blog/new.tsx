@@ -31,6 +31,18 @@ export const action: ActionFunction = async ({ request }) => {
   const title = formData.get('title') as string
   const description = formData.get('description') as string
   const body = formData.get('body') as string
+const categories = formData.get('categories') as string
+
+console.log(categories, 'categories');
+const cats = categories?.split(',')
+console.log(cats, 'cats');
+const category =cats.map((cat) => {
+  return {
+    value: cat,
+
+  }
+})
+console.log(category, 'category');
 
   console.log(imageUrl, 'imageUrl')
 
@@ -46,16 +58,36 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
+
+
   await prisma.post.create({
+
     data: {
       imageUrl: imageUrl,
       title: title,
       userId: user.id,
       description,
       body,
-      createdBy: user.userName
+      createdBy: user.userName,
+      published: true,
+      categories:
+      {
+        connectOrCreate: category.map((cat)=>({
+          where: {
+            value: cat.value
+          },
+          create: {
+            label: cat.value,
+            value: cat.value
+          }
+
+        }))
+      }
     }
+
+
   })
+
 
   return json({
     imageUrl
@@ -67,11 +99,9 @@ export default function Uploader() {
     categories: Categories
   }
 
-  console.log(categories, 'categories')
-
   const fetcher = useFetcher<ActionData>()
 
-  const [selected, setSelected] = useState<string[]>([])
+  const [selected, setSelected] = useState<string>('')
 
   const onClick = async () =>
     fetcher.submit({
@@ -111,13 +141,17 @@ export default function Uploader() {
           <TipTap />
           <MultiSelect
             label='Categories'
-            name='categories'
             data={categories}
-            onChange={(value) => setSelected(value)}
-            value={selected}
-          />
+            onChange={(e) => {
+              setSelected(e.join(','))
+              console.log(e.join(','))
 
-          <button type='submit'>Save post</button>
+            }
+            }
+
+          />
+          <input type='hidden' name='categories' value={selected} />
+                    <button type='submit'>Save post</button>
         </form>
         <Container>
           <fetcher.Form

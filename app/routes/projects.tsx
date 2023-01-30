@@ -14,7 +14,7 @@ export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
     <MediaQuery smallerThan='md' styles={{ width: 350 }}>
-      <Flex direction='row' gap={5}>
+      <Flex direction='column' gap={5}>
         {data.projects.map((project) => (
           <ProjectCard
             key={project.id}
@@ -22,7 +22,6 @@ export default function Index() {
             categories={data.categories}
           />
         ))}
-        <Outlet />
       </Flex>
     </MediaQuery>
   )

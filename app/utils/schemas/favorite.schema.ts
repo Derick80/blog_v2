@@ -1,6 +1,9 @@
-import type { Favorite as Fav } from '@prisma/client'
-import { SerializeFrom } from '@remix-run/node'
+import type { Favorite as PrismaFavorites } from '@prisma/client'
+import type { SerializeFrom } from '@remix-run/node'
+import type {  SerializedPost } from './post-schema'
 
-export type Favorites = Partial<Fav>
 
-export type Favorite = SerializeFrom<Favorites>
+
+export type Favorite = SerializeFrom<PrismaFavorites> & {
+    post: SerializedPost
+}

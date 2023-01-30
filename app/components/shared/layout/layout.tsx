@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
   return (
     <Flex direction='column' gap={2}>
-      <Group position='center' spacing='xl' align='center'>
+      <Group position='center' spacing='sm' align='center'>
         <div className='h-20 w-20'>
           <BrandIcon />
         </div>
@@ -80,7 +80,6 @@ function NavLinks() {
             </>
           )}
         </Flex>
-        <Dropdown />
       </Flex>
     </>
   )
