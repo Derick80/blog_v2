@@ -221,14 +221,8 @@ export async function savePost(
       imageUrl: data.imageUrl,
       createdBy: data.createdBy,
       categories: {
-        connectOrCreate: data?.category?.map((category) => ({
-          where: {
-            value: category.value
-          },
-          create: {
-            value: category.value,
-            label: category.value
-          }
+       set: data?.category?.map((category) => ({
+          value: category.value,
         }))
       }
     }
