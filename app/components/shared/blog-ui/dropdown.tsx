@@ -1,21 +1,9 @@
 import { Menu, Button, Text } from '@mantine/core'
-import { ExitIcon } from '@radix-ui/react-icons'
 import { Form, NavLink } from '@remix-run/react'
 import {
   IconChevronDown,
-  IconDoorExit,
-  IconEdit,
-  IconPhoto,
-  IconSettings,
-  IconMessageCircle,
-  IconFilePencil,
   IconLogout,
   IconNewSection,
-  IconSearch,
-  IconSun,
-  IconArrowsLeftRight,
-  IconTrash,
-  IconChevronLeft,
   IconPencilPlus
 } from '@tabler/icons'
 import { useState } from 'react'

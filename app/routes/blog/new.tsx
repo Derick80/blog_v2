@@ -1,17 +1,17 @@
 import {
   Center,
   Container,
-  Grid,
   MultiSelect,
   Stack,
   TextInput
 } from '@mantine/core'
-import { ActionFunction, redirect } from '@remix-run/node'
+import type { ActionFunction} from '@remix-run/node';
+import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Form, useFetcher, useRouteLoaderData } from '@remix-run/react'
 import { useState } from 'react'
 import TipTap from '~/components/shared/tip-tap'
-import { Category } from '~/utils/schemas/category-schema'
+import type { Category } from '~/utils/schemas/category-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createPost } from '~/utils/server/post.server'
 

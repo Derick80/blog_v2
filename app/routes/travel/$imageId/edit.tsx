@@ -1,11 +1,11 @@
 import { Button, Stack } from '@mantine/core'
-import { LoaderArgs, json, ActionArgs, redirect } from '@remix-run/node'
+import type { LoaderArgs, ActionArgs} from '@remix-run/node';
+import { json, redirect } from '@remix-run/node'
 import { Form, useLoaderData, useNavigate, useNavigation } from '@remix-run/react'
-import React, { useTransition } from 'react'
+import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import FormField from '~/components/shared/form-field'
-import { Modal } from '~/components/shared/layout/modal'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getTravelLogById, updateTravelLog } from '~/utils/server/travel.server'
 
@@ -15,7 +15,6 @@ export async function loader({ request, params }: LoaderArgs) {
   const imageId = Number(params.imageId)
   const image = await getTravelLogById(imageId)
 
-  // if(!photo) return redirect('/travel'    )
   return json({ image })
 }
 
