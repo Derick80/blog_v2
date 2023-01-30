@@ -27,22 +27,28 @@ export const action: ActionFunction = async ({ request }) => {
 
   const formData = await request.formData()
 
-  const imageUrl = formData.get('imageUrl') as string
-  const title = formData.get('title') as string
-  const description = formData.get('description') as string
-  const body = formData.get('body') as string
-const categories = formData.get('categories') as string
+  const imageUrl = formData.get('imageUrl')
+  const title = formData.get('title')
+  const description = formData.get('description')
+  const body = formData.get('body')
+  const categories = formData.get('categories')
 
-console.log(categories, 'categories');
-const cats = categories?.split(',')
-console.log(cats, 'cats');
-const category =cats.map((cat) => {
-  return {
-    value: cat,
-
+  if(typeof imageUrl !== 'string' ||
+    typeof title !== 'string' ||
+    typeof description !== 'string' ||
+    typeof body !== 'string' ||
+    typeof categories !== 'string'
+    ) {
+    return json({
+      errorMsg: 'Something went wrong while uploading'
+    })
   }
-})
-console.log(category, 'category');
+  const cats = categories?.split(',')
+  const category = cats.map((cat) => {
+    return {
+      value: cat
+    }
+  })
 
   console.log(imageUrl, 'imageUrl')
 
@@ -58,10 +64,7 @@ console.log(category, 'category');
     })
   }
 
-
-
   await prisma.post.create({
-
     data: {
       imageUrl: imageUrl,
       title: title,
@@ -70,9 +73,8 @@ console.log(category, 'category');
       body,
       createdBy: user.userName,
       published: true,
-      categories:
-      {
-        connectOrCreate: category.map((cat)=>({
+      categories: {
+        connectOrCreate: category.map((cat) => ({
           where: {
             value: cat.value
           },
@@ -80,14 +82,10 @@ console.log(category, 'category');
             label: cat.value,
             value: cat.value
           }
-
         }))
       }
     }
-
-
   })
-
 
   return json({
     imageUrl
@@ -145,13 +143,10 @@ export default function Uploader() {
             onChange={(e) => {
               setSelected(e.join(','))
               console.log(e.join(','))
-
-            }
-            }
-
+            }}
           />
           <input type='hidden' name='categories' value={selected} />
-                    <button type='submit'>Save post</button>
+          <button type='submit'>Save post</button>
         </form>
         <Container>
           <fetcher.Form

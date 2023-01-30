@@ -18,7 +18,7 @@ export async function loader({ request, params }: LoaderArgs) {
 
   const favorites = await getFavoriteList(user.id)
 
-  return json({  favorites })
+  return json({ favorites })
 }
 
 export default function FavoritePosts() {

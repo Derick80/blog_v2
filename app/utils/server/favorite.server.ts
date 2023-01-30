@@ -1,7 +1,7 @@
 import type { Prisma, User } from '@prisma/client'
 import { prisma } from './prisma.server'
 
-export async function getFavoriteList(userId:string) {
+export async function getFavoriteList(userId: string) {
   const list = await prisma.favorite.findMany({
     where: {
       userId: userId
@@ -10,7 +10,7 @@ export async function getFavoriteList(userId:string) {
       createdAt: 'desc'
     },
     include: {
-      post:{
+      post: {
         include: {
           user: true
         }

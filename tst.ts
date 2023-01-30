@@ -63,7 +63,7 @@ export default function brr() {}
 // console.log(regroup.length)
 // console.log(regroup)
 
-const test = [ 'Prisma,React' ]
+const test = ['Prisma,React']
 
 const test2 = test.map((item) => {
   return item.split(',')

@@ -1,7 +1,7 @@
-"use strict";
-exports.__esModule = true;
-function brr() { }
-exports["default"] = brr;
+'use strict'
+exports.__esModule = true
+function brr() {}
+exports['default'] = brr
 // const cbpid = [
 //   {
 //     id: '8e83ba73-0aba-443c-9356-6fa05653a681',
@@ -60,8 +60,8 @@ exports["default"] = brr;
 // }, [])
 // console.log(regroup.length)
 // console.log(regroup)
-var test = ['Prisma,React'];
+var test = ['Prisma,React']
 var test2 = test.map(function (item) {
-    return item.split(',');
-});
-console.log(test2);
+  return item.split(',')
+})
+console.log(test2)

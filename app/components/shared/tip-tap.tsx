@@ -6,11 +6,7 @@ import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useCallback } from 'react'
 
-const TipTap = ({
-  content
-}:{
-  content?: string
-}) => {
+const TipTap = ({ content }: { content?: string }) => {
   const editor = useEditor({
     content,
     extensions: [
@@ -19,8 +15,7 @@ const TipTap = ({
       }),
       StarterKit.configure({
         history: false
-      }),
-
+      })
     ],
 
     editorProps: {

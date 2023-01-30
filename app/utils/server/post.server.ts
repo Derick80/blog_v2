@@ -232,7 +232,6 @@ export async function savePost(
             label: category.value
           }
         }))
-
       }
     }
   })

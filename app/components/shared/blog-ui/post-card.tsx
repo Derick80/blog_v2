@@ -1,9 +1,6 @@
 /* eslint-disable react/no-danger-with-children */
 import { format } from 'date-fns'
-import type {
-  Post,
-  SerializedEditPost,
-} from '~/utils/schemas/post-schema'
+import type { Post, SerializedEditPost } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import PostOptions from './post-options'
 import FavoriteContainer from './favorite-container'
@@ -30,7 +27,7 @@ import {
   Tooltip,
   TypographyStylesProvider
 } from '@mantine/core'
-import type{ Like } from '~/utils/schemas/like-schema'
+import type { Like } from '~/utils/schemas/like-schema'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
 import formatComments from './format-comments'
