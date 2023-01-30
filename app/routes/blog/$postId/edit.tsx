@@ -1,6 +1,6 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
@@ -14,13 +14,9 @@ import {
   unPublishPost
 } from '~/utils/server/post.server'
 import { validateText } from '~/utils/validators.server'
-import { Modal } from '~/components/shared/layout/modal'
-import { IconEdit } from '@tabler/icons'
-import { id } from 'date-fns/locale'
 
 export async function loader({ params, request }: LoaderArgs) {
   const postId = params.postId
-  console.log(params, 'params')
 
   invariant(postId, 'postId is required')
   const post = await getPostToEdit(postId)
