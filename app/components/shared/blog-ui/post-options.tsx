@@ -1,6 +1,6 @@
 import { Group, Menu, ActionIcon, Button } from '@mantine/core'
 import { DotsVerticalIcon } from '@radix-ui/react-icons'
-import { Form, NavLink } from '@remix-run/react'
+import { Form, Link, NavLink } from '@remix-run/react'
 import {
   IconChevronDown,
   IconDotsVertical,
@@ -27,7 +27,9 @@ export default function PostOptions({ id, published }: OptionProps) {
 
       <Menu.Dropdown>
         <Menu.Label>Blog Actions</Menu.Label>
-        <NavLink
+
+       <Menu.Item>
+       <Link
           style={{
             textDecoration: 'none',
             color: 'currentcolor',
@@ -35,55 +37,70 @@ export default function PostOptions({ id, published }: OptionProps) {
             alignItems: 'center'
           }}
           to={`/blog/${id}/edit`}
-          onClick={() => setOpen(!open)}
         >
           <IconEdit />
           Edit
-        </NavLink>
-        <NavLink
-          style={{
-            textDecoration: 'none',
-            color: 'currentcolor',
-            display: 'flex',
-            alignItems: 'center'
-          }}
-          to={`/blog/${id}/delete`}
-          onClick={() => setOpen(!open)}
+        </Link>
+       </Menu.Item>
+       <Menu.Item>
+
+       <form method="post">
+  <button name="_action" type="submit" value="delete">
+    Delete
+  </button>
+</form>
+        </Menu.Item>
+        {/* <Menu.Item>
+        <Form
+        reloadDocument
+          method='post'
+          action={`/blog/${id}/publish`}
+
         >
-          <IconTrash />
-          <p>Delete</p>
-        </NavLink>
-        {published ? (
-          <NavLink
+          <Button
+            variant='subtle'
+            name='_action'
+            value='delete'
+            >
+            <IconTrash />
+            Delete
+            </Button>
+          {published ? (
+              <Button
+              variant='subtle'
+              style={{
+                textDecoration: 'none',
+                color: 'currentcolor',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+              name='_action'
+              value='publish'
+            >
+              <IconFilePlus />
+              <p>Publish</p>
+            </Button>
+
+          ): (
+            <Button
+            variant='subtle'
             style={{
               textDecoration: 'none',
               color: 'currentcolor',
               display: 'flex',
               alignItems: 'center'
             }}
-            to={`/blog/${id}/unpublish`}
-            onClick={() => setOpen(!open)}
-          >
-            <IconFileMinus />
-            <p>Unpublish</p>
-          </NavLink>
-        ) : (
-          <NavLink
-            style={{
-              textDecoration: 'none',
-              color: 'currentcolor',
-              display: 'flex',
-              alignItems: 'center'
-            }}
-            to={`/blog/${id}/publish`}
-            onClick={() => setOpen(!open)}
+            name='_action'
+            value='unpublish'
           >
             <IconFilePlus />
-
             <p>Publish</p>
-          </NavLink>
-        )}
+          </Button>
+          )}
+        </Form>
+        </Menu.Item> */}
       </Menu.Dropdown>
     </Menu>
   )
+
 }

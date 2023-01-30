@@ -154,7 +154,7 @@ export type PostInput = {
   imageUrl: string
   createdBy: string
   userId: string
-  correctedCategories: CategoryForm
+  category: CategoryForm
 }
 
 export async function createPost(data: PostInput) {
@@ -171,7 +171,7 @@ export async function createPost(data: PostInput) {
         }
       },
       categories: {
-        connectOrCreate: data.correctedCategories.map((category) => ({
+        connectOrCreate: data.category.map((category) => ({
           where: {
             value: category.value
           },
@@ -210,9 +210,7 @@ export async function getUserDrafts(userId: string) {
 }
 
 export async function savePost(
-  data: Partial<PostInput> & { postId: string } & {
-    correctedCategories: CategoryForm
-  }
+  data: Partial<PostInput> & { postId: string }
 ) {
   const post = await prisma.post.update({
     where: { id: data.postId },
@@ -223,7 +221,7 @@ export async function savePost(
       imageUrl: data.imageUrl,
       createdBy: data.createdBy,
       categories: {
-        connectOrCreate: data.correctedCategories.map((category) => ({
+        connectOrCreate: data?.category?.map((category) => ({
           where: {
             value: category.value
           },

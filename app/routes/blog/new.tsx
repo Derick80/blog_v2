@@ -6,14 +6,14 @@ import {
   Stack,
   TextInput
 } from '@mantine/core'
-import type { ActionFunction } from '@remix-run/node'
+import { ActionFunction, redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useFetcher, useRouteLoaderData } from '@remix-run/react'
+import { Form, useFetcher, useRouteLoaderData } from '@remix-run/react'
 import { useState } from 'react'
 import TipTap from '~/components/shared/tip-tap'
+import { Category } from '~/utils/schemas/category-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import { prisma } from '~/utils/server/prisma.server'
-import { Categories } from '../postTags'
+import { createPost } from '~/utils/server/post.server'
 
 type ActionData = {
   imageUrl?: string
@@ -33,12 +33,13 @@ export const action: ActionFunction = async ({ request }) => {
   const body = formData.get('body')
   const categories = formData.get('categories')
 
-  if(typeof imageUrl !== 'string' ||
+  if (
+    typeof imageUrl !== 'string' ||
     typeof title !== 'string' ||
     typeof description !== 'string' ||
     typeof body !== 'string' ||
     typeof categories !== 'string'
-    ) {
+  ) {
     return json({
       errorMsg: 'Something went wrong while uploading'
     })
@@ -64,37 +65,21 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
-  await prisma.post.create({
-    data: {
-      imageUrl: imageUrl,
-      title: title,
-      userId: user.id,
-      description,
-      body,
-      createdBy: user.userName,
-      published: true,
-      categories: {
-        connectOrCreate: category.map((cat) => ({
-          where: {
-            value: cat.value
-          },
-          create: {
-            label: cat.value,
-            value: cat.value
-          }
-        }))
-      }
-    }
+  await createPost({
+    title,
+    description,
+    body,
+    imageUrl,
+    createdBy: user.userName,
+    userId: user.id,
+    category: category
   })
-
-  return json({
-    imageUrl
-  })
+  return redirect('/drafts')
 }
 
 export default function Uploader() {
   const { categories } = useRouteLoaderData('root') as {
-    categories: Categories
+    categories: Category[]
   }
 
   const fetcher = useFetcher<ActionData>()
@@ -111,7 +96,7 @@ export default function Uploader() {
   return (
     <Center>
       <Stack className='w-[350px]'>
-        <form
+        <Form
           className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
           method='post'
         >
@@ -147,7 +132,7 @@ export default function Uploader() {
           />
           <input type='hidden' name='categories' value={selected} />
           <button type='submit'>Save post</button>
-        </form>
+        </Form>
         <Container>
           <fetcher.Form
             method='post'

@@ -219,15 +219,17 @@ export const PostCard = ({
           </Flex>
         </Group>
         <Divider />
-        <Flex direction={'column'}>
-          <FormComments />
-          {open && data.comments && (
-            <ListComments comments={formatComments(data.comments || [])} />
-          )}
-          <Button onClick={() => setOpen(!open)}>
-            {open ? 'Hide' : 'Show'} Comments
-          </Button>
-        </Flex>
+       {showComments && id && (
+         <Flex direction={'column'}>
+         <FormComments />
+         {open && data.comments && (
+           <ListComments comments={formatComments(data.comments || [])} />
+         )}
+         <Button onClick={() => setOpen(!open)}>
+           {open ? 'Hide' : 'Show'} Comments
+         </Button>
+       </Flex>
+       )}
       </Card>
     </>
   )

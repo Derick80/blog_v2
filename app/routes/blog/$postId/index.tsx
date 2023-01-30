@@ -5,6 +5,7 @@ import { Outlet, useFetcher, useLoaderData } from '@remix-run/react'
 import { useEffect } from 'react'
 import { badRequest } from 'remix-utils'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
+import getAllCategories from '~/utils/server/categories.server'
 import { getPostById } from '~/utils/server/post.server'
 
 export async function loader({ request, params }: LoaderArgs) {
@@ -12,13 +13,14 @@ export async function loader({ request, params }: LoaderArgs) {
   if (!postId) return badRequest({ message: 'Invalid post' })
 
   const post = await getPostById(postId)
-
-  return json({ post })
+const categories = await getAllCategories()
+  return json({ post, categories })
 }
 
 export default function Index() {
   const data = useLoaderData<{
     post: SerializeFrom<typeof getPostById>
+    categories: SerializeFrom<typeof getAllCategories>
   }>()
   const fetcher = useFetcher()
 

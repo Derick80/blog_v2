@@ -19,8 +19,6 @@ import {
   IconPencilPlus
 } from '@tabler/icons'
 import { useState } from 'react'
-import { Divider } from '../layout/divider'
-
 export default function Dropdown() {
   const [open, setOpen] = useState(false)
   return (
@@ -47,21 +45,11 @@ export default function Dropdown() {
             </NavLink>
           </Menu.Item>
           <Menu.Item icon={<IconPencilPlus size={14} />}>
-            <NavLink to='/blog/drafts' onClick={() => setOpen(!open)}>
+            <NavLink to='/drafts' onClick={() => setOpen(!open)}>
               <Text>Drafts</Text>
             </NavLink>
           </Menu.Item>
-          <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item>
-          <Menu.Item
-            icon={<IconSearch size={14} />}
-            rightSection={
-              <Text size='xs' color='dimmed'>
-                ⌘K
-              </Text>
-            }
-          >
-            Search
-          </Menu.Item>
+
 
           <Menu.Divider />
 

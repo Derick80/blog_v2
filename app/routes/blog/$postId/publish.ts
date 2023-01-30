@@ -9,6 +9,8 @@ import {
 
 export async function action({ request, params }: ActionArgs) {
   const postId = params?.postId
+  console.log(postId,'postId');
+
   const formData = await request.formData()
 
   const action = formData.get('_action')
@@ -20,7 +22,7 @@ export async function action({ request, params }: ActionArgs) {
   switch (action) {
     case 'publish':
       await publishPost(postId)
-      return redirect(`/blog/`)
+      return redirect(`/blog`)
 
     case 'unpublish':
       await unPublishPost(postId)
