@@ -1,7 +1,7 @@
 import { Box, Button, Group, Textarea } from '@mantine/core'
 import { Form } from '@remix-run/react'
 
-export default function FormComments({ parentId }: { parentId?: string }) {
+export default function FormComments({ postId, parentId }: { postId: string, parentId?: string }) {
   return (
     <Box
       mt='md'
@@ -10,7 +10,10 @@ export default function FormComments({ parentId }: { parentId?: string }) {
         maxWidth: '600px'
       }}
     >
-      <Form method='post' className='w-full' action={`blog/${parentId}/create`}>
+      <Form method='post' className='w-full' action={`/actions/comment`}>
+        <input type='hidden' name='postId' value={postId} />
+        {parentId && <input type='hidden' name='parentId' value={parentId} />
+        }
         <Textarea
           required
           name='message'
@@ -21,7 +24,7 @@ export default function FormComments({ parentId }: { parentId?: string }) {
         <Group position='right' mt='md'>
           <Button
             type='submit'
-            name='action'
+            name='_action'
             value={parentId ? 'reply' : 'create'}
           >
             {parentId ? 'post reply' : 'post comment'}

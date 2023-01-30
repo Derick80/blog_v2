@@ -1,6 +1,6 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Form, useLoaderData, useRouteLoaderData } from '@remix-run/react'
+import { Form, useLoaderData, useNavigate, useNavigation, useRouteLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
@@ -109,26 +109,32 @@ export async function action({ params, request }: ActionArgs) {
 }
 
 export default function EditPost() {
+  const navigate = useNavigation()
+  const text =
+  navigate.state === "submitting"
+    ? "Saving..."
+    : navigate.state === "loading"
+    ? "Saved!"
+    : "Save";
+
+    const publishText = navigate.state === "submitting" ? "Publishing..." : navigate.state === "loading" ? "Published!" : "Publish";
+
+    const unpublishText = navigate.state === "submitting" ? "Unpublishing..." : navigate.state === "loading" ? "Unpublished!" : "Unpublish";
+
+    const deleteText = navigate.state === "submitting" ? "Deleting..." : navigate.state === "loading" ? "Deleted!" : "Delete";
   const data = useLoaderData<typeof loader>()
+
   const { title, description, body, imageUrl, categories, id, published , userId} = data.post
+
   const [selected, setSelected] = useState<string[]>(
     categories.map((item) => item.value)
-
     )
-  console.log(data.allCategories, 'allCategories');
 
 const pickedCategories = categories.map((item) => item.value)
-
-console.log(pickedCategories, 'pickedCategories');
 
   const mainCategories = data.allCategories.map((item) => {
     return item.value
   })
-
-  console.log(mainCategories, 'mainCategories');
-
-
-
 
   const [formData, setFormData] =useState({
     title,
@@ -192,27 +198,25 @@ console.log(pickedCategories, 'pickedCategories');
             name='imageUrl'
             id='imageUrl'
             value={imageUrl}
-            // onChange={(e) =>
-            //   setFormData({ ...formData, imageUrl: e.target.value })
-            // }
+
           />
 
 
         </Flex>
         <Button type='submit' name='_action' value='save'>
-          Save
+         {text}
         </Button>
         {published ? (
           <Button type='submit' name='_action' value='unpublish'>
-            Unpublish
+            {unpublishText}
           </Button>
         ) : (
           <Button type='submit' name='_action' value='publish'>
-            Publish
+            {publishText}
           </Button>
         )}
         <Button type='submit' name='_action' value='delete'>
-          Delete
+          {deleteText}
         </Button>
       </Form>
     </Flex>

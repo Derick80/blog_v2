@@ -7,7 +7,7 @@ export interface CategoryContainerProps {
   index: number
 }
 export interface CategoryContainerPropsOne {
-  value: string[][]
+  value: string
   index: number
 }
 export default function CategoryContainer({

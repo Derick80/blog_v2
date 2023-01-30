@@ -1,4 +1,4 @@
-import { Flex, MediaQuery } from '@mantine/core'
+import { Flex, MediaQuery, Stack } from '@mantine/core'
 import { json, LoaderArgs } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
 import { ProjectCard } from '~/components/shared/project-card'
@@ -13,6 +13,8 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
+    <Stack align='center' className='w-full'>
+
     <MediaQuery smallerThan='md' styles={{ width: 350 }}>
       <Flex direction='column' gap={5}>
         {data.projects.map((project) => (
@@ -24,5 +26,6 @@ export default function Index() {
         ))}
       </Flex>
     </MediaQuery>
+          </Stack>
   )
 }

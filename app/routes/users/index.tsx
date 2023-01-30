@@ -1,11 +1,12 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { NavLink, Outlet, useLoaderData, useMatches } from '@remix-run/react'
+import {  Outlet, useLoaderData } from '@remix-run/react'
 import UserCard from '~/components/shared/user-ui/user-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import type { UserProps } from '~/utils/server/user.server'
 import { getUsers } from '~/utils/server/user.server'
-import { User } from '~/utils/schemas/user-schema'
+import type {  UserType } from '~/utils/schemas/user-schema'
+import { Flex, Stack, Title } from '@mantine/core'
 
 export type TestUser = {
   [key: string]: {
@@ -29,24 +30,22 @@ export async function loader({ request }: LoaderArgs) {
     return { redirect: '/login' }
   }
 
-  // const users =
   return json({ users: await getUsers() })
 }
 
 export default function Users() {
-  const data = useLoaderData<typeof loader>()
-  const users = data.users as ReturnType<typeof getUsers>
+  const data = useLoaderData<{ users: UserType[]}>()
   return (
-    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
-      <h1 className='mh1 mx-auto'>Users</h1>
+    <Stack align='center' className='w-full'>
+      <Title order={1}>Users</Title>
 
-      <div className='flex h-fit flex-wrap'>
-        {data.users.map((user: UserProps) => (
+     <Flex direction='column' gap={5}>
+     {data.users.map((user: UserProps) => (
           <UserCard key={user.id} user={user} />
         ))}
+      </Flex>
 
         <Outlet />
-      </div>
-    </div>
+    </Stack>
   )
 }

@@ -1,3 +1,4 @@
+import { Stack } from '@mantine/core'
 import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
@@ -15,7 +16,7 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData<{ post: SerializeFrom<Post> }>()
   return (
-    <>
+    <Stack align='center' className='w-full'>
       <StatsCard />
       <div>Hero Post</div>
       {data.post && (
@@ -31,6 +32,6 @@ export default function Index() {
           showShare={true}
         />
       )}
-    </>
+    </Stack>
   )
 }

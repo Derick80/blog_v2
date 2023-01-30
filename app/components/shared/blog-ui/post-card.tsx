@@ -145,7 +145,7 @@ export const PostCard = ({
               {title}
             </Text>
           </NavLink>
-          {showCategories && categories && (
+          {showCategories  && (
             <div
               className='flex flex-row space-x-2 p-2'
               style={{ width: 'fit-content' }}
@@ -177,9 +177,9 @@ export const PostCard = ({
           </div>
         </Card.Section>
 
-        <Group position='center'>
+        <Group position='apart'>
           <Flex align='center'>
-            {showLikes && id && likes && _count && user && (
+            {showLikes && id && likes && user && (
               <LikeContainer
                 postId={id}
                 likes={likes}
@@ -187,41 +187,43 @@ export const PostCard = ({
                 currentUser={user.id}
               />
             )}
-            <Space w={5} />
-            {showFavorites && user && id && (
+            {showFavorites && user && (
               <FavoriteContainer
                 postId={id}
                 favorites={favorites}
-                currentUser={user?.id}
+                currentUser={user.id}
               />
             )}
 
             {showShare && id && <ShareButton id={id} />}
-            {showOptions && id && (
+            {showOptions &&  (
               <PostOptions
                 id={id}
-                published={published === true ? true : false}
               />
             )}
 
-            {user?.avatarUrl && (
-              <>
-                <Tooltip label={user?.userName} position='top'>
-                  <Avatar
-                    src={user?.avatarUrl}
-                    variant='filled'
-                    radius='xl'
-                    size='sm'
-                  />
-                </Tooltip>
-              </>
-            )}
+
           </Flex>
+          {user?.avatarUrl && (
+
+<Tooltip label={user?.userName} position='top'>
+  <Avatar
+    src={user?.avatarUrl}
+    variant='filled'
+    radius='xl'
+    size='sm'
+  />
+</Tooltip>
+
+)}
         </Group>
         <Divider />
        {showComments && id && (
          <Flex direction={'column'}>
-         <FormComments />
+         <FormComments
+            postId={id}
+
+         />
          {open && data.comments && (
            <ListComments comments={formatComments(data.comments || [])} />
          )}

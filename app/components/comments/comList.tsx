@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import FormComments from './com-form'
 
-function CommentActions({ commentId }: { commentId: string }) {
+function CommentActions({ commentId, postId }: { postId:string,commentId: string }) {
   const [replying, setReplying] = useState(false)
 
   return (
@@ -13,7 +13,9 @@ function CommentActions({ commentId }: { commentId: string }) {
         <Button onClick={() => setReplying(!replying)}>Reply</Button>
       </Group>
 
-      {replying && <FormComments parentId={commentId} />}
+      {replying && <FormComments
+        postId={postId}
+      parentId={commentId} />}
     </>
   )
 }
@@ -47,7 +49,9 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
         </Box>
       </Box>
 
-      <CommentActions commentId={comment.id} />
+      <CommentActions
+        postId={comment.postId}
+      commentId={comment.id} />
 
       {comment.children && comment.children.length > 0 && (
         <ListComments comments={comment.children} />
