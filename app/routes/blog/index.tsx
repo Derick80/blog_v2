@@ -38,7 +38,7 @@ export async function loader() {
 export default function Index() {
   const data = useLoaderData()
   return (
-    <Stack align='center' className='w-full'>
+    <Stack align='center' className='w-full mt-10'>
       <Dropdown />
       {data.posts.map((post: Post) => (
         <PostCard

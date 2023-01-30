@@ -20,6 +20,7 @@ import TipTap from '~/components/shared/tip-tap'
 import { useEffect, useState } from 'react'
 import { Category } from '~/utils/schemas/category-schema'
 import getAllCategories from '~/utils/server/categories.server'
+import Dropdown from '~/components/shared/blog-ui/dropdown'
 
 export async function loader({ params, request }: LoaderArgs) {
   const postId = params.postId
@@ -147,10 +148,11 @@ const pickedCategories = categories.map((item) => item.value)
   })
 
   return (
-    <Stack
+    <Stack align='center' className='w-full mt-10'>
 
-    >
     <Flex direction={"column"}>
+    <Dropdown />
+
       <Form
       method='post' action={`/blog/${id}/edit`} className='w-[350px] flex flex-col'>
         <input type='hidden' name='postId' value={id} />

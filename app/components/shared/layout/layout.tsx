@@ -9,7 +9,7 @@ import { BrandIcon } from '../icons'
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
   return (
-    <Flex direction='column' gap={2}>
+    <Flex direction='column' gap={2} align='center'>
       <Group position='center' spacing='sm' align='center'>
         <div className='h-20 w-20'>
           <BrandIcon />

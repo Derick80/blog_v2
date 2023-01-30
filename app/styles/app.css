@@ -1557,6 +1557,10 @@ video {
   margin: auto;
 }
 
+.m-10{
+  margin: 2.5rem;
+}
+
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
@@ -1607,6 +1611,14 @@ video {
 
 .mb-3{
   margin-bottom: 0.75rem;
+}
+
+.mb-10{
+  margin-bottom: 2.5rem;
+}
+
+.mt-20{
+  margin-top: 5rem;
 }
 
 .inline-block{
@@ -1668,6 +1680,14 @@ video {
 
 .h-3\/4{
   height: 75%;
+}
+
+.h-\[350px\]{
+  height: 350px;
+}
+
+.h-\[250px\]{
+  height: 250px;
 }
 
 .max-h-36{
@@ -1737,6 +1757,10 @@ video {
 
 .w-64{
   width: 16rem;
+}
+
+.w-\[250px\]{
+  width: 250px;
 }
 
 .min-w-\[200px\]{
@@ -2147,6 +2171,10 @@ video {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.outline{
+  outline-style: solid;
 }
 
 .filter{

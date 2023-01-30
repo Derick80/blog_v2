@@ -13,10 +13,9 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
-    <Stack align='center' className='w-full'>
+    <Stack align='center' className='w-[350px] mt-10'>
 
-    <MediaQuery smallerThan='md' styles={{ width: 350 }}>
-      <Flex direction='column' gap={5}>
+      <Flex direction='column' gap={5} align='center' justify='center'>
         {data.projects.map((project) => (
           <ProjectCard
             key={project.id}
@@ -25,7 +24,6 @@ export default function Index() {
           />
         ))}
       </Flex>
-    </MediaQuery>
           </Stack>
   )
 }
