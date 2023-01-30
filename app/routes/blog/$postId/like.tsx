@@ -1,5 +1,6 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
+import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createLike, deleteLike } from '~/utils/server/likes.server'
 
@@ -9,8 +10,11 @@ export const loader: LoaderFunction = () => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const user = await isAuthenticated(request)
+  invariant(user, 'need  user')
   const postId = params.postId
-  const userId = user?.id
+  const userId = user.id
+  console.log(userId, 'userId')
+
   console.log(params, 'params')
 
   if (!userId || !postId) {

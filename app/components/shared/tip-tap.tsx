@@ -1,3 +1,4 @@
+import { Flex } from '@mantine/core'
 import { RichTextEditor } from '@mantine/tiptap'
 import * as Toolbar from '@radix-ui/react-toolbar'
 import Link from '@tiptap/extension-link'
@@ -5,8 +6,9 @@ import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useCallback } from 'react'
 
-const TipTap = () => {
+const TipTap = ({ content }: { content?: string }) => {
   const editor = useEditor({
+    content,
     extensions: [
       Link.configure({
         openOnClick: false
@@ -15,10 +17,11 @@ const TipTap = () => {
         history: false
       })
     ],
+
     editorProps: {
       attributes: {
         class:
-          'flex-1 p-4 bg-crimson12 h-24 mx-auto text-slate1 dark:text-slate12 m-5 focus:outline-none rounded-xl mt-0'
+          'flex-1 p-4 h-auto mx-auto text-slate1 dark:text-slate12 m-5 focus:outline-none rounded-xl mt-0'
       }
     }
   })
@@ -50,28 +53,29 @@ const TipTap = () => {
     <>
       <RichTextEditor editor={editor}>
         <RichTextEditor.Toolbar sticky stickyOffset={60}>
-          <div className='flex flex-row items-start'>
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.Bold />
-              <RichTextEditor.Italic />
-              <RichTextEditor.Underline />
-              <RichTextEditor.Strikethrough />
-              <RichTextEditor.ClearFormatting />
-              <RichTextEditor.Highlight />
-              <RichTextEditor.Code />
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Bold />
+            <RichTextEditor.Italic />
+            <RichTextEditor.Underline />
+            <RichTextEditor.Strikethrough />
+            <RichTextEditor.ClearFormatting />
+            <RichTextEditor.Highlight />
+            <RichTextEditor.Code />
 
-              <RichTextEditor.Blockquote />
-              <RichTextEditor.Hr />
+            <RichTextEditor.Blockquote />
+            <RichTextEditor.Hr />
+          </RichTextEditor.ControlsGroup>
 
-              <RichTextEditor.Link />
-              <RichTextEditor.Unlink />
-
-              <RichTextEditor.AlignLeft />
-              <RichTextEditor.AlignCenter />
-              <RichTextEditor.AlignJustify />
-              <RichTextEditor.AlignRight />
-            </RichTextEditor.ControlsGroup>
-          </div>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Link />
+            <RichTextEditor.Unlink />
+          </RichTextEditor.ControlsGroup>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.AlignLeft />
+            <RichTextEditor.AlignCenter />
+            <RichTextEditor.AlignJustify />
+            <RichTextEditor.AlignRight />
+          </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content />

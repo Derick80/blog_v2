@@ -1,100 +1,62 @@
 import { useState } from 'react'
-import {
-  adminLinks,
-  nonUserLinks,
-  siteLinks,
-  userLinks
-} from '~/utils/constants/links'
+import { nonUserLinks, siteLinks, userLinks } from '~/utils/constants/links'
 import { useOptionalUser } from '~/utils/utilities'
-import { BrandIcon } from '../icons'
 import LinkMaker from './link-maker'
-import Footer from './footer'
-import NavBar from './nav-bar'
 import AdminMaker from './admin-maker'
-import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
-import Dropdown from '../blog-ui/dropdown'
+import { Button, Flex, Group, Text, Title } from '@mantine/core'
+import { BrandIcon } from '../icons'
+import { Form, Link } from '@remix-run/react'
+import { IconArticle, IconBrandBlogger, IconHome, IconInfoCircle, IconLogout } from '@tabler/icons'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
   return (
-    <>
-      <NavBar>
-        <div className='text-slate11 dark:bg-black flex flex-row items-center p-4 md:p-4'>
-          <div className='flex h-24 w-24 items-center rounded md:h-24 md:w-24'>
-            <BrandIcon />
-          </div>
-
-          <h1 className='text-zinc-900 dark:text-slate-100 text-2xl font-bold md:text-3xl'>
-            Derick C. Hoskinson PhD
-          </h1>
+    <Flex direction='column' gap={2} align='center'>
+      <Group position='center' spacing='sm' align='center'>
+        <div className='h-20 w-20'>
+          <BrandIcon />
         </div>
-        <NavLinks />
-        <Dropdown />
-        {!user && <AdminMaker array={nonUserLinks} />}
-      </NavBar>
+        <Title> Derick C. Hoskinson PhD</Title>
 
-      <main className='grid grow grid-cols-1 gap-5 md:grid-cols-12'>
-        {children}
-      </main>
 
-      <Footer>
-        <ul className='border-1 flex flex-row items-center justify-center space-x-3 text-sm'>
-          <li>
-            <a
-              href='https://www.github.com/Derick80'
-              className='social'
-              aria-label='GitHub'
-            >
-              <GitHubLogoIcon />
-            </a>
-          </li>
-          <li>
-            <p className='mr-4'> copyright &copy; {new Date().getFullYear()}</p>
-          </li>
-          <li>
-            <a
-              href='https://www.linkedin.com/in/dhoskinson'
-              className='social'
-              target='_blank'
-              rel='noopener noreferrer'
-              aria-label='LinkedIn'
-            >
-              <LinkedInLogoIcon />
-            </a>
-          </li>
-          <li>{/* add more socials */}</li>
-        </ul>
-      </Footer>
-    </>
-  )
-}
 
-function NavLinks() {
-  const [isActive, setIsActive] = useState(false)
-  const toggle = () => setIsActive(!isActive)
-  const user = useOptionalUser()
 
-  return (
-    <nav className='flex p-2 md:p-4'>
-      <ul className='flex space-x-5'>
-        {user ? (
-          <>
-            {siteLinks.map((link, index) => (
-              <LinkMaker key={index} link={link} toggle={toggle} />
-            ))}
+      </Group>
+      <Flex direction='row' gap={10}  >
+      <Link to='/'>
+        <Text>Home</Text>
 
-            {userLinks.map((link, index) => (
-              <LinkMaker key={index} link={link} toggle={toggle} />
-            ))}
-          </>
-        ) : (
-          <>
-            {siteLinks.map((link, index) => (
-              <LinkMaker key={index} link={link} toggle={toggle} />
-            ))}
-          </>
+      </Link>
+      <Link to='/blog'>
+        <Text>Blog</Text>
+
+      </Link>
+      <Link to='/about'>
+        <Text>About</Text>
+
+      </Link>
+      <Link to='/projects' >
+        <Text>Projects</Text>
+
+      </Link>
+        {user ?( <Form method='post' action='/logout'>
+          <button type='submit'>
+            Logout
+          </button>
+        </Form>)
+        :(
+          <Link to='/login'>Login</Link>
+
         )}
-      </ul>
-    </nav>
+
+        </Flex>
+      <Flex direction={'column'} gap={5}
+      style={{
+        marginTop: '2rem',
+      }} className='h-full w-[350px] md:w-full'>
+        {children}
+      </Flex>
+    </Flex>
   )
 }
+

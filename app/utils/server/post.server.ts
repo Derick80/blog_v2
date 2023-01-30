@@ -1,8 +1,40 @@
+import { Post } from '../schemas/post-schema'
 import { prisma } from './prisma.server'
 
 export type CategoryForm = {
   value: string
 }[]
+export async function getHeroPost() {
+  const post = await prisma.post.findFirst({
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      body: true,
+      imageUrl: true,
+      createdAt: true,
+      updatedAt: true,
+      published: true,
+      createdBy: true,
+      userId: true,
+      categories: true,
+      user: true,
+      comments: {
+        include: {
+          user: true
+        }
+      },
+      favorites: true,
+      likes: true
+    },
+    take: 1,
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
+
+  return post
+}
 
 export async function getUserPosts(userId: string) {
   const posts = await prisma.post.findMany({
@@ -122,7 +154,7 @@ export type PostInput = {
   imageUrl: string
   createdBy: string
   userId: string
-  correctedCategories: CategoryForm
+  category: CategoryForm
 }
 
 export async function createPost(data: PostInput) {
@@ -139,7 +171,7 @@ export async function createPost(data: PostInput) {
         }
       },
       categories: {
-        connectOrCreate: data.correctedCategories.map((category) => ({
+        connectOrCreate: data.category.map((category) => ({
           where: {
             value: category.value
           },
@@ -178,9 +210,7 @@ export async function getUserDrafts(userId: string) {
 }
 
 export async function savePost(
-  data: Partial<PostInput> & { postId: string } & {
-    correctedCategories: CategoryForm
-  }
+  data: Partial<PostInput> & { postId: string }
 ) {
   const post = await prisma.post.update({
     where: { id: data.postId },
@@ -191,14 +221,8 @@ export async function savePost(
       imageUrl: data.imageUrl,
       createdBy: data.createdBy,
       categories: {
-        connectOrCreate: data.correctedCategories.map((category) => ({
-          where: {
-            value: category.value
-          },
-          create: {
-            value: category.value,
-            label: category.value
-          }
+       set: data?.category?.map((category) => ({
+          value: category.value,
         }))
       }
     }

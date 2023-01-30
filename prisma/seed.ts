@@ -25,32 +25,32 @@ async function seed(){
         data:{
             email:'Grayone@gmail.com',
             password: '1234567',
-            userName: 'Grayone',
-            avatarUrl:`https://res.cloudinary.com/dch-photo/image/upload/v1672076729/stock/DerickTrain1_ysxonq.jpg`
+            userName: 'Chris&Jason',
+            avatarUrl:`https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/dch_chris_jason.jpg`
         }
     })
       const user3 = await prisma.user.create({
         data:{
-            email:'thegrayone00@gmail.com',
+            email:'elisser00@gmail.com',
             password: '1234567',
-            userName: 'TheGrayone00',
-            avatarUrl: `https://res.cloudinary.com/dch-photo/image/upload/v1672076790/stock/fitzy_cx2zku.jpg`
+            userName: 'Lisser',
+            avatarUrl: `https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/dch_elissa.jpg`
         }
     })
       const user4 = await prisma.user.create({
         data:{
-            email:'sean@gmail.com',
+            email:'liss@gmail.com',
             password: '1234567',
-            userName: 'Sean Dempsey',
-            avatarUrl:`https://res.cloudinary.com/dch-photo/image/upload/v1672076840/stock/DerickWork_zah8vu.jpg`
+            userName: 'Elissa',
+            avatarUrl:`https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/dch_elissa.jpg`
         }
     })
       const user5 = await prisma.user.create({
         data:{
-            email:'thatGrayone@gmail.com',
+            email:'sean@gmail.com',
             password: '1234567',
-            userName: 'ThatGrayone',
-            avatarUrl:`https://res.cloudinary.com/dch-photo/image/upload/v1672076841/stock/turntable_bkgwyx.jpg`,
+            userName: 'SeanD',
+            avatarUrl:`https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/sean.jpg`,
 
 
         }
@@ -60,14 +60,14 @@ async function seed(){
       data:{
 
         userName: 'Grayone',
-        firstName: 'Grayone',
+        firstName: 'Derick',
         lastName: 'Hoskinson',
 bio:`I was born in western New York`
 ,
 location:`Chicago, IL`,
-education:`Education`,
-occupation:`Coder`,
-profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimages/DerickFace.jpg',
+education:`Tufts Graduate School of Biomedical Sciences`,
+occupation:`Senior Clinical Scientist`,
+profilePicture:'https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/DerickFace.jpg',
       userId: user2.id,
       email: user2.email,
 
@@ -79,7 +79,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
             password: hashedPassword,
             userName: 'Derick',
             role: 'ADMIN',
-            avatarUrl: `https://res.cloudinary.com/dch-photo/image/upload/v1672019067/stock/blogapp_xx4zq3.png`,
+            avatarUrl: `https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/DerickFace.jpg`,
 
         }
     })
@@ -235,27 +235,209 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
         }
     })
 
+    const book1 = await prisma.post.create({
+        data: {
+            title: "Atomic habits",
+            description: "Atomic Habits is a book by James Clear that explains how to build good habits and break bad ones.",
+            body:`Atomic Habits is a book by James Clear that explains how to build good habits and break bad ones. The book is based on the idea that habits are the compound interest of self-improvement. The book is divided into four parts: The first part explains the science behind habits and how they are formed. The second part explains how to make good habits. The third part explains how to break bad habits. The fourth part explains how to make habits automatic. The book is based on the idea that habits are the compound interest of self-improvement. The book is divided into four parts: The first part explains the science behind habits and how they are formed. The second part explains how to make good habits. The third part explains how to break bad habits. The fourth part explains how to make habits automatic.`,
+            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/books_2022/atamic.png",
+            createdBy:user.userName,
+            userId: user.id,
+            published: true,
+            categories: {
+        connectOrCreate: [
+            {
+            where: { value: 'Self-help' },
+            create: { label: 'Self-help',value: 'Self-help' }
+            },
+            {
+            where: { value: 'Books' },
+            create: { label: 'Books',value: 'Books' }
+            },
+          ],
+        }
+        }
+
+    })
+
+const book2 = await prisma.post.create({
+        data: {
+            title: "The Checklist Manifesto",
+           description: "The Checklist Manifesto is a book by Atul Gawande that explains how to use checklists to improve performance in all walks of life.",
+          body:`The Checklist Manifesto is a book by Atul Gawande that explains how to use checklists to improve performance in all walks of life. The book is based on the idea that habits are the compound interest of self-improvement. The book is divided into four parts: The first part explains the science behind habits and how they are formed. The second part explains how to make good habits. The third part explains how to break bad habits. The fourth part explains how to make habits automatic.`,
+            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/books_2022/checklist.png",
+            createdBy:user.userName,
+            userId: user.id,
+            published: true,
+            categories: {
+        connectOrCreate: [
+            {
+            where: { value: 'Self-help' },
+            create: { label: 'Self-help',value: 'Self-help' }
+            },
+            {
+            where: { value: 'Books' },
+            create: { label: 'Books',value: 'Books' }
+            },
+          ],
+        }
+        }
+
+    })
+
+    const book3 = await prisma.post.create({
+        data: {
+            title:"Edges",
+            description:`Edges is a new entry point into the classic story world of Linda Nagata’s The Nanotech Succession.`,
+            body:`Deception Well is a world on the edge, home to an isolated remnant surviving at the farthest reach of human expansion. All across the frontier, other worlds have succumbed to the relentless attacks of robotic alien warships, while hundreds of light years away, the core of human civilization—those star systems closest to Earth, known as the Hallowed Vasties—have all fallen to ruins. Powerful telescopes can see only dust and debris where once there were orbital mega-structures so huge they eclipsed the light of their parent stars.`,
+            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/books_2022/edges.png",
+            createdBy:user.userName,
+            userId: user.id,
+            published: true,
+            categories: {
+        connectOrCreate: [
+            {
+            where: { value: 'Science Fiction' },
+            create: { label: 'Science Fiction',value: 'Science Fiction' }
+            },
+            {
+            where: { value: 'Books' },
+            create: { label: 'Books',value: 'Books' }
+            },
+          ],
+        }
+        }
+
+    })
+
+const book4 = await prisma.post.create({
+        data: {
+            title:"Moon Witch Spider King",
+            description:`Moon Witch, Spider King is a 2022 fantasy novel by Jamaican writer Marlon James. It is the second book of a planned trilogy, after Black Leopard, Red Wolf.`,
+            body:`Moon Witch, Spider King is a 2022 fantasy novel by Jamaican writer Marlon James. It is the second book of a planned trilogy, after Black Leopard, Red Wolf. The book is based on the idea that habits are the compound interest of self-improvement. The book is divided into four parts: The first part explains the science behind habits and how they are formed. The second part explains how to make good habits. The third part explains how to break bad habits. The fourth part explains how to make habits automatic.`,
+            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/books_2022/james.png",
+            createdBy:user.userName,
+            userId: user.id,
+            published: true,
+            categories: {
+        connectOrCreate: [
+            {
+            where: { value: 'Fantasy' },
+            create: { label: 'Fantasy',value: 'Fantasy' }
+            },
+            {
+            where: { value: 'Books' },
+            create: { label: 'Books',value: 'Books' }
+            },
+          ],
+        }
+        }
+
+    })
+
+const book5 = await prisma.post.create({
+        data: {
+            title:"The Last Watch",
+            description:`The Last Watch, where a handful of soldiers stand between humanity and annihilation.
+            `,
+            body:`The Last Watch, where a handful of soldiers stand between humanity and annihilation. The book is based on the idea that habits are the compound interest of self-improvement. The book is divided into four parts: The first part explains the science behind habits and how they are formed. The second part explains how to make good habits. The third part explains how to break bad habits. The fourth part explains how to make habits automatic.`,
+            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/books_2022/lastwatch.png",
+            createdBy:user.userName,
+            userId: user.id,
+            published: true,
+            categories: {
+        connectOrCreate: [
+            {
+            where: { value: 'Science Fiction' },
+            create: { label: 'Science Fiction',value: 'Science Fiction' }
+            },
+            {
+            where: { value: 'Books' },
+            create: { label: 'Books',value: 'Books' }
+            },
+          ],
+        }
+        }
+
+    })
+
+const book6 = await prisma.post.create({
+        data: {
+            title:"Sea of Tranquility",
+            description:`Sea of Tranquility is a 2022 novel by the Canadian writer Emily St. John Mandel.`
+            ,
+            body:`Edwin St. Andrew is eighteen years old when he crosses the Atlantic by steamship, exiled from polite society following an ill-conceived diatribe at a dinner party. He enters the forest, spellbound by the beauty of the Canadian wilderness, and suddenly hears the notes of a violin echoing in an airship terminal--an experience that shocks him to his core.`,
+            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/books_2022/sea.png",
+            createdBy:user.userName,
+            userId: user.id,
+            published: true,
+            categories: {
+        connectOrCreate: [
+            {
+            where: { value: 'Fantasy' },
+            create: { label: 'Fantasy',value: 'Fantasy' }
+            },
+            {
+            where: { value: 'Books' },
+            create: { label: 'Books',value: 'Books' }
+            },
+          ],
+        }
+        }
+
+    })
+
+const book7 = await prisma.post.create({
+        data: {
+            title:"Tomorrow, and Tomorrow, and Tomorrow: A novel",
+            description:`Tomorrow, and Tomorrow, and Tomorrow: A novel is a 2022 novel by the American writer John Darnielle.`
+            ,
+            body:`Sam and Sadie—two college friends, often in love, but never lovers—become creative partners in a dazzling and intricately imagined world of video game design, where success brings them fame, joy, tragedy, duplicity, and, ultimately, a kind of immortality. It is a love story, but not one you have read before`,
+            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/books_2022/tomorrow.png",
+            createdBy:user.userName,
+            userId: user.id,
+            published: true,
+            categories: {
+        connectOrCreate: [
+            {
+            where: { value: 'Science Fiction' },
+            create: { label: 'Science Fiction',value: 'Science Fiction' }
+            },
+            {
+            where: { value: 'Books' },
+            create: { label: 'Books',value: 'Books' }
+            },
+          ],
+        }
+        }
+
+    })
+
+
+
+
+
+
 
 
     const post1= await prisma.post.create({
         data: {
-            title: `PRODUCTION OF MATURE MRNA IS A MULTISTEP PROCESS REQUIRING MANY PROTEINS THAT IS ESSENTIAL FOR PROPER CELLULAR FUNCTION
-            `,
+            title: `Production of mature mRNA is a multistep process requiring many proteins that is essential for proper cellular function.`,
                        description: `Defects in mRNA maturation lead to radical changes in development, growth and viability of the cell.`,
           body:`Production of mature mRNA is a multistep process requiring many proteins that is essential for proper cellular function. Defects in mRNA maturation lead to radical changes in development, growth and viability of the cell. The essential mRNA 3’ end processing subunit, Pcf11, is required for the cleavage and polyadenylation of nascent mRNAs and for proper termination of RNA polymerase II transcription. Pcf11 also plays a role in alternative polyadenylation. Previous work has identified`,
-            imageUrl: "https://blogphotosbucket.s3.us-east-2.amazonaws.com/postimages/post_three_yeast_plates.jpeg",
+            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/lab.jpeg",
             createdBy:user.userName,
             userId: user.id,
             published: true,
            categories: {
         connectOrCreate: [
             {
-            where: { value: 'JavaScript' },
-            create: { label: 'JavaScript',value: 'JavaScript' }
+            where: { value: 'Genetics' },
+            create: { label: 'Genetics',value: 'Genetics' }
             },
             {
-            where: { value: 'Elixir' },
-            create: { label: 'Elixir',value: 'Elixir' }
+            where: { value: 'Science' },
+            create: { label: 'Science',value: 'Science' }
             }
         ]
         }
@@ -265,20 +447,20 @@ const post2 = await prisma.post.create({
         data: {
             title: "mRNA Maturation",
             description: "Introns are removed from the pre-mRNA by the spliceosome components in a two step reaction that ends in the joining of two exons together",
-          body:`Many genes, if not most, in higher organisms contain non-coding, intervening DNA sequences called introns, between the protein-coding exon portions of the gene. The second major step in mRNA maturation is the removal of introns and the splicing of exons. Introns are removed from the pre-mRNA by the spliceosome components in a two step reaction that ends in the joining of two exons together (Bentley 2014). Most metazoan genes have numerous introns while very few genes in yeast have introns. The selection of which exons are included in the final mRNA has lead to a diversification of gene products such that one gene can code for numerous different mRNA isoforms, each of which may have unique functions. Chromatin modifications and differential phosphorylation of the CTD of RNAP II play an active role in the recruitment of splicing factors, and the splicing reaction itself may occur prior to or following the cleavage and polyadenylation step of mRNA maturation (Bentley 2014; Rigo & Martinson 2009; Oesterreich et al. 2011; David & Manley 2011). mRNAs that contain introns that are not properly spliced are recognized by the mRNA surveillance complex, TRAMP (Trf4/Air2/Mtr4p Polyadenylation), and degraded by the nuclear exosome. If intron-containing mRNAs escape to the cytoplasm, they are degraded via nonsense mediated decay (NMD) or NMD-independent degradation pathways (Aguilera, 2005; Bentley, 2014).`,
-            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/lab.jpeg",
+          body:`Introns are removed from primary transcripts by cleavage at conserved sequences called splice sites. These sites are found at the 5′ and 3′ ends of introns. Most commonly, the RNA sequence that is removed begins with the dinucleotide GU at its 5′ end, and ends with AG at its 3′ end`,
+            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/dna.jpg",
             createdBy:user.userName,
             userId: user.id,
             published: true,
            categories: {
         connectOrCreate: [
             {
-            where: { value: 'Science' },
-            create: { label: 'Science',value: 'Science' }
+            where: { value: 'DNA' },
+            create: { label: 'DNA',value: 'DNA' }
             },
             {
-            where: { value: 'Genetics'},
-            create: { label: 'Genetics',value: 'Genetics' }
+            where: { value: 'Science'},
+            create: { label: 'Science',value: 'Science' }
             }
         ]
         }
@@ -287,9 +469,9 @@ const post2 = await prisma.post.create({
 
     const comment1= await prisma.comment.create({
       data:{
-        message:`I'm a root comment`,
+        message:`I love this and wish I could read your phD dissertation`,
         createdBy:user.userName,
-        userId:user.id,
+        userId:user2.id,
 
         postId:post1.id
       }
@@ -298,9 +480,9 @@ const post2 = await prisma.post.create({
 const comment2= await prisma.comment.create({
       data:{
         parentId:comment1.id,
-        message:`I'm a child comment of comment1`,
+        message:`Thanks! Although I don't think that you would really like to read the dissertation.  It's a bit dry.`,
         createdBy:user2.userName,
-        userId:user2.id,
+        userId:user.id,
         postId:post1.id
 
       }
@@ -311,7 +493,7 @@ const comment2= await prisma.comment.create({
 
     const comment3= await prisma.comment.create({
       data:{
-        message:`I'm a root comment comment3`,
+        message:`I always loved images like these!`,
         createdBy:user2.userName,
         userId:user2.id,
         postId:post2.id
@@ -322,7 +504,7 @@ const comment2= await prisma.comment.create({
     const comment4= await prisma.comment.create({
       data:{
         parentId:comment3.id,
-        message:`I'm a child comment of comment 3`,
+        message:`Yeah same. I like looking for even better ones.  This one was just lying around on the internet`,
         createdBy:user.userName,
         userId:user.id,
         postId:post2.id
@@ -334,9 +516,9 @@ const comment2= await prisma.comment.create({
     const comment5= await prisma.comment.create({
       data:{
         parentId:comment3.id,
-        message:`I'm a child comment`,
+        message:`Hahah -- I think you should look for better quality images next time.  This one is a bit blurry.`,
         createdBy:user.userName,
-        userId:user.id,
+        userId:user2.id,
         postId:post2.id
 
       }

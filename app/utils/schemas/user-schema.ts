@@ -4,6 +4,7 @@ export type User = Omit<PrismaUser, 'password' | 'createdAt' | 'updatedAt'>
 
 export type UserType = User & {
   _count: {
+    favorites: number
     accounts: number
     tokens: number
     posts: number

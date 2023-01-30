@@ -1,15 +1,16 @@
 import { useState, useRef } from 'react'
-import { Divider } from '../layout/divider'
-import { Modal } from '../layout/modal'
+import { Divider } from '@mantine/core';
+
 import { useToast } from '../toaster'
 import {
   CopyIcon,
   DiscordLogoIcon,
   InstagramLogoIcon,
-  Share1Icon,
   TwitterLogoIcon
 } from '@radix-ui/react-icons'
 import { IconShare } from '@tabler/icons'
+import { Button, Flex, Popover } from '@mantine/core'
+
 
 type Props = {
   id: string
@@ -34,71 +35,75 @@ export const ShareButton = ({ id }: Props) => {
 
   return (
     <>
-      <button
-        type='button'
-        className='hover:bg-primary-bg dark:hover:bg-primary-bg rounded-lg p-2 transition'
-        onClick={() => {
-          if (navigator.share) {
-            navigator.share({
-              title: 'A Post from the Blog',
-              url: postUrl
-            })
-          } else {
-            setIsOpen(true)
-          }
-        }}
-      >
-        <IconShare />
-      </button>
-      <Modal isOpen={isOpen} onClick={() => setIsOpen(false)}>
-        <div className='flex justify-center gap-5'>
-          <a
-            className={iconClassName}
-            href={`https://www.instagram.com/sharer/sharer.php?u=${encodedPostUrl}`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <InstagramLogoIcon />
-          </a>
-          <a
-            className={iconClassName}
-            href={`http://twitter.com/share?url=${encodedPostUrl}`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <TwitterLogoIcon />
-          </a>
-          <a
-            className={iconClassName}
-            href={`https://discord.me/share/url?url=${encodedPostUrl}`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <DiscordLogoIcon />
-          </a>
-        </div>
-        <Divider bgColor='bg-white dark:bg-slate-900'>
-          Or share with link
-        </Divider>
-        <div className='relative'>
-          <input
-            id='share'
-            type='text'
-            className='w-11/12 rounded border-0 text-center transition dark:bg-slate9'
-            value={postUrl}
-            onClick={copyLink}
-            ref={ref}
-            readOnly
-          />
-          <button
+      <Popover width={200} position='top' withArrow shadow='md'>
+        <Popover.Target>
+          <Button
             type='button'
-            className='absolute  right-3 -top-1 p-2 transition'
-            onClick={copyLink}
+            variant='subtle'
+            onClick={() => {
+              if (navigator.share) {
+                navigator.share({
+                  title: 'A Post from the Blog',
+                  url: postUrl
+                })
+              } else {
+                setIsOpen(true)
+              }
+            }}
           >
-            <CopyIcon />
-          </button>
-        </div>
-      </Modal>
+            <IconShare />
+          </Button>
+        </Popover.Target>
+        <Popover.Dropdown>
+          <Flex gap={3} justify='space-between'>
+            <a
+              className={iconClassName}
+              href={`https://www.instagram.com/sharer/sharer.php?u=${encodedPostUrl}`}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <InstagramLogoIcon />
+            </a>
+            <a
+              className={iconClassName}
+              href={`http://twitter.com/share?url=${encodedPostUrl}`}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <TwitterLogoIcon />
+            </a>
+            <a
+              className={iconClassName}
+              href={`https://discord.me/share/url?url=${encodedPostUrl}`}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <DiscordLogoIcon />
+            </a>
+          </Flex>
+         <Divider>
+            Or share with link
+          </Divider>
+          <div className='relative'>
+            <input
+              id='share'
+              type='text'
+              className='w-11/12 rounded border-0 text-center transition dark:bg-slate9'
+              value={postUrl}
+              onClick={copyLink}
+              ref={ref}
+              readOnly
+            />
+            <Button
+              type='button'
+              className='absolute  right-3 -top-1 p-2 transition'
+              onClick={copyLink}
+            >
+              <CopyIcon />
+            </Button>
+          </div>
+        </Popover.Dropdown>
+      </Popover>
     </>
   )
 }

@@ -1,14 +1,12 @@
-import { JapanImages, TravelLog } from '@prisma/client'
-import {
-  ArrowLeftIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  PinLeftIcon
-} from '@radix-ui/react-icons'
-import { Link, NavLink } from '@remix-run/react'
+import { Button, Flex, Text, Title } from '@mantine/core'
+import type { TravelLog } from '@prisma/client';
+
+import { Link } from '@remix-run/react'
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
 import { useState } from 'react'
-import { CitiesAndAlbums } from '~/utils/server/travel.server'
-import { useOptionalUser, UserType } from '~/utils/utilities'
+import type { UserType } from '~/utils/schemas/user-schema'
+import type { CitiesAndAlbums } from '~/utils/server/travel.server'
+import { useOptionalUser } from '~/utils/utilities'
 // https://github.com/zioan/react-slider/blob/master/src/components/Slider2.jsx
 export type CarouselProps = {
   data: CitiesAndAlbums
@@ -43,34 +41,33 @@ export const ImageSlider = ({ data }: CarouselProps) => {
       {data?.map((item, index) => {
         return (
           <>
-            <div
+            <Flex justify='center' align='center'
               key={index}
               className={
                 activeSlide === index ? 'mx-auto flex w-fit p-6' : 'hidden'
               }
             >
-              <button className='p-2' onClick={() => prevSliderHandler(index)}>
-                <ChevronLeftIcon />
-              </button>
+              <Button className='p-2 ' onClick={() => prevSliderHandler(index)}>
+                <IconChevronLeft />
+              </Button>
 
-              <div className='h-[450px] w-[450px]' key={index} id={item.album}>
+              <div className='h-[250px] w-[250px] mb-5' key={index} id={item.album}>
                 <div
                   className='relative rounded-lg'
                   style={{
                     backgroundImage: `url(${item.imageUrl})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    height: '400px',
+                    height: '200px',
                     width: '100%'
                   }}
                 ></div>
                 <SliderFooter item={item} user={user} />
               </div>
-
-              <button className='p-2' onClick={() => nextSliderHandler(index)}>
-                <ChevronRightIcon />
-              </button>
-            </div>
+                  <Button className='p-2' onClick={() => nextSliderHandler(index)}>
+                    <IconChevronRight />
+                  </Button>
+            </Flex>
           </>
         )
       })}
@@ -86,19 +83,21 @@ function SliderFooter({
   user: Partial<UserType> | null | undefined
 }) {
   return (
-    <div className='flex items-center justify-center'>
-      <div className='flex flex-col items-center'>
-        <h2 className='text-2xl'>{item.imageTitle}</h2>
-        <p className='text-lg'>{item.imageDescription}</p>
+    <Flex direction={'column'} align='center' className='w-full'>
+      <Title order={3}>{item.imageTitle}</Title>
+        <Text>{item.imageDescription}</Text>
         {user?.role === 'ADMIN' ? (
           <Link
             className=' bg-gray-200 rounded-lg p-2'
             to={`/travel/${item.id}/edit`}
           >
-            Edit
+           <Button size='sm' variant='filled' color="blue"
+
+           >
+              Edit
+            </Button>
           </Link>
         ) : null}
-      </div>
-    </div>
+    </Flex>
   )
 }

@@ -1,13 +1,20 @@
 import type { Prisma, User } from '@prisma/client'
 import { prisma } from './prisma.server'
 
-export async function getFavoriteList(user: User | null) {
+export async function getFavoriteList(userId: string) {
   const list = await prisma.favorite.findMany({
     where: {
-      userId: user?.id
+      userId: userId
     },
     orderBy: {
       createdAt: 'desc'
+    },
+    include: {
+      post: {
+        include: {
+          user: true
+        }
+      }
     }
   })
 

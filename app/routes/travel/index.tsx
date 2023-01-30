@@ -1,3 +1,4 @@
+import { Button, Flex, Group, Stack, Title } from '@mantine/core'
 import type { TravelLog } from '@prisma/client'
 import type { LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
@@ -5,6 +6,7 @@ import { useLoaderData, Outlet, Link } from '@remix-run/react'
 import { ImageSlider } from '~/components/shared/carousel/image-slider'
 import type { CitiesAndAlbums } from '~/utils/server/travel.server'
 import { getAlbums } from '~/utils/server/travel.server'
+import { useOptionalUser } from '~/utils/utilities'
 
 export async function loader({ request, params }: LoaderArgs) {
   const albums = (await getAlbums()) as CitiesAndAlbums
@@ -32,44 +34,39 @@ export async function loader({ request, params }: LoaderArgs) {
 
 export default function Index() {
   const data = useLoaderData<typeof loader>()
+  const user = useOptionalUser()
 
   return (
     <>
-      <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
-        {' '}
-        <div className='flex items-center justify-around'>
-          <Link to='/travel/new'>New</Link>
-          {/* this is not quite working */}
-          {data.albumNames.map((item, index) => {
+         <Stack align='center' className='w-[350px] mt-10'>
+        {user?.role === 'ADMIN' &&  <Link to='/travel/new'>
+                  <Button color='teal' variant='outline'>
+                    Add a new photo
+                  </Button>
+                 </Link>}
+
+           <Flex
+              direction='row' gap={20} align='center'
+              >
+
+         <Flex gap={5}>
+         {data.albumNames.map((item, index) => {
             return (
-              <a href={`/travel/#${item}`} key={index}>
+              <Button
+              key={index}
+              color='blue' variant='outline'>
+              <a href={`/travel/#${item}`} >
                 <h2>{item}</h2>
               </a>
+              </Button>
             )
           })}
-        </div>
+         </Flex>
+              </Flex>
         <ImageSlider data={data.NYC} />
         <ImageSlider data={data.Japan} />
-        {/* <ImageSlider images={data.albums} /> */}
-        {/* {data.albums.map((item, index) => {
-          return (
-            <div key={index}>
-              <h2>{item.album}</h2>
-              <h2>{item.city}</h2>
-              <h2>{item.year}</h2>
-              <h2>{item.imageTitle}</h2>
-              <img
-                src={item.imageUrl}
-                alt='some text here'
-                width='300'
-                height='300'
-              />
-              <h2>{item.imageDescription}</h2>
 
-            </div>
-          )
-        })} */}
-      </div>
+      </Stack>
 
       <div></div>
 

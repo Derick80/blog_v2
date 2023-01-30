@@ -1,3 +1,4 @@
+import { Group, Space } from '@mantine/core'
 import { NavLink } from '@remix-run/react'
 
 export type LinkMakerProps = {
@@ -16,8 +17,9 @@ export default function LinkMaker({
   children
 }: LinkMakerProps) {
   return (
-    <li key={name} className='flex items-center'>
+    <Group position='center' spacing={'xl'} key={name}>
       <NavLink
+        style={{ textDecoration: 'none', color: 'currentcolor' }}
         to={href}
         className={({ isActive }) =>
           ` ${
@@ -32,6 +34,7 @@ export default function LinkMaker({
         {name}
         {children}
       </NavLink>
-    </li>
+      <Space h='md' />
+    </Group>
   )
 }

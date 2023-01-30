@@ -36,15 +36,6 @@ const defaultPersonalSelect = {
   posts: true,
   _count: true
 }
-export async function getMyPostsByEmail(email: string) {
-  const posts = await prisma.user.findMany({
-    where: {
-      email: email
-    },
-    select: defaultPersonalSelect
-  })
-  return posts
-}
 
 export async function getUsers(): Promise<UserProps[]> {
   const users = await prisma.user.findMany({

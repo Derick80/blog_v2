@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderArgs, MetaFunction } from '@remix-run/node'
+import { json, LinksFunction, LoaderArgs, MetaFunction } from '@remix-run/node'
 import {
   Links,
   LiveReload,
@@ -8,17 +8,13 @@ import {
   ScrollRestoration,
   useLoaderData
 } from '@remix-run/react'
-import Layout from './components/shared/layout/layout'
+import { MantineProvider, createEmotionCache } from '@mantine/core'
+import { StylesPlaceholder } from '@mantine/remix'
+import { theme } from './theme'
 import { isAuthenticated } from './utils/server/auth/auth.server'
-import styles from './styles/app.css'
-
 import getAllCategories from './utils/server/categories.server'
-export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
-  title: 'New Remix App',
-  viewport: 'width=device-width,initial-scale=1'
-})
-
+import Layout from './components/shared/layout/layout'
+import styles from './styles/app.css'
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: styles },
   {
@@ -27,58 +23,39 @@ export const links: LinksFunction = () => [
     crossOrigin: 'anonymous'
   }
 ]
+export const meta: MetaFunction = () => ({
+  charset: 'utf-8',
+  title: 'New Remix App',
+  viewport: 'width=device-width,initial-scale=1'
+})
 
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   const categories = await getAllCategories()
 
-  return { user, categories }
+  return json({ user, categories })
 }
-function LayoutWrapper() {
-  return (
-    <Layout>
-      <Outlet />
-      <ScrollRestoration />
-      <Scripts />
-      <LiveReload />
-    </Layout>
-  )
-}
-function App() {
+createEmotionCache({ key: 'mantine' })
+
+export default function App() {
   const data = useLoaderData<typeof loader>()
-
   return (
-    <html lang='en'
-    className='dark'
-    >
-      <head>
-        <Meta />
-        <Links />
-      </head>
-
-      <body className='bg-white dark:bg-black text-slate12 dark:text-white'>
-        <LayoutWrapper />
-      </body>
-    </html>
-  )
-}
-export default function AppWithThemeProvider() {
-  const data = useLoaderData<typeof loader>()
-  return <App />
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error)
-  return (
-    <html>
-      <head>
-        <title>Oh no!</title>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        {error && <div> {error.message}</div>} <Scripts />
-      </body>
-    </html>
+    <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
+      <html lang='en'>
+        <head>
+          <StylesPlaceholder />
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <Layout>
+            <Outlet />
+            <ScrollRestoration />
+            <Scripts />
+            <LiveReload />
+          </Layout>
+        </body>
+      </html>
+    </MantineProvider>
   )
 }

@@ -1,10 +1,10 @@
-import { Center, Stack } from '@mantine/core'
-import type { SerializeFrom } from '@remix-run/node'
+import {  Stack } from '@mantine/core'
 import { json } from '@remix-run/node'
-import { Outlet, useLoaderData } from '@remix-run/react'
-import React from 'react'
+import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
+import Dropdown from '~/components/shared/blog-ui/dropdown'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
+import type { Post } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPosts } from '~/utils/server/post.server'
 
@@ -20,71 +20,38 @@ export type SimpleComments = {
   }
 }
 
-
 export async function loader() {
   const posts = await getPosts()
 
   if (!posts) return badRequest({ message: 'There are no Posts' })
+
   // get all Categoiries for posts use this for useMatches, etc
   const categories = await getAllCategories()
-const comments = posts.map((post) => post.comments)
-// console.log(comments, 'comments');
+  // get all comments for posts use this for useMatches, etc
+  const comments = posts.map((post) => post.comments).flat()
 
-function getStuff(
-  comments: SimpleComments[],
-){
-  let group = {} as SimpleComments[]
-comments.forEach(comment =>  {
-
- group[comment.parentId] ||= []
- group[comment.parentId].push(comment)
-})
-
-return group
-
-}
-
-
-const commentsByParentId = getStuff(comments)
-// console.log(commentsByParentId, 'commentsByParentId');
-
-const rootComments = commentsByParentId[null]
-
-
-  return json({ posts, categories, commentsByParentId, rootComments })
+  return json({ posts, categories, comments })
 }
 
 export default function Index() {
-  const data = useLoaderData<{
-    posts: SerializeFrom<typeof getPosts>
-    categories: SerializeFrom<typeof getAllCategories>
-  }>()
-
+  const data = useLoaderData()
   return (
-    <div className='col-span-1 col-start-1  md:col-span-6 md:col-start-4'>
-      <Center>
-         <Stack align="center" >
-
-
-
-<h1 className='text-2xl font-semibold'>Posts</h1>{' '}
-
-      {data.posts.map((post) => (
-          <PostCard
-            key={post.id}
-            data={post}
-            user={post.user}
-            showCategories={true}
-            showLikes={true}
-            showComments={true}
-            showFavorites={true}
-            showOptions={true}
-            showShare={true}
-          />
-        ))}
-        <Outlet context={data.categories} />
-      </Stack>
-      </Center>
-    </div>
+    <Stack align='center' className='w-full mt-10'>
+      <Dropdown />
+      {data.posts.map((post: Post) => (
+        <PostCard
+          key={post.id}
+          data={post}
+          user={post.user}
+          showCategories={true}
+          showLikes={true}
+          showComments={true}
+          showFavorites={true}
+          showOptions={true}
+          showShare={true}
+        />
+      ))}
+      {/* <Outlet context={data.categories} /> */}
+    </Stack>
   )
 }

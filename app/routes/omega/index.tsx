@@ -1,21 +1,23 @@
-import { Container, MultiSelect } from '@mantine/core'
+import { Container, Flex, MultiSelect } from '@mantine/core'
 import { EyeOpenIcon } from '@radix-ui/react-icons'
 import { LoaderArgs, json, ActionArgs } from '@remix-run/node'
-import { useFetcher, useLoaderData } from '@remix-run/react'
+import { Form, useFetcher, useLoaderData } from '@remix-run/react'
 import { useEffect, useState } from 'react'
+import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
-import { Select } from '~/components/shared/box/select-box'
-import CategoryContainer from '~/components/shared/category-container'
-import TipTap from '~/components/shared/tip-tap'
+import FormComments from '~/components/comments/com-form'
+import ListComments from '~/components/comments/comList'
+import { formatComments } from '~/components/comments/format-comments'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import getAllCategories from '~/utils/server/categories.server'
-import { CategoryForm, createPost } from '~/utils/server/post.server'
-import { Categories } from '../postTags'
+import { getPosts } from '~/utils/server/post.server'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
-  const categories = await getAllCategories()
+  const posts = await getPosts()
 
-  return json({ user, categories })
+  if (!posts) return badRequest({ message: 'There are no Posts' })
+  // get all Categoiries for posts use this for useMatches, etc
+  const comments = posts.map((post) => post.comments)
+  return json({ user, posts, comments })
 }
 // Path: app/routes/omega/index.tsx
 
@@ -32,11 +34,42 @@ export async function action({ request }: ActionArgs) {
 
 export default function Index() {
   const data = useLoaderData<typeof loader>()
+  // const fetcher = useFetcher();
 
+  // useEffect(() => {
+  //   if (fetcher.type === "init") {
+  //     fetcher.load("/blog");
+  //   }
+  // }, [fetcher]);
+
+  // const posts = fetcher?.data?.posts
+  // console.log(posts,'posts');
 
   return (
-    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
-      <h1>Omega</h1>
-    </div>
+    <Flex direction={'column'} gap={5} align='center'>
+      {data.posts.map((post) => (
+        <div key={post.id}>
+          <div> {post.title}</div>
+
+          <FormComments />
+          {data.comments && (
+            <ListComments comments={formatComments(data.comments || [])} />
+          )}
+        </div>
+      ))}
+      {/* {fetcher?.data?.posts ? (
+  fetcher?.data?.posts.map((post)=>(
+    <div key={post.id}>
+    <div>{post.title}</div>
+    <FormComments
+
+    />
+    {
+      post.comments && <ListComments comments={formatComments(post.comments || [])} />
+    }
+  </div>
+  ))
+):null} */}
+    </Flex>
   )
 }

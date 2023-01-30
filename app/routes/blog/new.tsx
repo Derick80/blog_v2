@@ -1,22 +1,19 @@
-import { Center, Container, Grid, MultiSelect, TextInput } from '@mantine/core'
-import type { ActionFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
 import {
-  useFetcher,
-  useLoaderData,
-  useMatches,
-  useOutletContext,
-  useRouteLoaderData
-} from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import { useRouteData } from 'remix-utils'
+  Center,
+  Container,
+  MultiSelect,
+  Stack,
+  TextInput
+} from '@mantine/core'
+import type { ActionFunction} from '@remix-run/node';
+import { redirect } from '@remix-run/node'
+import { json } from '@remix-run/node'
+import { Form, useFetcher, useRouteLoaderData } from '@remix-run/react'
+import { useState } from 'react'
 import TipTap from '~/components/shared/tip-tap'
+import type { Category } from '~/utils/schemas/category-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import { CategoryForm } from '~/utils/server/post.server'
-import { prisma } from '~/utils/server/prisma.server'
-import { useMatchesData } from '~/utils/utilities'
-import { loader } from '.'
-import { Categories } from '../postTags'
+import { createPost } from '~/utils/server/post.server'
 
 type ActionData = {
   imageUrl?: string
@@ -30,10 +27,29 @@ export const action: ActionFunction = async ({ request }) => {
 
   const formData = await request.formData()
 
-  const imageUrl = formData.get('imageUrl') as string
-  const title = formData.get('title') as string
-  const description = formData.get('description') as string
-  const body = formData.get('body') as string
+  const imageUrl = formData.get('imageUrl')
+  const title = formData.get('title')
+  const description = formData.get('description')
+  const body = formData.get('body')
+  const categories = formData.get('categories')
+
+  if (
+    typeof imageUrl !== 'string' ||
+    typeof title !== 'string' ||
+    typeof description !== 'string' ||
+    typeof body !== 'string' ||
+    typeof categories !== 'string'
+  ) {
+    return json({
+      errorMsg: 'Something went wrong while uploading'
+    })
+  }
+  const cats = categories?.split(',')
+  const category = cats.map((cat) => {
+    return {
+      value: cat
+    }
+  })
 
   console.log(imageUrl, 'imageUrl')
 
@@ -49,32 +65,26 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
-  await prisma.post.create({
-    data: {
-      imageUrl: imageUrl,
-      title: title,
-      userId: user.id,
-      description,
-      body,
-      createdBy: user.userName
-    }
+  await createPost({
+    title,
+    description,
+    body,
+    imageUrl,
+    createdBy: user.userName,
+    userId: user.id,
+    category: category
   })
-
-  return json({
-    imageUrl
-  })
+  return redirect('/drafts')
 }
 
 export default function Uploader() {
   const { categories } = useRouteLoaderData('root') as {
-    categories: Categories
+    categories: Category[]
   }
-
-  console.log(categories, 'categories')
 
   const fetcher = useFetcher<ActionData>()
 
-  const [selected, setSelected] = useState<string[]>([])
+  const [selected, setSelected] = useState<string>('')
 
   const onClick = async () =>
     fetcher.submit({
@@ -84,9 +94,46 @@ export default function Uploader() {
     })
 
   return (
-    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
-      <Grid gutter={5} columns={24}>
-        <Grid.Col span={6}>
+    <Center>
+      <Stack className='w-[350px]'>
+        <Form
+          className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+          method='post'
+        >
+          <label htmlFor='imageUrl'>Image</label>
+          <input
+            type='text'
+            className='rounded-xl bg-crimson12 text-slate12'
+            name='imageUrl'
+            value={fetcher?.data?.imageUrl}
+            onChange={(e) => console.log(e.target.value)}
+          />
+
+          <TextInput
+            label='Title'
+            name='title'
+            onChange={(e) => console.log(e.target.value)}
+          />
+
+          <TextInput
+            label='Description'
+            name='description'
+            onChange={(e) => console.log(e.target.value)}
+          />
+
+          <TipTap />
+          <MultiSelect
+            label='Categories'
+            data={categories}
+            onChange={(e) => {
+              setSelected(e.join(','))
+              console.log(e.join(','))
+            }}
+          />
+          <input type='hidden' name='categories' value={selected} />
+          <button type='submit'>Save post</button>
+        </Form>
+        <Container>
           <fetcher.Form
             method='post'
             encType='multipart/form-data'
@@ -120,47 +167,8 @@ export default function Uploader() {
               <img src={fetcher.data.imageUrl} alt={'#'} />
             </>
           ) : null}
-        </Grid.Col>
-        <Grid.Col span={12}>
-          <form
-            className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
-            method='post'
-          >
-            <label htmlFor='imageUrl'>Image</label>
-            <input
-              type='text'
-              className='rounded-xl bg-crimson12 text-slate12'
-              name='imageUrl'
-              value={fetcher?.data?.imageUrl}
-              onChange={(e) => console.log(e.target.value)}
-            />
-
-            <TextInput
-              label='Title'
-              name='title'
-              onChange={(e) => console.log(e.target.value)}
-            />
-
-            <TextInput
-              label='Description'
-              name='description'
-              onChange={(e) => console.log(e.target.value)}
-            />
-
-            <TipTap />
-            <MultiSelect
-              label='Categories'
-              name='categories'
-              data={categories}
-              onChange={(value) => setSelected(value)}
-              value={selected}
-            />
-
-            <button type='submit'>Save post</button>
-          </form>
-        </Grid.Col>
-        <Grid.Col span={6}>Preview</Grid.Col>
-      </Grid>
-    </div>
+        </Container>
+      </Stack>
+    </Center>
   )
 }

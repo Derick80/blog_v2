@@ -1,10 +1,11 @@
-import { LoaderArgs, json, ActionArgs, redirect } from '@remix-run/node'
-import { Form, useLoaderData, useNavigate } from '@remix-run/react'
-import React, { useTransition } from 'react'
+import { Button, Stack } from '@mantine/core'
+import type { LoaderArgs, ActionArgs} from '@remix-run/node';
+import { json, redirect } from '@remix-run/node'
+import { Form, useLoaderData, useNavigate, useNavigation } from '@remix-run/react'
+import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import FormField from '~/components/shared/form-field'
-import { Modal } from '~/components/shared/layout/modal'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getTravelLogById, updateTravelLog } from '~/utils/server/travel.server'
 
@@ -14,7 +15,6 @@ export async function loader({ request, params }: LoaderArgs) {
   const imageId = Number(params.imageId)
   const image = await getTravelLogById(imageId)
 
-  // if(!photo) return redirect('/travel'    )
   return json({ image })
 }
 
@@ -79,7 +79,7 @@ export async function action({ request, params }: ActionArgs) {
 }
 export default function EditRoute() {
   const navigate = useNavigate()
-  const transition = useTransition()
+  const transition = useNavigation()
   const data = useLoaderData<typeof loader>()
   const [formData, setFormData] = React.useState({
     imageUrl: data.image.imageUrl,
@@ -92,12 +92,9 @@ export default function EditRoute() {
   })
 
   return (
-    <Modal
-      isOpen={true}
-      ariaLabel='Edit Income'
-      className='h-3/4 w-full md:w-1/2 lg:w-2/3'
-    >
-      {' '}
+    <Stack align='center' className='w-full mt-10'>
+
+
       <h1 className='mh1 text-center'>Edit</h1>
       <Form
         method='post'
@@ -165,21 +162,21 @@ export default function EditRoute() {
           />
         </div>
         <div className='flex space-x-4'>
-          <button
+          <Button
             type='submit'
             className='btn-base btn-solid-success space-x-1'
           >
             <p>{transition.state === 'submitting' ? 'Saving...' : 'Save'}</p>
-          </button>
-          <button
+          </Button>
+          <Button
             type='button'
             className='btn-base btn-solid-danger'
             onClick={() => navigate('/travel')}
           >
             Cancel
-          </button>
+          </Button>
         </div>
       </Form>
-    </Modal>
+    </Stack>
   )
 }

@@ -1,5 +1,7 @@
-export default function brr() {}
-
+'use strict'
+exports.__esModule = true
+function brr() {}
+exports['default'] = brr
 // const cbpid = [
 //   {
 //     id: '8e83ba73-0aba-443c-9356-6fa05653a681',
@@ -42,12 +44,10 @@ export default function brr() {}
 //     parentId: '1f14b77e-ffb7-4b31-8cbf-1f1f73e8b658'
 //   }
 // ]
-
 // const regroup = cbpid.reduce((group: any, values) => {
 //   const index = group.findIndex((obj: any) => obj.parentId === values.parentId)
 //   if (index !== -1) {
 //     group[index].value += values.id
-
 //     group[index].id = values.id
 //   } else {
 //     group.push({
@@ -56,17 +56,12 @@ export default function brr() {}
 //       message: values.message
 //     })
 //   }
-
 //   return group
 // }, [])
-
 // console.log(regroup.length)
 // console.log(regroup)
-
-const test = ['Prisma,React']
-
-const test2 = test.map((item) => {
+var test = ['Prisma,React']
+var test2 = test.map(function (item) {
   return item.split(',')
 })
-
 console.log(test2)
