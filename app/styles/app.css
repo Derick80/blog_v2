@@ -1572,6 +1572,10 @@ video {
   margin-left: auto;
 }
 
+.block{
+  display: block;
+}
+
 .flex{
   display: flex;
 }
@@ -1728,6 +1732,10 @@ video {
 
 .items-center{
   align-items: center;
+}
+
+.justify-end{
+  justify-content: flex-end;
 }
 
 .justify-center{
@@ -2092,6 +2100,18 @@ video {
     margin-bottom: 1.25rem;
   }
 
+  .md\:block{
+    display: block;
+  }
+
+  .md\:flex{
+    display: flex;
+  }
+
+  .md\:hidden{
+    display: none;
+  }
+
   .md\:h-60{
     height: 15rem;
   }
@@ -2107,6 +2127,10 @@ video {
 
   .md\:w-full{
     width: 100%;
+  }
+
+  .md\:flex-row{
+    flex-direction: row;
   }
 
   .md\:p-4{
