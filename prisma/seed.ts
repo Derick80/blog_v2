@@ -529,6 +529,28 @@ const comment2= await prisma.comment.create({
 
 
 
+    const profile3 = await prisma.profile.create({
+        data: {
+            bio: `I am a biochemist and I love to read and write about science.  I also love to play video games and watch movies.`,
+            firstName: "Jane",
+            lastName: "Doe",
+            education: "PhD in Biochemistry",
+user:{
+              connect:{
+                id:user3.id
+
+
+},
+            },
+         userName: user3.userName,
+            profilePicture: "https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/dch_elissa.jpg",
+            occupation: "Biochemist",
+          email: user3.email,
+            location: "New York, NY"
+        }
+    })
+
+
 
 
 

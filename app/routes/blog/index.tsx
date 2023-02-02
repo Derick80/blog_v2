@@ -1,4 +1,4 @@
-import {  Stack } from '@mantine/core'
+import { Stack } from '@mantine/core'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
@@ -36,7 +36,7 @@ export async function loader() {
 export default function Index() {
   const data = useLoaderData()
   return (
-    <Stack align='center' className='w-full mt-10'>
+    <Stack align='center' className='mt-10 w-full'>
       <Dropdown />
       {data.posts.map((post: Post) => (
         <PostCard

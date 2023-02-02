@@ -1,7 +1,12 @@
 import { Button, Stack } from '@mantine/core'
-import type { LoaderArgs, ActionArgs} from '@remix-run/node';
+import type { LoaderArgs, ActionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Form, useLoaderData, useNavigate, useNavigation } from '@remix-run/react'
+import {
+  Form,
+  useLoaderData,
+  useNavigate,
+  useNavigation
+} from '@remix-run/react'
 import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
@@ -92,9 +97,7 @@ export default function EditRoute() {
   })
 
   return (
-    <Stack align='center' className='w-full mt-10'>
-
-
+    <Stack align='center' className='mt-10 w-full'>
       <h1 className='mh1 text-center'>Edit</h1>
       <Form
         method='post'

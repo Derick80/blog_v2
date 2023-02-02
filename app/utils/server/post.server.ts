@@ -209,9 +209,7 @@ export async function getUserDrafts(userId: string) {
   return posts
 }
 
-export async function savePost(
-  data: Partial<PostInput> & { postId: string }
-) {
+export async function savePost(data: Partial<PostInput> & { postId: string }) {
   const post = await prisma.post.update({
     where: { id: data.postId },
     data: {
@@ -221,8 +219,8 @@ export async function savePost(
       imageUrl: data.imageUrl,
       createdBy: data.createdBy,
       categories: {
-       set: data?.category?.map((category) => ({
-          value: category.value,
+        set: data?.category?.map((category) => ({
+          value: category.value
         }))
       }
     }

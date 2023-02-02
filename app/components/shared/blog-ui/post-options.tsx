@@ -16,16 +16,10 @@ export type OptionProps = {
 }
 export default function PostOptions({ id }: OptionProps) {
   return (
-
-       <NavLink
-          to={`/blog/${id}/edit`}
-        >
-         <Button variant='subtle'
-          >
-            <IconEdit />
-          </Button>
-        </NavLink>
-
+    <NavLink to={`/blog/${id}/edit`}>
+      <Button variant='subtle'>
+        <IconEdit />
+      </Button>
+    </NavLink>
   )
-
 }

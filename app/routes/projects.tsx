@@ -12,10 +12,8 @@ export async function loader({ request }: LoaderArgs) {
 
 export default function Index() {
   const data = useLoaderData<typeof loader>()
-  return (
-    <Stack align='center' className='w-[350px] mt-10'>
-
-      <Flex direction='column' gap={5} align='center' justify='center'>
+  return ( <>
+        <Stack justify='space-around' align='center' spacing='xl'>
         {data.projects.map((project) => (
           <ProjectCard
             key={project.id}
@@ -23,7 +21,7 @@ export default function Index() {
             categories={data.categories}
           />
         ))}
-      </Flex>
-          </Stack>
+      </Stack>
+      </>
   )
 }

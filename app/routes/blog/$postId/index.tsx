@@ -13,7 +13,7 @@ export async function loader({ request, params }: LoaderArgs) {
   if (!postId) return badRequest({ message: 'Invalid post' })
 
   const post = await getPostById(postId)
-const categories = await getAllCategories()
+  const categories = await getAllCategories()
   return json({ post, categories })
 }
 
@@ -26,23 +26,20 @@ export default function Index() {
   const post = data.post
 
   return (
-         <Flex justify='center' align='center' direction='column'>
-
-          {post && (
-            <PostCard
-              key={post.id}
-              data={post}
-              user={post.user}
-              showCategories={true}
-              showComments={true}
-              showFavorites={true}
-              showLikes={true}
-              showShare={true}
-              showOptions={true}
-
-
-            />
-          )}
-        </Flex>
+    <Flex justify='center' align='center' direction='column'>
+      {post && (
+        <PostCard
+          key={post.id}
+          data={post}
+          user={post.user}
+          showCategories={true}
+          showComments={true}
+          showFavorites={true}
+          showLikes={true}
+          showShare={true}
+          showOptions={true}
+        />
+      )}
+    </Flex>
   )
 }

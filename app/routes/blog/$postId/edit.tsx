@@ -1,6 +1,12 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Form, useLoaderData, useNavigate, useNavigation, useRouteLoaderData } from '@remix-run/react'
+import {
+  Form,
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+  useRouteLoaderData
+} from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
@@ -24,7 +30,7 @@ import Dropdown from '~/components/shared/blog-ui/dropdown'
 
 export async function loader({ params, request }: LoaderArgs) {
   const postId = params.postId
-const allCategories = await getAllCategories()
+  const allCategories = await getAllCategories()
   invariant(postId, 'postId is required')
   const post = await getPostToEdit(postId)
   invariant(post, 'post is required')
@@ -33,7 +39,6 @@ const allCategories = await getAllCategories()
 }
 
 export async function action({ params, request }: ActionArgs) {
-
   const user = await isAuthenticated(request)
   invariant(user, 'user is required')
   const formData = await request.formData()
@@ -48,7 +53,6 @@ export async function action({ params, request }: ActionArgs) {
 
   const createdBy = user.userName
 
-
   const cats = categories?.split(',')
   const category = cats.map((cat) => {
     return {
@@ -61,7 +65,7 @@ export async function action({ params, request }: ActionArgs) {
     body: validateText(body),
     imageUrl: validateText(imageUrl),
     action: validateText(action),
-    createdBy: validateText(createdBy),
+    createdBy: validateText(createdBy)
   }
 
   if (Object.values(formErrors).some(Boolean)) {
@@ -69,7 +73,6 @@ export async function action({ params, request }: ActionArgs) {
       {
         formErrors,
         fields: {
-
           title,
           description,
           body,
@@ -93,7 +96,6 @@ export async function action({ params, request }: ActionArgs) {
         createdBy,
         userId,
         category
-
       })
       return redirect(`/blog/${postId}`)
 
@@ -112,32 +114,56 @@ export async function action({ params, request }: ActionArgs) {
 export default function EditPost() {
   const navigate = useNavigation()
   const text =
-  navigate.state === "submitting"
-    ? "Saving..."
-    : navigate.state === "loading"
-    ? "Saved!"
-    : "Save";
+    navigate.state === 'submitting'
+      ? 'Saving...'
+      : navigate.state === 'loading'
+      ? 'Saved!'
+      : 'Save'
 
-    const publishText = navigate.state === "submitting" ? "Publishing..." : navigate.state === "loading" ? "Published!" : "Publish";
+  const publishText =
+    navigate.state === 'submitting'
+      ? 'Publishing...'
+      : navigate.state === 'loading'
+      ? 'Published!'
+      : 'Publish'
 
-    const unpublishText = navigate.state === "submitting" ? "Unpublishing..." : navigate.state === "loading" ? "Unpublished!" : "Unpublish";
+  const unpublishText =
+    navigate.state === 'submitting'
+      ? 'Unpublishing...'
+      : navigate.state === 'loading'
+      ? 'Unpublished!'
+      : 'Unpublish'
 
-    const deleteText = navigate.state === "submitting" ? "Deleting..." : navigate.state === "loading" ? "Deleted!" : "Delete";
+  const deleteText =
+    navigate.state === 'submitting'
+      ? 'Deleting...'
+      : navigate.state === 'loading'
+      ? 'Deleted!'
+      : 'Delete'
   const data = useLoaderData<typeof loader>()
 
-  const { title, description, body, imageUrl, categories, id, published , userId} = data.post
+  const {
+    title,
+    description,
+    body,
+    imageUrl,
+    categories,
+    id,
+    published,
+    userId
+  } = data.post
 
   const [selected, setSelected] = useState<string[]>(
     categories.map((item) => item.value)
-    )
+  )
 
-const pickedCategories = categories.map((item) => item.value)
+  const pickedCategories = categories.map((item) => item.value)
 
   const mainCategories = data.allCategories.map((item) => {
     return item.value
   })
 
-  const [formData, setFormData] =useState({
+  const [formData, setFormData] = useState({
     title,
     description,
     body,
@@ -148,40 +174,41 @@ const pickedCategories = categories.map((item) => item.value)
   })
 
   return (
-    <Stack align='center' className='w-full mt-10'>
+    <Stack align='center' className='mt-10 w-full'>
+      <Flex direction={'column'}>
+        <Dropdown />
 
-    <Flex direction={"column"}>
-    <Dropdown />
-
-      <Form
-      method='post' action={`/blog/${id}/edit`} className='w-[350px] flex flex-col'>
-        <input type='hidden' name='postId' value={id} />
-        <input type='hidden' name='userId' value={userId} />
-        <Textarea
-        label='Title'
-          name='title'
-          id='title'
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-        />
-        <Textarea
-        label='Description'
-          name='description'
-          id='description'
-          value={formData.description}
-          onChange={(e) =>
-            setFormData({ ...formData, description: e.target.value })
-          }
-        />
+        <Form
+          method='post'
+          action={`/blog/${id}/edit`}
+          className='flex w-[350px] flex-col'
+        >
+          <input type='hidden' name='postId' value={id} />
+          <input type='hidden' name='userId' value={userId} />
+          <Textarea
+            label='Title'
+            name='title'
+            id='title'
+            value={formData.title}
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
+          />
+          <Textarea
+            label='Description'
+            name='description'
+            id='description'
+            value={formData.description}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
+          />
 
           <label htmlFor='body'>Post Content</label>
-          {/* {body && <TipTap
-          content={body}
-          />} */}
+          {body && <TipTap content={body} />}
           <input type='hidden' name='body' value={body} />
 
-
-            <MultiSelect
+          <MultiSelect
             label='Categories'
             name='categories'
             id='categories'
@@ -191,37 +218,33 @@ const pickedCategories = categories.map((item) => item.value)
               setSelected(e)
               setFormData({ ...formData, categories: e })
             }}
-            />
-
-
-        <Flex justify={'center'}>
-          <input
-            type='hidden'
-            name='imageUrl'
-            id='imageUrl'
-            value={imageUrl}
-
           />
 
-
-        </Flex>
-        <Button type='submit' name='_action' value='save'>
-         {text}
-        </Button>
-        {published ? (
-          <Button type='submit' name='_action' value='unpublish'>
-            {unpublishText}
+          <Flex justify={'center'}>
+            <input
+              type='hidden'
+              name='imageUrl'
+              id='imageUrl'
+              value={imageUrl}
+            />
+          </Flex>
+          <Button type='submit' name='_action' value='save'>
+            {text}
           </Button>
-        ) : (
-          <Button type='submit' name='_action' value='publish'>
-            {publishText}
+          {published ? (
+            <Button type='submit' name='_action' value='unpublish'>
+              {unpublishText}
+            </Button>
+          ) : (
+            <Button type='submit' name='_action' value='publish'>
+              {publishText}
+            </Button>
+          )}
+          <Button type='submit' name='_action' value='delete'>
+            {deleteText}
           </Button>
-        )}
-        <Button type='submit' name='_action' value='delete'>
-          {deleteText}
-        </Button>
-      </Form>
-    </Flex>
+        </Form>
+      </Flex>
     </Stack>
   )
 }

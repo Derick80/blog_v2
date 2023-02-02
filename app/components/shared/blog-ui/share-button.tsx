@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Divider } from '@mantine/core';
+import { Divider } from '@mantine/core'
 
 import { useToast } from '../toaster'
 import {
@@ -10,7 +10,6 @@ import {
 } from '@radix-ui/react-icons'
 import { IconShare } from '@tabler/icons'
 import { Button, Flex, Popover } from '@mantine/core'
-
 
 type Props = {
   id: string
@@ -81,9 +80,7 @@ export const ShareButton = ({ id }: Props) => {
               <DiscordLogoIcon />
             </a>
           </Flex>
-         <Divider>
-            Or share with link
-          </Divider>
+          <Divider>Or share with link</Divider>
           <div className='relative'>
             <input
               id='share'

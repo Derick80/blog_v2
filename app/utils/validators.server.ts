@@ -25,15 +25,9 @@ export const validateText = (name: string) => {
   if (!name.length) return `Please enter some text`
 }
 
-export const validateAmount = (amount: number) => {
-  if (amount <= 0) return `Please enter a number`
-}
 
-export const validateDate = (date: Date) => {
-  if (!date) return `Please enter a date`
-}
 
 export const validateTitle = (title: string) => {
   if (!title.length || title.length > 25)
-    return `Please create a title that is less than 15 characters`
+    return `Please create a title that is less than 25 characters`
 }

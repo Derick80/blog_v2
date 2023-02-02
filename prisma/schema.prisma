@@ -18,42 +18,40 @@ model User {
   role        Role          @default(USER)
   accounts    Account[]
   tokens      Token[]
-  profile     Profile?
+  profile     Profile[]
   japanImages JapanImages[]
-  travelLogs   TravelLog[]
+  travelLogs  TravelLog[]
   posts       Post[]
   likes       Like[]
   favorites   Favorite[]
   projects    Project[]
-    comments   Comment[]
-    images ImageTest[]
-
+  comments    Comment[]
+  images      ImageTest[]
 }
 
 model JapanImages {
-id  Int @id @unique @default(autoincrement())
-  imageUrl String
-  imgTitle String?
+  id             Int     @id @unique @default(autoincrement())
+  imageUrl       String
+  imgTitle       String?
   imgDescription String?
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId   String
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId         String
 }
-
 
 model TravelLog {
-  id  Int @id @unique @default(autoincrement())
-  imageUrl String
-  imageTitle String?
+  id               Int     @id @unique @default(autoincrement())
+  imageUrl         String
+  imageTitle       String?
   imageDescription String?
   // album describes the primary destination
-  album String
-  city String
-  year String
+  album            String
+  city             String
+  year             String
 
-
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId   String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
 }
+
 model Project {
   id          String     @id @unique @default(uuid())
   title       String
@@ -64,23 +62,22 @@ model Project {
   categories  Category[]
   user        User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId      String
-
 }
 
 model Post {
-  id          String   @id @unique @default(uuid())
+  id          String     @id @unique @default(uuid())
   title       String
   description String
   body        String
-  imageUrl     String
+  imageUrl    String
   createdBy   String
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  comments   Comment[]
-  favorites  Favorite[]
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
+  published   Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  comments    Comment[]
+  favorites   Favorite[]
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId      String
 
   categories Category[]
   likes      Like[]
@@ -102,12 +99,11 @@ model Comment {
   parent    Comment?  @relation("comment_children", fields: [parentId], references: [id], onDelete: Cascade)
   children  Comment[] @relation("comment_children")
   parentId  String?
-
 }
 
 model Category {
   id       String    @id @unique @default(uuid())
-  label     String
+  label    String
   value    String    @unique
   posts    Post[]
   projects Project[]
@@ -115,7 +111,7 @@ model Category {
 
 model About {
   id             String   @id @unique @default(uuid())
-  userName       String  @unique
+  userName       String   @unique
   firstName      String
   lastName       String
   bio            String
@@ -126,11 +122,12 @@ model About {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())
 
-  email          String
+  email String
 }
+
 model Profile {
   id             String   @id @unique @default(uuid())
-  userName       String  @unique
+  userName       String   @unique
   firstName      String
   lastName       String
   bio            String
@@ -141,15 +138,15 @@ model Profile {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId         String   @unique
+  userId         String  @unique
   email          String
 }
 
 model Favorite {
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  postId String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -205,14 +202,14 @@ model Account {
   @@index([userId])
 }
 
-
 model ImageTest {
-  id  Int @id @unique @default(autoincrement())
+  id       Int    @id @unique @default(autoincrement())
   imageUrl String
-  title String
+  title    String
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId   String
 }
+
 enum Role {
   ADMIN
   USER

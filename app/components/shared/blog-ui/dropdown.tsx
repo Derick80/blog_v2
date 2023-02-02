@@ -38,7 +38,6 @@ export default function Dropdown() {
             </NavLink>
           </Menu.Item>
 
-
           <Menu.Divider />
 
           <Menu.Label>Account</Menu.Label>

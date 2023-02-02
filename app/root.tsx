@@ -15,6 +15,7 @@ import { isAuthenticated } from './utils/server/auth/auth.server'
 import getAllCategories from './utils/server/categories.server'
 import Layout from './components/shared/layout/layout'
 import styles from './styles/app.css'
+import { useIsBot } from './is-bot.context'
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: styles },
   {
@@ -39,6 +40,8 @@ createEmotionCache({ key: 'mantine' })
 
 export default function App() {
   const data = useLoaderData<typeof loader>()
+  let isBot = useIsBot()
+
   return (
     <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
       <html lang='en'>
@@ -51,7 +54,7 @@ export default function App() {
           <Layout>
             <Outlet />
             <ScrollRestoration />
-            <Scripts />
+            {isBot ? null : <Scripts />}
             <LiveReload />
           </Layout>
         </body>

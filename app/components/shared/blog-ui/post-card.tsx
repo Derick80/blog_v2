@@ -32,6 +32,7 @@ import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
 import formatComments from './format-comments'
 import React from 'react'
+import { IconMessage } from '@tabler/icons'
 
 export type ManyPostProps = {
   data: Post & {
@@ -145,7 +146,7 @@ export const PostCard = ({
               {title}
             </Text>
           </NavLink>
-          {showCategories  && (
+          {showCategories && (
             <div
               className='flex flex-row space-x-2 p-2'
               style={{ width: 'fit-content' }}
@@ -194,44 +195,41 @@ export const PostCard = ({
                 currentUser={user.id}
               />
             )}
-
+ {showComments && (
+            <Button
+            type='button'
+            variant='subtle'
+            onClick={() => setOpen(!open)}
+            ><IconMessage /><Text>{ _count.comments }</Text></Button>
+           )}
             {showShare && id && <ShareButton id={id} />}
-            {showOptions &&  (
-              <PostOptions
-                id={id}
-              />
-            )}
+            {showOptions && <PostOptions id={id} />}
 
 
           </Flex>
           {user?.avatarUrl && (
-
-<Tooltip label={user?.userName} position='top'>
-  <Avatar
-    src={user?.avatarUrl}
-    variant='filled'
-    radius='xl'
-    size='sm'
-  />
-</Tooltip>
-
-)}
+            <Tooltip label={user?.userName} position='top'>
+              <Avatar
+                src={user?.avatarUrl}
+                variant='filled'
+                radius='xl'
+                size='sm'
+              />
+            </Tooltip>
+          )}
         </Group>
         <Divider />
-       {showComments && id && (
-         <Flex direction={'column'}>
-         <FormComments
-            postId={id}
-
-         />
-         {open && data.comments && (
-           <ListComments comments={formatComments(data.comments || [])} />
-         )}
-         <Button onClick={() => setOpen(!open)}>
-           {open ? 'Hide' : 'Show'} Comments
-         </Button>
-       </Flex>
-       )}
+        {showComments && id && (
+          <Flex direction={'column'}>
+            <FormComments postId={id} />
+            {open && data.comments && (
+              <ListComments comments={formatComments(data.comments || [])} />
+            )}
+            <Button onClick={() => setOpen(!open)}>
+              {open ? 'Hide' : 'Show'} Comments
+            </Button>
+          </Flex>
+        )}
       </Card>
     </>
   )

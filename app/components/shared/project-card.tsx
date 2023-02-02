@@ -1,9 +1,6 @@
-import { Container, Flex, Image, SimpleGrid, Text, Title } from '@mantine/core'
-import { Project } from '@prisma/client'
-import { ExternalLinkIcon } from '@radix-ui/react-icons'
-import { Link } from '@remix-run/react'
+import { Container,  Flex,  Group, Image,  Stack,  Text, Title } from '@mantine/core'
 import { IconExternalLink } from '@tabler/icons'
-import { ProjectCategories } from '~/utils/server/project.server'
+import { Project } from '~/utils/schemas/projects-schema'
 import CategoryContainer from './category-container'
 
 export const ProjectCard = ({
@@ -15,20 +12,22 @@ export const ProjectCard = ({
 }) => {
   return (
     <>
-      <SimpleGrid cols={4}>
-        <Container
-          key={project.id}
-          className='text-zing-900 border-zinc-600 dark:text-slate-100 m-1 mx-auto rounded border-4 bg-fixed opacity-90 shadow-md'
-        >
-          <Title size={1}>{project.title}</Title>
-          <p className='p-2 indent-1 text-sm italic'>{project.description}</p>
 
-          <Flex justify='center'>
-            {categories.map((category: string[], index: number) => (
+        <Flex direction='column' gap={20}
+          key={project.id}
+          className='w-[350px]  pb-2'
+        >
+         <Stack >
+         <Title size={1}>{project.title}</Title>
+          <Text>{project.description}</Text>
+          </Stack>
+
+           <Group position='left' >
+           {categories.map((category: string[], index: number) => (
               <CategoryContainer key={index} value={category} index={index} />
             ))}
-          </Flex>
-          <Flex align='center' justify='end'>
+          </Group>
+          <Group position='apart' >
             <a
               href={project.githubUrl}
               className='flex items-center space-x-1'
@@ -48,16 +47,15 @@ export const ProjectCard = ({
               <Text>Visit Project</Text>
               <IconExternalLink />
             </a>
-          </Flex>
+          </Group>
           <div className='h-40 md:h-60'>
-            <img
+            <Image
               src={project.projectImg}
               alt={project.title}
               style={{ height: '100%', width: '100%', objectFit: 'cover' }}
             />
           </div>
-        </Container>
-      </SimpleGrid>
+        </Flex>
     </>
   )
 }

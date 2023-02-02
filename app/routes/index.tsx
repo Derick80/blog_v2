@@ -25,7 +25,7 @@ export default function Index() {
           data={data.post}
           user={data.post.user}
           showCategories={true}
-          showComments={true}
+          showComments={false}
           showFavorites={true}
           showLikes={true}
           showOptions={true}

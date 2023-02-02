@@ -1,11 +1,5 @@
-import {
-  Center,
-  Container,
-  MultiSelect,
-  Stack,
-  TextInput
-} from '@mantine/core'
-import type { ActionFunction} from '@remix-run/node';
+import { Center, Container, MultiSelect, Stack, TextInput } from '@mantine/core'
+import type { ActionFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Form, useFetcher, useRouteLoaderData } from '@remix-run/react'
