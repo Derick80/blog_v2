@@ -1465,6 +1465,13 @@ video {
   position: sticky;
 }
 
+.inset-0{
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
 .-left-1{
   left: -0.25rem;
 }
@@ -1621,8 +1628,16 @@ video {
   height: 2.5rem;
 }
 
+.h-3\/4{
+  height: 75%;
+}
+
 .h-32{
   height: 8rem;
+}
+
+.max-h-screen{
+  max-height: 100vh;
 }
 
 .max-h-36{
@@ -1694,10 +1709,6 @@ video {
   flex: 1 1 0%;
 }
 
-.grow{
-  flex-grow: 1;
-}
-
 .translate-y-1{
   --tw-translate-y: 0.25rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -1736,10 +1747,6 @@ video {
 
 .items-center{
   align-items: center;
-}
-
-.justify-end{
-  justify-content: flex-end;
 }
 
 .justify-center{
@@ -1794,6 +1801,14 @@ video {
   overflow: hidden;
 }
 
+.overflow-scroll{
+  overflow: scroll;
+}
+
+.overflow-y-auto{
+  overflow-y: auto;
+}
+
 .rounded-xl{
   border-radius: 0.75rem;
 }
@@ -1846,6 +1861,10 @@ video {
 .bg-crimson4{
   --tw-bg-opacity: 1;
   background-color: rgb(72 26 45 / var(--tw-bg-opacity));
+}
+
+.bg-opacity-80{
+  --tw-bg-opacity: 0.8;
 }
 
 .object-cover{
@@ -1935,11 +1954,6 @@ video {
 .text-base{
   font-size: 1rem;
   line-height: 1.5rem;
-}
-
-.text-2xl{
-  font-size: 1.5rem;
-  line-height: 2rem;
 }
 
 .font-extrabold{
@@ -2056,6 +2070,10 @@ video {
     background-color: rgb(136 144 150 / var(--tw-bg-opacity));
   }
 
+  .dark\:bg-opacity-80{
+    --tw-bg-opacity: 0.8;
+  }
+
   .dark\:prose-invert{
     --tw-prose-body: var(--tw-prose-invert-body);
     --tw-prose-headings: var(--tw-prose-invert-headings);
@@ -2109,10 +2127,6 @@ video {
     margin-bottom: 1.25rem;
   }
 
-  .md\:block{
-    display: block;
-  }
-
   .md\:flex{
     display: flex;
   }
@@ -2138,8 +2152,16 @@ video {
     width: 100%;
   }
 
+  .md\:w-1\/2{
+    width: 50%;
+  }
+
   .md\:flex-row{
     flex-direction: row;
+  }
+
+  .md\:rounded-xl{
+    border-radius: 0.75rem;
   }
 
   .md\:p-4{
@@ -2156,6 +2178,12 @@ video {
 
   .md\:pt-2{
     padding-top: 0.5rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .lg\:w-2\/3{
+    width: 66.666667%;
   }
 }
 

@@ -5,7 +5,7 @@ import invariant from 'tiny-invariant'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getPostByCategoryValue } from '~/utils/server/post.server'
-import { Post } from '~/utils/schemas/post-schema'
+import type { Post } from '~/utils/schemas/post-schema'
 
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
@@ -17,22 +17,32 @@ export async function loader({ request, params }: LoaderArgs) {
   invariant(categoryId, 'categoryId is required')
 
   const posts = await getPostByCategoryValue(categoryId)
-  const post = await posts.map((post) => {
-    return {
-      ...post,
-      categories: post.categories
-    }
-  })
+
 
   return json({ posts })
 }
 
 export default function CategoryRoute() {
-  const data = useLoaderData<typeof loader>()
+  const data = useLoaderData<{ posts: Post[] }>()
 
-  console.log(data, 'data')
 
-  return <>{data && <PostCard posts={data.post} />}</>
+  return <>
+
+
+  {data && data.posts.map((post)=>(
+    <PostCard
+    key={post.id}
+    data={post}
+    user={post.user}
+    showCategories={true}
+    showComments={false}
+    showFavorites={true}
+    showLikes={true}
+    showOptions={true}
+    showShare={true}
+
+    />
+  ))}</>
 }
 
 function NoPosts() {

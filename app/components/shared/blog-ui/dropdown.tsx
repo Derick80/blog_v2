@@ -1,5 +1,5 @@
 import { Menu, Button, Text } from '@mantine/core'
-import { Form, NavLink } from '@remix-run/react'
+import { Form, Link, NavLink } from '@remix-run/react'
 import {
   IconChevronDown,
   IconLogout,
@@ -36,6 +36,11 @@ export default function Dropdown() {
             <NavLink to='/drafts' onClick={() => setOpen(!open)}>
               <Text>Drafts</Text>
             </NavLink>
+          </Menu.Item>
+          <Menu.Item icon={<IconPencilPlus size={14} />}>
+            <Link to='/blog/categories' onClick={() => setOpen(!open)}>
+              <Text>Categories add one</Text>
+            </Link>
           </Menu.Item>
 
           <Menu.Divider />

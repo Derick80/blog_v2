@@ -1,6 +1,5 @@
 import { Badge } from '@mantine/core'
 import { Link } from '@remix-run/react'
-import type { ProjectCategories } from '~/utils/server/project.server'
 
 export interface CategoryContainerProps {
   value: string[]
@@ -8,7 +7,7 @@ export interface CategoryContainerProps {
 }
 export interface CategoryContainerPropsOne {
   value: string
-  index: number
+  index: number | string
 }
 export default function CategoryContainer({
   value,
