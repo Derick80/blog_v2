@@ -52,6 +52,15 @@ export async function getUserById(userId: string) {
   })
 }
 
+export async function getUserByUserName(userName: string) {
+  return await prisma.user.findUnique({
+    where: {
+      userName: userName
+    },
+    select: defaultPersonalSelect
+  })
+}
+
 export const createUser = async (
   input: Prisma.UserCreateInput & {
     password?: string

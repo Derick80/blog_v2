@@ -1,6 +1,7 @@
 import { useMatches } from '@remix-run/react'
 import { useMemo } from 'react'
-import { UserType } from './schemas/user-schema'
+import type{ ZodError, ZodSchema } from 'zod'
+import type { UserType } from './schemas/user-schema'
 
 const DEFAULT_REDIRECT = '/'
 
@@ -63,4 +64,34 @@ export function useUser(): UserType {
     )
   }
   return maybeUser
+}
+
+
+export async function validateNewPostAction({
+  request, schema
+}:{
+  request: Request,
+  schema: ZodSchema
+}){
+const body = Object.fromEntries(await request.formData())
+
+try{
+const formData =schema.parse(body)
+return {formData, errors:null}
+}catch(error){
+  console.log(error)
+
+const errors = error as ZodError
+
+return{
+  formData:body, errors:errors.issues.reduce((acc, curr) => {
+const key = curr.path[0]
+
+acc[key] = curr.message
+return acc
+
+}, {}
+    )
+}
+}
 }

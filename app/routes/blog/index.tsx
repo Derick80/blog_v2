@@ -37,7 +37,10 @@ export default function Index() {
   const data = useLoaderData()
   return (
     <Stack align='center' className='mt-10 w-full'>
+      <div className='flex justify-between w-full'>
+        <h1 className='text-3xl font-bold'>Blog Feed</h1>
       <Dropdown />
+      </div>
       {data.posts.map((post: Post) => (
         <PostCard
           key={post.id}

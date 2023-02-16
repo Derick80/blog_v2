@@ -13,17 +13,15 @@ import {
   useNavigation,
   useParams
 } from '@remix-run/react'
-import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import TipTap from '~/components/shared/tip-tap'
-import { UserType } from '~/utils/schemas/user-schema'
-import { prisma } from '~/utils/server/prisma.server'
+import type{ UserType } from '~/utils/schemas/user-schema'
 import { editUserProfile, Profile } from '~/utils/server/profile.server'
-import { getProfiles, getUserProfile } from '~/utils/server/profile.server'
+import {  getUserProfile } from '~/utils/server/profile.server'
 import { getUserById } from '~/utils/server/user.server'
 
-export async function loader({ params, request }: LoaderArgs) {
+export async function loader({ params }: LoaderArgs) {
   const userId = params.userId
   invariant(userId, 'userId is required')
   const users = await getUserById(userId)

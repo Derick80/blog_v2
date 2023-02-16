@@ -1,7 +1,8 @@
 import { TextInput, Button, Title } from '@mantine/core'
-import { ActionArgs, LoaderArgs, redirect } from '@remix-run/node';
+import type { ActionArgs, LoaderArgs} from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 import { json } from '@remix-run/node'
-import { Form, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import CategoryContainer from '~/components/shared/category-container'
 import { Modal } from '~/components/shared/modal'
 import getAllCategories, { createCategory } from '~/utils/server/categories.server'
@@ -39,7 +40,7 @@ export default function CategoryIndex(){
     return(
         <Modal
         isOpen={true}
-        ariaLabel='Edit Income'
+        ariaLabel='Edit categories'
         className='h-3/4 w-full md:w-1/2 lg:w-2/3'
       >
         <div

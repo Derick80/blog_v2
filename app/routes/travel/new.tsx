@@ -5,9 +5,8 @@ import {
   LoaderArgs,
   redirect
 } from '@remix-run/node'
-import { Form, useFetcher, useLoaderData } from '@remix-run/react'
-import React, { useEffect } from 'react'
-import { Outlet, useActionData } from 'react-router'
+import {  useFetcher, useLoaderData } from '@remix-run/react'
+import React  from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import FormField from '~/components/shared/form-field'

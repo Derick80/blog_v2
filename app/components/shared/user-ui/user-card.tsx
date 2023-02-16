@@ -1,16 +1,20 @@
 
-import { Button, Image, Text } from '@mantine/core'
+import { Button, Image, Select, Text } from '@mantine/core'
 import { Form, NavLink } from '@remix-run/react'
 import React from 'react'
 import { Profile } from '~/utils/schemas/profile-schema'
 import { UserProps } from '~/utils/server/user.server'
+import { useOptionalUser } from '~/utils/utilities'
 import { UserPlaceHolder } from '../icons'
 
 export type UserCardProps = {
-  user?: UserProps
-  profiles?: Profile[]
+  user: UserProps
+  profiles?: Profile[],
+
 }
 export default function UserCard({ user, profiles }: UserCardProps) {
+  const optionalUser = useOptionalUser()
+const currentUser = optionalUser?.id
   console.log(profiles,'profiles');
 const [showMore, setShowMore] = React.useState(false)
   return (
@@ -38,11 +42,12 @@ const [showMore, setShowMore] = React.useState(false)
             ) }
             <NavLink
               className='flex flex-col pl-1 md:pl-2 '
-              to={ `/users/${user.id}` }
+              to={ `/users/${user.userName}` }
             >
               <p className='text-xs italic'>Username</p>
               <p className='text-base'> { user.userName }</p>
             </NavLink>
+
             <Button className='ml-auto' variant='outline' size='sm'
               onClick={ () => setShowMore(!showMore) }
             >
@@ -95,22 +100,25 @@ const [showMore, setShowMore] = React.useState(false)
               <p className='text-sm'>{ user._count.likes }</p>
             </NavLink>
           </div>
-          <Form action={ `/users/${user.id}/edit` }>
-              <button type="submit">Edit</button>
-            </Form>
-            <Form
-              method="post"
-              action="destroy"
-              onSubmit={ (event) => {
-                if (!confirm(
-                  "Please confirm you want to delete this record."
-                )) {
-                  event.preventDefault()
-                }
-              } }
-            >
+          {
+  currentUser === user.id && (
+    <><Form action={ `/users/${user.id}/edit` }>
+            <button type="submit">Edit</button>
+          </Form><Form
+            method="post"
+            action="destroy"
+            onSubmit={ (event) => {
+              if (!confirm(
+                "Please confirm you want to delete this record."
+              )) {
+                event.preventDefault()
+              }
+            } }
+          >
               <button type="submit">Delete</button>
-            </Form>
+            </Form></>
+  )
+}
         </div>
 
 
@@ -121,4 +129,5 @@ const [showMore, setShowMore] = React.useState(false)
 
     </>
   )
+
 }

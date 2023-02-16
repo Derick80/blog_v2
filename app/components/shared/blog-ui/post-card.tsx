@@ -195,7 +195,7 @@ export const PostCard = ({
                 currentUser={user.id}
               />
             )}
- {showComments && (
+ {showComments &&(
             <Button
             type='button'
             variant='subtle'
@@ -219,7 +219,7 @@ export const PostCard = ({
           )}
         </Group>
         <Divider />
-        {showComments && id && (
+        {showComments && data.comments &&id && (
           <Flex direction={'column'}>
             <FormComments postId={id} />
             {open && data.comments && (

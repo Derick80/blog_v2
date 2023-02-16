@@ -5,7 +5,7 @@ import { badRequest, serverError } from 'remix-utils'
 import { AuthForm } from '~/components/shared/auth/auth-form'
 import { SocialLoginForm } from '~/components/shared/auth/social-login-form'
 import { isAuthenticated, authenticator } from '~/utils/server/auth/auth.server'
-
+import * as Z from 'zod'
 export const meta: MetaFunction = () => {
   return {
     title: `Derick's Personal Blog | Login`,
@@ -30,6 +30,15 @@ type ActionData = {
   }
 }
 
+
+// const schema =Z.object)({
+//   email: Z.string({
+//     required_error:'Email is required',
+//   }).email( 'invalid email'),
+//   password: Z.string().min(8, 'password must be at least 8 characters long'),
+
+
+// })
 export async function loader(args: LoaderArgs) {
   return (await isAuthenticated(args.request)) ? redirect('/') : null
 }
