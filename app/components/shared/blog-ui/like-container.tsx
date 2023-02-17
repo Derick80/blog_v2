@@ -1,7 +1,8 @@
 import { Button, Text } from '@mantine/core'
+import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons'
 import type { FormMethod } from '@remix-run/react'
 import { NavLink, useFetcher } from '@remix-run/react'
-import { IconHeart, IconHeartPlus, IconLogin } from '@tabler/icons'
+import { IconLogin } from '@tabler/icons'
 import { useState } from 'react'
 import type { Like } from '~/utils/schemas/like-schema'
 
@@ -50,15 +51,19 @@ export default function LikeContainer({
       {currentUser ? (
         <Button type='button' variant='subtle' onClick={toggleLike}>
           {isLiked ? (
-            <>
-              <IconHeart style={{ color: 'red', fill: 'red' }} />
-              <Text>{likeCount}</Text>
-            </>
+           <div className='flex flex-row space-x-1'>
+              <HeartFilledIcon style={{ color: 'red', fill: 'red' }} />
+              <p
+                className='text-xs space-x-1'
+              >{likeCount}</p>
+            </div>
           ) : (
-            <>
-              <IconHeartPlus />
-              <Text>{likeCount}</Text>
-            </>
+            <div className='flex flex-row space-x-1'>
+              <HeartIcon />
+              <p
+                className='text-xs space-x-1'
+              >{likeCount}</p>
+            </div>
           )}
         </Button>
       ) : (

@@ -1,10 +1,10 @@
-import { Flex, Stack } from '@mantine/core'
+import { Flex } from '@mantine/core'
 import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Outlet, useFetcher, useLoaderData } from '@remix-run/react'
-import { useEffect } from 'react'
+import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
+import type { Post } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPostById } from '~/utils/server/post.server'
 
@@ -19,14 +19,14 @@ export async function loader({ request, params }: LoaderArgs) {
 
 export default function Index() {
   const data = useLoaderData<{
-    post: SerializeFrom<typeof getPostById>
+    post: Post
     categories: SerializeFrom<typeof getAllCategories>
   }>()
 
   const post = data.post
 
   return (
-    <Flex justify='center' align='center' direction='column'>
+    <div className='flex flex-col items-center'>
       {post && (
         <PostCard
           key={post.id}
@@ -40,6 +40,6 @@ export default function Index() {
           showOptions={true}
         />
       )}
-    </Flex>
+    </div>
   )
 }

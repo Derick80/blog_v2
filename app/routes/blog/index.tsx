@@ -1,4 +1,3 @@
-import { Stack } from '@mantine/core'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'

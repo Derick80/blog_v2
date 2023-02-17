@@ -1,6 +1,5 @@
 /* eslint-disable react/no-danger-with-children */
-import { format } from 'date-fns'
-import type { Post, SerializedEditPost } from '~/utils/schemas/post-schema'
+import type { Post, SerializedEditPost, SerializedPost } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import PostOptions from './post-options'
 import FavoriteContainer from './favorite-container'
@@ -20,9 +19,7 @@ import {
   Group,
   Image,
   MediaQuery,
-  Space,
   Spoiler,
-  Stack,
   Text,
   Tooltip,
   TypographyStylesProvider
@@ -32,7 +29,7 @@ import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
 import formatComments from './format-comments'
 import React from 'react'
-import { IconMessage } from '@tabler/icons'
+import { ChatBubbleIcon } from '@radix-ui/react-icons'
 
 export type ManyPostProps = {
   data: Post & {
@@ -50,7 +47,7 @@ export type ManyPostProps = {
 }
 
 export type EditPostCardProps = {
-  data: SerializedEditPost & {
+  data: SerializedPost & {
     comments: CommentWithChildren[]
   } & {
     favorites: Favorite[]
@@ -180,12 +177,12 @@ export const PostCard = ({
 
         <Group position='apart'>
           <Flex align='center'>
-            {showLikes && id && likes && user && (
+            {showLikes && likes && data.user && (
               <LikeContainer
                 postId={id}
                 likes={likes}
                 likeCounts={_count?.likes}
-                currentUser={user.id}
+                currentUser={data.user.id}
               />
             )}
             {showFavorites && user && (
@@ -201,8 +198,14 @@ export const PostCard = ({
                 variant='subtle'
                 onClick={() => setOpen(!open)}
               >
-                <IconMessage />
-                <Text>{_count.comments}</Text>
+                <div className='flex flex-row space-x-1'>
+                <ChatBubbleIcon />
+                <p
+                className='text-xs'
+                > {
+
+                _count.comments}</p>
+                </div>
               </Button>
             )}
             {showShare && id && <ShareButton id={id} />}
@@ -220,6 +223,11 @@ export const PostCard = ({
           )}
         </Group>
         <Divider />
+        <Group position='right'>
+          <p className='text-xs text-gray-200'>
+            {createdAt && new Date(createdAt).toLocaleDateString()}
+          </p>
+          </Group>
         {showComments && data.comments && id && (
           <Flex direction={'column'}>
             <FormComments postId={id} />

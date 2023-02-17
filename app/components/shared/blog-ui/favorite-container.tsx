@@ -44,9 +44,9 @@ export default function FavoriteContainer({
     <>
       <Button type='button' variant='subtle' onClick={toggleFavorite}>
         {isFavorite ? (
-          <IconBookmark style={{ color: 'red', fill: 'red' }} />
+          <BookmarkFilledIcon style={{ color: 'red', fill: 'red' }} />
         ) : (
-          <IconBookmark />
+          <BookmarkIcon />
         )}
       </Button>
     </>

@@ -1,6 +1,6 @@
 import type { Category, Post as PrismaPost } from '@prisma/client'
 import type { SerializeFrom } from '@remix-run/node'
-import type { Comment, CommentWithChildren } from './comment-schema'
+import type {  CommentWithChildren } from './comment-schema'
 import type { Favorite } from './favorite.schema'
 import type { Like } from './like-schema'
 import type { User } from './user-schema'

@@ -6,5 +6,7 @@ import { authenticator } from '~/utils/server/auth/auth.server'
 export let loader = () => redirect('/login')
 
 export let action = ({ request, params }: ActionArgs) => {
-  return authenticator.authenticate(params.provider, request)
+  const provider = params.provider as string
+
+  return authenticator.authenticate(provider, request)
 }

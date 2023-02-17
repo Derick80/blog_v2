@@ -1,18 +1,8 @@
 import {
-  Container,
-  Flex,
-  Group,
-  Image,
-  Stack,
-  Text,
-  Title
-} from '@mantine/core'
+  Image} from '@mantine/core'
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
-import { IconExternalLink } from '@tabler/icons'
-import { SingleCategory } from '~/utils/schemas/category-schema'
 
-import { Project } from '~/utils/schemas/projects-schema'
-import CategoryContainer from './category-container'
+import type{ Project } from '~/utils/schemas/projects-schema'
 
 export const ProjectCard = ({
   project,

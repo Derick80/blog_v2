@@ -9,7 +9,15 @@ export async function getProjects() {
   const projects = await prisma.project.findMany({
     include: {
       categories: true,
-      user: true
+      user: {
+        select:{
+           id:true,
+           userName:true,
+           avatarUrl:true,
+           email:true,
+
+        }
+       },
     }
   })
 

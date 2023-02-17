@@ -1,6 +1,4 @@
-import { Post } from '../schemas/post-schema'
 import { prisma } from './prisma.server'
-import {User} from '../schemas/user-schema'
 export type CategoryForm = {
   value: string
 }[]
@@ -148,6 +146,7 @@ export async function getPostById(id: string) {
   const post = await prisma.post.findUnique({
     where: { id },
     include: {
+      likes: true,
       comments: {
         include: {
           user: {

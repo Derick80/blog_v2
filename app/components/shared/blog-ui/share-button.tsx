@@ -6,9 +6,9 @@ import {
   CopyIcon,
   DiscordLogoIcon,
   InstagramLogoIcon,
+  Share1Icon,
   TwitterLogoIcon
 } from '@radix-ui/react-icons'
-import { IconShare } from '@tabler/icons'
 import { Button, Flex, Popover } from '@mantine/core'
 
 type Props = {
@@ -50,7 +50,7 @@ export const ShareButton = ({ id }: Props) => {
               }
             }}
           >
-            <IconShare />
+            <Share1Icon />
           </Button>
         </Popover.Target>
         <Popover.Dropdown>

@@ -13,9 +13,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   invariant(user, 'need  user')
   const postId = params.postId
   const userId = user.id
-  console.log(userId, 'userId')
-
-  console.log(params, 'params')
 
   if (!userId || !postId) {
     return json(

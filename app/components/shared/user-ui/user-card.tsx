@@ -1,8 +1,8 @@
-import { Button, Image, Select, Text } from '@mantine/core'
+import { Button, Image, Text } from '@mantine/core'
 import { Form, NavLink } from '@remix-run/react'
 import React from 'react'
-import { Profile } from '~/utils/schemas/profile-schema'
-import { UserProps } from '~/utils/server/user.server'
+import type { Profile } from '~/utils/schemas/profile-schema'
+import type{ UserProps } from '~/utils/server/user.server'
 import { useOptionalUser } from '~/utils/utilities'
 import { UserPlaceHolder } from '../icons'
 

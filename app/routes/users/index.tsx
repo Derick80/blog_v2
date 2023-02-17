@@ -1,15 +1,14 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Form, Outlet, useFetcher, useLoaderData } from '@remix-run/react'
+import { Outlet, useFetcher, useLoaderData } from '@remix-run/react'
 import UserCard from '~/components/shared/user-ui/user-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import type { UserProps } from '~/utils/server/user.server'
 import { getUsers } from '~/utils/server/user.server'
 import type { UserType } from '~/utils/schemas/user-schema'
-import { Button, Flex, Select, Title } from '@mantine/core'
+import { Button, Select } from '@mantine/core'
 import { getProfiles } from '~/utils/server/profile.server'
-import { Profile } from '~/utils/schemas/profile-schema'
-import { useOptionalUser } from '~/utils/utilities'
+import type { Profile } from '~/utils/schemas/profile-schema'
 import { useState } from 'react'
 
 export type TestUser = {

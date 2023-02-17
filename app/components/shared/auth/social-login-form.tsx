@@ -2,7 +2,7 @@ import { Form } from '@remix-run/react'
 import type { SocialsProvider } from 'remix-auth-socials'
 
 interface SocialLoginFormProps {
-  provider: SocialsProvider | string
+  provider?: SocialsProvider | string
   children: React.ReactNode
 }
 export const SocialLoginForm = ({
