@@ -10,6 +10,18 @@ export async function getChildCommentsByParentId({
   const comments = await prisma.comment.findMany({
     where: {
       parentId: parentId
+    },
+    include: {
+      user: {
+        select:{
+           id:true,
+           userName:true,
+           avatarUrl:true,
+           email:true,
+            password:false
+
+        }
+       }
     }
   })
   return comments
@@ -80,6 +92,17 @@ export async function getCommentById(commentId: string) {
   const comment = await prisma.comment.findUnique({
     where: {
       id: commentId
+    },
+    include: {
+      user:{
+        select:{
+           id:true,
+           userName:true,
+           avatarUrl:true,
+           email:true,
+            password:false
+        }
+       }
     }
   })
   return comment
@@ -162,10 +185,31 @@ export type CommentAndUserData = {
 export async function getCommentsAndUserData() {
   const result = await prisma.comment.findMany({
     include: {
-      user: true,
+      user: {
+        select:{
+           id:true,
+           userName:true,
+           avatarUrl:true,
+           email:true,
+           password:false
+
+        }
+       },
       post: {
         include: {
-          comments: true,
+          comments: {
+            include: {
+              user: {
+                select:{
+                   id:true,
+                   userName:true,
+                   avatarUrl:true,
+                   email:true,
+
+                }
+               },
+          }
+          },
           _count: true,
           likes: true,
           favorites: true
