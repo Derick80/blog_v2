@@ -10,8 +10,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
   const [open, setOpen] = React.useState(false)
   return (
-    <Flex direction='column' gap={2} align='center'>
-      <Group position='center' spacing='sm' align='center'>
+<div className='flex flex-col gap-5'>
+      <div className='flex flex-col h-screen gap-5 items-center w-full '>
+ <Group position='center' spacing='sm' align='center'>
         <div className='h-20 w-20'>
           <BrandIcon />
         </div>
@@ -22,32 +23,42 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         className='hidden md:flex-row gap-5 md:flex items-center'
         >
         <Link to='/'
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen(false)}
         >
           <Text>Home</Text>
         </Link>
         <Link to='/blog'
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen(false)}
         >
           <Text>Blog</Text>
         </Link>
         <Link to='/about'
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen(false)}
         >
           <Text>About</Text>
         </Link>
         <Link to='/projects'
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen(false)}
         >
           <Text>Projects</Text>
         </Link>
         <Link to='/travel'
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen(false)}
         >
           <Text>Travel</Text>
         </Link>
         <Link to='/users'
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen(false)}
+        >
+          <Text>omega</Text>
+        </Link>
+        <Link to='/omega'
+        onClick={() => setOpen(false)}
+        >
+          <Text>beta</Text>
+        </Link>
+        <Link to='/beta'
+        onClick={() => setOpen(false)}
         >
           <Text>Users</Text>
         </Link>
@@ -63,83 +74,85 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 
       </div>
-      <Drawer
 
-      opened={open}
-        onClose={() => setOpen(false)}
-        title="Menu"
-        padding="xl"
-        size="xl"
-        position='top'
-        transition="slide-down"
-        transitionDuration={250}
-        transitionTimingFunction="ease"
-      >
-        <div
-        className='flex flex-col md:flex-row items-center'
-        >
-        <Link to='/'
-        onClick={() => setOpen(!open)}
-        >
-          <Text>Home</Text>
-        </Link>
-        <Link to='/blog'
-        onClick={() => setOpen(!open)}
-        >
-          <Text>Blog</Text>
-        </Link>
-        <Link to='/about'
-        onClick={() => setOpen(!open)}
-        >
-          <Text>About</Text>
-        </Link>
-        <Link to='/projects'
-        onClick={() => setOpen(!open)}
-        >
-          <Text>Projects</Text>
-        </Link>
-        <Link to='/travel'
-        onClick={() => setOpen(!open)}
-        >
-          <Text>Travel</Text>
-        </Link>
-        <Link to='/users'
-        onClick={() => setOpen(!open)}
-        >
-          <Text>Users</Text>
-        </Link>
+     <div className='flex flex-col gap-5 md:hidden'>
+     <Drawer
 
-        {user ? (
-          <Form method='post' action='/logout'>
-            <button type='submit'>Logout</button>
-          </Form>
-        ) : (
-          <Link to='/login'>Login</Link>
-        )}
+opened={open}
+  onClose={() => setOpen(false)}
+  title="Menu"
+  padding="xl"
+  size="xl"
+  position='top'
+  transition="slide-down"
+  transitionDuration={250}
+  transitionTimingFunction="ease"
+>
+  <div
+  className='flex flex-col md:flex-row items-center'
+  >
+  <Link to='/'
+  onClick={() => setOpen(!open)}
+  >
+    <Text>Home</Text>
+  </Link>
+  <Link to='/blog'
+  onClick={() => setOpen(!open)}
+  >
+    <Text>Blog</Text>
+  </Link>
+  <Link to='/about'
+  onClick={() => setOpen(!open)}
+  >
+    <Text>About</Text>
+  </Link>
+  <Link to='/projects'
+  onClick={() => setOpen(!open)}
+  >
+    <Text>Projects</Text>
+  </Link>
+  <Link to='/travel'
+  onClick={() => setOpen(!open)}
+  >
+    <Text>Travel</Text>
+  </Link>
+  <Link to='/users'
+  onClick={() => setOpen(!open)}
+  >
+    <Text>Users</Text>
+  </Link>
+
+  {user ? (
+    <Form method='post' action='/logout'>
+      <button type='submit'>Logout</button>
+    </Form>
+  ) : (
+    <Link to='/login'>Login</Link>
+  )}
 
 
 
-      </div>
-      </Drawer>
+</div>
+</Drawer>
+        </div>
       <Button color='teal' variant='subtle'
         className='block md:hidden '
           onClick={() => setOpen(!open)}>
 
-<IconMenu2 />
+        < IconMenu2 />
         </Button>
         </Flex>
+<div className='flex h-full flex-col gap-5 mt-2 grow w-[350px] md:w-full'>
 
-      <Flex
-        direction={'column'}
-        gap={5}
-        style={{
-          marginTop: '2rem'
-        }}
-        className='h-full w-[350px] md:w-full'
-      >
         {children}
-      </Flex>
+        </div>
       <Footer />
-    </Flex>
+    </div>
+
+            </div>
   )
+
+
 }
+
+

@@ -9,44 +9,9 @@ type ActionData = {
   imageUrl?: string
 }
 
-export const action: ActionFunction = async ({ request }) => {
-  const user = await isAuthenticated(request)
-  if (!user) {
-    return json({ error: 'Not authenticated' }, { status: 401 })
-  }
+export const action: ActionFunction = async ({ request }) => {}
 
-  const formData = await request.formData()
-
-  const imageUrl = formData.get('imageUrl') as string
-  const title = formData.get('title') as string
-  console.log(imageUrl, 'imageUrl')
-
-  if (!imageUrl) {
-    return json({
-      errorMsg: 'Something went wrong while uploading'
-    })
-  }
-
-  if (!title) {
-    return json({
-      errorMsg: 'Something went wrong while uploading'
-    })
-  }
-
-  await prisma.imageTest.create({
-    data: {
-      imageUrl: imageUrl,
-      title: title,
-      userId: user.id
-    }
-  })
-
-  return json({
-    imageUrl
-  })
-}
-
-export default function Uploader() {
+export default function BetaRoute() {
   const fetcher = useFetcher<ActionData>()
 
   useEffect(() => {
@@ -61,7 +26,7 @@ export default function Uploader() {
     })
 
   return (
-    <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
+    <div className='mx-auto p-2'>
       <fetcher.Form
         method='post'
         encType='multipart/form-data'

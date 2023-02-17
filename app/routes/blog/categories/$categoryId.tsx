@@ -18,31 +18,37 @@ export async function loader({ request, params }: LoaderArgs) {
 
   const posts = await getPostByCategoryValue(categoryId)
 
-
-  return json({ posts })
+  return json({ posts, categoryId })
 }
 
 export default function CategoryRoute() {
-  const data = useLoaderData<{ posts: Post[] }>()
+  const data = useLoaderData<{ posts: Post[],
+  categoryId: string}>()
 
-
-  return <>
-
-
-  {data && data.posts.map((post)=>(
-    <PostCard
-    key={post.id}
-    data={post}
-    user={post.user}
-    showCategories={true}
-    showComments={false}
-    showFavorites={true}
-    showLikes={true}
-    showOptions={true}
-    showShare={true}
-
-    />
-  ))}</>
+  return (
+    <div
+    className='flex grow flex-col items-center gap-5'
+    >
+      <h1
+      className='text-2xl font-bold'
+      > {data.categoryId}</h1>
+      {data &&
+        data.posts.map((post) => (
+          <PostCard
+            key={post.id}
+            data={post}
+            user={post.user}
+            showCategories={true}
+            showComments={ false
+            }
+            showFavorites={true}
+            showLikes={true}
+            showOptions={true}
+            showShare={true}
+          />
+        ))}
+    </div>
+  )
 }
 
 function NoPosts() {

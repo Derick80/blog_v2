@@ -16,9 +16,9 @@ import {
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import TipTap from '~/components/shared/tip-tap'
-import type{ UserType } from '~/utils/schemas/user-schema'
+import type { UserType } from '~/utils/schemas/user-schema'
 import { editUserProfile, Profile } from '~/utils/server/profile.server'
-import {  getUserProfile } from '~/utils/server/profile.server'
+import { getUserProfile } from '~/utils/server/profile.server'
 import { getUserById } from '~/utils/server/user.server'
 
 export async function loader({ params }: LoaderArgs) {
@@ -51,7 +51,6 @@ export async function action({ request, params }: ActionArgs) {
   if (
     typeof id !== 'string' ||
     typeof userId !== 'string' ||
-
     bio !== 'string' ||
     typeof profilePicture !== 'string' ||
     typeof userName !== 'string' ||
@@ -62,32 +61,28 @@ export async function action({ request, params }: ActionArgs) {
     typeof lastName !== 'string' ||
     typeof email !== 'string' ||
     typeof userId !== 'string'
-
   ) {
     return badRequest({
-      message: 'Invalid form data',
+      message: 'Invalid form data'
     })
   }
 
-
-
   await editUserProfile({
     id,
-bio,
-profilePicture,
-userName,
-education,
-occupation,
-location,
-firstName,
-lastName,
-email,
-user:{
-  connect:{
-    id:userId
-
-  }
-}
+    bio,
+    profilePicture,
+    userName,
+    education,
+    occupation,
+    location,
+    firstName,
+    lastName,
+    email,
+    user: {
+      connect: {
+        id: userId
+      }
+    }
   })
 
   return redirect(`/users/${userId}`)
@@ -95,100 +90,82 @@ user:{
 
 export default function UserProfileRoute() {
   const navigation = useNavigation()
-  const actionData = useActionData<typeof action>();
+  const actionData = useActionData<typeof action>()
 
   const text =
-    navigation.state === "submitting"
-      ? "Saving..."
-      : navigation.state === "loading"
-      ? "Saved!"
-      : "Update Profile";
-
+    navigation.state === 'submitting'
+      ? 'Saving...'
+      : navigation.state === 'loading'
+      ? 'Saved!'
+      : 'Update Profile'
 
   const data = useLoaderData<{
-    profile: Profile,
+    profile: Profile
     user: UserType
-  }
-  >()
-  const {id, bio, profilePicture, userName, education, occupation, location, firstName, lastName, email, userId} = data.profile
-
+  }>()
+  const {
+    id,
+    bio,
+    profilePicture,
+    userName,
+    education,
+    occupation,
+    location,
+    firstName,
+    lastName,
+    email,
+    userId
+  } = data.profile
 
   return (
     <div className='col-span-4 p-2 md:col-span-1 md:col-start-3 md:col-end-11'>
       {data.profile ? (
-        <Form method='post'
-          reloadDocument
+        <Form method='post' reloadDocument>
+          <input type='hidden' name='id' defaultValue={id} />
+          <input type='hidden' name='userId' defaultValue={userId} />
 
-        >
-          <input type='hidden' name='id' defaultValue={
-            id} />
-          <input type='hidden' name='userId' defaultValue={
-            userId} />
-
-          <TipTap
-            content={
-              bio}/>
-          <input type='hidden' name='bio' defaultValue={
-            bio} />
+          <TipTap content={bio} />
+          <input type='hidden' name='bio' defaultValue={bio} />
 
           <TextInput
             label='Education'
             name='education'
-
-            defaultValue={
-              education}
-
-
-              aria-invalid={
-                Boolean(actionData?.fieldErrors?.education) ||
-                undefined
-              }
-              aria-errormessage={
-                actionData?.fieldErrors?.education
-                  ? "education-error"
-                  : undefined
-              }
-
+            defaultValue={education}
+            aria-invalid={
+              Boolean(actionData?.fieldErrors?.education) || undefined
+            }
+            aria-errormessage={
+              actionData?.fieldErrors?.education ? 'education-error' : undefined
+            }
           />
           <TextInput
             label='Occupation'
             name='occupation'
-            defaultValue={
-              occupation}
+            defaultValue={occupation}
           />
-          <TextInput
-            label='Location'
-            name='location'
-            defaultValue={
-              location}
-          />
+          <TextInput label='Location' name='location' defaultValue={location} />
           <TextInput
             label='User Name'
             name='userName'
-            defaultValue={
-              userName}
+            defaultValue={userName}
           />
           <TextInput
             label='First Name'
             name='firstName'
-            defaultValue={
-              firstName}
+            defaultValue={firstName}
           />
           <TextInput
             label='Last Name'
             name='lastName'
-            defaultValue={
-              lastName}
+            defaultValue={lastName}
           />
-          <Textarea
-            label='Email'
-            name='email'
-            defaultValue={
-              email}
-          />
+          <Textarea label='Email' name='email' defaultValue={email} />
           <Image src={profilePicture} alt='Profile Picture' />
-              <input type='hidden' name='profilePicture' defaultValue={
-                profilePicture} />
+          <input
+            type='hidden'
+            name='profilePicture'
+            defaultValue={profilePicture}
+          />
 
           <Button type='submit'>{text}</Button>
         </Form>

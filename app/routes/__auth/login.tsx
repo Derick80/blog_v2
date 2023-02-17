@@ -30,13 +30,11 @@ type ActionData = {
   }
 }
 
-
 // const schema =Z.object)({
 //   email: Z.string({
 //     required_error:'Email is required',
 //   }).email( 'invalid email'),
 //   password: Z.string().min(8, 'password must be at least 8 characters long'),
-
 
 // })
 export async function loader(args: LoaderArgs) {

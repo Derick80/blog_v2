@@ -25,7 +25,7 @@ export default function Drafts() {
 
   return (
     <>
-      <div className='col-span-1 col-start-1  md:col-span-6 md:col-start-4'>
+      <div className='flex grow flex-col items-center gap-5'>
         <h1>Drafts</h1>
         {data.drafts.length > 0 ? (
           data.drafts.map((draft) => (

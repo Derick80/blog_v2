@@ -271,7 +271,7 @@ export async function getPostByCategoryValue(value: string) {
         include: {
           user: true
         }
-      }
+      },
     }
   })
   return results

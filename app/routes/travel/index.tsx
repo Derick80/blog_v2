@@ -37,8 +37,9 @@ export default function Index() {
   const user = useOptionalUser()
 
   return (
-    <>
-      <Stack align='center' className='mt-10 w-[350px]'>
+    <div
+    className='flex grow flex-col items-center'>
+
         {user?.role === 'ADMIN' && (
           <Link to='/travel/new'>
             <Button color='teal' variant='outline'>
@@ -62,11 +63,10 @@ export default function Index() {
         </Flex>
         <ImageSlider data={data.NYC} />
         <ImageSlider data={data.Japan} />
-      </Stack>
 
       <div></div>
 
       <Outlet />
-    </>
+    </div>
   )
 }

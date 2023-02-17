@@ -1,6 +1,6 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Form, Outlet, useLoaderData } from '@remix-run/react'
+import { Form, Outlet, useFetcher, useLoaderData } from '@remix-run/react'
 import UserCard from '~/components/shared/user-ui/user-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import type { UserProps } from '~/utils/server/user.server'
@@ -29,6 +29,8 @@ export type TestUser = {
   }
 }
 export async function loader({ request }: LoaderArgs) {
+  const url = new URL(request.url)
+
   const user = await isAuthenticated(request)
   const currentUser = user?.id
 
@@ -36,7 +38,7 @@ export async function loader({ request }: LoaderArgs) {
   const profiles = await getProfiles()
   const userNames = users.map((user) => user.userName)
 
-  return json({ users, profiles , currentUser, userNames})
+  return json({ users, profiles, currentUser, userNames })
 }
 
 export default function Users() {
@@ -46,29 +48,28 @@ export default function Users() {
     currentUser: string
     userNames: string[]
   }>()
-  const [searchValue, onSearchChange] = useState('');
-
+  const [searchValue, onSearchChange] = useState('')
+  const userFetcher = useFetcher()
   return (
-      <>
-      <Flex direction='column' gap={ 5 } align='center' className='w-full'>
-      <Title order={ 1 }>Users</Title>
-      <Form method='get' action={`users/${searchValue}`}>
-      <Select
-      label="Your favorite framework/library"
-      placeholder="Pick one"
-      searchable
-      searchValue={searchValue}
-      nothingFound="No options"
-      data={
-       data.userNames
-      }
-    />
-    <Button type='submit'>Search</Button>
-    </Form>
-      { data.users.map((user: UserProps) => (<>
-
-        <UserCard key={ user.id } user={ user } profiles={ data?.profiles } />
-    </> ))}
-    </Flex><Outlet /></>
+    <div className='flex w-full flex-col items-center gap-5 '>
+      <div className='text-2xl font-semibold'>Users</div>
+      <userFetcher.Form method='get' action={`users/${searchValue}`}>
+        <Select
+          label='Search by username'
+          placeholder='Pick one'
+          searchable
+          searchValue={searchValue}
+          nothingFound='No options'
+          data={data.userNames}
+        />
+        <Button type='submit'>Search</Button>
+      </userFetcher.Form>
+      {data.users.map((user: UserProps) => (
+        <>
+          <UserCard key={user.id} user={user} profiles={data?.profiles} />
+        </>
+      ))}
+      <Outlet />
+    </div>
   )
 }

@@ -5,8 +5,8 @@ import {
   LoaderArgs,
   redirect
 } from '@remix-run/node'
-import {  useFetcher, useLoaderData } from '@remix-run/react'
-import React  from 'react'
+import { useFetcher, useLoaderData } from '@remix-run/react'
+import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import FormField from '~/components/shared/form-field'

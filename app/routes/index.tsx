@@ -16,8 +16,7 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData<{ post: SerializeFrom<Post> }>()
   return (
-    <Stack align='center' className='w-full'>
-      <StatsCard />
+<div className='flex grow flex-col items-center gap-5 '>      <StatsCard />
       <div>Hero Post</div>
       {data.post && (
         <PostCard
@@ -32,6 +31,6 @@ export default function Index() {
           showShare={true}
         />
       )}
-    </Stack>
+    </div>
   )
 }

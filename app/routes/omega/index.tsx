@@ -45,31 +45,5 @@ export default function Index() {
   // const posts = fetcher?.data?.posts
   // console.log(posts,'posts');
 
-  return (
-    <Flex direction={'column'} gap={5} align='center'>
-      {data.posts.map((post) => (
-        <div key={post.id}>
-          <div> {post.title}</div>
-
-          <FormComments />
-          {data.comments && (
-            <ListComments comments={formatComments(data.comments || [])} />
-          )}
-        </div>
-      ))}
-      {/* {fetcher?.data?.posts ? (
-  fetcher?.data?.posts.map((post)=>(
-    <div key={post.id}>
-    <div>{post.title}</div>
-    <FormComments
-
-    />
-    {
-      post.comments && <ListComments comments={formatComments(post.comments || [])} />
-    }
-  </div>
-  ))
-):null} */}
-    </Flex>
-  )
+  return <Flex direction={'column'} gap={5} align='center'></Flex>
 }

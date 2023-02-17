@@ -1,7 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { prisma } from './prisma.server'
 
-
 export async function getProfiles() {
   const profiles = await prisma.profile.findMany()
   return profiles
@@ -15,8 +14,10 @@ export async function getUserProfile(userId: string) {
   return profile
 }
 
-export async function editUserProfile({input}:{
-  input:{
+export async function editUserProfile({
+  input
+}: {
+  input: {
     id: string
     userName: string
     email: string
@@ -27,8 +28,6 @@ export async function editUserProfile({input}:{
     location: string
     occupation: string
     education: string
-
-
   }
 }) {
   const profile = await prisma.profile.update({
@@ -44,11 +43,9 @@ export async function editUserProfile({input}:{
       profilePicture: input.profilePicture,
       location: input.location,
       occupation: input.occupation,
-      education: input.education,
-
-  }
+      education: input.education
+    }
   })
 
   return profile
 }
-

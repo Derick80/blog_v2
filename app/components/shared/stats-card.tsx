@@ -1,6 +1,6 @@
 import { useOptionalUser } from '~/utils/utilities'
 
-export default function   StatsCard() {
+export default function StatsCard() {
   const user = useOptionalUser()
   return (
     <>

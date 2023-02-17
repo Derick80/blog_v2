@@ -3,15 +3,9 @@ import { json, redirect } from '@remix-run/node'
 import {
   Form,
   useLoaderData,
-  useNavigate,
-  useNavigation,
-  useRouteLoaderData
-} from '@remix-run/react'
-import { badRequest } from 'remix-utils'
+  useNavigation} from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import Edit from '~/components/shared/blog-ui/edit-post'
-import type { CategoryForm } from '~/utils/server/post.server'
 import { getPostToEdit } from '~/utils/server/post.server'
 import {
   deletePost,
@@ -21,10 +15,8 @@ import {
 } from '~/utils/server/post.server'
 import { validateText } from '~/utils/validators.server'
 import { Button, Flex, MultiSelect, Stack, Textarea } from '@mantine/core'
-import { id } from 'date-fns/locale'
 import TipTap from '~/components/shared/tip-tap'
-import { useEffect, useState } from 'react'
-import { Category } from '~/utils/schemas/category-schema'
+import { useState } from 'react'
 import getAllCategories from '~/utils/server/categories.server'
 import Dropdown from '~/components/shared/blog-ui/dropdown'
 

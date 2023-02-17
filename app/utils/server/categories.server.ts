@@ -23,7 +23,6 @@ export async function getPostsByCategoryNameId(value: string) {
   return categories
 }
 
-
 export async function createCategory(value: string) {
   const category = await prisma.category.create({
     data: {

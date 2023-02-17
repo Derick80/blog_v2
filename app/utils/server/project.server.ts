@@ -13,9 +13,7 @@ export async function getProjects() {
     }
   })
 
-  const categories = projects.map((project) =>
-    project.categories.map((cat) => cat.value)
-  )
 
-  return { projects, categories }
+
+  return { projects }
 }

@@ -25,8 +25,6 @@ export const validateText = (name: string) => {
   if (!name.length) return `Please enter some text`
 }
 
-
-
 export const validateTitle = (title: string) => {
   if (!title.length || title.length > 25)
     return `Please create a title that is less than 25 characters`

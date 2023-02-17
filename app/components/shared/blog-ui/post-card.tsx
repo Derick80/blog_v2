@@ -195,17 +195,18 @@ export const PostCard = ({
                 currentUser={user.id}
               />
             )}
- {showComments &&(
-            <Button
-            type='button'
-            variant='subtle'
-            onClick={() => setOpen(!open)}
-            ><IconMessage /><Text>{ _count.comments }</Text></Button>
-           )}
+            {showComments &&  data.comments &&(
+              <Button
+                type='button'
+                variant='subtle'
+                onClick={() => setOpen(!open)}
+              >
+                <IconMessage />
+                <Text>{_count.comments}</Text>
+              </Button>
+            )}
             {showShare && id && <ShareButton id={id} />}
             {showOptions && <PostOptions id={id} />}
-
-
           </Flex>
           {user?.avatarUrl && (
             <Tooltip label={user?.userName} position='top'>
@@ -219,7 +220,7 @@ export const PostCard = ({
           )}
         </Group>
         <Divider />
-        {showComments && data.comments &&id && (
+        {showComments && data.comments && id && (
           <Flex direction={'column'}>
             <FormComments postId={id} />
             {open && data.comments && (

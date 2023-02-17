@@ -1,4 +1,4 @@
-import { Center, Container, MultiSelect, Stack, TextInput } from '@mantine/core'
+import { Button, Center, Container, MultiSelect, Stack, TextInput } from '@mantine/core'
 import type { ActionFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
@@ -89,14 +89,14 @@ export default function Uploader() {
 
   return (
     <Center>
-      <Stack className='w-[350px]'>
+      <Stack className='w-[350px] '>
         <Form
-          className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+        id='newPost'
+          className='flex gap-5 flex-col rounded-xl shadow-md'
           method='post'
         >
-          <label htmlFor='imageUrl'>Image</label>
           <input
-            type='text'
+            type='hidden'
             className='rounded-xl bg-crimson12 text-slate12'
             name='imageUrl'
             value={fetcher?.data?.imageUrl}
@@ -121,47 +121,61 @@ export default function Uploader() {
             data={categories}
             onChange={(e) => {
               setSelected(e.join(','))
-              console.log(e.join(','))
             }}
           />
           <input type='hidden' name='categories' value={selected} />
-          <button type='submit'>Save post</button>
         </Form>
-        <Container>
+        <div
+          className='flex flex-col gap-5'
+        >
           <fetcher.Form
             method='post'
             encType='multipart/form-data'
             action='/actions/image'
             onClick={onClick}
-            className='col-span-2 col-start-3 flex flex-col rounded-xl shadow-md'
+            className='flex flex-col gap-5'
+
           >
-            <label htmlFor='imageUrl'>Image to upload</label>
+            <label htmlFor='imageUrl'>Upload an Image</label>
             <input
               id='imageUrl'
-              className='rounded-xl bg-crimson12 text-slate12'
+              className='rounded-xl bg-crimson12 text-slate12 block'
               type='file'
               name='imageUrl'
               accept='image/*'
             />
-            <button type='submit'>Upload</button>
+            <Button
+            color={'blue'}
+              variant='subtle'
+            type='submit'>Upload Image</Button>
           </fetcher.Form>
           {fetcher.data ? (
-            <>
-              <div>
-                File has been uploaded to S3 and is available under the
-                following URL:
-              </div>
+            <div
+            className='flex  flex-col items-center'
+            >
+              <p
+              className='text-white'
+              >
+                File has been uploaded
+              </p>
               <input
                 type='hidden'
                 name='imageUrl'
-                value={fetcher.data.imageUrl}
+                value={fetcher?.data?.imageUrl}
               />
-              {fetcher?.data?.imageUrl}
-
-              <img src={fetcher.data.imageUrl} alt={'#'} />
-            </>
+              <div
+              className='w-[100px] h-[100px] rounded-xl bg-crimson12 text-slate12'>
+              <img src={fetcher?.data?.imageUrl} alt={'#'} />
+              </div>
+            </div>
           ) : null}
-        </Container>
+        </div>
+        <Button type='submit' form='newPost'
+        color={'green'}
+        variant='outline'
+
+        >Save post</Button>
+
       </Stack>
     </Center>
   )

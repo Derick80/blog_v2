@@ -5,3 +5,5 @@ export type Category = PrismaCategory & {
   posts: SerializedPost[]
   projects: Project[]
 }
+
+export type SingleCategory = PrismaCategory

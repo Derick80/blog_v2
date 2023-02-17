@@ -36,10 +36,10 @@ export async function loader() {
 export default function Index() {
   const data = useLoaderData()
   return (
-    <Stack align='center' className='mt-10 w-full'>
-      <div className='flex justify-between w-full'>
+<div className='flex grow w-full flex-col items-center gap-5 '>
+  <div className='flex w-full justify-center gap-2'>
         <h1 className='text-3xl font-bold'>Blog Feed</h1>
-      <Dropdown />
+        <Dropdown />
       </div>
       {data.posts.map((post: Post) => (
         <PostCard
@@ -54,7 +54,6 @@ export default function Index() {
           showShare={true}
         />
       ))}
-      {/* <Outlet context={data.categories} /> */}
-    </Stack>
+    </div>
   )
 }
