@@ -7,7 +7,7 @@ import { getAbout } from '~/utils/server/about.server'
 export const meta: MetaFunction = () => {
   return {
     title: `Derick's Personal Blog | About this Site`,
-    description: `About Page`
+    description: `Read all about me and this site`
   }
 }
 

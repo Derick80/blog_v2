@@ -1,5 +1,5 @@
 import { TextInput, Button, Title } from '@mantine/core'
-import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
@@ -8,7 +8,12 @@ import { Modal } from '~/components/shared/modal'
 import getAllCategories, {
   createCategory
 } from '~/utils/server/categories.server'
-
+export const meta: MetaFunction = () => {
+  return {
+    title: `Derick's Personal Blog | Blog Categories`,
+    description: `Take a look at all the categories for this blog`
+  }
+}
 export async function loader({ request }: LoaderArgs) {
   const categories = await getAllCategories()
 

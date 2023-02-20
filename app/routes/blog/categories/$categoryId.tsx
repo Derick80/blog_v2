@@ -1,4 +1,4 @@
-import type { LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import invariant from 'tiny-invariant'
@@ -6,7 +6,12 @@ import { PostCard } from '~/components/shared/blog-ui/post-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getPostByCategoryValue } from '~/utils/server/post.server'
 import type { Post } from '~/utils/schemas/post-schema'
-
+export const meta: MetaFunction = () => {
+  return {
+    title: `Derick's Personal Blog | Blog Categories`,
+    description: `List all articles by category`
+  }
+}
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {

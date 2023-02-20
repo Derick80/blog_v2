@@ -1512,16 +1512,16 @@ video {
   z-index: 20;
 }
 
-.col-span-4{
-  grid-column: span 4 / span 4;
-}
-
 .col-span-2{
   grid-column: span 2 / span 2;
 }
 
 .col-span-1{
   grid-column: span 1 / span 1;
+}
+
+.col-span-4{
+  grid-column: span 4 / span 4;
 }
 
 .col-start-3{
@@ -1640,6 +1640,10 @@ video {
   height: 250px;
 }
 
+.h-screen{
+  height: 100vh;
+}
+
 .h-20{
   height: 5rem;
 }
@@ -1654,10 +1658,6 @@ video {
 
 .h-32{
   height: 8rem;
-}
-
-.h-screen{
-  height: 100vh;
 }
 
 .h-0{
@@ -1778,6 +1778,14 @@ video {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+}
+
+.list-inside{
+  list-style-position: inside;
+}
+
+.list-disc{
+  list-style-type: disc;
 }
 
 .break-before-auto{
@@ -2056,6 +2064,11 @@ video {
   line-height: 1rem;
 }
 
+.text-2xl{
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 .text-lg{
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -2066,9 +2079,9 @@ video {
   line-height: 1.5rem;
 }
 
-.text-2xl{
-  font-size: 1.5rem;
-  line-height: 2rem;
+.text-xl{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 .font-extrabold{
@@ -2214,20 +2227,20 @@ video {
 }
 
 @media (min-width: 768px){
-  .md\:col-span-1{
-    grid-column: span 1 / span 1;
-  }
-
   .md\:col-span-6{
     grid-column: span 6 / span 6;
   }
 
-  .md\:col-start-3{
-    grid-column-start: 3;
+  .md\:col-span-1{
+    grid-column: span 1 / span 1;
   }
 
   .md\:col-start-4{
     grid-column-start: 4;
+  }
+
+  .md\:col-start-3{
+    grid-column-start: 3;
   }
 
   .md\:col-end-11{

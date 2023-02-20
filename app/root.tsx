@@ -64,3 +64,18 @@ export default function App() {
     </MantineProvider>
   )
 }
+export function ErrorBoundary() {
+  return (
+    <div>
+      <h1>ROOT ERROR</h1>
+    </div>
+  )
+}
+
+export function CatchBoundary() {
+  return (
+    <div>
+      <h1>ROOT CATCH</h1>
+    </div>
+  )
+}

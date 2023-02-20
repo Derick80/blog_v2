@@ -2,6 +2,7 @@ import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import {
   Form,
+  useCatch,
   useLoaderData,
   useNavigation} from '@remix-run/react'
 import invariant from 'tiny-invariant'
@@ -21,6 +22,13 @@ import getAllCategories from '~/utils/server/categories.server'
 import Dropdown from '~/components/shared/blog-ui/dropdown'
 
 export async function loader({ params, request }: LoaderArgs) {
+  const user = await isAuthenticated(request)
+  if(!user){
+    throw new Response("Not authenticated", {
+      status: 401,
+    });
+
+  }
   const postId = params.postId
   const allCategories = await getAllCategories()
   invariant(postId, 'postId is required')
@@ -239,4 +247,17 @@ export default function EditPost() {
       </Flex>
     </Stack>
   )
+}
+export function CatchBoundary() {
+  const caught = useCatch();
+
+  return (
+    <div>
+      <h1>Caught</h1>
+      <p>Status: {caught.status}</p>
+      <pre>
+        <code>{JSON.stringify(caught.data, null, 2)}</code>
+      </pre>
+    </div>
+  );
 }

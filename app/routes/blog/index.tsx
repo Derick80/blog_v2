@@ -1,4 +1,4 @@
-import { json } from '@remix-run/node'
+import { json, MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import Dropdown from '~/components/shared/blog-ui/dropdown'
@@ -6,6 +6,13 @@ import { PostCard } from '~/components/shared/blog-ui/post-card'
 import type { Post } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPosts } from '~/utils/server/post.server'
+
+export const meta: MetaFunction = () => {
+  return {
+    title: `Derick's Personal Blog | Dashboard`,
+    description: `A feed of science and technology articles, genetics, and bioinformatics`
+  }
+}
 
 export type SimpleComments = {
   id: string
@@ -53,6 +60,13 @@ export default function Index() {
           showShare={true}
         />
       ))}
+    </div>
+  )
+}
+export function ErrorBoundary() {
+  return (
+    <div>
+      <h1>BLOG ERROR</h1>
     </div>
   )
 }
