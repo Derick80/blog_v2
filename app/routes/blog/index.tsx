@@ -42,8 +42,8 @@ export async function loader() {
 export default function Index() {
   const data = useLoaderData()
   return (
-<div className='flex grow w-full flex-col items-center gap-5 '>
-  <div className='flex w-full justify-center gap-2'>
+    <div className='flex w-full grow flex-col items-center gap-5 '>
+      <div className='flex w-full justify-center gap-2'>
         <h1 className='text-3xl font-bold'>Blog Feed</h1>
         <Dropdown />
       </div>

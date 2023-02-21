@@ -10,18 +10,15 @@ export async function getProjects() {
     include: {
       categories: true,
       user: {
-        select:{
-           id:true,
-           userName:true,
-           avatarUrl:true,
-           email:true,
-
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true
         }
-       },
+      }
     }
   })
-
-
 
   return { projects }
 }

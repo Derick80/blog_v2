@@ -2,7 +2,6 @@ import { Button } from '@mantine/core'
 import { BookmarkFilledIcon, BookmarkIcon } from '@radix-ui/react-icons'
 import type { FormMethod } from '@remix-run/react'
 import { useFetcher } from '@remix-run/react'
-import { IconBookmark } from '@tabler/icons'
 import { useState } from 'react'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
 export type FavoriteContainerProps = {

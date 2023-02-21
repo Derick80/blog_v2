@@ -13,15 +13,14 @@ export async function getChildCommentsByParentId({
     },
     include: {
       user: {
-        select:{
-           id:true,
-           userName:true,
-           avatarUrl:true,
-           email:true,
-            password:false
-
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          password: false
         }
-       }
+      }
     }
   })
   return comments
@@ -94,15 +93,15 @@ export async function getCommentById(commentId: string) {
       id: commentId
     },
     include: {
-      user:{
-        select:{
-           id:true,
-           userName:true,
-           avatarUrl:true,
-           email:true,
-            password:false
+      user: {
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          password: false
         }
-       }
+      }
     }
   })
   return comment
@@ -186,29 +185,27 @@ export async function getCommentsAndUserData() {
   const result = await prisma.comment.findMany({
     include: {
       user: {
-        select:{
-           id:true,
-           userName:true,
-           avatarUrl:true,
-           email:true,
-           password:false
-
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          password: false
         }
-       },
+      },
       post: {
         include: {
           comments: {
             include: {
               user: {
-                select:{
-                   id:true,
-                   userName:true,
-                   avatarUrl:true,
-                   email:true,
-
+                select: {
+                  id: true,
+                  userName: true,
+                  avatarUrl: true,
+                  email: true
                 }
-               },
-          }
+              }
+            }
           },
           _count: true,
           likes: true,

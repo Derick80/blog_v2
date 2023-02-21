@@ -17,26 +17,25 @@ export async function getHeroPost() {
       userId: true,
       categories: true,
       user: {
-        select:{
-           id:true,
-           userName:true,
-           avatarUrl:true,
-           email:true,
-          password:false
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          password: false
         }
-       },
+      },
       comments: {
         include: {
           user: {
-            select:{
-               id:true,
-               userName:true,
-               avatarUrl:true,
-               email:true,
-                password:false
-
+            select: {
+              id: true,
+              userName: true,
+              avatarUrl: true,
+              email: true,
+              password: false
             }
-           },
+          }
         }
       },
       favorites: true,
@@ -59,28 +58,27 @@ export async function getUserPosts(userId: string) {
     include: {
       categories: true,
       user: {
-        select:{
-            id:true,
-            userName:true,
-            avatarUrl:true,
-            email:true,
-            _count: true,
-            password:false
-              }
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          _count: true,
+          password: false
+        }
       },
       likes: true,
       comments: {
         include: {
           user: {
-            select:{
-               id:true,
-               userName:true,
-               avatarUrl:true,
-               email:true,
-               password:false
-
+            select: {
+              id: true,
+              userName: true,
+              avatarUrl: true,
+              email: true,
+              password: false
             }
-           },
+          }
         }
       }
     }
@@ -98,39 +96,37 @@ export async function getPosts() {
       comments: {
         include: {
           user: {
-            select:{
-               id:true,
-               userName:true,
-               avatarUrl:true,
-               email:true,
-
+            select: {
+              id: true,
+              userName: true,
+              avatarUrl: true,
+              email: true
             }
-           },
+          },
           children: {
             include: {
               user: {
-                select:{
-                   id:true,
-                   userName:true,
-                   avatarUrl:true,
-                   email:true,
-                   password:false
-
+                select: {
+                  id: true,
+                  userName: true,
+                  avatarUrl: true,
+                  email: true,
+                  password: false
                 }
-               },
+              }
             }
           }
         }
       },
       user: {
-        select:{
-           id:true,
-           userName:true,
-           avatarUrl:true,
-           email:true,
-            password:false
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          password: false
         }
-       },
+      },
       categories: true,
       _count: true,
       likes: true,
@@ -150,34 +146,31 @@ export async function getPostById(id: string) {
       comments: {
         include: {
           user: {
-           select:{
-              id:true,
-              userName:true,
-              avatarUrl:true,
-              email:true,
-              password:false
-
-           }
+            select: {
+              id: true,
+              userName: true,
+              avatarUrl: true,
+              email: true,
+              password: false
+            }
           },
           children: {
             include: {
               user: {
-                select:{
-                   id:true,
-                   userName:true,
-                   avatarUrl:true,
-                   email:true,
-                    password:false
-
+                select: {
+                  id: true,
+                  userName: true,
+                  avatarUrl: true,
+                  email: true,
+                  password: false
                 }
-               },
+              }
             }
           }
         }
       },
 
-
-            categories: true,
+      categories: true,
       _count: true,
       likes: true,
       favorites: true
@@ -201,15 +194,14 @@ export async function getMyPosts(email: string) {
       comments: {
         include: {
           user: {
-            select:{
-               id:true,
-               userName:true,
-               avatarUrl:true,
-               email:true,
-                password:false
-
+            select: {
+              id: true,
+              userName: true,
+              avatarUrl: true,
+              email: true,
+              password: false
             }
-           },
+          }
         }
       }
     }
@@ -224,15 +216,14 @@ export async function getPostToEdit(id: string) {
     include: {
       categories: true,
       user: {
-        select:{
-           id:true,
-           userName:true,
-           avatarUrl:true,
-           email:true,
-            password:false
-
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          password: false
         }
-       },
+      }
     }
   })
   return post
@@ -288,27 +279,25 @@ export async function getUserDrafts(userId: string) {
       _count: true,
       categories: true,
       user: {
-        select:{
-           id:true,
-           userName:true,
-           avatarUrl:true,
-           email:true,
-            password:false
-
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          password: false
         }
-       },
+      },
       comments: {
         include: {
           user: {
-            select:{
-               id:true,
-               userName:true,
-               avatarUrl:true,
-               email:true,
-                password:false
-
+            select: {
+              id: true,
+              userName: true,
+              avatarUrl: true,
+              email: true,
+              password: false
             }
-           },
+          }
         }
       },
       likes: true,
@@ -380,17 +369,16 @@ export async function getPostByCategoryValue(value: string) {
       comments: {
         include: {
           user: {
-            select:{
-               id:true,
-               userName:true,
-               avatarUrl:true,
-               email:true,
-                password:false
-
+            select: {
+              id: true,
+              userName: true,
+              avatarUrl: true,
+              email: true,
+              password: false
             }
-           },
+          }
         }
-      },
+      }
     }
   })
   return results

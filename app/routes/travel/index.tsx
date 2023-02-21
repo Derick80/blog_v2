@@ -37,32 +37,30 @@ export default function Index() {
   const user = useOptionalUser()
 
   return (
-    <div
-    className='flex grow flex-col items-center'>
+    <div className='flex grow flex-col items-center'>
+      {user?.role === 'ADMIN' && (
+        <Link to='/travel/new'>
+          <Button color='teal' variant='outline'>
+            Add a new photo
+          </Button>
+        </Link>
+      )}
 
-        {user?.role === 'ADMIN' && (
-          <Link to='/travel/new'>
-            <Button color='teal' variant='outline'>
-              Add a new photo
-            </Button>
-          </Link>
-        )}
-
-        <Flex direction='row' gap={20} align='center'>
-          <Flex gap={5}>
-            {data.albumNames.map((item, index) => {
-              return (
-                <Button key={index} color='blue' variant='outline'>
-                  <a href={`/travel/#${item}`}>
-                    <h2>{item}</h2>
-                  </a>
-                </Button>
-              )
-            })}
-          </Flex>
+      <Flex direction='row' gap={20} align='center'>
+        <Flex gap={5}>
+          {data.albumNames.map((item, index) => {
+            return (
+              <Button key={index} color='blue' variant='outline'>
+                <a href={`/travel/#${item}`}>
+                  <h2>{item}</h2>
+                </a>
+              </Button>
+            )
+          })}
         </Flex>
-        <ImageSlider data={data.NYC} />
-        <ImageSlider data={data.Japan} />
+      </Flex>
+      <ImageSlider data={data.NYC} />
+      <ImageSlider data={data.Japan} />
 
       <div></div>
 

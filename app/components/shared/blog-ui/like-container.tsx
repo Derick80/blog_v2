@@ -26,7 +26,7 @@ export default function LikeContainer({
     ? true
     : false
 
-    console.log('userLikedPost', userLikedPost);
+  console.log('userLikedPost', userLikedPost)
 
   const [likeCount, setLikeCount] = useState(likeCounts || 0)
   const [isLiked, setIsLiked] = useState(userLikedPost)
@@ -53,18 +53,14 @@ export default function LikeContainer({
       {currentUser ? (
         <Button type='button' variant='subtle' onClick={toggleLike}>
           {isLiked ? (
-           <div className='flex flex-row space-x-1'>
+            <div className='flex flex-row space-x-1'>
               <HeartFilledIcon style={{ color: 'red', fill: 'red' }} />
-              <p
-                className='text-xs space-x-1'
-              >{likeCount}</p>
+              <p className='space-x-1 text-xs'>{likeCount}</p>
             </div>
           ) : (
             <div className='flex flex-row space-x-1'>
               <HeartIcon />
-              <p
-                className='text-xs space-x-1'
-              >{likeCount}</p>
+              <p className='space-x-1 text-xs'>{likeCount}</p>
             </div>
           )}
         </Button>

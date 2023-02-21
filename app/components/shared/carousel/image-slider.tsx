@@ -1,8 +1,7 @@
 import { Button, Flex, Text, Title } from '@mantine/core'
 import type { TravelLog } from '@prisma/client'
-
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 import { Link } from '@remix-run/react'
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
 import { useState } from 'react'
 import type { UserType } from '~/utils/schemas/user-schema'
 import type { CitiesAndAlbums } from '~/utils/server/travel.server'
@@ -50,7 +49,7 @@ export const ImageSlider = ({ data }: CarouselProps) => {
               }
             >
               <Button className='p-2 ' onClick={() => prevSliderHandler(index)}>
-                <IconChevronLeft />
+                <ChevronLeftIcon />
               </Button>
 
               <div
@@ -71,7 +70,7 @@ export const ImageSlider = ({ data }: CarouselProps) => {
                 <SliderFooter item={item} user={user} />
               </div>
               <Button className='p-2' onClick={() => nextSliderHandler(index)}>
-                <IconChevronRight />
+                <ChevronRightIcon />
               </Button>
             </Flex>
           </>

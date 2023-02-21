@@ -1,7 +1,8 @@
 import { Avatar, Text, Box, Button, Group, Paper } from '@mantine/core'
 import { Link } from '@remix-run/react'
+import { format } from 'date-fns'
 import { useState } from 'react'
-import { CommentWithChildren } from '~/utils/schemas/comment-schema'
+import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import FormComments from './com-form'
 
 function CommentActions({
@@ -46,7 +47,7 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
         >
           <Group>
             <Text>{comment.createdBy}</Text>
-            <Text>{comment.createdAt}</Text>
+            <Text>{format(new Date(comment.createdAt), 'MMM d, yyyy')}</Text>
           </Group>
 
           {comment.message}

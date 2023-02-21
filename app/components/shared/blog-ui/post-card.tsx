@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger-with-children */
-import type { Post, SerializedEditPost, SerializedPost } from '~/utils/schemas/post-schema'
+import type { Post, SerializedPost } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import PostOptions from './post-options'
 import FavoriteContainer from './favorite-container'
@@ -18,7 +18,6 @@ import {
   Flex,
   Group,
   Image,
-  MediaQuery,
   Spoiler,
   Text,
   Tooltip,
@@ -114,18 +113,18 @@ export const PostCard = ({
       >
         <Card.Section>
           {imageUrl && (
-              <AspectRatio ratio={3 / 2} sx={{ maxWidth: 650 }}>
-                <Image
-                  src={imageUrl}
-                  alt={title}
-                  radius='md'
-                  style={{
-                    width: '100%',
-                    height: '100%'
-                  }}
-                  fit='cover'
-                />
-              </AspectRatio>
+            <AspectRatio ratio={3 / 2} sx={{ maxWidth: 650 }}>
+              <Image
+                src={imageUrl}
+                alt={title}
+                radius='md'
+                style={{
+                  width: '100%',
+                  height: '100%'
+                }}
+                fit='cover'
+              />
+            </AspectRatio>
           )}
         </Card.Section>
 
@@ -192,19 +191,15 @@ export const PostCard = ({
                 currentUser={currentUser.id}
               />
             )}
-            {showComments &&  data.comments &&(
+            {showComments && data.comments && (
               <Button
                 type='button'
                 variant='subtle'
                 onClick={() => setOpen(!open)}
               >
                 <div className='flex flex-row space-x-1'>
-                <ChatBubbleIcon />
-                <p
-                className='text-xs'
-                > {
-
-                _count.comments}</p>
+                  <ChatBubbleIcon />
+                  <p className='text-xs'> {_count.comments}</p>
                 </div>
               </Button>
             )}
@@ -224,10 +219,10 @@ export const PostCard = ({
         </Group>
         <Divider />
         <Group position='right'>
-          <p className='text-xs text-gray-200'>
+          <p className='text-gray-200 text-xs'>
             {createdAt && new Date(createdAt).toLocaleDateString()}
           </p>
-          </Group>
+        </Group>
         {showComments && data.comments && id && (
           <Flex direction={'column'}>
             <FormComments postId={id} />

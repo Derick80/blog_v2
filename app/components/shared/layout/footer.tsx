@@ -4,14 +4,15 @@ import { IconBrandGithub, IconBrandLinkedin } from '@tabler/icons'
 
 export default function Footer({ children }: { children?: React.ReactNode }) {
   return (
-    <footer className='flex items-center gap-5 justify-center'>
+    <footer className='flex items-center justify-center gap-5'>
       <div className='flex items-center gap-5'>
         <a
           href='https://github.com/Derick80'
           target='_blank'
           rel='noopener noreferrer'
         >
-<GitHubLogoIcon />        </a>
+          <GitHubLogoIcon />{' '}
+        </a>
 
         <Text>Copywrite {new Date().getFullYear()}</Text>
         <a
@@ -19,8 +20,8 @@ export default function Footer({ children }: { children?: React.ReactNode }) {
           target='_blank'
           rel='noopener noreferrer'
         >
-
-<LinkedInLogoIcon />        </a>
+          <LinkedInLogoIcon />{' '}
+        </a>
       </div>
     </footer>
   )

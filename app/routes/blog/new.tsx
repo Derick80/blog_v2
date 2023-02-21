@@ -1,4 +1,11 @@
-import { Button, Center, Container, MultiSelect, Stack, TextInput } from '@mantine/core'
+import {
+  Button,
+  Center,
+  Container,
+  MultiSelect,
+  Stack,
+  TextInput
+} from '@mantine/core'
 import type { ActionFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
@@ -91,8 +98,8 @@ export default function Uploader() {
     <Center>
       <Stack className='w-[350px] '>
         <Form
-        id='newPost'
-          className='flex gap-5 flex-col rounded-xl shadow-md'
+          id='newPost'
+          className='flex flex-col gap-5 rounded-xl shadow-md'
           method='post'
         >
           <input
@@ -125,57 +132,43 @@ export default function Uploader() {
           />
           <input type='hidden' name='categories' value={selected} />
         </Form>
-        <div
-          className='flex flex-col gap-5'
-        >
+        <div className='flex flex-col gap-5'>
           <fetcher.Form
             method='post'
             encType='multipart/form-data'
             action='/actions/image'
             onClick={onClick}
             className='flex flex-col gap-5'
-
           >
             <label htmlFor='imageUrl'>Upload an Image</label>
             <input
               id='imageUrl'
-              className='rounded-xl bg-crimson12 text-slate12 block'
+              className='block rounded-xl bg-crimson12 text-slate12'
               type='file'
               name='imageUrl'
               accept='image/*'
             />
-            <Button
-            color={'blue'}
-              variant='subtle'
-            type='submit'>Upload Image</Button>
+            <Button color={'blue'} variant='subtle' type='submit'>
+              Upload Image
+            </Button>
           </fetcher.Form>
           {fetcher.data ? (
-            <div
-            className='flex  flex-col items-center'
-            >
-              <p
-              className='text-white'
-              >
-                File has been uploaded
-              </p>
+            <div className='flex  flex-col items-center'>
+              <p className='text-white'>File has been uploaded</p>
               <input
                 type='hidden'
                 name='imageUrl'
                 value={fetcher?.data?.imageUrl}
               />
-              <div
-              className='w-[100px] h-[100px] rounded-xl bg-crimson12 text-slate12'>
-              <img src={fetcher?.data?.imageUrl} alt={'#'} />
+              <div className='h-[100px] w-[100px] rounded-xl bg-crimson12 text-slate12'>
+                <img src={fetcher?.data?.imageUrl} alt={'#'} />
               </div>
             </div>
           ) : null}
         </div>
-        <Button type='submit' form='newPost'
-        color={'green'}
-        variant='outline'
-
-        >Save post</Button>
-
+        <Button type='submit' form='newPost' color={'green'} variant='outline'>
+          Save post
+        </Button>
       </Stack>
     </Center>
   )

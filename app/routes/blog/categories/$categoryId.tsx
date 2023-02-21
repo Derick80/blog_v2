@@ -27,16 +27,11 @@ export async function loader({ request, params }: LoaderArgs) {
 }
 
 export default function CategoryRoute() {
-  const data = useLoaderData<{ posts: Post[],
-  categoryId: string}>()
+  const data = useLoaderData<{ posts: Post[]; categoryId: string }>()
 
   return (
-    <div
-    className='flex grow flex-col items-center gap-5'
-    >
-      <h1
-      className='text-2xl font-bold'
-      > {data.categoryId}</h1>
+    <div className='flex grow flex-col items-center gap-5'>
+      <h1 className='text-2xl font-bold'> {data.categoryId}</h1>
       {data &&
         data.posts.map((post) => (
           <PostCard
@@ -44,8 +39,7 @@ export default function CategoryRoute() {
             data={post}
             user={post.user}
             showCategories={true}
-            showComments={ false
-            }
+            showComments={false}
             showFavorites={true}
             showLikes={true}
             showOptions={true}
