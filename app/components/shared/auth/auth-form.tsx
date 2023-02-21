@@ -1,5 +1,7 @@
+import { Button } from '@mantine/core'
 import { Form, useActionData, useSearchParams } from '@remix-run/react'
 import { useEffect } from 'react'
+import { useToast } from '../toaster'
 
 type Props = {
   authType: 'register' | 'login' | 'request' | 'confirm'
@@ -25,6 +27,8 @@ const actionMap: Record<Props['authType'], { button: string; url: string }> = {
 }
 
 export const AuthForm = ({ authType }: Props) => {
+  const { toast } = useToast();
+
   const action = useActionData()
   const [searchParams] = useSearchParams()
   const { button, url } = actionMap[authType]
@@ -34,7 +38,7 @@ export const AuthForm = ({ authType }: Props) => {
 
   useEffect(() => {
     if (action && action.message) {
-      alert(action.message)
+      toast(action.message)
     }
   }, [action])
 
@@ -53,7 +57,7 @@ export const AuthForm = ({ authType }: Props) => {
             Email
           </label>
           <input
-            className='form-field-primary'
+            className='rounded-xl p-2'
             id='email'
             name='email'
             type='email'
@@ -61,7 +65,7 @@ export const AuthForm = ({ authType }: Props) => {
           />
           <label>Username</label>
           <input
-            className='form-field-primary'
+            className='rounded-xl p-2'
             id='username'
             name='username'
             type='text'
@@ -73,7 +77,7 @@ export const AuthForm = ({ authType }: Props) => {
         <>
           <label>Password</label>
           <input
-            className='form-field-primary'
+            className='rounded-xl p-2'
             id='password'
             name='password'
             type='password'
@@ -83,9 +87,13 @@ export const AuthForm = ({ authType }: Props) => {
         </>
       )}
 
-      <button className='btn-base btn-outline mb-2' type='submit'>
+      <Button
+        variant='outline'
+        color='blue'
+        className='mt-5'
+      type='submit'>
         {button}
-      </button>
+      </Button>
     </Form>
   )
 }

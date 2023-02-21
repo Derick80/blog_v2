@@ -1,4 +1,4 @@
-import { TravelLog } from '@prisma/client'
+import type { TravelLog } from '@prisma/client'
 import { prisma } from './prisma.server'
 
 export type CitiesAndAlbums = {

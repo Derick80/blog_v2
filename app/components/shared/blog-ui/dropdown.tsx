@@ -1,11 +1,6 @@
 import { Menu, Button, Text } from '@mantine/core'
+import { ChevronDownIcon, ExitIcon, Pencil1Icon, Pencil2Icon } from '@radix-ui/react-icons'
 import { Form, Link, NavLink } from '@remix-run/react'
-import {
-  IconChevronDown,
-  IconLogout,
-  IconNewSection,
-  IconPencilPlus
-} from '@tabler/icons'
 import { useState } from 'react'
 export default function Dropdown() {
   const [open, setOpen] = useState(false)
@@ -14,13 +9,13 @@ export default function Dropdown() {
       <Menu shadow='md' width={200}>
         <Menu.Target>
           <Button variant='default'>
-            <IconChevronDown />
+            <ChevronDownIcon />
           </Button>
         </Menu.Target>
 
         <Menu.Dropdown>
           <Menu.Label>Blog</Menu.Label>
-          <Menu.Item icon={<IconNewSection size={14} />}>
+          <Menu.Item icon={<Pencil2Icon />}>
             <NavLink
               style={{
                 textDecoration: 'none',
@@ -32,12 +27,12 @@ export default function Dropdown() {
               <p>New Post</p>
             </NavLink>
           </Menu.Item>
-          <Menu.Item icon={<IconPencilPlus size={14} />}>
+          <Menu.Item icon={<Pencil1Icon />}>
             <NavLink to='/drafts' onClick={() => setOpen(!open)}>
               <Text>Drafts</Text>
             </NavLink>
           </Menu.Item>
-          <Menu.Item icon={<IconPencilPlus size={14} />}>
+          <Menu.Item icon={<Pencil2Icon />}>
             <Link to='/blog/categories' onClick={() => setOpen(!open)}>
               <Text>Categories add one</Text>
             </Link>
@@ -46,7 +41,7 @@ export default function Dropdown() {
           <Menu.Divider />
 
           <Menu.Label>Account</Menu.Label>
-          <Menu.Item icon={<IconLogout size={14} />}>
+          <Menu.Item icon={<ExitIcon />}>
             <NavLink
               className={({ isActive }) =>
                 ` ${
