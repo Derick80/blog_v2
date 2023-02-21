@@ -1,10 +1,9 @@
 // app/auth.server.ts
 import { User } from '@prisma/client'
 import { Authenticator } from 'remix-auth'
-import type { DiscordProfile, PartialDiscordGuild } from 'remix-auth-discord'
+import type { DiscordProfile } from 'remix-auth-discord'
 import { DiscordStrategy } from 'remix-auth-discord'
 import { sessionStorage } from '../session.server'
-import { AuthInput } from '~/utils/schemas/auth-schema'
 import { getAccount } from './accountService.server'
 import { createUser } from '~/utils/server/user.server'
 

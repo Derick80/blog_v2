@@ -30,6 +30,7 @@ import ListComments from '~/components/comments/comList'
 import formatComments from './format-comments'
 import React from 'react'
 import { ChatBubbleIcon } from '@radix-ui/react-icons'
+import { useOptionalUser } from '~/utils/utilities'
 
 export type ManyPostProps = {
   data: Post & {
@@ -87,6 +88,7 @@ export const PostCard = ({
   showOptions,
   showCategories
 }: BasicCardProps | TheBasicCardProps) => {
+  const currentUser = useOptionalUser()
   const {
     id,
     title,
@@ -94,12 +96,12 @@ export const PostCard = ({
     body,
     imageUrl,
     createdAt,
-    published,
     categories,
     likes,
     _count,
     favorites
   } = data
+
   const [open, setOpen] = React.useState(false)
   return (
     <>
@@ -112,7 +114,6 @@ export const PostCard = ({
       >
         <Card.Section>
           {imageUrl && (
-            <MediaQuery smallerThan='md' styles={{ maxWidth: 350 }}>
               <AspectRatio ratio={3 / 2} sx={{ maxWidth: 650 }}>
                 <Image
                   src={imageUrl}
@@ -125,7 +126,6 @@ export const PostCard = ({
                   fit='cover'
                 />
               </AspectRatio>
-            </MediaQuery>
           )}
         </Card.Section>
 
@@ -177,19 +177,19 @@ export const PostCard = ({
 
         <Group position='apart'>
           <Flex align='center'>
-            {showLikes && likes && data.user && (
+            {showLikes && likes && currentUser && (
               <LikeContainer
                 postId={id}
                 likes={likes}
                 likeCounts={_count?.likes}
-                currentUser={data.user.id}
+                currentUser={currentUser.id}
               />
             )}
-            {showFavorites && user && (
+            {showFavorites && currentUser && (
               <FavoriteContainer
                 postId={id}
                 favorites={favorites}
-                currentUser={user.id}
+                currentUser={currentUser.id}
               />
             )}
             {showComments &&  data.comments &&(

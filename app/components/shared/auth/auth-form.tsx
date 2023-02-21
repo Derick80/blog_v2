@@ -1,5 +1,5 @@
 import { Form, useActionData, useSearchParams } from '@remix-run/react'
-import { useEffect, useTransition } from 'react'
+import { useEffect } from 'react'
 
 type Props = {
   authType: 'register' | 'login' | 'request' | 'confirm'
