@@ -26,6 +26,7 @@ model User {
   favorites   Favorite[]
   projects    Project[]
   comments    Comment[]
+  messages    Message[]
   images      ImageTest[]
 }
 
@@ -208,6 +209,16 @@ model ImageTest {
   title    String
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId   String
+}
+
+
+model Message {
+   id          String     @id @unique @default(uuid())
+    message     String
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
+    user       User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId     String
 }
 
 enum Role {
