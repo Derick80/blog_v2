@@ -26,8 +26,6 @@ export default function LikeContainer({
     ? true
     : false
 
-  console.log('userLikedPost', userLikedPost)
-
   const [likeCount, setLikeCount] = useState(likeCounts || 0)
   const [isLiked, setIsLiked] = useState(userLikedPost)
 

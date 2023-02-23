@@ -11,20 +11,7 @@ export type CitiesAndAlbums = {
   year: string
   userId: string
 }[]
-export async function getAblumbyAblum() {
-  return await prisma.travelLog.groupBy({
-    by: ['album'],
-    select: {
-      album: true,
-      city: true,
-      imageTitle: true,
-      imageDescription: true,
-      imageUrl: true,
-      year: true,
-      userId: true
-    }
-  })
-}
+
 export async function getAlbums() {
   const citiesAndAlbums = await prisma.travelLog.findMany({
     orderBy: {

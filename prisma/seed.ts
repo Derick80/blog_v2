@@ -185,7 +185,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
   await prisma.project.create({
     data: {
         title: "Personal Blog 1.0 ",
-        description: "A personal blog built with Remix and Typescript",
+        description: "A personal blog built with Remix and Typescript. This was the first first largely non-tutorial app that I built",
         projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/blog.png",
 
         projectUrl: "https://blog-nine-tau-49.vercel.app/",

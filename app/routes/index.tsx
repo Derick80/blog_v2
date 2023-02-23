@@ -1,4 +1,3 @@
-import { Stack } from '@mantine/core'
 import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
@@ -16,10 +15,10 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData<{ post: SerializeFrom<Post> }>()
   return (
-    <div className='flex grow flex-col items-center gap-5 '>
+    <div className='flex grow flex-col items-center gap-4 '>
       {' '}
       <StatsCard />
-      <div>Hero Post</div>
+      <h2 className='text-2xl font-bold'>Latest Post</h2>
       {data.post && (
         <PostCard
           key={data.post.id}

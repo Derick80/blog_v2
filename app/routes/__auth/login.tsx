@@ -61,13 +61,13 @@ export default function Login() {
         <h3 className='mh3'>OR</h3>
         <p className='text-sm italic'>Login with your social account</p>
       </div>
-     <div className='flex flex-col items-center justify-center'>
-     <SocialLoginForm provider='discord'>
-        <button className=''>Discord </button>
-      </SocialLoginForm>
-      <SocialLoginForm provider='github'>
-        <button className=''>Github</button>
-      </SocialLoginForm>
+      <div className='flex flex-col items-center justify-center'>
+        <SocialLoginForm provider='discord'>
+          <button className=''>Discord </button>
+        </SocialLoginForm>
+        <SocialLoginForm provider='github'>
+          <button className=''>Github</button>
+        </SocialLoginForm>
       </div>
 
       <div className='mt-2 mb-2 flex flex-col items-center justify-center md:mt-5 md:mb-5'>

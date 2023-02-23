@@ -27,7 +27,7 @@ const actionMap: Record<Props['authType'], { button: string; url: string }> = {
 }
 
 export const AuthForm = ({ authType }: Props) => {
-  const { toast } = useToast();
+  const { toast } = useToast()
 
   const action = useActionData()
   const [searchParams] = useSearchParams()
@@ -87,11 +87,7 @@ export const AuthForm = ({ authType }: Props) => {
         </>
       )}
 
-      <Button
-        variant='outline'
-        color='blue'
-        className='mt-5'
-      type='submit'>
+      <Button variant='outline' color='blue' className='mt-5' type='submit'>
         {button}
       </Button>
     </Form>

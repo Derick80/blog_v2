@@ -1,7 +1,7 @@
-import { json, MetaFunction } from '@remix-run/node'
+import type { MetaFunction } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { NavLink, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
-import Dropdown from '~/components/shared/blog-ui/dropdown'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import type { Post } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
@@ -44,30 +44,27 @@ export default function Index() {
   const user = useOptionalUser()
   const data = useLoaderData()
   return (
-    <div className='flex w-[350px] md:w-[650px] grow flex-col items-center mx-auto gap-5 '>
-        <h1 className='text-3xl font-bold'>Blog Feed</h1>
-{user?.role === 'ADMIN' && (
-  <div
-  className='flex gap-5'
-  ><NavLink
-          style={ {
-            textDecoration: 'none',
-            color: 'currentcolor'
-          } }
-          to='/blog/new'
-
-        >
-          <p>New Post</p>
-        </NavLink><NavLink to='/drafts' >
-            <p
-            >Drafts</p>
+    <div className='mx-auto flex w-[350px] grow flex-col items-center gap-5 md:w-[650px] '>
+      <h1 className='text-3xl font-bold'>Blog Feed</h1>
+      {user?.role === 'ADMIN' && (
+        <div className='flex gap-5'>
+          <NavLink
+            style={{
+              textDecoration: 'none',
+              color: 'currentcolor'
+            }}
+            to='/blog/new'
+          >
+            <p>New Post</p>
           </NavLink>
-          <NavLink to='/blog/categories' >
-              <p>New Category</p>
-            </NavLink>
-          </div>
-        )
-}
+          <NavLink to='/drafts'>
+            <p>Drafts</p>
+          </NavLink>
+          <NavLink to='/blog/categories'>
+            <p>New Category</p>
+          </NavLink>
+        </div>
+      )}
       {data.posts.map((post: Post) => (
         <PostCard
           key={post.id}

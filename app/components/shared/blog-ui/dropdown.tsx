@@ -1,5 +1,10 @@
 import { Menu, Button, Text } from '@mantine/core'
-import { ChevronDownIcon, ExitIcon, Pencil1Icon, Pencil2Icon } from '@radix-ui/react-icons'
+import {
+  ChevronDownIcon,
+  ExitIcon,
+  Pencil1Icon,
+  Pencil2Icon
+} from '@radix-ui/react-icons'
 import { Form, Link, NavLink } from '@remix-run/react'
 import { useState } from 'react'
 export default function Dropdown() {

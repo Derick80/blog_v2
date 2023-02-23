@@ -26,7 +26,7 @@ export const links: LinksFunction = () => [
 ]
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
-  title: 'New Remix App',
+  title: `Derick's blog`,
   viewport: 'width=device-width,initial-scale=1'
 })
 

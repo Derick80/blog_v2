@@ -1,4 +1,4 @@
-import { Button, Flex, Group, Stack, Title } from '@mantine/core'
+import { Button, Flex } from '@mantine/core'
 import type { TravelLog } from '@prisma/client'
 import type { LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
@@ -11,7 +11,7 @@ import { useOptionalUser } from '~/utils/utilities'
 export async function loader({ request, params }: LoaderArgs) {
   const albums = (await getAlbums()) as CitiesAndAlbums
   const byGroup = albums.reduce((acc, item) => {
-    const { album, city, year } = item
+    const { album } = item
     const key = `${album}`
     if (!acc[key]) {
       acc[key] = []

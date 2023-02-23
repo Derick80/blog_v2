@@ -4,11 +4,10 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 import { Link } from '@remix-run/react'
 import { useState } from 'react'
 import type { UserType } from '~/utils/schemas/user-schema'
-import type { CitiesAndAlbums } from '~/utils/server/travel.server'
 import { useOptionalUser } from '~/utils/utilities'
 // https://github.com/zioan/react-slider/blob/master/src/components/Slider2.jsx
 export type CarouselProps = {
-  data: CitiesAndAlbums
+  data: TravelLog[]
 }
 
 export const ImageSlider = ({ data }: CarouselProps) => {
