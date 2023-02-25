@@ -27,6 +27,7 @@ model User {
   projects    Project[]
   comments    Comment[]
   images      ImageTest[]
+  miniposts  MiniPost[]
 }
 
 model JapanImages {
@@ -210,6 +211,12 @@ model ImageTest {
   userId   String
 }
 
+model MiniPost {
+  id String @id @default(uuid())
+  message String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+}
 enum Role {
   ADMIN
   USER

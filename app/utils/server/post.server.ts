@@ -383,3 +383,35 @@ export async function getPostByCategoryValue(value: string) {
   })
   return results
 }
+
+export async function getMiniPosts(userId: string) {
+  const miniPosts = await prisma.miniPost.findMany({
+    where: {
+      userId
+    },
+    include: {
+      user: false
+    }
+  })
+  return miniPosts
+}
+export async function createMiniPost({
+  message,
+  userId
+}: {
+  message: string
+  userId: string
+}) {
+  const miniPost = await prisma.miniPost.create({
+    data: {
+      message,
+      user: {
+        connect: {
+          id: userId
+        }
+      }
+    }
+  })
+
+  return miniPost
+}

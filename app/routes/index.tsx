@@ -16,7 +16,6 @@ export default function Index() {
   const data = useLoaderData<{ post: SerializeFrom<Post> }>()
   return (
     <div className='flex grow flex-col items-center gap-4 '>
-      {' '}
       <StatsCard />
       <h2 className='text-2xl font-bold'>Latest Post</h2>
       {data.post && (

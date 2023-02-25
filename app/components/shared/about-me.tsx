@@ -32,8 +32,13 @@ export default function AboutMe({ about }: AboutProps) {
         </div>
       </div>
 
-      <div className='mx-auto max-w-prose break-before-auto p-2 indent-4 leading-6 md:w-fit md:p-4'>
-        {about.bio}
+      <div className='w-full grow'>
+        {about.bio && (
+          <div
+            dangerouslySetInnerHTML={{ __html: about.bio }}
+            className='prose prose-sm h-full dark:prose-invert'
+          ></div>
+        )}
       </div>
 
       {user?.userName === about.userName ? (

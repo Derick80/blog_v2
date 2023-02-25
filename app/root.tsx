@@ -16,6 +16,7 @@ import getAllCategories from './utils/server/categories.server'
 import Layout from './components/shared/layout/layout'
 import styles from './styles/app.css'
 import { useIsBot } from './is-bot.context'
+import { getFlash } from './utils/server/auth/session.server'
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: styles },
   {
@@ -33,8 +34,9 @@ export const meta: MetaFunction = () => ({
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   const categories = await getAllCategories()
+  const { message, headers } = await getFlash(request)
 
-  return json({ user, categories })
+  return json({ user, categories, message }, { headers })
 }
 createEmotionCache({ key: 'mantine' })
 
@@ -52,7 +54,7 @@ export default function App() {
         </head>
         <body>
           <Layout>
-            <Outlet />
+            <Outlet context={data} />
             <ScrollRestoration />
             {isBot ? null : <Scripts />}
             <LiveReload />
