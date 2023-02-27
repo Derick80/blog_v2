@@ -186,7 +186,7 @@ export const PostCard = ({
               </Button>
             )}
             {showShare && id && <ShareButton id={id} />}
-            {showOptions && <PostOptions id={id} />}
+            {showOptions && <PostOptions postId={id} />}
           </div>
           <div className='flex flex-col items-center space-x-2'>
             {user?.avatarUrl && (

@@ -2,7 +2,10 @@ import { prisma } from './prisma.server'
 
 export default async function getAllCategories() {
   const categories = await prisma.category.findMany({
-    distinct: ['value']
+    distinct: ['value'],
+    orderBy:{
+      value: 'asc'
+    }
   })
   return categories
 }

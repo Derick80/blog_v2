@@ -1,8 +1,9 @@
 import { TextInput, Button, Title } from '@mantine/core'
+import { Cross2Icon } from '@radix-ui/react-icons'
 import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { Form, useLoaderData } from '@remix-run/react'
 import CategoryContainer from '~/components/shared/category-container'
 import { Modal } from '~/components/shared/modal'
 import getAllCategories, {
@@ -32,7 +33,9 @@ export async function action({ request }: ActionArgs) {
 
   await createCategory(categoryName)
 
-  return redirect('/blog/categories')
+  return json({
+    success: true
+  })
 }
 
 export default function CategoryIndex() {
@@ -46,13 +49,26 @@ export default function CategoryIndex() {
     >
       <div className='flex flex-col items-center gap-4'>
         <Title>Existing Categories</Title>
-        <div>
+        <div
+          className='flex flex-row flex-wrap gap-2 justify-start'
+        >
           {data.categories.map((category: { id: string; value: string }) => (
-            <CategoryContainer
-              key={category.id}
-              value={category.value}
-              index={category.id}
-            />
+            <div key={category.id}
+              className='flex flex-col outline rounded-sm gap-4 justify-start'
+            >
+              <div className='flex items-center'>
+                <div className='flex-grow text-sm m-0.5'>{category.value}</div>
+                <Form method='post' action={`/blog/categories/${category.id}/delete`}
+                  className='border-l-2 inline-flex items-center'
+                >
+                  <button type='submit'
+                    className=' '
+                  >
+                    <Cross2Icon />
+                  </button>
+                </Form>
+                </div>
+              </div>
           ))}
         </div>
         <Title>New Category</Title>

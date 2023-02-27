@@ -3,11 +3,11 @@ import { Pencil1Icon } from '@radix-ui/react-icons'
 import { NavLink } from '@remix-run/react'
 
 export type OptionProps = {
-  id: string
+  postId: string
 }
-export default function PostOptions({ id }: OptionProps) {
+export default function PostOptions({ postId }: OptionProps) {
   return (
-    <NavLink to={`/blog/${id}/edit`}>
+    <NavLink to={`/blog/${postId}/edit`}>
       <Button variant='subtle'>
         <Pencil1Icon />
       </Button>
