@@ -16,7 +16,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <BrandIcon />
         </div>
         <div className='text-xl font-bold md:text-5xl '>
-          {' '}
           Derick Hoskinson PhD
         </div>
         <div className='mx-auto hidden items-center gap-5 md:flex md:flex-row'>
@@ -59,10 +58,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             onClose={() => setOpen(false)}
             title='Menu'
             padding='xl'
-            size='xl'
+            size='lg'
             position='top'
             transition='slide-down'
-            transitionDuration={250}
+            transitionDuration={450}
             transitionTimingFunction='ease'
           >
             <div className='flex flex-col items-center md:flex-row'>
@@ -99,7 +98,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Button
             color='teal'
             variant='subtle'
-            className='block md:hidden '
+            className='block md:hidden'
             onClick={() => setOpen(!open)}
           >
             <HamburgerMenuIcon />

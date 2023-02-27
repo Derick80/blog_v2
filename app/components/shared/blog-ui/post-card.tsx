@@ -104,43 +104,29 @@ export const PostCard = ({
   const [open, setOpen] = React.useState(false)
   return (
     <>
-      <Card
-        key={id}
-        shadow='sm'
-        radius='md'
-        withBorder
-        className='w-[350px] md:w-[650px]'
-      >
-        <Card.Section>
+      <div key={id} className='radius-md w-[350px] p-2 shadow-sm md:w-[650px]'>
+        <div>
           {imageUrl && (
-            <AspectRatio ratio={3 / 2} sx={{ maxWidth: 650 }}>
-              <Image
-                src={imageUrl}
-                alt={title}
-                radius='md'
-                style={{
-                  width: '100%',
-                  height: '100%'
-                }}
-                fit='cover'
-              />
-            </AspectRatio>
+            <Image
+              src={imageUrl}
+              alt={title}
+              radius='md'
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+              fit='cover'
+            />
           )}
-        </Card.Section>
+        </div>
 
-        <Card.Section>
+        <div>
           <NavLink
             to={`/blog/${id}`}
             className='text-gray-900 text-lg font-bold'
             style={{ textDecoration: 'none', color: 'currentcolor' }}
           >
-            <Text
-              className='prose prose-xl dark:prose-invert'
-              weight={600}
-              fz='xl'
-            >
-              {title}
-            </Text>
+            <h2 className='text-gray-900 text-lg font-bold'>{title}</h2>
           </NavLink>
           {showCategories && (
             <div
@@ -158,24 +144,20 @@ export const PostCard = ({
           )}
 
           <div className='prose prose-sm h-full'>
-            <TypographyStylesProvider>
-              <Spoiler maxHeight={120} showLabel='Show more' hideLabel='Hide'>
-                {body && (
-                  <p
-                    dangerouslySetInnerHTML={{ __html: body }}
-                    className='prose prose-sm h-full dark:prose-invert'
-                  ></p>
-                )}
-              </Spoiler>
-              <Text className='prose prose-sm dark:prose-invert' size='xs'>
-                {description}{' '}
-              </Text>
-            </TypographyStylesProvider>
+            <Spoiler maxHeight={120} showLabel='Show more' hideLabel='Hide'>
+              {body && (
+                <p
+                  dangerouslySetInnerHTML={{ __html: body }}
+                  className='prose prose-sm h-full dark:prose-invert'
+                ></p>
+              )}
+            </Spoiler>
+            <p className='prose prose-sm dark:prose-invert'>{description}</p>
           </div>
-        </Card.Section>
+        </div>
 
-        <Group position='apart'>
-          <Flex align='center'>
+        <div className='flex flex-row items-center justify-between'>
+          <div className='flex flex-row space-x-2 p-2'>
             {showLikes && likes && currentUser && (
               <LikeContainer
                 postId={id}
@@ -205,26 +187,27 @@ export const PostCard = ({
             )}
             {showShare && id && <ShareButton id={id} />}
             {showOptions && <PostOptions id={id} />}
-          </Flex>
-          {user?.avatarUrl && (
-            <Tooltip label={user?.userName} position='top'>
-              <Avatar
-                src={user?.avatarUrl}
-                variant='filled'
-                radius='xl'
-                size='sm'
-              />
-            </Tooltip>
-          )}
-        </Group>
+          </div>
+          <div className='flex flex-col items-center space-x-2'>
+            {user?.avatarUrl && (
+              <Tooltip label={user?.userName} position='top'>
+                <Avatar
+                  src={user?.avatarUrl}
+                  variant='filled'
+                  radius='xl'
+                  size='sm'
+                />
+              </Tooltip>
+            )}
+            <p className='text-gray-200 text-xs'>
+              {createdAt && new Date(createdAt).toLocaleDateString()}
+            </p>
+          </div>
+        </div>
         <Divider />
-        <Group position='right'>
-          <p className='text-gray-200 text-xs'>
-            {createdAt && new Date(createdAt).toLocaleDateString()}
-          </p>
-        </Group>
+        <Group position='right'></Group>
         {showComments && data.comments && id && (
-          <Flex direction={'column'}>
+          <div className='flex flex-col'>
             <FormComments postId={id} />
             {open && data.comments && (
               <ListComments comments={formatComments(data.comments || [])} />
@@ -232,9 +215,9 @@ export const PostCard = ({
             <Button onClick={() => setOpen(!open)}>
               {open ? 'Hide' : 'Show'} Comments
             </Button>
-          </Flex>
+          </div>
         )}
-      </Card>
+      </div>
     </>
   )
 }

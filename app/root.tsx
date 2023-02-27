@@ -38,14 +38,19 @@ export async function loader({ request }: LoaderArgs) {
 
   return json({ user, categories, message }, { headers })
 }
-createEmotionCache({ key: 'mantine' })
+const myCache = createEmotionCache({ key: 'mantine' })
 
 export default function App() {
   const data = useLoaderData<typeof loader>()
   let isBot = useIsBot()
 
   return (
-    <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
+    <MantineProvider
+      emotionCache={myCache}
+      theme={theme}
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <html lang='en'>
         <head>
           <StylesPlaceholder />

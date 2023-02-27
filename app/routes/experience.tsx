@@ -1,4 +1,4 @@
-import { Accordion, Button } from '@mantine/core'
+import { Button } from '@mantine/core'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import React from 'react'
 

@@ -142,7 +142,6 @@ export async function getPostById(id: string) {
   const post = await prisma.post.findUnique({
     where: { id },
     include: {
-      likes: true,
       comments: {
         include: {
           user: {
