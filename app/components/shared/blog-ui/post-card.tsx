@@ -100,8 +100,8 @@ export const PostCard = ({
     _count,
     favorites
   } = data
-
-  const [open, setOpen] = React.useState(false)
+  // this should be set to false outside of active development
+  const [open, setOpen] = React.useState(true)
   return (
     <>
       <div key={id} className='radius-md w-[350px] p-2 shadow-sm md:w-[650px]'>

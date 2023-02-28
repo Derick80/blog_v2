@@ -78,8 +78,7 @@ export default function Index() {
           showShare={true}
         />
       ))}
-          <Outlet />
-
+      <Outlet />
     </div>
   )
 }

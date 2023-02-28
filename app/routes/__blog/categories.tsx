@@ -49,26 +49,25 @@ export default function CategoryIndex() {
     >
       <div className='flex flex-col items-center gap-4'>
         <Title>Existing Categories</Title>
-        <div
-          className='flex flex-row flex-wrap gap-2 justify-start'
-        >
+        <div className='flex flex-row flex-wrap justify-start gap-2'>
           {data.categories.map((category: { id: string; value: string }) => (
-            <div key={category.id}
-              className='flex flex-col outline rounded-sm gap-4 justify-start'
+            <div
+              key={category.id}
+              className='flex flex-col justify-start gap-4 rounded-sm outline'
             >
               <div className='flex items-center'>
-                <div className='flex-grow text-sm m-0.5'>{category.value}</div>
-                <Form method='post' action={`/blog/categories/${category.id}/delete`}
-                  className='border-l-2 inline-flex items-center'
+                <div className='m-0.5 flex-grow text-sm'>{category.value}</div>
+                <Form
+                  method='post'
+                  action={`/blog/categories/${category.id}/delete`}
+                  className='inline-flex items-center border-l-2'
                 >
-                  <button type='submit'
-                    className=' '
-                  >
+                  <button type='submit' className=' '>
                     <Cross2Icon />
                   </button>
                 </Form>
-                </div>
               </div>
+            </div>
           ))}
         </div>
         <Title>New Category</Title>

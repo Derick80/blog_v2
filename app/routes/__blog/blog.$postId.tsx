@@ -27,9 +27,7 @@ export default function Index() {
 
   return (
     <div className='flex flex-col items-center'>
-      <div>
-        Post ID page
-      </div>
+      <div>Post ID page</div>
       {post && (
         <PostCard
           key={post.id}

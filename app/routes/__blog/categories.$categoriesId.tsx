@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => {
   }
 }
 export async function loader({ request, params }: LoaderArgs) {
-  console.log('params', params);
+  console.log('params', params)
 
   const user = await isAuthenticated(request)
   if (!user) {

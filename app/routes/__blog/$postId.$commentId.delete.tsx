@@ -1,24 +1,24 @@
-import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { ActionArgs, json, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { badRequest } from 'remix-utils'
 import { prisma } from '~/utils/server/prisma.server'
 
 export async function action({ request, params }: ActionArgs) {
-  console.log(params, 'params');
+  console.log(params, 'params')
 
   const commentId = params?.commentId
-console.log(commentId, 'commentId');
+  console.log(commentId, 'commentId')
 
   if (typeof commentId !== 'string')
     return badRequest({ message: 'Invalid commentId' })
 
   await prisma.comment.delete({
     where: {
-        id: commentId,
-    },
-    })
+      id: commentId
+    }
+  })
 
-  return redirect('/blog')
+  return json({ message: 'comment deleted' })
 }
 
 export async function loader({ request, params }: LoaderArgs) {

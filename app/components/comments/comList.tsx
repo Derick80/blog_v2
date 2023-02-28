@@ -1,5 +1,14 @@
-import { Avatar, Text, Box, Button, Group, Paper } from '@mantine/core'
-import { Form, Link, NavLink, useFetcher, useNavigate } from '@remix-run/react'
+import {
+  Avatar,
+  Text,
+  Box,
+  Button,
+  Group,
+  Paper,
+  Textarea
+} from '@mantine/core'
+import { CheckIcon, Cross2Icon, Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
+import { Form, Link, NavLink, useFetcher, useNavigate, useNavigation } from '@remix-run/react'
 import { format } from 'date-fns'
 import { useState } from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
@@ -10,7 +19,7 @@ function CommentActions({
   commentId,
   postId,
   userId,
-  message,
+  message
 }: {
   postId: string
   commentId: string
@@ -18,40 +27,38 @@ function CommentActions({
   message?: string
 }) {
   const [replying, setReplying] = useState(false)
-const user = useOptionalUser()
-const currentUser = user?.id
-const editCommentFetcher = useFetcher()
-const [editing, setEditing] = useState(false)
+  const user = useOptionalUser()
+  const currentUser = user?.id
+  const deleteCommentFetcher = useFetcher()
+
   return (
     <>
-      <Group position='apart' mt='md'>
-        <Button onClick={() => setReplying(!replying)}>Reply</Button>
+      <div
+      className='flex flex-row items-center justify-between'
+      >
+        <Button
+          size='sm'
+          variant='subtle'
+
+        onClick={() => setReplying(!replying)}>Reply</Button>
         {currentUser === userId && (
-          <><Form method='post' action={ `${commentId}/delete` }>
-            <Button type='submit' name='_action' value='deleteComment'>
-              Delete
-            </Button>
-          </Form>
-{/* `comments/${commentId}/edit` */}
+          <>
+            <deleteCommentFetcher.Form
+              method='post'
+              action={`${commentId}/delete`}
+            >
               <Button
-                onClick={() => setEditing(!editing)}
-              >Edit</Button>
-              {editing && (
-                <editCommentFetcher.Form method='post' action={ `comments/${commentId}/edit` }>
-                  <input type='hidden' name='postId' value={postId} />
-                  <input type='hidden' name='commentId' value={commentId} />
-                  <input type='hidden' name='userId' value={userId} />
-                  <textarea name='message'
-                    defaultValue={message}
-                  />
-                  <Button type='submit' name='_action' value='editComment'>
-                    Save
-                  </Button>
-                </editCommentFetcher.Form>
-              )}
-           </>
+                size='xs'
+                color='red'
+                variant='subtle'
+
+              type='submit' name='_action' value='deleteComment'>
+               <TrashIcon />
+              </Button>
+            </deleteCommentFetcher.Form>
+          </>
         )}
-      </Group>
+      </div>
 
       {replying && <FormComments postId={postId} parentId={commentId} />}
     </>
@@ -59,56 +66,78 @@ const [editing, setEditing] = useState(false)
 }
 
 function Comment({ comment }: { comment: CommentWithChildren }) {
+  const currentUser = useOptionalUser()
+  const navigate = useNavigation()
   const editCommentFetcher = useFetcher()
 
   const [editing, setEditing] = useState(false)
   return (
     <Paper withBorder radius='md' mb='md' p='md'>
-      <Box
-        sx={() => ({
-          display: 'flex'
-        })}
-      >
+      <div className='flex flex-row items-center justify-between'>
+
+
         <Avatar
           component={Link}
-          to={`/users/${comment.userId}`}
+          to={`/users/${comment.user.id}`}
           src={comment.user.avatarUrl}
         />
-        <Box
-          pl='md'
-          sx={() => ({
-            display: 'flex',
-            flexDirection: 'column'
-          })}
+        <div
+          className='flex flex-col w-full ml-4'
+
         >
-          <Group>
-            <Text>{comment.createdBy}</Text>
-            <Text>{format(new Date(comment.createdAt), 'MMM d, yyyy')}</Text>
-          </Group>
-          <div className='flex flex-row w-full items-center'>
-        {editing ? (<>
-          <editCommentFetcher.Form method='post' action={ `comments/${comment.id}/edit` }>
+          <div
+            className='flex w-full flex-row items-center justify-between'
+          >
+            <p>{comment.createdBy} wrote:</p>
+            <p>{format(new Date(comment.createdAt), 'MMM d, yyyy')}</p>
+          </div>
+          <div className='flex w-full flex-row gap-2'>
+            {editing ? (
+              <>
+                <editCommentFetcher.Form
+                  method='post'
+                  action={`comments/${comment.id}/edit`}
+                  className='w-full flex gap-2'
+                >
                   <input type='hidden' name='postId' value={comment.postId} />
                   <input type='hidden' name='commentId' value={comment.id} />
                   <input type='hidden' name='userId' value={comment.userId} />
-                  <textarea name='message'
-                    defaultValue={comment.message}
-                  />
-                  <Button type='submit' name='_action' value='editComment'>
-                    Save
-                  </Button>
+                  <textarea
+                    required
+                    className='w-full'
+                  name='message' defaultValue={comment.message} />
+                  <Button type='submit'
+                      variant='subtle'
+                      size='xs'
+                  name='_action' value='editComment'>
+                    <CheckIcon />
+                    </Button>
                 </editCommentFetcher.Form>
-        </>):(
-         <>
-         <p className='text-sm'>{comment.message}</p>
-         </>
-        )}
-        <Button onClick={() => setEditing(!editing)}>Edit</Button>
-        </div>
-        </Box>
-      </Box>
+              </>
+            ) : (
+              <>
+                <p className='w-full text-sm'>{comment.message}</p>
+              </>
+            )}
+            {comment.userId === currentUser?.id && (
+              <Button
+              size='xs'
+              variant='subtle'
 
-      <CommentActions postId={comment.postId} commentId={comment.id} userId={comment.userId} message={comment.message} />
+              onClick={() => setEditing(!editing)}>
+                {editing ? <Cross2Icon /> : <Pencil1Icon />}
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <CommentActions
+        postId={comment.postId}
+        commentId={comment.id}
+        userId={comment.user.id}
+        message={comment.message}
+      />
 
       {comment.children && comment.children.length > 0 && (
         <ListComments comments={comment.children} />

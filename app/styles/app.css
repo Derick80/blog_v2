@@ -1400,6 +1400,10 @@ video {
   margin-left: auto;
 }
 
+.ml-4{
+  margin-left: 1rem;
+}
+
 .block{
   display: block;
 }
@@ -1649,6 +1653,10 @@ video {
   justify-content: space-between;
 }
 
+.justify-around{
+  justify-content: space-around;
+}
+
 .gap-5{
   gap: 1.25rem;
 }
@@ -1759,6 +1767,10 @@ video {
 
 .border-l-2{
   border-left-width: 2px;
+}
+
+.border-t-2{
+  border-top-width: 2px;
 }
 
 .border-dashed{

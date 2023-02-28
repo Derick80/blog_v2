@@ -3,7 +3,7 @@ import { Form, Link, NavLink, useParams } from '@remix-run/react'
 
 export interface CategoryContainerProps {
   value: string[]
-  index: number,
+  index: number
   isEditable?: boolean
 }
 export interface CategoryContainerPropsOne {
@@ -16,8 +16,6 @@ export default function CategoryContainer({
   index,
   isEditable
 }: CategoryContainerProps | CategoryContainerPropsOne) {
-
-
   return (
     <>
       <Badge key={index}>
@@ -28,15 +26,13 @@ export default function CategoryContainer({
         >
           {value}
         </NavLink>
-        {
-          isEditable && (
-              <Form method='delete' action={`/blog/categories/${value}/delete`}>
-                    <Button variant='subtle' size='xs'>
-delete
-        </Button>
-        </Form>
-          )
-        }
+        {isEditable && (
+          <Form method='delete' action={`/blog/categories/${value}/delete`}>
+            <Button variant='subtle' size='xs'>
+              delete
+            </Button>
+          </Form>
+        )}
       </Badge>
     </>
   )

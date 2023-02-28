@@ -1,5 +1,5 @@
 import { Box, Button, Group, Textarea } from '@mantine/core'
-import { Form, useNavigation } from '@remix-run/react'
+import { Form, useFetcher, useNavigation } from '@remix-run/react'
 import React, { useEffect } from 'react'
 
 export default function FormComments({
@@ -9,18 +9,16 @@ export default function FormComments({
   postId: string
   parentId?: string
 }) {
+  const commentForm = useFetcher()
   // use the next few lines to reset the comment form without user navigating away from the page
   let navigation = useNavigation()
-  let isUpdating =
-    navigation.state === 'submitting' &&
-    navigation.formAction === '/actions/comment'
 
   let formRef = React.useRef<HTMLFormElement>(null)
   useEffect(() => {
-    if (!isUpdating) {
+    if (commentForm.type === 'done') {
       formRef.current?.reset()
     }
-  }, [isUpdating])
+  }, [commentForm.type])
   return (
     <Box
       mt='md'
@@ -29,7 +27,7 @@ export default function FormComments({
         maxWidth: '600px'
       }}
     >
-      <Form
+      <commentForm.Form
         ref={formRef}
         method='post'
         className='w-full'
@@ -40,7 +38,7 @@ export default function FormComments({
         <Textarea
           required
           name='message'
-          placeholder='your comment here'
+          placeholder='Write your comment here....'
           label='Comment'
         />
 
@@ -48,12 +46,14 @@ export default function FormComments({
           <Button
             type='submit'
             name='_action'
+            variant='filled'
+            size='sm'
             value={parentId ? 'reply' : 'create'}
           >
-            {parentId ? 'post reply' : 'post comment'}
+            {parentId ? 'post reply' : 'Post a comment'}
           </Button>
         </Group>
-      </Form>
+      </commentForm.Form>
     </Box>
   )
 }

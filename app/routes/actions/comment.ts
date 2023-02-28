@@ -49,7 +49,7 @@ export async function action({ request, params }: ActionArgs) {
       postId,
       createdBy
     })
-    return redirect(`/blog/${postId}`)
+    return json({ success: true })
   } else if (parentId) {
     await createChildComment({
       message,
@@ -58,7 +58,7 @@ export async function action({ request, params }: ActionArgs) {
       createdBy,
       parentId: parentId?.toString()
     })
-    return redirect(`/blog/${postId}`)
+    return json({ success: true })
   } else {
     return json({ error: 'Invalid form data' }, { status: 400 })
   }
