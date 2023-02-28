@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core'
+import { Button, Divider } from '@mantine/core'
 import type { MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { NavLink, Outlet, useLoaderData } from '@remix-run/react'
@@ -59,13 +59,17 @@ export default function Index() {
               Drafts
             </Button>
           </NavLink>
-          <NavLink prefetch='intent' to='/blog/categories'>
+          <NavLink prefetch='intent' to='/categories'>
             <Button size='sm' variant='subtle'>
               Manage categories
             </Button>
           </NavLink>
         </div>
       )}
+      <Divider
+        className='w-full'
+        style={{ height: '1px', backgroundColor: '#e2e8f0' }}
+      />
       {data.posts.map((post: Post) => (
         <PostCard
           key={post.id}

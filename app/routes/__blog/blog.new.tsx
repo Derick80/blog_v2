@@ -98,7 +98,7 @@ export default function Uploader() {
     <div className='mx-auto mb-7 flex w-[350px] flex-col bg-white text-slate12 dark:bg-zinc-900 dark:text-slate1'>
       <Form
         id='newPost'
-        className='flex flex-col gap-5 rounded-xl bg-white text-slate12 shadow-md dark:bg-zinc-900 dark:text-slate1'
+        className='flex flex-col gap-5 rounded-xl bg-white text-slate12 shadow-md dark:bg-zinc-900 dark:text-slate-50'
         method='post'
       >
         <input

@@ -104,7 +104,7 @@ export const PostCard = ({
   const [open, setOpen] = React.useState(true)
   return (
     <>
-      <div key={id} className='radius-md w-[350px] p-2 shadow-sm md:w-[650px]'>
+      <div key={id} className='bg-zinc-800 radius-md w-[350px] p-2 shadow-2xl md:w-[650px] text-zinc-900 dark:text-slate-50'>
         <div>
           {imageUrl && (
             <Image
@@ -126,7 +126,7 @@ export const PostCard = ({
             className='text-lg font-bold text-gray-900'
             style={{ textDecoration: 'none', color: 'currentcolor' }}
           >
-            <h2 className='text-lg font-bold text-gray-900'>{title}</h2>
+            <h2 className='text-lg font-bold'>{title}</h2>
           </NavLink>
           {showCategories && (
             <div

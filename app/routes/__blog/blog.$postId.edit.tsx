@@ -1,6 +1,6 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Form, useCatch, useLoaderData, useNavigation } from '@remix-run/react'
+import { Form, NavLink, useCatch, useLoaderData, useNavigation } from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getPostToEdit } from '~/utils/server/post.server'
@@ -16,6 +16,7 @@ import TipTap from '~/components/shared/tip-tap'
 import { useState } from 'react'
 import getAllCategories from '~/utils/server/categories.server'
 import Dropdown from '~/components/shared/blog-ui/dropdown'
+import { useOptionalUser } from '~/utils/utilities'
 
 export async function loader({ params, request }: LoaderArgs) {
   const user = await isAuthenticated(request)
@@ -107,6 +108,7 @@ export async function action({ params, request }: ActionArgs) {
 }
 
 export default function EditPost() {
+  const user = useOptionalUser()
   const navigate = useNavigation()
   const text =
     navigate.state === 'submitting'
@@ -169,9 +171,30 @@ export default function EditPost() {
   })
 
   return (
-    <Stack align='center' className='mt-10 w-full'>
-      <Flex direction={'column'}>
-        <Dropdown />
+    <div
+     className='mt-10 flex flex-col items-center w-full'>
+      <div
+      className='flex flex-col w-full items-center justify-center'
+     >
+       {user?.role === 'ADMIN' && (
+        <div className='flex gap-5'>
+          <NavLink prefetch='intent' to='/blog/new'>
+            <Button size='sm' variant='subtle'>
+              New post
+            </Button>
+          </NavLink>
+          <NavLink prefetch='intent' to='/drafts'>
+            <Button size='sm' variant='subtle'>
+              Drafts
+            </Button>
+          </NavLink>
+          <NavLink prefetch='intent' to='/blog/categories'>
+            <Button size='sm' variant='subtle'>
+              Manage categories
+            </Button>
+          </NavLink>
+        </div>
+      )}
 
         <Form
           method='post'
@@ -241,8 +264,8 @@ export default function EditPost() {
             {deleteText}
           </Button>
         </Form>
-      </Flex>
-    </Stack>
+      </div>
+    </div>
   )
 }
 export function CatchBoundary() {

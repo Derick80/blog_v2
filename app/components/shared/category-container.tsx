@@ -18,7 +18,9 @@ export default function CategoryContainer({
 }: CategoryContainerProps | CategoryContainerPropsOne) {
   return (
     <>
-      <Badge key={index}>
+      <div
+        className='flex flex-row items-center gap-2 border-2 border-slate-50 rounded-full py-1 w-fit px-1'
+      key={index}>
         <NavLink
           prefetch='intent'
           to={`/blog/categories/${value}`}
@@ -33,7 +35,7 @@ export default function CategoryContainer({
             </Button>
           </Form>
         )}
-      </Badge>
+      </div>
     </>
   )
 }
