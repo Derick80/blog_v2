@@ -188,7 +188,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
         description: "A personal blog built with Remix and Typescript. This was the first first largely non-tutorial app that I built",
         projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/blog.png",
 
-        projectUrl: "https://blog-nine-tau-49.vercel.app/",
+        projectUrl: "https://derickcurtis.com/",
         githubUrl:'https://github.com/Derick80/blog_social_media',
         userId: user.id,
           categories: {
@@ -229,7 +229,29 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
       }
         }
     })
+    await prisma.project.create({
+      data: {
+          title: "Japan 2023 Image Carousel",
+          description: "An Image Carousel built with React and Typescript and Tailwindcss",
+          projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/Screenshot+2023-02-28+at+2.14.51+PM.png",
 
+          projectUrl: "https://photogallery-3r9pc82rg-derick80.vercel.app/",
+          githubUrl:'https://github.com/Derick80/mindgame',
+          userId: user.id,
+         categories: {
+      connectOrCreate: [
+        {
+          where: { value: 'Typescript' },
+          create: { label: 'Typescript', value: 'Typescript' }
+        },
+        {
+          where: {  value: 'React' },
+          create: { label: 'React',value: 'React' }
+        }
+      ]
+    }
+      }
+  })
     const book1 = await prisma.post.create({
         data: {
             title: "Atomic habits",
