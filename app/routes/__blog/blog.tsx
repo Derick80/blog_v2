@@ -1,6 +1,6 @@
 import type { MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { NavLink, useLoaderData } from '@remix-run/react'
+import { NavLink, Outlet, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import type { Post } from '~/utils/schemas/post-schema'
@@ -78,6 +78,8 @@ export default function Index() {
           showShare={true}
         />
       ))}
+          <Outlet />
+
     </div>
   )
 }

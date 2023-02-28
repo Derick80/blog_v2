@@ -1554,6 +1554,10 @@ video {
   width: 1rem;
 }
 
+.w-2\/3{
+  width: 66.666667%;
+}
+
 .min-w-\[200px\]{
   min-width: 200px;
 }
@@ -1803,6 +1807,10 @@ video {
 
 .p-6{
   padding: 1.5rem;
+}
+
+.p-10{
+  padding: 2.5rem;
 }
 
 .py-2{
