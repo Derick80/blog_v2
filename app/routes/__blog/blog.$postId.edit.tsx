@@ -223,9 +223,11 @@ export default function EditPost() {
               value={imageUrl}
             />
           </Flex>
-          <Button type='submit' name='_action' value='save'>
+          <button type='submit' name='_action' value='save'
+           className='rounded-xl bg-white py-2 px-4 font-bold hover:bg-green-800 dark:bg-green-500'
+          >
             {text}
-          </Button>
+          </button>
           {published ? (
             <Button type='submit' name='_action' value='unpublish'>
               {unpublishText}

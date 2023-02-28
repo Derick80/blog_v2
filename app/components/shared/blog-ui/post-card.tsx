@@ -123,10 +123,10 @@ export const PostCard = ({
         <div>
           <NavLink
             to={`/blog/${id}`}
-            className='text-gray-900 text-lg font-bold'
+            className='text-lg font-bold text-gray-900'
             style={{ textDecoration: 'none', color: 'currentcolor' }}
           >
-            <h2 className='text-gray-900 text-lg font-bold'>{title}</h2>
+            <h2 className='text-lg font-bold text-gray-900'>{title}</h2>
           </NavLink>
           {showCategories && (
             <div
@@ -199,7 +199,7 @@ export const PostCard = ({
                 />
               </Tooltip>
             )}
-            <p className='text-gray-200 text-xs'>
+            <p className='text-xs text-gray-200'>
               {createdAt && new Date(createdAt).toLocaleDateString()}
             </p>
           </div>

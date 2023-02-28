@@ -92,7 +92,7 @@ function SliderFooter({
       <Text>{item.imageDescription}</Text>
       {user?.role === 'ADMIN' ? (
         <Link
-          className=' bg-gray-200 rounded-lg p-2'
+          className=' rounded-lg bg-gray-200 p-2'
           to={`/travel/${item.id}/edit`}
         >
           <Button size='sm' variant='filled' color='blue'>

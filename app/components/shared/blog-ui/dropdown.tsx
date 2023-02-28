@@ -51,7 +51,7 @@ export default function Dropdown() {
               className={({ isActive }) =>
                 ` ${
                   isActive
-                    ? 'border-black flex space-x-2 border-b-2'
+                    ? 'flex space-x-2 border-b-2 border-black'
                     : 'flex flex-row items-center space-x-2'
                 }`
               }

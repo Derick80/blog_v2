@@ -1,7 +1,7 @@
 import { useOptionalUser } from '~/utils/utilities'
-import { Button, Drawer, Flex, Group, Text, Title } from '@mantine/core'
+import { Button, Drawer, Text } from '@mantine/core'
 import { BrandIcon } from '../icons'
-import { Form, Link } from '@remix-run/react'
+import { Form, Link, NavLink } from '@remix-run/react'
 import Footer from './footer'
 import React from 'react'
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
@@ -19,30 +19,38 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           Derick Hoskinson PhD
         </div>
         <div className='mx-auto hidden items-center gap-5 md:flex md:flex-row'>
-          <Link to='/' onClick={() => setOpen(false)}>
+          <NavLink prefetch='intent' to='/' onClick={() => setOpen(false)}>
             <Text>Home</Text>
-          </Link>
-          <Link to='/blog' onClick={() => setOpen(false)}>
+          </NavLink>
+          <NavLink prefetch='intent' to='/blog' onClick={() => setOpen(false)}>
             <Text>Blog</Text>
-          </Link>
-          <Link to='/about' onClick={() => setOpen(false)}>
+          </NavLink>
+          <NavLink prefetch='intent' to='/about' onClick={() => setOpen(false)}>
             <Text>About</Text>
-          </Link>
-          <Link to='/projects' onClick={() => setOpen(false)}>
+          </NavLink>
+          <NavLink
+            prefetch='intent'
+            to='/projects'
+            onClick={() => setOpen(false)}
+          >
             <Text>Projects</Text>
-          </Link>
-          <Link to='/travel' onClick={() => setOpen(false)}>
+          </NavLink>
+          <NavLink
+            prefetch='intent'
+            to='/travel'
+            onClick={() => setOpen(false)}
+          >
             <Text>Travel</Text>
-          </Link>
-          <Link to='/users' onClick={() => setOpen(false)}>
+          </NavLink>
+          <NavLink prefetch='intent' to='/users' onClick={() => setOpen(false)}>
             <Text>Users</Text>
-          </Link>
-          <Link to='/omega' onClick={() => setOpen(false)}>
+          </NavLink>
+          <NavLink prefetch='intent' to='/omega' onClick={() => setOpen(false)}>
             <Text>omega</Text>
-          </Link>
-          <Link to='/beta' onClick={() => setOpen(false)}>
+          </NavLink>
+          <NavLink prefetch='intent' to='/beta' onClick={() => setOpen(false)}>
             <Text>Beta</Text>
-          </Link>
+          </NavLink>
 
           {user ? (
             <Form method='post' action='/logout'>
@@ -65,24 +73,44 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             transitionTimingFunction='ease'
           >
             <div className='flex flex-col items-center md:flex-row'>
-              <Link to='/' onClick={() => setOpen(!open)}>
+              <NavLink prefetch='intent' to='/' onClick={() => setOpen(!open)}>
                 <Text>Home</Text>
-              </Link>
-              <Link to='/blog' onClick={() => setOpen(!open)}>
+              </NavLink>
+              <NavLink
+                prefetch='intent'
+                to='/blog'
+                onClick={() => setOpen(!open)}
+              >
                 <Text>Blog</Text>
-              </Link>
-              <Link to='/about' onClick={() => setOpen(!open)}>
+              </NavLink>
+              <NavLink
+                prefetch='intent'
+                to='/about'
+                onClick={() => setOpen(!open)}
+              >
                 <Text>About</Text>
-              </Link>
-              <Link to='/projects' onClick={() => setOpen(!open)}>
+              </NavLink>
+              <NavLink
+                prefetch='intent'
+                to='/projects'
+                onClick={() => setOpen(!open)}
+              >
                 <Text>Projects</Text>
-              </Link>
-              <Link to='/travel' onClick={() => setOpen(!open)}>
+              </NavLink>
+              <NavLink
+                prefetch='intent'
+                to='/travel'
+                onClick={() => setOpen(!open)}
+              >
                 <Text>Travel</Text>
-              </Link>
-              <Link to='/users' onClick={() => setOpen(!open)}>
+              </NavLink>
+              <NavLink
+                prefetch='intent'
+                to='/users'
+                onClick={() => setOpen(!open)}
+              >
                 <Text>Users</Text>
-              </Link>
+              </NavLink>
 
               {user ? (
                 <Form method='post' action='/logout'>
@@ -106,7 +134,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      <div className='mt-1 flex h-full w-[350px] grow flex-col gap-5 md:w-full'>
+      <div className='mt-1 flex h-full w-[350px] grow flex-col gap-5 overflow-auto md:w-full'>
         {children}
       </div>
       <Footer />

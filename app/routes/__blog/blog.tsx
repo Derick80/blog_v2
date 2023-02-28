@@ -1,3 +1,4 @@
+import { Button } from '@mantine/core'
 import type { MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { NavLink, Outlet, useLoaderData } from '@remix-run/react'
@@ -48,20 +49,20 @@ export default function Index() {
       <h1 className='text-3xl font-bold'>Blog Feed</h1>
       {user?.role === 'ADMIN' && (
         <div className='flex gap-5'>
-          <NavLink
-            style={{
-              textDecoration: 'none',
-              color: 'currentcolor'
-            }}
-            to='/blog/new'
-          >
-            <p>New Post</p>
+          <NavLink prefetch='intent' to='/blog/new'>
+            <Button size='sm' variant='subtle'>
+              New post
+            </Button>
           </NavLink>
-          <NavLink to='/drafts'>
-            <p>Drafts</p>
+          <NavLink prefetch='intent' to='/drafts'>
+            <Button size='sm' variant='subtle'>
+              Drafts
+            </Button>
           </NavLink>
-          <NavLink to='/blog/categories'>
-            <p>New Category</p>
+          <NavLink prefetch='intent' to='/blog/categories'>
+            <Button size='sm' variant='subtle'>
+              Manage categories
+            </Button>
           </NavLink>
         </div>
       )}

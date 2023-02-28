@@ -8,9 +8,7 @@ import {
   ScrollRestoration,
   useLoaderData
 } from '@remix-run/react'
-import { MantineProvider, createEmotionCache } from '@mantine/core'
 import { StylesPlaceholder } from '@mantine/remix'
-import { theme } from './theme'
 import { isAuthenticated } from './utils/server/auth/auth.server'
 import getAllCategories from './utils/server/categories.server'
 import Layout from './components/shared/layout/layout'
@@ -38,35 +36,27 @@ export async function loader({ request }: LoaderArgs) {
 
   return json({ user, categories, message }, { headers })
 }
-const myCache = createEmotionCache({ key: 'mantine' })
 
 export default function App() {
   const data = useLoaderData<typeof loader>()
   let isBot = useIsBot()
 
   return (
-    <MantineProvider
-      emotionCache={myCache}
-      theme={theme}
-      withGlobalStyles
-      withNormalizeCSS
-    >
-      <html lang='en'>
-        <head>
-          <StylesPlaceholder />
-          <Meta />
-          <Links />
-        </head>
-        <body>
-          <Layout>
-            <Outlet context={data} />
-            <ScrollRestoration />
-            {isBot ? null : <Scripts />}
-            <LiveReload />
-          </Layout>
-        </body>
-      </html>
-    </MantineProvider>
+    <html lang='en'>
+      <head>
+        <StylesPlaceholder />
+        <Meta />
+        <Links />
+      </head>
+      <body className='bg-white text-slate12 dark:bg-zinc-900 dark:text-slate1'>
+        <Layout>
+          <Outlet context={data} />
+          <ScrollRestoration />
+          {isBot ? null : <Scripts />}
+          <LiveReload />
+        </Layout>
+      </body>
+    </html>
   )
 }
 export function ErrorBoundary() {

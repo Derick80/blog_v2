@@ -7,8 +7,20 @@ import {
   Paper,
   Textarea
 } from '@mantine/core'
-import { CheckIcon, Cross2Icon, Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
-import { Form, Link, NavLink, useFetcher, useNavigate, useNavigation } from '@remix-run/react'
+import {
+  CheckIcon,
+  Cross2Icon,
+  Pencil1Icon,
+  TrashIcon
+} from '@radix-ui/react-icons'
+import {
+  Form,
+  Link,
+  NavLink,
+  useFetcher,
+  useNavigate,
+  useNavigation
+} from '@remix-run/react'
 import { format } from 'date-fns'
 import { useState } from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
@@ -33,14 +45,14 @@ function CommentActions({
 
   return (
     <>
-      <div
-      className='flex flex-row items-center justify-between'
-      >
+      <div className='flex flex-row items-center justify-between'>
         <Button
           size='sm'
           variant='subtle'
-
-        onClick={() => setReplying(!replying)}>Reply</Button>
+          onClick={() => setReplying(!replying)}
+        >
+          Reply
+        </Button>
         {currentUser === userId && (
           <>
             <deleteCommentFetcher.Form
@@ -51,9 +63,11 @@ function CommentActions({
                 size='xs'
                 color='red'
                 variant='subtle'
-
-              type='submit' name='_action' value='deleteComment'>
-               <TrashIcon />
+                type='submit'
+                name='_action'
+                value='deleteComment'
+              >
+                <TrashIcon />
               </Button>
             </deleteCommentFetcher.Form>
           </>
@@ -74,20 +88,13 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
   return (
     <Paper withBorder radius='md' mb='md' p='md'>
       <div className='flex flex-row items-center justify-between'>
-
-
         <Avatar
           component={Link}
           to={`/users/${comment.user.id}`}
           src={comment.user.avatarUrl}
         />
-        <div
-          className='flex flex-col w-full ml-4'
-
-        >
-          <div
-            className='flex w-full flex-row items-center justify-between'
-          >
+        <div className='ml-4 flex w-full flex-col'>
+          <div className='flex w-full flex-row items-center justify-between'>
             <p>{comment.createdBy} wrote:</p>
             <p>{format(new Date(comment.createdAt), 'MMM d, yyyy')}</p>
           </div>
@@ -97,7 +104,7 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
                 <editCommentFetcher.Form
                   method='post'
                   action={`comments/${comment.id}/edit`}
-                  className='w-full flex gap-2'
+                  className='flex w-full gap-2'
                 >
                   <input type='hidden' name='postId' value={comment.postId} />
                   <input type='hidden' name='commentId' value={comment.id} />
@@ -105,13 +112,18 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
                   <textarea
                     required
                     className='w-full'
-                  name='message' defaultValue={comment.message} />
-                  <Button type='submit'
-                      variant='subtle'
-                      size='xs'
-                  name='_action' value='editComment'>
+                    name='message'
+                    defaultValue={comment.message}
+                  />
+                  <Button
+                    type='submit'
+                    variant='subtle'
+                    size='xs'
+                    name='_action'
+                    value='editComment'
+                  >
                     <CheckIcon />
-                    </Button>
+                  </Button>
                 </editCommentFetcher.Form>
               </>
             ) : (
@@ -121,10 +133,10 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
             )}
             {comment.userId === currentUser?.id && (
               <Button
-              size='xs'
-              variant='subtle'
-
-              onClick={() => setEditing(!editing)}>
+                size='xs'
+                variant='subtle'
+                onClick={() => setEditing(!editing)}
+              >
                 {editing ? <Cross2Icon /> : <Pencil1Icon />}
               </Button>
             )}

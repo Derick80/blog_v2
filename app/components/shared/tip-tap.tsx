@@ -21,7 +21,7 @@ const TipTap = ({ content }: { content?: string }) => {
     editorProps: {
       attributes: {
         class:
-          'flex-1 p-4 h-auto mx-auto text-slate1 dark:text-white m-5 focus:outline-none rounded-xl mt-0'
+          'flex-1 p-4 h-auto mx-auto text-slate12  m-5 focus:outline-none rounded-xl mt-0'
       }
     }
   })

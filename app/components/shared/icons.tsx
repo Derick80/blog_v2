@@ -92,7 +92,7 @@ export function BrandIcon() {
 export function UserPlaceHolder() {
   return (
     <svg
-      className='text-gray-400 absolute -left-1 h-12 w-12'
+      className='absolute -left-1 h-12 w-12 text-gray-400'
       fill='currentColor'
       viewBox='0 0 20 20'
       xmlns='http://www.w3.org/2000/svg'
