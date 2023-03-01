@@ -106,7 +106,7 @@ export const PostCard = ({
     <>
       <div
         key={id}
-        className='radius-md w-[350px] bg-zinc-800 p-2 text-zinc-900 shadow-2xl dark:text-slate-50 md:w-[650px]'
+        className='rounded-2xl w-[350px] bg-zinc-800  shadow-2xl text-slate-50 md:w-[650px]'
       >
         <div>
           {imageUrl && (
@@ -126,11 +126,13 @@ export const PostCard = ({
         <div>
           <NavLink
             to={`/blog/${id}`}
-            className='text-lg font-bold text-gray-900'
+            className='text-lg font-bold text-slate-50'
             style={{ textDecoration: 'none', color: 'currentcolor' }}
           >
-            <h2 className='text-lg font-bold'>{title}</h2>
+            <h2 className='indent-1 text-lg font-bold'>{title}</h2>
           </NavLink>
+          <p className='indent-1 italic p-1 prose prose-invert'>{description}</p>
+
           {showCategories && (
             <div
               className='flex flex-row space-x-2 p-2'
@@ -146,17 +148,14 @@ export const PostCard = ({
             </div>
           )}
 
-          <div className='prose prose-sm h-full'>
             <Spoiler maxHeight={120} showLabel='Show more' hideLabel='Hide'>
               {body && (
                 <p
                   dangerouslySetInnerHTML={{ __html: body }}
-                  className='prose prose-sm h-full dark:prose-invert'
+                  className='prose prose-invert indent-1 p-1 prose-sm h-full'
                 ></p>
               )}
             </Spoiler>
-            <p className='prose prose-sm dark:prose-invert'>{description}</p>
-          </div>
         </div>
 
         <div className='flex flex-row items-center justify-between'>
