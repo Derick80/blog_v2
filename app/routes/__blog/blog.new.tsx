@@ -75,6 +75,7 @@ export const action: ActionFunction = async ({ request }) => {
     userId: user.id,
     category: category
   })
+
   return redirect('/drafts')
 }
 
