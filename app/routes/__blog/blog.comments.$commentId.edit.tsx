@@ -3,7 +3,14 @@ import { Form, useLoaderData } from '@remix-run/react'
 import { Modal } from '~/components/shared/modal'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
+import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 
+export const meta: MetaFunction = () => {
+  return {
+    title: 'Edit comment',
+    description: "Edit a comment on Derick's blog"
+  }
+}
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {

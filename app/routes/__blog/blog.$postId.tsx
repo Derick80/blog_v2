@@ -7,7 +7,15 @@ import { PostCard } from '~/components/shared/blog-ui/post-card'
 import type { Post } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPostById } from '~/utils/server/post.server'
+import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 
+export const meta: MetaFunction = () => {
+  return {
+    title: 'See a post',
+    description:
+      "See a post on Derick's blog and share your knowledge with the world"
+  }
+}
 export async function loader({ request, params }: LoaderArgs) {
   const postId = params?.postId
   if (!postId) return badRequest({ message: 'Invalid post' })

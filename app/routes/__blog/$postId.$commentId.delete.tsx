@@ -1,8 +1,14 @@
-import { ActionArgs, json, LoaderArgs } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { badRequest } from 'remix-utils'
 import { prisma } from '~/utils/server/prisma.server'
+import type { MetaFunction, ActionArgs, LoaderArgs } from '@remix-run/node' // or cloudflare/deno
 
+export const meta: MetaFunction = () => {
+  return {
+    title: 'Delete comment',
+    description: "Delete a comment on Derick's blog"
+  }
+}
 export async function action({ request, params }: ActionArgs) {
   console.log(params, 'params')
 

@@ -16,15 +16,15 @@ export async function loader({ request, params }: LoaderArgs) {
   console.log('params', params)
 
   const user = await isAuthenticated(request)
-  if (!user) {
-    return { redirect: '/login' }
-  }
+
 
   const categoryId = params.categoriesId
   invariant(categoryId, 'categoryId is required')
 
   const posts = await getPostByCategoryValue(categoryId)
-
+if(!posts){
+  return new Response('No posts', { status: 404 })
+}
   return json({ posts, categoryId })
 }
 

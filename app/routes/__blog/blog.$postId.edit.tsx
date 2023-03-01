@@ -1,6 +1,12 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Form, NavLink, useCatch, useLoaderData, useNavigation } from '@remix-run/react'
+import {
+  Form,
+  NavLink,
+  useCatch,
+  useLoaderData,
+  useNavigation
+} from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getPostToEdit } from '~/utils/server/post.server'
@@ -11,13 +17,20 @@ import {
   unPublishPost
 } from '~/utils/server/post.server'
 import { validateText } from '~/utils/validators.server'
-import { Button, Flex, MultiSelect, Stack, Textarea } from '@mantine/core'
+import { Button, Flex, MultiSelect, Textarea } from '@mantine/core'
 import TipTap from '~/components/shared/tip-tap'
 import { useState } from 'react'
 import getAllCategories from '~/utils/server/categories.server'
-import Dropdown from '~/components/shared/blog-ui/dropdown'
 import { useOptionalUser } from '~/utils/utilities'
+import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 
+export const meta: MetaFunction = () => {
+  return {
+    title: "Edit Post | Derick's Blog",
+    description:
+      "Edit a post on Derick's blog and share your knowledge with the world"
+  }
+}
 export async function loader({ params, request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
@@ -171,30 +184,27 @@ export default function EditPost() {
   })
 
   return (
-    <div
-     className='mt-10 flex flex-col items-center w-full'>
-      <div
-      className='flex flex-col w-full items-center justify-center'
-     >
-       {user?.role === 'ADMIN' && (
-        <div className='flex gap-5'>
-          <NavLink prefetch='intent' to='/blog/new'>
-            <Button size='sm' variant='subtle'>
-              New post
-            </Button>
-          </NavLink>
-          <NavLink prefetch='intent' to='/drafts'>
-            <Button size='sm' variant='subtle'>
-              Drafts
-            </Button>
-          </NavLink>
-          <NavLink prefetch='intent' to='/blog/categories'>
-            <Button size='sm' variant='subtle'>
-              Manage categories
-            </Button>
-          </NavLink>
-        </div>
-      )}
+    <div className='mt-10 flex w-full flex-col items-center'>
+      <div className='flex w-full flex-col items-center justify-center'>
+        {user?.role === 'ADMIN' && (
+          <div className='flex gap-5'>
+            <NavLink prefetch='intent' to='/blog/new'>
+              <Button size='sm' variant='subtle'>
+                New post
+              </Button>
+            </NavLink>
+            <NavLink prefetch='intent' to='/drafts'>
+              <Button size='sm' variant='subtle'>
+                Drafts
+              </Button>
+            </NavLink>
+            <NavLink prefetch='intent' to='/blog/categories'>
+              <Button size='sm' variant='subtle'>
+                Manage categories
+              </Button>
+            </NavLink>
+          </div>
+        )}
 
         <Form
           method='post'
@@ -246,8 +256,11 @@ export default function EditPost() {
               value={imageUrl}
             />
           </Flex>
-          <button type='submit' name='_action' value='save'
-           className='rounded-xl bg-white py-2 px-4 font-bold hover:bg-green-800 dark:bg-green-500'
+          <button
+            type='submit'
+            name='_action'
+            value='save'
+            className='rounded-xl bg-white py-2 px-4 font-bold hover:bg-green-800 dark:bg-green-500'
           >
             {text}
           </button>

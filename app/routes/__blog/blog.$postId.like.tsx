@@ -4,6 +4,14 @@ import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createLike, deleteLike } from '~/utils/server/likes.server'
 
+import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+
+export const meta: MetaFunction = () => {
+  return {
+    title: 'Like a post',
+    description: "Like a post on Derick's blog"
+  }
+}
 export const loader: LoaderFunction = () => {
   throw new Response("This page doesn't exists.", { status: 404 })
 }

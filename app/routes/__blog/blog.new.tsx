@@ -6,24 +6,47 @@ import {
   Stack,
   TextInput
 } from '@mantine/core'
-import type { ActionFunction } from '@remix-run/node'
+import type { ActionFunction, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Form, useFetcher, useRouteLoaderData } from '@remix-run/react'
+import {
+  Form,
+  useCatch,
+  useFetcher,
+  useParams,
+  useRouteLoaderData
+} from '@remix-run/react'
 import { useState } from 'react'
 import TipTap from '~/components/shared/tip-tap'
 import type { Category } from '~/utils/schemas/category-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createPost } from '~/utils/server/post.server'
+import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 
+export const meta: MetaFunction = () => {
+  return {
+    title: 'Create a new post',
+    description:
+      "Create a new post on Derick's blog and share your knowledge with the world"
+  }
+}
 type ActionData = {
   imageUrl?: string
+}
+
+export async function loader({ request }: LoaderArgs) {
+  const user = await isAuthenticated(request)
+
+  if (!user) {
+    throw new Response('Not authenticated', { status: 401 })
+  }
+  return json({ user })
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const user = await isAuthenticated(request)
   if (!user) {
-    return json({ error: 'Not authenticated' }, { status: 401 })
+    throw new Response('Not authenticated', { status: 401 })
   }
 
   const formData = await request.formData()
@@ -176,6 +199,33 @@ export default function Uploader() {
       >
         Save
       </button>
+    </div>
+  )
+}
+export function CatchBoundary() {
+  const caught = useCatch()
+  const params = useParams()
+
+  switch (caught.status) {
+    case 404: {
+      return <h2>User with ID "{params.userId}" not found!</h2>
+    }
+    default: {
+      // if we don't handle this then all bets are off. Just throw an error
+      // and let the nearest ErrorBoundary handle this
+      throw new Error(`${caught.status} not handled`)
+    }
+  }
+}
+
+// this will handle unexpected errors (like the default case above where the
+// CatchBoundary gets a response it's not prepared to handle).
+export function ErrorBoundary({ error }: { error: Error }) {
+  console.error(error)
+
+  return (
+    <div>
+      <pre>{JSON.stringify(error, null, 2)}</pre>
     </div>
   )
 }

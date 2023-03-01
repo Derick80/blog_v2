@@ -2,7 +2,14 @@ import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createFavorite, deleteFavorite } from '~/utils/server/favorite.server'
+import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 
+export const meta: MetaFunction = () => {
+  return {
+    title: 'Favorite a post',
+    description: "Favorite a post on Derick's blog"
+  }
+}
 export async function loader({ request, params }: LoaderArgs) {
   throw new Response("This page doesn't exists.", { status: 404 })
 }

@@ -8,6 +8,14 @@ import type { CitiesAndAlbums } from '~/utils/server/travel.server'
 import { getAlbums } from '~/utils/server/travel.server'
 import { useOptionalUser } from '~/utils/utilities'
 
+import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Travel | Derick's Blog",
+    description: "Travel photos and stories from Derick's travels"
+  }
+}
 export async function loader({ request, params }: LoaderArgs) {
   const albums = (await getAlbums()) as CitiesAndAlbums
   const byGroup = albums.reduce((acc, item) => {

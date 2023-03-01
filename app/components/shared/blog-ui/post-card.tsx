@@ -104,7 +104,10 @@ export const PostCard = ({
   const [open, setOpen] = React.useState(true)
   return (
     <>
-      <div key={id} className='bg-zinc-800 radius-md w-[350px] p-2 shadow-2xl md:w-[650px] text-zinc-900 dark:text-slate-50'>
+      <div
+        key={id}
+        className='radius-md w-[350px] bg-zinc-800 p-2 text-zinc-900 shadow-2xl dark:text-slate-50 md:w-[650px]'
+      >
         <div>
           {imageUrl && (
             <Image
