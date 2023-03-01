@@ -5,29 +5,44 @@ export interface CategoryContainerProps {
   value: string[]
   index: number
   isEditable?: boolean
+  isLink?: boolean
 }
 export interface CategoryContainerPropsOne {
   value: string
   index: number | string
   isEditable?: boolean
+  isLink?: boolean
 }
 export default function CategoryContainer({
   value,
   index,
-  isEditable
+  isEditable,
+  isLink=true
 }: CategoryContainerProps | CategoryContainerPropsOne) {
   return (
     <>
       <div
-        className='flex flex-row items-center gap-2 border-2 border-slate-50 rounded-full py-1 w-fit px-1'
-      key={index}>
-        <NavLink
-          prefetch='intent'
-          to={`/blog/categories/${value}`}
-          style={{ textDecoration: 'none', color: 'currentcolor' }}
-        >
-          {value}
-        </NavLink>
+        className='flex w-fit flex-row items-center gap-2 rounded-full border-2 border-slate-50 py-1 px-1'
+        key={index}
+      >
+       {isLink ? (
+         <NavLink
+         prefetch='intent'
+         to={`/categories/${value}`}
+         style={{ textDecoration: 'none', color: 'currentcolor' }}
+       >
+         {value}
+       </NavLink>
+       ):
+       (
+        <div
+
+        style={{ textDecoration: 'none', color: 'currentcolor' }}
+      >
+        {value}
+      </div>
+       )
+       }
         {isEditable && (
           <Form method='delete' action={`/blog/categories/${value}/delete`}>
             <Button variant='subtle' size='xs'>

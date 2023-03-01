@@ -1,20 +1,25 @@
-import {
-  ActionArgs,
-  ActionFunction,
-  json,
-  LoaderArgs,
-  redirect
-} from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import { useFetcher, useLoaderData } from '@remix-run/react'
 import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
 import FormField from '~/components/shared/form-field'
-import Uploader from '~/components/shared/s3-uploader'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createTravelLog } from '~/utils/server/travel.server'
 import { validateText } from '~/utils/validators.server'
+import type {
+  MetaFunction,
+  ActionArgs,
+  ActionFunction,
+  LoaderArgs
+} from '@remix-run/node' // or cloudflare/deno
 
+export const meta: MetaFunction = () => {
+  return {
+    title: "Derick's Personal Blog | Add Travel Log",
+    description: 'Add a travel log'
+  }
+}
 type ActionData = {
   errorMsg?: string
   imageUrl?: string

@@ -2,7 +2,14 @@ import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { badRequest } from 'remix-utils'
 import { prisma } from '~/utils/server/prisma.server'
+import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 
+export const meta: MetaFunction = () => {
+  return {
+    title: 'Delete a category',
+    description: "Delete a category on Derick's blog"
+  }
+}
 export async function action({ request, params }: ActionArgs) {
   console.log(params, 'params')
 

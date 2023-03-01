@@ -182,6 +182,59 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
     )
   }
 
+
+
+
+    await prisma.project.create({
+      data: {
+          title: "Japan 2023 Image Carousel",
+          description: "An Image Carousel built with React and Typescript and Tailwindcss",
+          projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/Screenshot+2023-02-28+at+2.14.51+PM.png",
+
+          projectUrl: "https://photogallery-3r9pc82rg-derick80.vercel.app/",
+          githubUrl:'https://github.com/Derick80/photogallery',
+          userId: user.id,
+         categories: {
+      connectOrCreate: [
+        {
+          where: { value: 'Typescript' },
+          create: { label: 'Typescript', value: 'Typescript' }
+        },
+        {
+          where: {  value: 'React' },
+          create: { label: 'React',value: 'React' }
+        },
+        {
+          where: {  value: 'Tailwindcss' },
+          create: { label: 'Tailwindcss',value: 'Tailwindcss' }
+
+        },
+        {
+          where: {  value: 'Prisma' },
+          create: { label: 'Prisma',value: 'Prisma' }
+        },
+        {
+          where: {  value: 'Remix-run' },
+          create: { label: 'Remix-run',value: 'Remix-run' }
+
+        },
+        {
+          where:{ value: 'Vercel'},
+          create:{label:'Vercel',value:'Vercel'}
+
+        },
+        {
+          where:{ value: 'CockroachDB'},
+          create:{label:'CockroachDB',value:'CockroachDB'}
+        },
+        {
+          where:{ value: 'S3'},
+          create:{label:'S3',value:'S3'}
+        }
+      ]
+    }
+      }
+  })
   await prisma.project.create({
     data: {
         title: "Personal Blog 1.0 ",
@@ -193,65 +246,70 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
         userId: user.id,
           categories: {
     connectOrCreate: [
-        {
-        where: { value: 'Prisma' },
+      {
+        where: {  value: 'Typescript' },
+        create: { label: 'Typescript',value: 'Typescript' }
+
+      },
+      {
+        where: {  value: 'React' },
+        create: { label: 'React',value: 'React' }
+
+      },
+      {
+        where: {  value: 'Tailwindcss' },
+        create: { label: 'Tailwindcss',value: 'Tailwindcss' }
+
+      },
+      {
+        where: {  value: 'Prisma' },
         create: { label: 'Prisma',value: 'Prisma' }
-        },
-        {
-        where: {value: 'Remix-run' },
+      },
+      {
+        where: {  value: 'Remix-run' },
         create: { label: 'Remix-run',value: 'Remix-run' }
-        }
+
+      },
+      {
+        where:{ value: 'Vercel'},
+        create:{label:'Vercel',value:'Vercel'}
+
+      },
+      {
+        where:{ value: 'CockroachDB'},
+        create:{label:'CockroachDB',value:'CockroachDB'}
+      },
+      {
+        where:{ value: 'S3'},
+        create:{label:'S3',value:'S3'}
+      }
     ]
     }
     }
 })
+  await prisma.project.create({
+    data: {
+        title: "Memory Game",
+        description: "A simple memory game built with React and Typescript",
+        projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/post_two_memory_game.png",
 
-    await prisma.project.create({
-        data: {
-            title: "Memory Game",
-            description: "A simple memory game built with React and Typescript",
-            projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/post_two_memory_game.png",
-
-            projectUrl: "https://codesandbox.io/s/wow-memory-game-02b34",
-            githubUrl:'https://github.com/Derick80/mindgame',
-            userId: user.id,
-           categories: {
-        connectOrCreate: [
-          {
-            where: { value: 'Typescript' },
-            create: { label: 'Typescript', value: 'Typescript' }
-          },
-          {
-            where: {  value: 'React' },
-            create: { label: 'React',value: 'React' }
-          }
-        ]
+        projectUrl: "https://codesandbox.io/s/wow-memory-game-02b34",
+        githubUrl:'https://github.com/Derick80/mindgame',
+        userId: user.id,
+       categories: {
+    connectOrCreate: [
+      {
+        where: { value: 'Typescript' },
+        create: { label: 'Typescript', value: 'Typescript' }
+      },
+      {
+        where: {  value: 'React' },
+        create: { label: 'React',value: 'React' }
       }
-        }
-    })
-    await prisma.project.create({
-      data: {
-          title: "Japan 2023 Image Carousel",
-          description: "An Image Carousel built with React and Typescript and Tailwindcss",
-          projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/Screenshot+2023-02-28+at+2.14.51+PM.png",
-
-          projectUrl: "https://photogallery-3r9pc82rg-derick80.vercel.app/",
-          githubUrl:'https://github.com/Derick80/mindgame',
-          userId: user.id,
-         categories: {
-      connectOrCreate: [
-        {
-          where: { value: 'Typescript' },
-          create: { label: 'Typescript', value: 'Typescript' }
-        },
-        {
-          where: {  value: 'React' },
-          create: { label: 'React',value: 'React' }
-        }
-      ]
+    ]
+  }
     }
-      }
-  })
+})
     const book1 = await prisma.post.create({
         data: {
             title: "Atomic habits",
