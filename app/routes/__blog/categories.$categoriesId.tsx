@@ -17,14 +17,13 @@ export async function loader({ request, params }: LoaderArgs) {
 
   const user = await isAuthenticated(request)
 
-
   const categoryId = params.categoriesId
   invariant(categoryId, 'categoryId is required')
 
   const posts = await getPostByCategoryValue(categoryId)
-if(!posts){
-  return new Response('No posts', { status: 404 })
-}
+  if (!posts) {
+    return new Response('No posts', { status: 404 })
+  }
   return json({ posts, categoryId })
 }
 
