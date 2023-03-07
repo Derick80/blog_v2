@@ -20,7 +20,7 @@ export async function loader({ request }: { request: Request }) {
         publications: true
       }
     })
-    let stream = await renderToStream(cv)
+    let stream = await renderToStream()
     let body: Buffer = await new Promise((resolve, reject) => {
     let buffers: Uint8Array[] = [];
     stream.on("data", (data) => {
