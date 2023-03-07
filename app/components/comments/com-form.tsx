@@ -1,7 +1,6 @@
 import { Box, Button, Group, Textarea } from '@mantine/core'
 import { useFetcher } from '@remix-run/react'
 import React, { useEffect } from 'react'
-import { useOptionalUser } from '~/utils/utilities'
 
 export default function FormComments({
   postId,
@@ -46,11 +45,11 @@ export default function FormComments({
           <Button
             type='submit'
             name='_action'
-            variant='filled'
+            variant='default'
             size='sm'
-            value={parentId ? 'reply' : 'create'}
+            value={parentId ? 'Reply' : 'Create'}
           >
-            {parentId ? 'post reply' : 'Post a comment'}
+            {parentId ? 'Post reply' : 'Post a comment'}
           </Button>
         </Group>
       </commentForm.Form>

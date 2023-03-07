@@ -10,19 +10,13 @@ import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { NavLink } from '@remix-run/react'
 import CategoryContainer from '../category-container'
 import {
-  AspectRatio,
   Avatar,
   Button,
-  Card,
   Divider,
-  Flex,
   Group,
   Image,
   Spoiler,
-  Text,
-  Tooltip,
-  TypographyStylesProvider
-} from '@mantine/core'
+  Tooltip} from '@mantine/core'
 import type { Like } from '~/utils/schemas/like-schema'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
@@ -101,12 +95,12 @@ export const PostCard = ({
     favorites
   } = data
   // this should be set to false outside of active development
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
   return (
     <>
       <div
         key={id}
-        className='w-[350px] rounded-2xl bg-zinc-800  text-slate-50 shadow-2xl md:w-[650px]'
+        className='w-[350px] rounded-2xl text-black dark:text-slate-50 shadow-2xl md:w-[650px]'
       >
         <div>
           {imageUrl && (
@@ -126,12 +120,12 @@ export const PostCard = ({
         <div>
           <NavLink
             to={`/blog/${id}`}
-            className='text-lg font-bold text-slate-50'
+            className='text-lg font-bold text-black dark:text-slate-50'
             style={{ textDecoration: 'none', color: 'currentcolor' }}
           >
             <h2 className='indent-1 text-lg font-bold'>{title}</h2>
           </NavLink>
-          <p className='prose prose-invert p-1 indent-1 italic'>
+          <p className='prose dark:prose-invert p-1 indent-1 italic'>
             {description}
           </p>
 
@@ -154,7 +148,7 @@ export const PostCard = ({
             {body && (
               <p
                 dangerouslySetInnerHTML={{ __html: body }}
-                className='prose prose-sm prose-invert h-full p-1 indent-1'
+                className='prose prose-sm dark:prose-invert h-full p-1 indent-1'
               ></p>
             )}
           </Spoiler>

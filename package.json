@@ -12,15 +12,6 @@
     "format": "prettier \"app/**/*.ts\" \"app/**/*.tsx\" --write . ",
     "tsx": "tsx"
   },
-  "watch": {
-    "icons": {
-      "patterns": [
-        "icons"
-      ],
-      "extensions": "svg",
-      "quiet": false
-    }
-  },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
