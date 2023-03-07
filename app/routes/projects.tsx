@@ -20,7 +20,6 @@ export default function Index() {
   return (
     <>
       <div className='flex flex-col justify-center gap-5 md:flex-row'>
-
         {data.projects.map((project) => (
           <ProjectsCard key={project.id} project={project} />
         ))}

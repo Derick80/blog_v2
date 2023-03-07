@@ -35,6 +35,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           >
             <Text>Projects</Text>
           </NavLink>
+          <NavLink prefetch='intent' to='/cv' onClick={() => setOpen(false)}>
+            <Text>CV</Text>
+          </NavLink>
+
           <NavLink
             prefetch='intent'
             to='/travel'
@@ -44,12 +48,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </NavLink>
           <NavLink prefetch='intent' to='/users' onClick={() => setOpen(false)}>
             <Text>Users</Text>
-          </NavLink>
-          <NavLink prefetch='intent' to='/omega' onClick={() => setOpen(false)}>
-            <Text>omega</Text>
-          </NavLink>
-          <NavLink prefetch='intent' to='/beta' onClick={() => setOpen(false)}>
-            <Text>Beta</Text>
           </NavLink>
 
           {user ? (

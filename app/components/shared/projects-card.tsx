@@ -16,7 +16,7 @@ export default function ProjectsCard({ project }: { project: Project }) {
         <div className='flex flex-col gap-2'>
           <p className='text-base font-semibold italic'>Technologies</p>
         </div>
-        <div className='flex flex-wrap gap-2 mb-2'>
+        <div className='mb-2 flex flex-wrap gap-2'>
           {project.categories.map((category, index) => (
             <CategoryContainer
               key={index}

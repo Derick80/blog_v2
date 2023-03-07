@@ -1,26 +1,11 @@
-import {
-  Avatar,
-  Text,
-  Box,
-  Button,
-  Group,
-  Paper,
-  Textarea
-} from '@mantine/core'
+import { Avatar, Box, Button, Paper } from '@mantine/core'
 import {
   CheckIcon,
   Cross2Icon,
   Pencil1Icon,
   TrashIcon
 } from '@radix-ui/react-icons'
-import {
-  Form,
-  Link,
-  NavLink,
-  useFetcher,
-  useNavigate,
-  useNavigation
-} from '@remix-run/react'
+import { Link, NavLink, useFetcher } from '@remix-run/react'
 import { format } from 'date-fns'
 import { useState } from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
@@ -46,13 +31,17 @@ function CommentActions({
   return (
     <>
       <div className='flex flex-row items-center justify-between'>
-        <Button
-          size='sm'
-          variant='subtle'
-          onClick={() => setReplying(!replying)}
-        >
-          Reply
-        </Button>
+        {user ? (
+          <Button
+            size='sm'
+            variant='subtle'
+            onClick={() => setReplying(!replying)}
+          >
+            Reply
+          </Button>
+        ) : (
+          <NavLink to='/login'>Login to Reply</NavLink>
+        )}
         {currentUser === userId && (
           <>
             <deleteCommentFetcher.Form
@@ -81,7 +70,6 @@ function CommentActions({
 
 function Comment({ comment }: { comment: CommentWithChildren }) {
   const currentUser = useOptionalUser()
-  const navigate = useNavigation()
   const editCommentFetcher = useFetcher()
 
   const [editing, setEditing] = useState(false)

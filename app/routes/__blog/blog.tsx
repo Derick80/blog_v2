@@ -16,22 +16,13 @@ export const meta: MetaFunction = () => {
   }
 }
 
-export type SimpleComments = {
-  id: string
-  parentId: string
-  message: string
-  createdAt: string
-  user: {
-    id: string
-    username: string
-    email: string
-  }
-}
+
 
 export async function loader() {
   const posts = await getPosts()
 
-  if (!posts) return badRequest({ message: 'There are no Posts' })
+  if (!posts) throw new Error("Error");
+
 
   // get all Categoiries for posts use this for useMatches, etc
   const categories = await getAllCategories()
@@ -47,7 +38,7 @@ export default function Index() {
   return (
     <div className='mx-auto flex w-[350px] grow flex-col items-center gap-5 md:w-[650px] '>
       <h1 className='text-3xl font-bold'>Blog Feed</h1>
-      {user?.role === 'ADMIN' && (
+      {user?.role === 'ADMIN' ?(
         <div className='flex gap-5'>
           <NavLink prefetch='intent' to='/blog/new'>
             <Button size='sm' variant='subtle'>
@@ -65,7 +56,7 @@ export default function Index() {
             </Button>
           </NavLink>
         </div>
-      )}
+      ): null}
       <Divider
         className='w-full'
         style={{ height: '1px', backgroundColor: '#e2e8f0' }}
@@ -87,10 +78,15 @@ export default function Index() {
     </div>
   )
 }
-export function ErrorBoundary() {
+export function ErrorBoundary({ error }: any) {
   return (
     <div>
-      <h1>BLOG ERROR</h1>
+      <h1
+        className='text-3xl font-bold'
+      >Blog ERROR</h1>
+      <p>{error.message}</p>
+      <p>The stack trace is:</p>
+      <pre>{error.stack}</pre>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { Box, Button, Group, Textarea } from '@mantine/core'
-import { Form, useFetcher, useNavigation } from '@remix-run/react'
+import { useFetcher } from '@remix-run/react'
 import React, { useEffect } from 'react'
+import { useOptionalUser } from '~/utils/utilities'
 
 export default function FormComments({
   postId,
@@ -11,7 +12,6 @@ export default function FormComments({
 }) {
   const commentForm = useFetcher()
   // use the next few lines to reset the comment form without user navigating away from the page
-  let navigation = useNavigation()
 
   let formRef = React.useRef<HTMLFormElement>(null)
   useEffect(() => {

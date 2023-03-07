@@ -13,7 +13,6 @@ export type UserCardProps = {
 export default function UserCard({ user, profiles }: UserCardProps) {
   const optionalUser = useOptionalUser()
   const currentUser = optionalUser?.id
-  console.log(profiles, 'profiles')
   const [showMore, setShowMore] = React.useState(false)
   return (
     <>

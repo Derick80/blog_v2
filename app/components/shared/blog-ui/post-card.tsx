@@ -106,7 +106,7 @@ export const PostCard = ({
     <>
       <div
         key={id}
-        className='rounded-2xl w-[350px] bg-zinc-800  shadow-2xl text-slate-50 md:w-[650px]'
+        className='w-[350px] rounded-2xl bg-zinc-800  text-slate-50 shadow-2xl md:w-[650px]'
       >
         <div>
           {imageUrl && (
@@ -131,7 +131,9 @@ export const PostCard = ({
           >
             <h2 className='indent-1 text-lg font-bold'>{title}</h2>
           </NavLink>
-          <p className='indent-1 italic p-1 prose prose-invert'>{description}</p>
+          <p className='prose prose-invert p-1 indent-1 italic'>
+            {description}
+          </p>
 
           {showCategories && (
             <div
@@ -148,14 +150,14 @@ export const PostCard = ({
             </div>
           )}
 
-            <Spoiler maxHeight={120} showLabel='Show more' hideLabel='Hide'>
-              {body && (
-                <p
-                  dangerouslySetInnerHTML={{ __html: body }}
-                  className='prose prose-invert indent-1 p-1 prose-sm h-full'
-                ></p>
-              )}
-            </Spoiler>
+          <Spoiler maxHeight={120} showLabel='Show more' hideLabel='Hide'>
+            {body && (
+              <p
+                dangerouslySetInnerHTML={{ __html: body }}
+                className='prose prose-sm prose-invert h-full p-1 indent-1'
+              ></p>
+            )}
+          </Spoiler>
         </div>
 
         <div className='flex flex-row items-center justify-between'>
@@ -210,7 +212,7 @@ export const PostCard = ({
         <Group position='right'></Group>
         {showComments && data.comments && id && (
           <div className='flex flex-col'>
-            <FormComments postId={id} />
+            {currentUser && <FormComments postId={id} />}
             {open && data.comments && (
               <ListComments comments={formatComments(data.comments || [])} />
             )}
