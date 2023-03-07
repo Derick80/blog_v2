@@ -52,7 +52,7 @@ export default function App() {
       </head>
       <body className='bg-white text-zinc-900 dark:bg-zinc-900 dark:text-slate-50'>
         <Layout>
-          <Outlet  />
+          <Outlet />
           <ScrollRestoration />
           {isBot ? null : <Scripts />}
           <LiveReload />

@@ -1,5 +1,10 @@
 import { Divider } from '@mantine/core'
-import type { CVExperience, Education, Publication, Skill } from '@prisma/client'
+import type {
+  CVExperience,
+  Education,
+  Publication,
+  Skill
+} from '@prisma/client'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
@@ -15,17 +20,13 @@ export async function loader({ request }: { request: Request }) {
     return json({ error: 'Not authenticated' }, { status: 401 })
   }
 
-  return json({user }, { status: 200 })
+  return json({ user }, { status: 200 })
 }
 
 export default function BetaRoute() {
   const data = useLoaderData()
 
   return (
-    <div className='flex w-[350px] flex-col items-center p-2 md:w-full'>
-
-    </div>
+    <div className='flex w-[350px] flex-col items-center p-2 md:w-full'></div>
   )
 }
-
-

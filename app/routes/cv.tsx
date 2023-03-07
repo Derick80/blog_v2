@@ -1,5 +1,10 @@
 import { Divider } from '@mantine/core'
-import type { CVExperience, Education, Publication, Skill } from '@prisma/client'
+import type {
+  CVExperience,
+  Education,
+  Publication,
+  Skill
+} from '@prisma/client'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
@@ -34,8 +39,7 @@ export default function BetaRoute() {
   const skills = data.cv.map((skill: CV) => skill.skills).flat()
   const education = data.cv.map((edu: CV) => edu.education).flat()
   const publications = data.cv.map((pub: CV) => pub.publications).flat()
-  console.log(publications, 'publications');
-
+  console.log(publications, 'publications')
 
   const experiences = data.cv.map((exp: CV) => exp.cvExperiences).flat()
   // Group the items by category using reduce
@@ -70,12 +74,10 @@ export default function BetaRoute() {
                 endDate={exp.endDate}
                 responsibilities={exp.responsibilities}
               />
-
-
             ))}
           </div>
         </div>
-        <div className='flex flex-col gap-5 justify-between'>
+        <div className='flex flex-col justify-between gap-5'>
           <h2 className='text-2xl font-bold'>Education</h2>
           <Divider />
 
@@ -87,34 +89,27 @@ export default function BetaRoute() {
               place={edu.institution}
               startDate={edu.startDate}
               endDate={edu.endDate}
-
             />
           ))}
-
         </div>
         <h2 className='text-2xl font-bold'>Publications</h2>
         <Divider />
 
-{publications.map((pub:Publication) => (
-  <Pubs
-  key={pub.id}
-  id={pub.id}
-  title={pub.title}
-  authors={pub.authors}
-  year={pub.year}
-  edition={pub.edition}
-  journal={pub.journal}
-  url={pub.url}
-
-
-  />
-))}
+        {publications.map((pub: Publication) => (
+          <Pubs
+            key={pub.id}
+            id={pub.id}
+            title={pub.title}
+            authors={pub.authors}
+            year={pub.year}
+            edition={pub.edition}
+            journal={pub.journal}
+            url={pub.url}
+          />
+        ))}
 
         <h2 className='text-2xl font-bold'>Skills</h2>
-        <Divider
-
-        />
-
+        <Divider />
 
         {Object.entries(itemsBycategory).map(([category, items]) => (
           <div className='' key={category}>
@@ -139,83 +134,103 @@ export default function BetaRoute() {
         ))}
       </div>
       <span className='flex gap-5'>
-          <CheckCircledIcon className='text-blue-500' />
-          Mastered
-          <CheckCircledIcon className='text-amber-500' />
-          Familiar
-        </span>
+        <CheckCircledIcon className='text-blue-500' />
+        Mastered
+        <CheckCircledIcon className='text-amber-500' />
+        Familiar
+      </span>
     </div>
   )
 }
 
-
-
- function DisplayData({id, place, title, startDate, endDate, responsibilities}:{
-  id: string, place: string, title: string, startDate: string, endDate: string, responsibilities?: string[]
- }){
-
+function DisplayData({
+  id,
+  place,
+  title,
+  startDate,
+  endDate,
+  responsibilities
+}: {
+  id: string
+  place: string
+  title: string
+  startDate: string
+  endDate: string
+  responsibilities?: string[]
+}) {
   return (
     <div key={id} className='w-full gap-5 '>
-    <div className='flex flex-row justify-between text-sm text-gray-500'>
-      <div className='flex flex-col gap-2'>
-        <p className='font-bold'>{place}</p>
-        <p className='font-bold italic'>{title}</p>
+      <div className='flex flex-row justify-between text-sm text-gray-500'>
+        <div className='flex flex-col gap-2'>
+          <p className='font-bold'>{place}</p>
+          <p className='font-bold italic'>{title}</p>
+        </div>
+        <div className='flex gap-5'>
+          <p>{format(new Date(startDate), 'MMM yyyy')}</p>-{' '}
+          {endDate ? (
+            <p>{format(new Date(endDate), 'MMM yyyy')}</p>
+          ) : (
+            <p>Present</p>
+          )}
+        </div>
       </div>
-      <div className='flex gap-5'>
-        <p>{format(new Date(startDate), 'MMM yyyy')}</p>-{' '}
-        {endDate ? (
-          <p>{format(new Date(endDate), 'MMM yyyy')}</p>
-        ) : (
-          <p>Present</p>
-        )}
-      </div>
+
+      <ul className='list-disc indent-5'>
+        {responsibilities?.map((resp, index) => (
+          <li className='' key={index}>
+            {resp}
+          </li>
+        ))}
+      </ul>
     </div>
-
-    <ul className='list-disc indent-5'>
-      {responsibilities?.map((resp, index) => (
-        <li className='' key={index}>
-          {resp}
-        </li>
-      ))}
-    </ul>
-  </div>
   )
- }
+}
 
-
- function Pubs({id, title, year, authors, journal, edition,url}:{
-  id: string, title: string, year: string, authors: string[], journal: string, edition: string, url: string
- }){
-
+function Pubs({
+  id,
+  title,
+  year,
+  authors,
+  journal,
+  edition,
+  url
+}: {
+  id: string
+  title: string
+  year: string
+  authors: string[]
+  journal: string
+  edition: string
+  url: string
+}) {
   return (
     <>
-    <div key={id} className='w-full flex-col flex gap-1 mt-1'>
-{authors && authors.length > 0 && (
-        <div className='flex flex-row justify-between text-sm text-slate-400'>
-          <div className='flex flex-col gap-1'>
-            <p className='font-bold'>{authors}</p>
-            <p className='font-bold italic text-black text-xl dark:text-slate-50'>{title}</p>
+      <div key={id} className='mt-1 flex w-full flex-col gap-1'>
+        {authors && authors.length > 0 && (
+          <div className='flex flex-row justify-between text-sm text-slate-400'>
+            <div className='flex flex-col gap-1'>
+              <p className='font-bold'>{authors}</p>
+              <p className='text-xl font-bold italic text-black dark:text-slate-50'>
+                {title}
+              </p>
+            </div>
+          </div>
+        )}
 
-
-              </div>
-
-
-      </div>)}
-
-      <div className='flex flex-col justify-between text-sm text-gray-500'>
-      <p className='font-bold'>{journal}</p>
+        <div className='flex flex-col justify-between text-sm text-gray-500'>
+          <p className='font-bold'>{journal}</p>
 
           <p className='font-bold italic'>{edition}</p>
-
-          </div>
-          <a href={url}
+        </div>
+        <a
+          href={url}
           target='_blank'
           rel='noreferrer'
-          className='font-bold italic'>{url}</a>
-
-
-  </div>
+          className='font-bold italic'
+        >
+          {url}
+        </a>
+      </div>
     </>
   )
- }
-
+}

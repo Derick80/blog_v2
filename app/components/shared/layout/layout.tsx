@@ -35,13 +35,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           >
             <Text>Projects</Text>
           </NavLink>
-<NavLink
-prefetch='intent'
-to='/cv'
-onClick={() => setOpen(false)}
->
-<Text>CV</Text>
-</NavLink>
+          <NavLink prefetch='intent' to='/cv' onClick={() => setOpen(false)}>
+            <Text>CV</Text>
+          </NavLink>
 
           <NavLink
             prefetch='intent'
