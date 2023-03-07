@@ -31,7 +31,8 @@ export type SimpleComments = {
 export async function loader() {
   const posts = await getPosts()
 
-  if (!posts) return badRequest({ message: 'There are no Posts' })
+  if (!posts) throw new Error("Error");
+
 
   // get all Categoiries for posts use this for useMatches, etc
   const categories = await getAllCategories()
@@ -87,10 +88,13 @@ export default function Index() {
     </div>
   )
 }
-export function ErrorBoundary() {
+export function ErrorBoundary({ error }: any) {
   return (
     <div>
-      <h1>BLOG ERROR</h1>
+      <h1>Blog ERROR</h1>
+      <p>{error.message}</p>
+      <p>The stack trace is:</p>
+      <pre>{error.stack}</pre>
     </div>
   )
 }
