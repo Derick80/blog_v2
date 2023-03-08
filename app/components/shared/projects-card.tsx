@@ -12,7 +12,13 @@ export default function ProjectsCard({ project }: { project: Project }) {
       className='mx-auto grid w-[350px] grid-cols-3 rounded-md shadow-2xl dark:bg-zinc-800'
     >
       <div className='col-span-4'>
-        <h1 className='text-2xl font-bold'>{project.title}</h1>
+            <a href={project.projectUrl}
+            className='flex items-center space-x-1'
+            target='_blank'
+            rel='noreferrer'
+          >
+          <h1 className='text-2xl font-bold'>{project.title} </h1>
+          </a>
         <div className='flex flex-col gap-2'>
           <p className='text-base font-semibold italic'>Technologies</p>
         </div>

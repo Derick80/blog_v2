@@ -19,13 +19,12 @@ export default function FormComments({
     }
   }, [commentForm.type])
   return (
-    <Box
-      mt='md'
-      mb='md'
-      sx={{
-        maxWidth: '600px'
-      }}
-    >
+    <div
+    className='w-auto'>
+
+
+
+      {/* send to actions/comment to leave a comment */}
       <commentForm.Form
         ref={formRef}
         method='post'
@@ -34,25 +33,24 @@ export default function FormComments({
       >
         <input type='hidden' name='postId' value={postId} />
         {parentId && <input type='hidden' name='parentId' value={parentId} />}
-        <Textarea
+        <textarea
           required
           name='message'
+
           placeholder='Write your comment here....'
-          label='Comment'
+          className='w-full p-2 border border-gray-300 rounded-md text-black'
         />
 
-        <Group position='right' mt='md'>
           <Button
             type='submit'
             name='_action'
-            variant='default'
+            variant='filled'
             size='sm'
             value={parentId ? 'Reply' : 'Create'}
           >
             {parentId ? 'Post reply' : 'Post a comment'}
           </Button>
-        </Group>
       </commentForm.Form>
-    </Box>
+    </div>
   )
 }

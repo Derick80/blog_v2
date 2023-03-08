@@ -1,11 +1,6 @@
 import {
   Button,
-  Center,
-  Container,
-  MultiSelect,
-  Stack,
-  TextInput
-} from '@mantine/core'
+  MultiSelect} from '@mantine/core'
 import type { ActionFunction, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
@@ -135,14 +130,14 @@ export default function Uploader() {
         <label htmlFor='title'>Title</label>
         <input
           type='text'
-          className='text-slate12 dark:text-slate1'
+          className='text-slate12'
           name='title'
           onChange={(e) => console.log(e.target.value)}
         />
         <label htmlFor='description'>Description</label>
         <input
           type='text'
-          className='text-slate12 dark:text-slate1'
+          className='text-slate12'
           name='description'
           onChange={(e) => console.log(e.target.value)}
         />

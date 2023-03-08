@@ -104,15 +104,11 @@ export const PostCard = ({
       >
         <div>
           {imageUrl && (
-            <Image
-              src={imageUrl}
-              alt={title}
-              radius='md'
-              style={{
-                width: '100%',
-                height: '100%'
-              }}
-              fit='cover'
+
+            <img
+            className='h-auto max-w-full'
+            src={imageUrl}
+            alt={title}
             />
           )}
         </div>
