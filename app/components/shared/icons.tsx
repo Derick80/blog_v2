@@ -3,12 +3,11 @@ import { motion } from 'framer-motion'
 // use this to change icons in other places
 export function BrandIcon() {
   return (
-    <motion.div
-      style={{ width: '100%', height: '100%' }}
-      animate={{ rotate: 360 }}
-      transition={{ ease: 'linear', delay: 1, duration: 5, repeat: Infinity }}
+    <div
+    className='animate-pulse'
+
     >
-      <motion.svg
+      <svg
         version='1.1'
         id='Layer_1'
         xmlns='http://www.w3.org/2000/svg'
@@ -84,8 +83,8 @@ export function BrandIcon() {
             </g>
           </g>
         </g>
-      </motion.svg>
-    </motion.div>
+      </svg>
+    </div>
   )
 }
 
