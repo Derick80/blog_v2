@@ -437,12 +437,65 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
 
 
 
+await prisma.project.create({
+      data: {
+        title: "Social Media Blog V2",
+        description: "A social media blog built with React and Typescript and Tailwindcss with new functionality",
+        projectImg:"https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/blogv2.png",
+        projectUrl: "derickhoskinson.com",
+        githubUrl:'https://github.com/Derick80/blog',
+        userId: user.id,
+        categories: {
+      connectOrCreate: [
+        {
+          where: { value: 'Typescript' },
+          create: { label: 'Typescript', value: 'Typescript' }
+        },
+        {
+          where: {  value: 'React' },
+          create: { label: 'React',value: 'React' }
+        },
+        {
+          where: {  value: 'Tailwindcss' },
+          create: { label: 'Tailwindcss',value: 'Tailwindcss' }
+        },
+        {
+          where: {  value: 'Remix-run' },
+          create: { label: 'Remix-run',value: 'Remix-run' }
+        },
+        {
+          where: {  value: 'Prisma' },
+          create: { label: 'Prisma',value: 'Prisma' }
+        },
+        {
+          where: {  value: 'Postgres' },
+          create: { label: 'Postgres',value: 'Postgres' }
+        },
+
+        {
+          where:{ value: 'Vercel'},
+          create:{label:'Vercel',value:'Vercel'}
+
+        },
+        {
+          where:{ value: 'CockroachDB'},
+          create:{label:'CockroachDB',value:'CockroachDB'}
+        },
+        {
+          where:{ value: 'S3'},
+          create:{label:'S3',value:'S3'}
+        }
+      ]
+    }
+      }
+    })
+
 
     await prisma.project.create({
       data: {
           title: "Japan 2023 Image Carousel",
           description: "An Image Carousel built with React and Typescript and Tailwindcss",
-          projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/Screenshot+2023-02-28+at+2.14.51+PM.png",
+          projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/photogallery.png",
 
           projectUrl: "https://photogallery-3r9pc82rg-derick80.vercel.app/",
           githubUrl:'https://github.com/Derick80/photogallery',
@@ -492,7 +545,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
     data: {
         title: "Personal Blog 1.0 ",
         description: "A personal blog built with Remix and Typescript. This was the first first largely non-tutorial app that I built",
-        projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/blog.png",
+        projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/blogV1.png",
 
         projectUrl: "https://derickcurtis.com/",
         githubUrl:'https://github.com/Derick80/blog_social_media',
@@ -544,7 +597,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
     data: {
         title: "Memory Game",
         description: "A simple memory game built with React and Typescript",
-        projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/post_two_memory_game.png",
+        projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/memory.png",
 
         projectUrl: "https://codesandbox.io/s/wow-memory-game-02b34",
         githubUrl:'https://github.com/Derick80/mindgame',

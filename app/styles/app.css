@@ -1525,16 +1525,12 @@ video {
   min-width: 200px;
 }
 
-.max-w-prose{
-  max-width: 65ch;
-}
-
-.max-w-xl{
-  max-width: 36rem;
-}
-
 .max-w-full{
   max-width: 100%;
+}
+
+.max-w-prose{
+  max-width: 65ch;
 }
 
 .flex-1{
