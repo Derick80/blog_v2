@@ -8,6 +8,7 @@ import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
+
   const [open, setOpen] = React.useState(false)
   return (
     <div className='flex h-screen w-full flex-col items-center'>

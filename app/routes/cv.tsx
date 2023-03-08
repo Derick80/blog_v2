@@ -1,27 +1,19 @@
 import { Divider } from '@mantine/core'
-import type {
-  CVExperience,
-  Education,
-  Publication,
-  Skill
-} from '@prisma/client'
+import { Skill, CVExperience, Education, Publication } from '@prisma/client'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { format } from 'date-fns'
-import type { CV } from '~/utils/schemas/cv-schema'
+import { CV } from '~/utils/schemas/cv-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
 
 export async function loader({ request }: { request: Request }) {
   const user = await isAuthenticated(request)
 
-  if (!user) {
-    return json({ error: 'Not authenticated' }, { status: 401 })
-  }
   const cv = await prisma.curriculumVitae.findMany({
     where: {
-      userId: user.id
+      userId: user?.id
     },
     include: {
       education: true,
@@ -39,7 +31,7 @@ export default function BetaRoute() {
   const skills = data.cv.map((skill: CV) => skill.skills).flat()
   const education = data.cv.map((edu: CV) => edu.education).flat()
   const publications = data.cv.map((pub: CV) => pub.publications).flat()
-  console.log(publications, 'publications')
+  console.table(publications)
 
   const experiences = data.cv.map((exp: CV) => exp.cvExperiences).flat()
   // Group the items by category using reduce
