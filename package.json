@@ -12,15 +12,6 @@
     "format": "prettier \"app/**/*.ts\" \"app/**/*.tsx\" --write . ",
     "tsx": "tsx"
   },
-  "watch": {
-    "icons": {
-      "patterns": [
-        "icons"
-      ],
-      "extensions": "svg",
-      "quiet": false
-    }
-  },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
@@ -42,9 +33,9 @@
     "@radix-ui/react-icons": "^1.1.1",
     "@radix-ui/react-toolbar": "^1.0.1",
     "@react-pdf/renderer": "^3.1.6",
-    "@remix-run/node": "^1.9.0",
-    "@remix-run/react": "^1.9.0",
-    "@remix-run/serve": "^1.9.0",
+    "@remix-run/node": "*",
+    "@remix-run/react": "*",
+    "@remix-run/serve": "*",
     "@tailwindcss/container-queries": "^0.1.0",
     "@tiptap/extension-link": "^2.0.0-beta.209",
     "@tiptap/html": "^2.0.0-beta.218",
@@ -74,8 +65,8 @@
     "zod": "^3.20.6"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.9.0",
-    "@remix-run/eslint-config": "^1.9.0",
+    "@remix-run/dev": "*",
+    "@remix-run/eslint-config": "*",
     "@tailwindcss/typography": "^0.5.8",
     "@types/bcryptjs": "^2.4.2",
     "@types/chroma-js": "^2.1.4",

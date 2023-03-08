@@ -2,6 +2,8 @@ import { useOptionalUser } from '~/utils/utilities'
 
 export default function StatsCard() {
   const user = useOptionalUser()
+  console.log(user, 'user');
+
   return (
     <>
       {user && (
