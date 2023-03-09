@@ -8,11 +8,14 @@ if (!ghClientId) throw new Error('GITHUB_CLIENT_ID is not defined')
 const ghClientSecret = process.env.GITHUB_CLIENT_SECRET as string
 if (!ghClientSecret) throw new Error('GITHUB_CLIENT_SECRET is not defined')
 
+const ghCallbackUrl = process.env.GITHUB_CALLBACK_URL as string
+if (!ghCallbackUrl) throw new Error('GITHUB_CALLBACK_URL is not defined')
+
 export const gitHubStrategy = new GitHubStrategy(
   {
     clientID: ghClientId,
     clientSecret: ghClientSecret,
-    callbackURL: 'http://localhost:5832/github/callback'
+    callbackURL: ghCallbackUrl
   },
   async ({ accessToken, extraParams, profile }) => {
     const account = await getAccount({
@@ -25,6 +28,7 @@ export const gitHubStrategy = new GitHubStrategy(
     const user = await createUser({
       email: profile.emails ? profile.emails[0].value : '',
       userName: profile.displayName,
+      avatarUrl: profile.photos ? profile.photos[0].value : '',
       account: {
         provider: profile.provider,
         providerAccountId: profile.id,
