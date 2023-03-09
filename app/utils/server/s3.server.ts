@@ -4,6 +4,7 @@ import {
   writeAsyncIterableToWritable
 } from '@remix-run/node'
 import AWS from 'aws-sdk'
+import { S3 } from '@aws-sdk/client-s3'
 import { PassThrough } from 'stream'
 
 const { ACCESS_KEY_ID, SECRET_ACCESS_KEY, BUCKET_REGION, BUCKET_NAME } =
@@ -13,7 +14,7 @@ if (!(ACCESS_KEY_ID && SECRET_ACCESS_KEY && BUCKET_REGION && BUCKET_NAME)) {
   throw new Error(`Storage is missing required configuration.`)
 }
 
-const uploadStream = ({ Key }: Pick<AWS.S3.Types.PutObjectRequest, 'Key'>) => {
+const uploadStream = ({ Key }: Pick<S3.Types.PutObjectRequest, 'Key'>) => {
   const s3 = new AWS.S3({
     credentials: {
       accessKeyId: ACCESS_KEY_ID,
