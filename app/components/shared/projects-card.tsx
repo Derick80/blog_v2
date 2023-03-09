@@ -9,7 +9,7 @@ export default function ProjectsCard({ project }: { project: Project }) {
   return (
     <div
       key={project.id}
-      className='mx-auto grid w-[350px] grid-cols-3 rounded-md shadow-2xl dark:bg-zinc-800'
+      className='mx-auto grid w-[350px] grid-cols-3 p-2 rounded-md shadow-2xl dark:bg-zinc-800'
     >
       <div className='col-span-4'>
             <a href={project.projectUrl}
@@ -19,6 +19,15 @@ export default function ProjectsCard({ project }: { project: Project }) {
           >
           <h1 className='text-2xl font-bold'>{project.title} </h1>
           </a>
+
+
+        <AspectRatio.Root ratio={3 / 2}>
+          <img
+            src={project.projectImg}
+            alt={project.title}
+            style={{ height: '100%', width: '100%', objectFit: 'cover' }}
+          />
+        </AspectRatio.Root>
         <div className='flex flex-col gap-2'>
           <p className='text-base font-semibold italic'>Technologies</p>
         </div>
@@ -32,13 +41,6 @@ export default function ProjectsCard({ project }: { project: Project }) {
             />
           ))}
         </div>
-        <AspectRatio.Root ratio={3 / 2}>
-          <img
-            src={project.projectImg}
-            alt={project.title}
-            style={{ height: '100%', width: '100%', objectFit: 'cover' }}
-          />
-        </AspectRatio.Root>
         <div>
           <p className='indent-1 text-base'>{project.description}</p>
         </div>
