@@ -29,6 +29,8 @@ model User {
   images      ImageTest[]
   miniposts  MiniPost[]
   cv CurriculumVitae[]
+  chats Chat[]
+  messages Message[]
 }
 
 model JapanImages {
@@ -278,6 +280,26 @@ model MiniPost {
   message String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
+}
+
+
+model Chat {
+  id String @id @default(cuid())
+ createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users User[]
+  messages Message[]
+}
+
+model Message {
+  id String @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  content String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  chatId String
 }
 enum Role {
   ADMIN

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 export function BrandIcon() {
   return (
     <div
-    className='animate-pulse'
+    className='animate-pulse items-center'
 
     >
       <svg
