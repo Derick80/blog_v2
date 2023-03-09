@@ -1,7 +1,10 @@
 import { ActionArgs, json, LoaderArgs } from '@remix-run/node'
 import { Outlet, useCatch, useFetcher, useLoaderData, useParams } from '@remix-run/react'
+import { useEffect, useRef } from 'react'
 import invariant from 'tiny-invariant'
+import { useEventSource, useRevalidator } from '~/utils/hooks'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
+import { chatEmitter, EVENTS } from '~/utils/server/chat.server'
 import { prisma } from '~/utils/server/prisma.server'
 
 
@@ -57,7 +60,7 @@ export async function action({request, params}:ActionArgs){
     invariant(typeof content ==='string' , 'content invalid')
     switch(action){
         case 'send-message':{
-            const message = await prisma.message.create({
+             await prisma.message.create({
                 data:{
                     content,
                     userId,
@@ -67,6 +70,7 @@ export async function action({request, params}:ActionArgs){
                     id: true,
                 }
             })
+            chatEmitter.emit(EVENTS.NEW_MESSAGE, Date.now())
             return json({success: true})
         }
         default:{
@@ -79,14 +83,26 @@ export async function action({request, params}:ActionArgs){
 
 }
 export default function ChatRoute(){
+    const {chatId} = useParams()
+
     const data = useLoaderData<typeof loader>()
     const messageFetcher = useFetcher<typeof action>()
+    const chatUpdateData = useEventSource(`/chats/${chatId}/events`)
+    const revalidator = useRevalidator()
+    const mounted = useRef(false)
+
+    useEffect(()=>{
+        if(!mounted.current){
+            mounted.current = true
+            return}
+        revalidator.revalidate()
+    },[chatUpdateData, revalidator])
 
     return(
         <div>
             <h1>Chat</h1>
-            <pre>{
-                JSON.stringify(data, null, 2)}</pre>
+            {/* <pre>{
+                JSON.stringify(data, null, 2)}</pre> */}
                 <hr />
                 <div className='flex flex-col'>
                     {data.chat.messages.map((message)=>{
@@ -117,7 +133,10 @@ export default function ChatRoute(){
 
 
                 >
-                    <input type='text' name='content' />
+                    <input type='text' name='content'
+                    className='text-black'
+
+                    />
                     <button type='submit'
                         name='action'
                         value='send-message'
