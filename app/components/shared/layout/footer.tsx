@@ -13,7 +13,7 @@ export default function Footer({ children }: { children?: React.ReactNode }) {
           <GitHubLogoIcon />{' '}
         </a>
 
-        <Text>Copywrite {new Date().getFullYear()}</Text>
+        <Text>Copyrite {new Date().getFullYear()}</Text>
         <a
           href='https://www.linkedin.com/in/dhoskinson/'
           target='_blank'
