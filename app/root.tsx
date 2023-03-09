@@ -38,6 +38,10 @@ export async function loader({ request }: LoaderArgs) {
 
   return json({ user, categories, message }, { headers })
 }
+export async function action(){
+
+  return {ok: true}
+}
 
 export default function App() {
   const data = useLoaderData<typeof loader>()
