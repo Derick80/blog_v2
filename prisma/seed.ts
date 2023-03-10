@@ -20,41 +20,16 @@ async function seed(){
     })
 
     const hashedPassword = (await process.env.HASHEDPASSWORD) as string
-
-    const user2 = await prisma.user.create({
-        data:{
-            email:'Grayone@gmail.com',
-            password: '1234567',
-            userName: 'Chris&Jason',
-            avatarUrl:`https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/dch_chris_jason.jpg`
-        }
-    })
-      const user3 = await prisma.user.create({
+const user2Password = (await process.env.USER2PASSWORD) as string
+      const user2 = await prisma.user.create({
         data:{
             email:'elisser00@gmail.com',
-            password: '1234567',
+            password: user2Password,
             userName: 'Lisser',
             avatarUrl: `https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/dch_elissa.jpg`
         }
     })
-      const user4 = await prisma.user.create({
-        data:{
-            email:'liss@gmail.com',
-            password: '1234567',
-            userName: 'Elissa',
-            avatarUrl:`https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/dch_elissa.jpg`
-        }
-    })
-      const user5 = await prisma.user.create({
-        data:{
-            email:'sean@gmail.com',
-            password: '1234567',
-            userName: 'SeanD',
-            avatarUrl:`https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/sean.jpg`,
 
-
-        }
-    })
 
     await prisma.profile.create({
       data:{
@@ -490,6 +465,52 @@ await prisma.project.create({
       }
     })
 
+    await prisma.project.create({
+      data: {
+        title:"Budget App",
+        description: "A budget app built with React and Typescript and Tailwindcss and Remix-run metaframework",
+        projectImg:"https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/bankapp.png",
+        projectUrl: "",
+        githubUrl:'https://github.com/Derick80/bank23',
+        userId: user.id,
+        categories:{
+          connectOrCreate: [
+            {
+              where: { value: 'Typescript' },
+              create: { label: 'Typescript', value: 'Typescript' }
+            },
+            {
+              where: {  value: 'React' },
+              create: { label: 'React',value: 'React' }
+            },
+            {
+              where: {  value: 'Tailwindcss' },
+              create: { label: 'Tailwindcss',value: 'Tailwindcss' }
+            },
+            {
+              where: {  value: 'Remix-run' },
+              create: { label: 'Remix-run',value: 'Remix-run' }
+            },
+            {
+              where: {  value: 'Prisma' },
+              create: { label: 'Prisma',value: 'Prisma' }
+            },
+            {
+              where: {  value: 'Postgres' },
+              create: { label: 'Postgres',value: 'Postgres' }
+            },
+
+            {
+              where:{ value: 'Data Visualization'},
+              create:{label:'Data Visualization',value:'Data Visualization'}
+            }
+          ]
+        }
+      }
+    })
+
+
+
 
     await prisma.project.create({
       data: {
@@ -801,30 +822,8 @@ const book7 = await prisma.post.create({
 
 
 
-    const post1= await prisma.post.create({
-        data: {
-            title: `Production of mature mRNA is a multistep process requiring many proteins that is essential for proper cellular function.`,
-                       description: `Defects in mRNA maturation lead to radical changes in development, growth and viability of the cell.`,
-          body:`Production of mature mRNA is a multistep process requiring many proteins that is essential for proper cellular function. Defects in mRNA maturation lead to radical changes in development, growth and viability of the cell. The essential mRNA 3’ end processing subunit, Pcf11, is required for the cleavage and polyadenylation of nascent mRNAs and for proper termination of RNA polymerase II transcription. Pcf11 also plays a role in alternative polyadenylation. Previous work has identified`,
-            imageUrl: "https://remix-bucket.s3.us-east-2.amazonaws.com/lab.jpeg",
-            createdBy:user.userName,
-            userId: user.id,
-            published: true,
-           categories: {
-        connectOrCreate: [
-            {
-            where: { value: 'Genetics' },
-            create: { label: 'Genetics',value: 'Genetics' }
-            },
-            {
-            where: { value: 'Science' },
-            create: { label: 'Science',value: 'Science' }
-            }
-        ]
-        }
-        }
-    })
-const post2 = await prisma.post.create({
+
+const post1 = await prisma.post.create({
         data: {
             title: "mRNA Maturation",
             description: "Introns are removed from the pre-mRNA by the spliceosome components in a two step reaction that ends in the joining of two exons together",
@@ -877,7 +876,7 @@ const comment2= await prisma.comment.create({
         message:`I always loved images like these!`,
         createdBy:user2.userName,
         userId:user2.id,
-        postId:post2.id
+        postId:post1.id
 
       }
     })
@@ -888,7 +887,7 @@ const comment2= await prisma.comment.create({
         message:`Yeah same. I like looking for even better ones.  This one was just lying around on the internet`,
         createdBy:user.userName,
         userId:user.id,
-        postId:post2.id
+        postId:post1.id
 
       }
     })
@@ -900,41 +899,11 @@ const comment2= await prisma.comment.create({
         message:`Hahah -- I think you should look for better quality images next time.  This one is a bit blurry.`,
         createdBy:user.userName,
         userId:user2.id,
-        postId:post2.id
+        postId:post1.id
 
       }
 
     })
-
-
-
-
-
-    const profile3 = await prisma.profile.create({
-        data: {
-            bio: `I am a biochemist and I love to read and write about science.  I also love to play video games and watch movies.`,
-            firstName: "Jane",
-            lastName: "Doe",
-            education: "PhD in Biochemistry",
-user:{
-              connect:{
-                id:user3.id
-
-
-},
-            },
-         userName: user3.userName,
-            profilePicture: "https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/dch_elissa.jpg",
-            occupation: "Biochemist",
-          email: user3.email,
-            location: "New York, NY"
-        }
-    })
-
-
-
-
-
 
 
  console.log(`Database has been seeded. 🌱`);
