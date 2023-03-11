@@ -3,10 +3,7 @@ import { motion } from 'framer-motion'
 // use this to change icons in other places
 export function BrandIcon() {
   return (
-    <div
-    className='animate-pulse items-center'
-
-    >
+    <div className='animate-pulse items-center'>
       <svg
         version='1.1'
         id='Layer_1'

@@ -19,11 +19,7 @@ export default function FormComments({
     }
   }, [commentForm.type])
   return (
-    <div
-    className='w-auto'>
-
-
-
+    <div className='w-auto'>
       {/* send to actions/comment to leave a comment */}
       <commentForm.Form
         ref={formRef}
@@ -36,20 +32,19 @@ export default function FormComments({
         <textarea
           required
           name='message'
-
           placeholder='Write your comment here....'
-          className='w-full p-2 border border-gray-300 rounded-md text-black'
+          className='w-full rounded-md border border-gray-300 p-2 text-black'
         />
 
-          <Button
-            type='submit'
-            name='_action'
-            variant='filled'
-            size='sm'
-            value={parentId ? 'Reply' : 'Create'}
-          >
-            {parentId ? 'Post reply' : 'Post a comment'}
-          </Button>
+        <Button
+          type='submit'
+          name='_action'
+          variant='filled'
+          size='sm'
+          value={parentId ? 'Reply' : 'Create'}
+        >
+          {parentId ? 'Post reply' : 'Post a comment'}
+        </Button>
       </commentForm.Form>
     </div>
   )

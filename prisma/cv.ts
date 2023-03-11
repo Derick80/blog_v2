@@ -10,9 +10,8 @@ async function seed() {
       phone: '312-871-8067',
       location: 'Chicago, IL',
       blurb:
-        'I am a clinical scientist with a passion for data science and genetics. I have a PhD in Genetics from Tufts University School of Biomedical Sciences. I have experience in the fields of inherited genetics, cancer genetics, and clinical research. I am currently working as a Senior Clinical Scientist at Tempus Labs. I am looking for a position where I can apply my skills to solve real-world problems.',
+        'I am a clinical scientist with a passion for data science and genetics. I have a PhD in Genetics from Tufts University School of Biomedical Sciences. I have experience in the fields of inherited genetics, cancer genetics, and clinical research. I am currently working as a Senior Clinical Scientist at Tempus Labs. I am looking for a position where I can apply my skills to solve real-world problems.'
     }
-
   })
 
   async function seedEducation() {

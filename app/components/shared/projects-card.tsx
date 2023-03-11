@@ -1,25 +1,29 @@
 import { Image } from '@mantine/core'
 import * as AspectRatio from '@radix-ui/react-aspect-ratio'
 import { ExitIcon, ExternalLinkIcon } from '@radix-ui/react-icons'
-import { Link } from '@remix-run/react'
+import { Link, NavLink } from '@remix-run/react'
 import type { Project } from '~/utils/schemas/projects-schema'
+import { useOptionalUser } from '~/utils/utilities'
 import CategoryContainer from './category-container'
 
 export default function ProjectsCard({ project }: { project: Project }) {
+  const user = useOptionalUser()
+  const isOwner = user?.id === project.userId
+
   return (
     <div
       key={project.id}
-      className='mx-auto grid w-[350px] grid-cols-3 p-2 rounded-md shadow-2xl dark:bg-zinc-800'
+      className='mx-auto grid w-[350px] grid-cols-3 rounded-md p-2 shadow-2xl dark:bg-zinc-800'
     >
       <div className='col-span-4'>
-            <a href={project.projectUrl}
-            className='flex items-center space-x-1'
-            target='_blank'
-            rel='noreferrer'
-          >
+        <a
+          href={project.projectUrl}
+          className='flex items-center space-x-1'
+          target='_blank'
+          rel='noreferrer'
+        >
           <h1 className='text-2xl font-bold'>{project.title} </h1>
-          </a>
-
+        </a>
 
         <AspectRatio.Root ratio={3 / 2}>
           <img
@@ -71,6 +75,11 @@ export default function ProjectsCard({ project }: { project: Project }) {
           </a>
         </div>
       </div>
+      {isOwner && (
+        <div className='col-span-4'>
+          <NavLink to={`/projects/${project.id}/edit`}>edit</NavLink>
+        </div>
+      )}
     </div>
   )
 }

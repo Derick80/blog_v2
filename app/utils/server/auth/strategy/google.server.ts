@@ -32,7 +32,7 @@ export const googleStrategy = new GoogleStrategy(
     const user = await createUser({
       email: profile.emails ? profile.emails[0].value : '',
       userName: profile.displayName,
-        avatarUrl: profile.photos ? profile.photos[0].value : '',
+      avatarUrl: profile.photos ? profile.photos[0].value : '',
       account: {
         provider: profile.provider,
         providerAccountId: profile.id,

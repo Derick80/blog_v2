@@ -12,129 +12,133 @@ export async function loader({ request, params }: LoaderArgs) {
   const username = params.userName
 
   const user = await prisma.user.findUnique({
-    where:{
+    where: {
       userName: username
     },
-    select:{
+    select: {
       password: false,
       id: true,
       userName: true,
       email: true,
       avatarUrl: true,
-      chats: loggedInUser? {
-        where:{
-          users:{
-            some:{
-              id:{ equals: loggedInUser.id}
+      chats: loggedInUser
+        ? {
+            where: {
+              users: {
+                some: {
+                  id: { equals: loggedInUser.id }
+                }
+              }
+            },
+            select: {
+              id: true,
+              users: {
+                select: {
+                  id: true,
+                  userName: true,
+                  avatarUrl: true
+                }
+              }
             }
-        },
-      },
-      select:{
-        id: true,
-        users:{
-          select:{
-            id: true,
-            userName: true,
-            avatarUrl: true
-
-      }
-    }
-      }
-    } : false
+          }
+        : false
     }
   })
   return json({ user })
 }
 
-
-export async function action({request, params}:ActionArgs){
+export async function action({ request, params }: ActionArgs) {
   const user = await isAuthenticated(request)
   invariant(user, 'User is not authenticated')
   const formData = await request.formData()
   const action = await formData.get('action')
 
-  switch(action){
-    case 'create-chat':{
+  switch (action) {
+    case 'create-chat': {
       const currentUser = await prisma.user.findUnique({
-        where:{
+        where: {
           userName: params.userName
         }
       })
-      invariant(currentUser, 'cannot create chat with a user that does not exist')
+      invariant(
+        currentUser,
+        'cannot create chat with a user that does not exist'
+      )
       const existingChat = await prisma.chat.findFirst({
-        where:{
-          AND:[
-            {users: {some: {id: user.id}}},
-            {users: {some: {id: currentUser.id}}},
+        where: {
+          AND: [
+            { users: { some: { id: user.id } } },
+            { users: { some: { id: currentUser.id } } }
           ]
         },
-        select:{
+        select: {
           id: true
         }
       })
-      if(existingChat){
+      if (existingChat) {
         return redirect(`/chats/${existingChat.id}`)
       }
       const createdChat = await prisma.chat.create({
-        select:{
+        select: {
           id: true
         },
-        data:{
-          users:{
-            connect: [{id: user.id}, {id: currentUser.id}]
+        data: {
+          users: {
+            connect: [{ id: user.id }, { id: currentUser.id }]
           }
         }
       })
       return redirect(`/chats/${createdChat.id}`)
     }
-    default:{
+    default: {
       throw new Error(`Unsupported action: ${action}`)
     }
   }
 }
 
-export default function UserRoute(){
-const data = useLoaderData<typeof loader>()
-const loggedInUser = useOptionalUser()
-const isOwnProfile = loggedInUser?.id === data?.user?.id
+export default function UserRoute() {
+  const data = useLoaderData<typeof loader>()
+  const loggedInUser = useOptionalUser()
+  const isOwnProfile = loggedInUser?.id === data?.user?.id
 
-const oneOnOneChat = loggedInUser ? data.user?.chats.find(c =>
-  // @ts-ignore
-  c.users.length === 2 &&
-  // @ts-ignore
-  c.users.some(
-    // @ts-ignore
-    u => u.id === loggedInUser?.id || u.id === data?.user?.id
-  )) : null
-console.log( {oneOnOneChat});
+  const oneOnOneChat = loggedInUser
+    ? data.user?.chats.find(
+        (c) =>
+          // @ts-ignore
+          c.users.length === 2 &&
+          // @ts-ignore
+          c.users.some(
+            // @ts-ignore
+            (u) => u.id === loggedInUser?.id || u.id === data?.user?.id
+          )
+      )
+    : null
+  console.log({ oneOnOneChat })
 
   return (
     <div>
       <h1>User</h1>
       <strong>Chats:</strong>
-     {isOwnProfile ? (
-      <div>
-         {data?.user?.chats.map(chat => (
-        <Link key={chat.id} to={`/chats/${chat.id}`}>Chat {chat.id}</Link>
-      ))}
-      </div>
-     ):(
-      oneOnOneChat ? (
+      {isOwnProfile ? (
+        <div>
+          {data?.user?.chats.map((chat) => (
+            <Link key={chat.id} to={`/chats/${chat.id}`}>
+              Chat {chat.id}
+            </Link>
+          ))}
+        </div>
+      ) : oneOnOneChat ? (
         <Link to={`/chats/${oneOnOneChat.id}`}>Chat </Link>
-      ):(
+      ) : (
         <>
-        <Form
-        method="post"
-      >
-        <button type="submit" name="action" value="create-chat">
-          Create Chat
-        </button>
-      </Form>
-      </>
-      )
-
-     )}
-<pre>{JSON.stringify(data, null, 2)}</pre>
+          <Form method='post'>
+            <button type='submit' name='action' value='create-chat'>
+              Create Chat
+            </button>
+          </Form>
+        </>
+      )}
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   )
 }

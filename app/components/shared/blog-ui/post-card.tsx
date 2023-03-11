@@ -16,7 +16,8 @@ import {
   Group,
   Image,
   Spoiler,
-  Tooltip} from '@mantine/core'
+  Tooltip
+} from '@mantine/core'
 import type { Like } from '~/utils/schemas/like-schema'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
@@ -100,16 +101,11 @@ export const PostCard = ({
     <>
       <div
         key={id}
-        className='w-[350px] rounded-2xl text-black dark:text-slate-50 shadow-2xl md:w-[650px]'
+        className='w-[350px] rounded-2xl text-black shadow-2xl dark:text-slate-50 md:w-[650px]'
       >
         <div>
           {imageUrl && (
-
-            <img
-            className='h-auto max-w-full'
-            src={imageUrl}
-            alt={title}
-            />
+            <img className='h-auto max-w-full' src={imageUrl} alt={title} />
           )}
         </div>
 
@@ -121,7 +117,7 @@ export const PostCard = ({
           >
             <h2 className='indent-1 text-lg font-bold'>{title}</h2>
           </NavLink>
-          <p className='prose dark:prose-invert p-1 indent-1 italic'>
+          <p className='prose p-1 indent-1 italic dark:prose-invert'>
             {description}
           </p>
 
@@ -144,7 +140,7 @@ export const PostCard = ({
             {body && (
               <p
                 dangerouslySetInnerHTML={{ __html: body }}
-                className='prose prose-sm dark:prose-invert h-full p-1 indent-1'
+                className='prose prose-sm h-full p-1 indent-1 dark:prose-invert'
               ></p>
             )}
           </Spoiler>

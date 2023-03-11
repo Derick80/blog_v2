@@ -6,3 +6,7 @@ export type ProjectType = PrismaProject & {
 }
 
 export type Project = SerializeFrom<ProjectType>
+
+export type Categories = {
+  categories: Category[]
+}

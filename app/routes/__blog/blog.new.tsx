@@ -1,6 +1,4 @@
-import {
-  Button,
-  MultiSelect} from '@mantine/core'
+import { Button, MultiSelect } from '@mantine/core'
 import type { ActionFunction, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'

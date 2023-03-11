@@ -10,8 +10,7 @@ export default function StatsCard() {
             <li className='flex flex-row items-center gap-3'>
               <h3 className='text-sm text-black dark:text-slate-50'>
                 Welcome,
-
-              {user.userName}
+                {user.userName}
               </h3>
             </li>
             <li className='flex flex-row items-center gap-3'>

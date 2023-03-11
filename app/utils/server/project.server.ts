@@ -22,3 +22,24 @@ export async function getProjects() {
 
   return { projects }
 }
+
+export async function getProjectById(id: string) {
+  const project = await prisma.project.findUnique({
+    where: {
+      id
+    },
+    include: {
+      categories: true,
+      user: {
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true
+        }
+      }
+    }
+  })
+
+  return project
+}

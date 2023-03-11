@@ -29,13 +29,12 @@ export default function CategoryContainer({
           <NavLink
             prefetch='intent'
             to={`/categories/${value}`}
-            className='text-slate-50 text-decoration-none text-xs'
+            className='text-decoration-none text-xs text-slate-50'
           >
             {value}
           </NavLink>
         ) : (
-          <div             className='text-slate-50 text-decoration-none text-xs'
-          >
+          <div className='text-decoration-none text-xs text-slate-50'>
             {value}
           </div>
         )}
