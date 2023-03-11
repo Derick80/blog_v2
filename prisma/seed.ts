@@ -470,7 +470,7 @@ await prisma.project.create({
         title:"Budget App",
         description: "A budget app built with React and Typescript and Tailwindcss and Remix-run metaframework",
         projectImg:"https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/bankapp.png",
-        projectUrl: "",
+        projectUrl: "https://bank23-jhumheegh-derick80.vercel.app/",
         githubUrl:'https://github.com/Derick80/bank23',
         userId: user.id,
         categories:{

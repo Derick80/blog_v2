@@ -6,6 +6,7 @@ import type { Session } from '@remix-run/node'
 import { gitHubStrategy } from './strategy/github.server'
 import { getUser } from '../user.server'
 import { discordStrategy } from './strategy/discord.server'
+import { googleStrategy } from './strategy/google.server'
 
 export const authenticator = new Authenticator<User['id']>(sessionStorage, {
   throwOnError: true
@@ -15,7 +16,7 @@ authenticator.use(registerStrategy, 'register')
 authenticator.use(loginStrategy, 'login')
 authenticator.use(gitHubStrategy, 'github')
 authenticator.use(discordStrategy, 'discord')
-
+authenticator.use(googleStrategy, 'google')
 export const isAuthenticated = async (request: Request) => {
   const userId = await authenticator.isAuthenticated(request)
   if (!userId) return null

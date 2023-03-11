@@ -1,3 +1,4 @@
+import { DiscordLogoIcon, GitHubLogoIcon } from '@radix-ui/react-icons'
 import type { ActionFunction, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { Link } from '@remix-run/react'
@@ -5,7 +6,6 @@ import { badRequest, serverError } from 'remix-utils'
 import { AuthForm } from '~/components/shared/auth/auth-form'
 import { SocialLoginForm } from '~/components/shared/auth/social-login-form'
 import { isAuthenticated, authenticator } from '~/utils/server/auth/auth.server'
-import * as Z from 'zod'
 export const meta: MetaFunction = () => {
   return {
     title: `Derick's Personal Blog | Login`,
@@ -30,13 +30,7 @@ type ActionData = {
   }
 }
 
-// const schema =Z.object)({
-//   email: Z.string({
-//     required_error:'Email is required',
-//   }).email( 'invalid email'),
-//   password: Z.string().min(8, 'password must be at least 8 characters long'),
 
-// })
 export async function loader(args: LoaderArgs) {
   return (await isAuthenticated(args.request)) ? redirect('/') : null
 }
@@ -55,23 +49,42 @@ export const action: ActionFunction = async ({ request }) => {
 }
 export default function Login() {
   return (
-    <div className='mx-auto mt-10 flex h-fit w-1/4 flex-col shadow-2xl md:mt-20'>
+    <div className='mx-auto mt-10 flex h-fit flex-col shadow-2xl md:mt-20'>
       <AuthForm authType='login' />
       <div className='mt-2 mb-2 flex h-full flex-col items-center justify-center md:mt-5 md:mb-5'>
-        <h3 className='mh3'>OR</h3>
+        <h3
+          className='text-sm italic'
+        >OR</h3>
         <p className='text-sm italic'>Login with your social account</p>
       </div>
-      <div className='flex flex-col items-center justify-center'>
+      <div className='flex items-center justify-center'>
         <SocialLoginForm provider='discord'>
-          <button className=''>Discord </button>
+          <button className='flex flex-col items-center gap-2'>
+
+            <DiscordLogoIcon className='w-5 h-5' />
+
+
+          </button>
         </SocialLoginForm>
         <SocialLoginForm provider='github'>
-          <button className=''>Github</button>
+          <button className='flex flex-col items-center gap-2'>
+
+            <GitHubLogoIcon className='w-5 h-5' />
+          </button>
+        </SocialLoginForm>
+        <SocialLoginForm provider='google'>
+          <button className='flex flex-col items-center gap-2'>
+            Google
+          </button>
         </SocialLoginForm>
       </div>
 
       <div className='mt-2 mb-2 flex flex-col items-center justify-center md:mt-5 md:mb-5'>
-        <Link to='/register'>New to the site?? ..Register Here</Link>
+        <h3
+          className='text-sm italic'
+        >OR</h3>
+
+        <Link to='/register'><p className='text-sm italic'>Register a new account</p></Link>
       </div>
     </div>
   )
