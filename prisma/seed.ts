@@ -31,7 +31,19 @@ const user2Password = (await process.env.USER2PASSWORD) as string
     })
 
 
-    await prisma.profile.create({
+
+    const user = await prisma.user.create({
+        data:{
+            email,
+            password: hashedPassword,
+            userName: 'Derick',
+            role: 'ADMIN',
+            avatarUrl: `https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/DerickFace.jpg`,
+
+        }
+    })
+
+        await prisma.profile.create({
       data:{
 
         userName: 'Grayone',
@@ -43,20 +55,10 @@ location:`Chicago, IL`,
 education:`Tufts Graduate School of Biomedical Sciences`,
 occupation:`Senior Clinical Scientist`,
 profilePicture:'https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/DerickFace.jpg',
-      userId: user2.id,
-      email: user2.email,
+      userId: user.id,
+      email: user.email,
 
       }
-    })
-    const user = await prisma.user.create({
-        data:{
-            email,
-            password: hashedPassword,
-            userName: 'Derick',
-            role: 'ADMIN',
-            avatarUrl: `https://remix-bucket.s3.us-east-2.amazonaws.com/blog-prototype-images/DerickFace.jpg`,
-
-        }
     })
     await prisma.about.create({
       data: {

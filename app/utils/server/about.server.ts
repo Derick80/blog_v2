@@ -1,3 +1,4 @@
+import { About } from '@prisma/client'
 import { prisma } from './prisma.server'
 
 export async function getAbout() {
@@ -14,7 +15,7 @@ export async function getAboutById(id: string) {
   return about
 }
 
-export async function editAbout(input: any) {
+export async function editAbout(input: Partial<About>) {
   const about = await prisma.about.update({
     where: {
       id: input.id

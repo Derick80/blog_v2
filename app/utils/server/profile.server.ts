@@ -5,10 +5,10 @@ export async function getProfiles() {
   const profiles = await prisma.profile.findMany()
   return profiles
 }
-export async function getUserProfile(userId: string) {
+export async function getUserProfile(id: string) {
   const profile = await prisma.profile.findUnique({
     where: {
-      userId
+      id
     }
   })
   return profile
@@ -32,7 +32,7 @@ export async function editUserProfile({
 }) {
   const profile = await prisma.profile.update({
     where: {
-      id: input.id as string
+      id: input.id
     },
     data: {
       userName: input.userName,
