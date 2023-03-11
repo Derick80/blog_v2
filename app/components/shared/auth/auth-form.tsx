@@ -57,7 +57,7 @@ export const AuthForm = ({ authType }: Props) => {
             Email
           </label>
           <input
-            className='rounded-xl p-2'
+            className='rounded-xl p-2 text-black'
             id='email'
             name='email'
             type='email'
@@ -65,7 +65,7 @@ export const AuthForm = ({ authType }: Props) => {
           />
           <label>Username</label>
           <input
-            className='rounded-xl p-2'
+            className='rounded-xl p-2 text-black'
             id='username'
             name='username'
             type='text'
@@ -77,7 +77,7 @@ export const AuthForm = ({ authType }: Props) => {
         <>
           <label>Password</label>
           <input
-            className='rounded-xl p-2'
+            className='rounded-xl p-2 text-black'
             id='password'
             name='password'
             type='password'

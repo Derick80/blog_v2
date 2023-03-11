@@ -12,7 +12,7 @@ import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
 import { getProjectById } from '~/utils/server/project.server'
 type ActionData = {
-    imageUrl?: string
+  imageUrl?: string
 }
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
@@ -114,8 +114,11 @@ export default function Index() {
         id='projectForm'
         className='flex w-1/2 flex-col gap-2'
       >
-        <input type='hidden' name='imageUrl' value={imageFetcher?.data?.imageUrl}
-        onChange={(e) => console.log(e.target.value)}
+        <input
+          type='hidden'
+          name='imageUrl'
+          value={imageFetcher?.data?.imageUrl}
+          onChange={(e) => console.log(e.target.value)}
         />
         <label htmlFor='title' className='text-sm font-semibold'>
           Title

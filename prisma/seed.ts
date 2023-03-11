@@ -70,6 +70,7 @@ education:`Education I completed my Ph.D in genetics at Tufts Graduate School of
 occupation:`I am a Senior Clinical Scientist at Tempus Labs in Chicago, IL.`,
 profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimages/DerickFace.jpg',
       email: user.email,
+      userId: user.id,
       }
     })
 
