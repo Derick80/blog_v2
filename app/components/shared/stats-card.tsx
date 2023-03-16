@@ -1,19 +1,18 @@
-import { useOptionalUser } from '~/utils/utilities'
+import {  useOptionalUser, useUser } from '~/utils/utilities'
 
 export default function StatsCard() {
   const user = useOptionalUser()
   return (
     <>
       {user && (
-        <div className='flex w-full flex-col items-center'>
-          <ul className='flex flex-col items-center gap-3 md:flex-row'>
-            <li className='flex flex-row items-center gap-3'>
+          <ul className='flex flex-col items-center gap-3 mt-5'>
+            <li className='flex items-center gap-3'>
               <h3 className='text-sm text-black dark:text-slate-50'>
                 Welcome,
                 {user.userName}
               </h3>
             </li>
-            <li className='flex flex-row items-center gap-3'>
+            <li className='flex flex-col items-center gap-3'>
               <h3 className='text-sm text-black dark:text-slate-50'>
                 Favorited Posts
               </h3>
@@ -23,7 +22,7 @@ export default function StatsCard() {
                 </p>
               </div>
             </li>
-            <li className='flex flex-row items-center gap-3'>
+            <li className='flex flex-col items-center gap-3'>
               <h3 className='text-base text-black dark:text-slate-50'>
                 Liked Posts
               </h3>
@@ -31,7 +30,7 @@ export default function StatsCard() {
                 <p className='text-slate-50'>{user._count.likes}</p>
               </div>
             </li>
-            <li className='flex flex-row items-center gap-3'>
+            <li className='flex flex-col items-center gap-3'>
               <h3 className='text-base text-black dark:text-slate-50'>
                 # of posts
               </h3>
@@ -40,7 +39,6 @@ export default function StatsCard() {
               </div>
             </li>
           </ul>
-        </div>
       )}
     </>
   )

@@ -38,6 +38,7 @@
     "@remix-run/react": "*",
     "@remix-run/serve": "*",
     "@tailwindcss/container-queries": "^0.1.0",
+    "@tiptap/extension-image": "^2.0.0-beta.220",
     "@tiptap/extension-link": "^2.0.0-beta.209",
     "@tiptap/html": "^2.0.0-beta.218",
     "@tiptap/react": "^2.0.0-beta.209",

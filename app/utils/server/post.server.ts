@@ -3,7 +3,11 @@ export type CategoryForm = {
   value: string
 }[]
 export async function getHeroPost() {
-  const post = await prisma.post.findFirst({
+  const post = await prisma.post.findMany({
+  where:{
+    featured: true,
+    published: true
+  },
     select: {
       id: true,
       title: true,
@@ -41,7 +45,6 @@ export async function getHeroPost() {
       favorites: true,
       likes: true
     },
-    take: 1,
     orderBy: {
       createdAt: 'desc'
     }
@@ -236,6 +239,7 @@ export type PostInput = {
   imageUrl: string
   createdBy: string
   userId: string
+  featured: boolean
   category: CategoryForm
 }
 
@@ -247,6 +251,7 @@ export async function createPost(data: PostInput) {
       body: data.body,
       imageUrl: data.imageUrl,
       createdBy: data.createdBy,
+      featured: data.featured || false,
       user: {
         connect: {
           id: data.userId
@@ -316,6 +321,7 @@ export async function savePost(data: Partial<PostInput> & { postId: string }) {
       body: data.body,
       imageUrl: data.imageUrl,
       createdBy: data.createdBy,
+      featured: data.featured || false,
       categories: {
         set: data?.category?.map((category) => ({
           value: category.value
@@ -381,36 +387,4 @@ export async function getPostByCategoryValue(value: string) {
     }
   })
   return results
-}
-
-export async function getMiniPosts(userId: string) {
-  const miniPosts = await prisma.miniPost.findMany({
-    where: {
-      userId
-    },
-    include: {
-      user: false
-    }
-  })
-  return miniPosts
-}
-export async function createMiniPost({
-  message,
-  userId
-}: {
-  message: string
-  userId: string
-}) {
-  const miniPost = await prisma.miniPost.create({
-    data: {
-      message,
-      user: {
-        connect: {
-          id: userId
-        }
-      }
-    }
-  })
-
-  return miniPost
 }

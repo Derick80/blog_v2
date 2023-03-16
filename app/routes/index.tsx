@@ -13,16 +13,15 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 export default function Index() {
-  const data = useLoaderData<{ post: SerializeFrom<Post> }>()
+  const data = useLoaderData<typeof loader>()
   return (
     <div className='flex grow flex-col items-center gap-4 '>
-      <StatsCard />
       <h2 className='text-2xl font-bold'>Latest Post</h2>
-      {data.post && (
+      {data.post && data.post.map((item) => (
         <PostCard
-          key={data.post.id}
-          data={data.post}
-          user={data.post.user}
+          key={item.id}
+          data={item}
+          user={item.user}
           showCategories={true}
           showComments={false}
           showFavorites={true}
@@ -30,6 +29,7 @@ export default function Index() {
           showOptions={true}
           showShare={true}
         />
+      )
       )}
     </div>
   )

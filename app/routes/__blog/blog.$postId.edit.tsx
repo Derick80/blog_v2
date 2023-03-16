@@ -56,10 +56,14 @@ export async function action({ params, request }: ActionArgs) {
   const userId = formData.get('userId') as string
   const title = formData.get('title') as string
   const description = formData.get('description') as string
-  const body = formData.get('body')
+  const body = formData.get('body')?.toString()
   const imageUrl = formData.get('imageUrl') as string
+  const featured = Boolean(formData.get('featured'))
   const categories = formData.get('categories') as string
-
+console.log(body, 'featured');
+if(typeof body !== 'string') {
+  throw new Error('body is required')
+}
   const createdBy = user.userName
 
   const cats = categories?.split(',')
@@ -104,7 +108,8 @@ export async function action({ params, request }: ActionArgs) {
         imageUrl,
         createdBy,
         userId,
-        category
+        category,
+        featured,
       })
       return redirect(`/blog/${postId}`)
 
@@ -151,6 +156,7 @@ export default function EditPost() {
       ? 'Deleted!'
       : 'Delete'
   const data = useLoaderData<typeof loader>()
+console.log(data.post.featured, 'featured');
 
   const {
     title,
@@ -160,7 +166,8 @@ export default function EditPost() {
     categories,
     id,
     published,
-    userId
+    userId,
+    featured
   } = data.post
 
   const [selected, setSelected] = useState<string[]>(
@@ -180,7 +187,8 @@ export default function EditPost() {
     imageUrl,
     categories: pickedCategories,
     id,
-    published
+    published,
+    featured,
   })
 
   return (
@@ -209,12 +217,16 @@ export default function EditPost() {
         <Form
           method='post'
           action={`/blog/${id}/edit`}
-          className='flex w-[350px] flex-col'
+          className='flex w-[350px] md:w-1/2 flex-col'
         >
           <input type='hidden' name='postId' value={id} />
           <input type='hidden' name='userId' value={userId} />
-          <Textarea
-            label='Title'
+
+          <label htmlFor='title'>Title</label>
+          <input
+            type='text'
+            className='text-slate12'
+
             name='title'
             id='title'
             value={formData.title}
@@ -222,8 +234,11 @@ export default function EditPost() {
               setFormData({ ...formData, title: e.target.value })
             }
           />
-          <Textarea
-            label='Description'
+          <label htmlFor='description'>Description</label>
+          <input
+            type='text'
+            className='text-slate12'
+
             name='description'
             id='description'
             value={formData.description}
@@ -235,6 +250,15 @@ export default function EditPost() {
           <label htmlFor='body'>Post Content</label>
           {body && <TipTap content={body} />}
           <input type='hidden' name='body' value={body} />
+          <label htmlFor='featured'>Featured</label>
+          <input type='checkbox' name='featured' id='featured'
+            checked={formData.featured || false}
+            onChange={(e) => {
+              console.log(e.target.checked);
+              setFormData({ ...formData, featured: e.target.checked })
+            }}
+
+          />
 
           <MultiSelect
             label='Categories'

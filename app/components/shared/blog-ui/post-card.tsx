@@ -14,7 +14,6 @@ import {
   Button,
   Divider,
   Group,
-  Image,
   Spoiler,
   Tooltip
 } from '@mantine/core'

@@ -5,10 +5,11 @@ import type {
   Publication,
   Skill
 } from '@prisma/client'
-import { CheckCircledIcon } from '@radix-ui/react-icons'
+import { CheckCircledIcon, StarFilledIcon, StarIcon } from '@radix-ui/react-icons'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { Form, useLoaderData } from '@remix-run/react'
 import { format } from 'date-fns'
+import React from 'react'
 import type { CV } from '~/utils/schemas/cv-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
@@ -25,8 +26,33 @@ export async function loader({ request }: { request: Request }) {
 
 export default function BetaRoute() {
   const data = useLoaderData()
-
+const [rating, setRating] = React.useState(4)
   return (
-    <div className='flex w-[350px] flex-col items-center p-2 md:w-full'></div>
+    <div className='flex w-[350px] flex-col items-center p-2 md:w-full'>
+      <Form
+        className='flex  items-center justify-center w-full h-40 bg-gray-100 rounded-md'
+      >
+       {[...Array(5)].map((star,index )=> {
+        const ratingValue = index + 1
+const isRated = ratingValue <= rating
+
+        return (
+            <>
+            <label
+              key={index}
+              className='flex items-center cursor-pointer'
+            >
+              <input type='radio' name='rating' className='hidden'  value={ratingValue}
+              onClick={()=> setRating(ratingValue)}
+              />
+
+       {isRated ? <StarFilledIcon className='text-yellow-500' /> : <StarIcon className='text-black' />}
+            </label>
+            </>
+        )
+       })}
+      </Form>
+       <button onClick={()=> console.log(rating)}>Submit</button>
+    </div>
   )
 }

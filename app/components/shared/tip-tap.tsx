@@ -1,15 +1,18 @@
-import { Flex } from '@mantine/core'
+import { Button, Flex } from '@mantine/core'
 import { RichTextEditor } from '@mantine/tiptap'
 import * as Toolbar from '@radix-ui/react-toolbar'
 import Link from '@tiptap/extension-link'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useCallback } from 'react'
+import Image from '@tiptap/extension-image'
+import { ImageIcon } from '@radix-ui/react-icons'
 
 const TipTap = ({ content }: { content?: string }) => {
   const editor = useEditor({
     content,
     extensions: [
+Image,
       Link.configure({
         openOnClick: false
       }),
@@ -25,31 +28,19 @@ const TipTap = ({ content }: { content?: string }) => {
       }
     }
   })
-  const setLink = useCallback(() => {
-    const previousUrl = editor?.getAttributes('link').href
-    const url = window.prompt('URL', previousUrl)
+  const addImage = useCallback(() => {
+    const url = window.prompt('URL')
 
-    // cancelled
-    if (url === null) {
-      return
+    if (url) {
+      editor?.chain().focus().setImage({ src: url }).run()
     }
-
-    // empty
-    if (url === '') {
-      editor?.chain().focus().extendMarkRange('link').unsetLink().run()
-
-      return
-    }
-
-    // update link
-    editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
   }, [editor])
 
   if (!editor) {
     return null
   }
 
-  return (
+    return (
     <>
       <RichTextEditor editor={editor}>
         <RichTextEditor.Toolbar sticky stickyOffset={60}>
@@ -75,8 +66,18 @@ const TipTap = ({ content }: { content?: string }) => {
             <RichTextEditor.AlignCenter />
             <RichTextEditor.AlignJustify />
             <RichTextEditor.AlignRight />
+
+          </RichTextEditor.ControlsGroup>
+          <RichTextEditor.ControlsGroup>
+              <Button type='button'
+              size='xs'
+              variant='outline'
+              onClick={ addImage }>
+                <ImageIcon />
+              </Button>
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
+
 
         <RichTextEditor.Content />
       </RichTextEditor>
@@ -85,5 +86,6 @@ const TipTap = ({ content }: { content?: string }) => {
     </>
   )
 }
+
 
 export default TipTap
