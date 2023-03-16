@@ -19,7 +19,6 @@ export async function getHeroPost() {
       published: true,
       createdBy: true,
       userId: true,
-      featured: true,
       categories: true,
       user: {
         select: {
