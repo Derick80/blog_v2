@@ -92,6 +92,7 @@ export const PostCard = ({
     categories,
     likes,
     _count,
+    featured,
     favorites
   } = data
   // this should be set to false outside of active development
