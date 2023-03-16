@@ -685,6 +685,7 @@ export function BandContainer({ children }: { children: ReactNode }) {
             createdAt: new Date('03-04-2023'),
             userId: user.id,
             published: true,
+            featured: true,
             categories: {
         connectOrCreate: [
             {

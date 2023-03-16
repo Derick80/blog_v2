@@ -156,17 +156,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Button>
      <div className='flex flex-row items-center w-full'>
 
-                <aside className='md:flex hidden flex-col items-center bg-red-500 justify-start w-full h-screen md:w-1/4'>
-                  stuff HamburgerMenuIcon
-                </aside>
-
-
-        <button
-        className='block'
-        onClick={ () => setSideBar(!sideBar) }>
-          { sideBar ? <ChevronRightIcon /> : <ChevronDownIcon /> }
-        </button>
-
 
 
         <div className='mt-1 flex h-full w-[250px] md:w-3/4 grow flex-col gap-5 overflow-asuto'>
