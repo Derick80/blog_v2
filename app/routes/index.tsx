@@ -17,6 +17,7 @@ export default function Index() {
   return (
     <div className='flex grow flex-col items-center gap-4 '>
       <h2 className='text-2xl font-bold'>Latest Post</h2>
+      <StatsCard />
       {data.post && data.post.map((item) => (
         <PostCard
           key={item.id}
