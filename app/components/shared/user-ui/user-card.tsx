@@ -20,7 +20,7 @@ export default function UserCard({ user, profiles }: UserCardProps) {
         <>
           <div
             key={user.id}
-            className=' my-2 flex w-[350px] md:w-[650px] flex-col justify-between rounded-md border-2 p-1 md:p-2'
+            className=' my-2 flex w-[350px] flex-col justify-between rounded-md border-2 p-1 md:w-[650px] md:p-2'
           >
             <div
               // main content

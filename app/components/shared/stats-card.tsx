@@ -1,17 +1,15 @@
-import {  useOptionalUser, useUser } from '~/utils/utilities'
+import { useOptionalUser, useUser } from '~/utils/utilities'
 
 export default function StatsCard() {
   const user = useOptionalUser()
   return (
     <>
       {user && (
-          <ul className='flex flex-col items-center gap-3 mt-5'>
-            <li className='flex items-center gap-3'>
-              <h3 className='text-sm text-black dark:text-slate-50'>
-                Welcome,
-                {user.userName}
-              </h3>
-            </li>
+        <>
+          <h3 className='flex gap-1 text-sm text-black dark:text-slate-50'>
+            Welcome, {user.userName}
+          </h3>
+          <ul className='mt-5 flex flex-row items-center gap-3'>
             <li className='flex flex-col items-center gap-3'>
               <h3 className='text-sm text-black dark:text-slate-50'>
                 Favorited Posts
@@ -39,6 +37,7 @@ export default function StatsCard() {
               </div>
             </li>
           </ul>
+        </>
       )}
     </>
   )

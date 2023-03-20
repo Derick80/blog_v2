@@ -60,10 +60,10 @@ export async function action({ params, request }: ActionArgs) {
   const imageUrl = formData.get('imageUrl') as string
   const featured = Boolean(formData.get('featured'))
   const categories = formData.get('categories') as string
-console.log(body, 'featured');
-if(typeof body !== 'string') {
-  throw new Error('body is required')
-}
+  console.log(body, 'featured')
+  if (typeof body !== 'string') {
+    throw new Error('body is required')
+  }
   const createdBy = user.userName
 
   const cats = categories?.split(',')
@@ -109,7 +109,7 @@ if(typeof body !== 'string') {
         createdBy,
         userId,
         category,
-        featured,
+        featured
       })
       return redirect(`/blog/${postId}`)
 
@@ -156,7 +156,7 @@ export default function EditPost() {
       ? 'Deleted!'
       : 'Delete'
   const data = useLoaderData<typeof loader>()
-console.log(data.post.featured, 'featured');
+  console.log(data.post.featured, 'featured')
 
   const {
     title,
@@ -188,7 +188,7 @@ console.log(data.post.featured, 'featured');
     categories: pickedCategories,
     id,
     published,
-    featured,
+    featured
   })
 
   return (
@@ -217,7 +217,7 @@ console.log(data.post.featured, 'featured');
         <Form
           method='post'
           action={`/blog/${id}/edit`}
-          className='flex w-[350px] md:w-1/2 flex-col'
+          className='flex w-[350px] flex-col md:w-1/2'
         >
           <input type='hidden' name='postId' value={id} />
           <input type='hidden' name='userId' value={userId} />
@@ -226,7 +226,6 @@ console.log(data.post.featured, 'featured');
           <input
             type='text'
             className='text-slate12'
-
             name='title'
             id='title'
             value={formData.title}
@@ -238,7 +237,6 @@ console.log(data.post.featured, 'featured');
           <input
             type='text'
             className='text-slate12'
-
             name='description'
             id='description'
             value={formData.description}
@@ -251,13 +249,15 @@ console.log(data.post.featured, 'featured');
           {body && <TipTap content={body} />}
           <input type='hidden' name='body' value={body} />
           <label htmlFor='featured'>Featured</label>
-          <input type='checkbox' name='featured' id='featured'
+          <input
+            type='checkbox'
+            name='featured'
+            id='featured'
             checked={formData.featured || false}
             onChange={(e) => {
-              console.log(e.target.checked);
+              console.log(e.target.checked)
               setFormData({ ...formData, featured: e.target.checked })
             }}
-
           />
 
           <MultiSelect

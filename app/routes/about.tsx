@@ -1,6 +1,7 @@
 import type { LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import AboutCard from '~/components/shared/about'
 import MyProfile from '~/components/shared/about-me'
 import { getAbout } from '~/utils/server/about.server'
 import { useOptionalUser } from '~/utils/utilities'
@@ -24,7 +25,7 @@ export default function Page() {
   return (
     <>
       {data.about.map((about) => (
-        <MyProfile key={about.id} about={about} />
+        <AboutCard key={about.id} about={about} />
       ))}
       <details>
         <summary>View Raw Data</summary>

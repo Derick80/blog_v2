@@ -1,4 +1,3 @@
-import { Button, Flex } from '@mantine/core'
 import type { TravelLog } from '@prisma/client'
 import type { LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
@@ -7,7 +6,6 @@ import { ImageSlider } from '~/components/shared/carousel/image-slider'
 import type { CitiesAndAlbums } from '~/utils/server/travel.server'
 import { getAlbums } from '~/utils/server/travel.server'
 import { useOptionalUser } from '~/utils/utilities'
-
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 
 export const meta: MetaFunction = () => {
@@ -48,25 +46,23 @@ export default function Index() {
     <div className='flex grow flex-col items-center'>
       {user?.role === 'ADMIN' && (
         <Link to='/travel/new'>
-          <Button color='teal' variant='outline'>
-            Add a new photo
-          </Button>
+          <button>Add a new photo</button>
         </Link>
       )}
-
-      <Flex direction='row' gap={20} align='center'>
-        <Flex gap={5}>
+      <div className='flex items-center gap-5'>
+        <div className='flex gap-1'>
           {data.albumNames.map((item, index) => {
             return (
-              <Button key={index} color='blue' variant='outline'>
+              <button key={index}>
                 <a href={`/travel/#${item}`}>
                   <h2>{item}</h2>
                 </a>
-              </Button>
+              </button>
             )
           })}
-        </Flex>
-      </Flex>
+        </div>
+      </div>
+
       <ImageSlider data={data.NYC} />
       <ImageSlider data={data.Japan} />
 

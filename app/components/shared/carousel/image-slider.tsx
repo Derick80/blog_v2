@@ -47,12 +47,12 @@ export const ImageSlider = ({ data }: CarouselProps) => {
                 activeSlide === index ? 'mx-auto flex w-fit p-6' : 'hidden'
               }
             >
-              <Button className='p-2 ' onClick={() => prevSliderHandler(index)}>
+              <button className='p-2 ' onClick={() => prevSliderHandler(index)}>
                 <ChevronLeftIcon />
-              </Button>
+              </button>
 
               <div
-                className='mb-5 h-[250px] w-[250px]'
+                className='mb-5 h-[350px] w-[350px]'
                 key={index}
                 id={item.album}
               >
@@ -87,19 +87,14 @@ function SliderFooter({
   user: Partial<UserType> | null | undefined
 }) {
   return (
-    <Flex direction={'column'} align='center' className='w-full'>
-      <Title order={3}>{item.imageTitle}</Title>
-      <Text>{item.imageDescription}</Text>
+    <div className='flex flex-col items-center'>
+      <h3 className='font-semibold'>{item.imageTitle}</h3>
+      <p className='text-sm'>{item.imageDescription}</p>
       {user?.role === 'ADMIN' ? (
-        <Link
-          className=' rounded-lg bg-gray-200 p-2'
-          to={`/travel/${item.id}/edit`}
-        >
-          <Button size='sm' variant='filled' color='blue'>
-            Edit
-          </Button>
+        <Link className=' rounded-lg p-2' to={`/travel/${item.id}/edit`}>
+          <button>Edit</button>
         </Link>
       ) : null}
-    </Flex>
+    </div>
   )
 }

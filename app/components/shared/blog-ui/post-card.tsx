@@ -9,14 +9,7 @@ import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { NavLink } from '@remix-run/react'
 import CategoryContainer from '../category-container'
-import {
-  Avatar,
-  Button,
-  Divider,
-  Group,
-  Spoiler,
-  Tooltip
-} from '@mantine/core'
+import { Avatar, Button, Divider, Group, Spoiler, Tooltip } from '@mantine/core'
 import type { Like } from '~/utils/schemas/like-schema'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
@@ -135,13 +128,14 @@ export const PostCard = ({
               ))}
             </div>
           )}
+          {/* I ALMOST removed show more from Mantine because it was breaking with page refresh in both production and development but then I remembered that the <p> tag in the dangerouslSetInnerHtml element was breaking and I have to use div for a reason unknown to me */}
 
-          <Spoiler maxHeight={120} showLabel='Show more' hideLabel='Hide'>
+          <Spoiler maxHeight={120} showLabel='More...' hideLabel='...less'>
             {body && (
-              <p
+              <div
                 dangerouslySetInnerHTML={{ __html: body }}
                 className='prose prose-sm h-full p-1 indent-1 dark:prose-invert'
-              ></p>
+              ></div>
             )}
           </Spoiler>
         </div>

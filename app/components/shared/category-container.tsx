@@ -22,19 +22,19 @@ export default function CategoryContainer({
   return (
     <>
       <div
-        className='flex w-fit flex-row items-center gap-2 border   border-slate-50 py-1 px-1'
+        className='flex w-fit flex-row items-center gap-2 border border-black  py-1 px-1 dark:border-slate-50'
         key={index}
       >
         {isLink ? (
           <NavLink
             prefetch='intent'
             to={`/categories/${value}`}
-            className='text-decoration-none text-xs text-slate-50'
+            className='text-decoration-none text-xs dark:text-slate-50'
           >
             {value}
           </NavLink>
         ) : (
-          <div className='text-decoration-none text-xs text-slate-50'>
+          <div className='text-decoration-none text-xs dark:text-slate-50'>
             {value}
           </div>
         )}

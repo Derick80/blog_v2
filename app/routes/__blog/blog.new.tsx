@@ -83,7 +83,7 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
-  if(!featured) {
+  if (!featured) {
     throw new Error('featured is required')
   }
 
@@ -118,7 +118,7 @@ export default function Uploader() {
     })
 
   return (
-    <div className='mx-auto mb-7 flex w-[350px] md:w-full flex-col bg-white text-slate12 dark:bg-zinc-900 dark:text-slate1 p-2'>
+    <div className='mx-auto mb-7 flex w-[350px] flex-col bg-white p-2 text-slate12 dark:bg-zinc-900 dark:text-slate1 md:w-full'>
       <Form
         id='newPost'
         className='flex flex-col gap-5 rounded-xl bg-white text-slate12 shadow-md dark:bg-zinc-900 dark:text-slate-50'
@@ -156,10 +156,12 @@ export default function Uploader() {
         />
 
         <label htmlFor='Featured'>Featured</label>
-        <input type='checkbox' name='featured' id='featured'
-        onChange={(e) => console.log(e.target.checked)}
-         />
-
+        <input
+          type='checkbox'
+          name='featured'
+          id='featured'
+          onChange={(e) => console.log(e.target.checked)}
+        />
 
         <input type='hidden' name='categories' value={selected} />
       </Form>
