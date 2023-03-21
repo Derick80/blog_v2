@@ -1,5 +1,7 @@
+import { Container } from '@mantine/core'
 import { ActionArgs, json, LoaderArgs, redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import React from 'react'
 import { Form, Link } from 'react-router-dom'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
@@ -21,6 +23,7 @@ export async function loader({ request, params }: LoaderArgs) {
       userName: true,
       email: true,
       avatarUrl: true,
+      profile:true,
       chats: loggedInUser
         ? {
             where: {
@@ -52,6 +55,14 @@ export async function action({ request, params }: ActionArgs) {
   invariant(user, 'User is not authenticated')
   const formData = await request.formData()
   const action = await formData.get('action')
+  const firstName = await formData.get('firstName')
+  const lastName = await formData.get('lastName')
+  const bio = await formData.get('bio')
+  const location = await formData.get('location')
+  const education = await formData.get('education')
+const occupation = await formData.get('occupation')
+const profilePicture = await formData.get('profilePicture')
+
 
   switch (action) {
     case 'create-chat': {
@@ -88,8 +99,12 @@ export async function action({ request, params }: ActionArgs) {
           }
         }
       })
+
       return redirect(`/chats/${createdChat.id}`)
     }
+
+
+
     default: {
       throw new Error(`Unsupported action: ${action}`)
     }
@@ -97,9 +112,11 @@ export async function action({ request, params }: ActionArgs) {
 }
 
 export default function UserRoute() {
+  const [editing, setEditing] = React.useState(false)
   const data = useLoaderData<typeof loader>()
   const loggedInUser = useOptionalUser()
   const isOwnProfile = loggedInUser?.id === data?.user?.id
+const profile = data?.user?.profile
 
   const oneOnOneChat = loggedInUser
     ? data.user?.chats.find(
@@ -116,8 +133,135 @@ export default function UserRoute() {
   console.log({ oneOnOneChat })
 
   return (
-    <div>
+    <>
       <h1>User</h1>
+
+    {!editing ? (
+     profile?.map((profile) => (
+        <Container
+          key={profile.id}
+        >
+          <h1>{profile.firstName} {profile.lastName}</h1>
+          <p>{profile.bio}</p>
+          <p>{profile.location}</p>
+          <p>{profile.education}</p>
+          <p>{profile.occupation}</p>
+          <img src={profile.profilePicture} alt="profile " />
+        </Container>
+      )
+
+     )
+
+    ):(
+     profile?.map((profile) => (
+        <Container
+          key={profile.id}
+        >
+          <Form method='post' className='flex flex-col space-y-4'>
+<label htmlFor='firstName'
+  className='text-sm font-medium text-gray-700'
+>
+  First Name
+</label>
+
+            <input
+              id='firstName'
+              name='firstName'
+              type='text'
+              className='block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+              defaultValue={profile.firstName}
+            />
+            <label htmlFor='lastName'
+  className='text-sm font-medium text-gray-700'
+>
+  Last Name
+</label>
+            <input
+              id='lastName'
+              name='lastName'
+              type='text'
+              className='block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+              defaultValue={profile.lastName}
+            />
+            <label htmlFor='bio'
+  className='text-sm font-medium text-gray-700'
+>
+  Bio
+</label>
+            <input
+              id='bio'
+              name='bio'
+              type='text'
+              className='block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+              defaultValue={profile.bio}
+            />
+            <label htmlFor='location'
+  className='text-sm font-medium text-gray-700'
+>
+  Location
+</label>
+
+            <input
+
+              id='location'
+              name='location'
+              type='text'
+              className='block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+              defaultValue={profile.location}
+            />
+            <label htmlFor='education'
+  className='text-sm font-medium text-gray-700'
+>
+  Education
+</label>
+
+            <input
+              id='education'
+
+              name='education'
+              type='text'
+              className='block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+              defaultValue={profile.education}
+            />
+            <label htmlFor='occupation'
+  className='text-sm font-medium text-gray-700'
+>
+  Occupation
+</label>
+
+            <input
+
+              id='occupation'
+              name='occupation'
+              type='text'
+
+              className='block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+              defaultValue={profile.occupation}
+            />
+            <label htmlFor='profilePicture'
+  className='text-sm font-medium text-gray-700'
+>
+  Profile Picture
+</label>
+
+            <input
+              id='profilePicture'
+              name='profilePicture'
+              type='text'
+              className='block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+              defaultValue={profile.profilePicture}
+            />
+                        <button type='submit' name='action' value='update-profile'>
+              Update Profile
+            </button>
+          </Form>
+        </Container>
+
+     ))
+    )}
+
+
+   <button onClick={ () => setEditing(true) }>Edit Profile</button>
       <strong>Chats:</strong>
       {isOwnProfile ? (
         <div>
@@ -139,6 +283,8 @@ export default function UserRoute() {
         </>
       )}
       <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>
+    </>
+
+
   )
 }

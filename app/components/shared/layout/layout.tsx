@@ -50,12 +50,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           to='/travel'>
             <h3 className='font-semibold'>Travel</h3>
           </NavLink>
-          <NavLink prefetch='intent'
+          {/* <NavLink prefetch='intent'
             aria-label='Go to Users'
           to='/users'
           >
             <h3 className='font-semibold'>Users</h3>
-          </NavLink>
+          </NavLink> */}
 
           {user ? (
             <Form method='post' action='/logout'>

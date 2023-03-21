@@ -1,7 +1,22 @@
-import { useOptionalUser, useUser } from '~/utils/utilities'
+import { useFetcher } from '@remix-run/react'
+import React from 'react'
+import { useMatchesData, useOptionalUser, useUser } from '~/utils/utilities'
 
 export default function StatsCard() {
   const user = useOptionalUser()
+  const draftsFetcher = useFetcher(
+
+  )
+
+  React.useEffect(() => {
+    if (draftsFetcher.type === "init") {
+      draftsFetcher.load("/drafts")
+    }
+  }, [draftsFetcher]);
+
+  console.log(draftsFetcher.data, 'drafts');
+
+
   return (
     <>
       {user && (
@@ -34,6 +49,22 @@ export default function StatsCard() {
               </h3>
               <div className='flex w-[24px] justify-center rounded-full bg-crimson8'>
                 <p className='text-base text-slate-50'>{user._count.posts}</p>
+
+              </div>
+            </li>
+            <li className='flex flex-col items-center gap-3'>
+              <h3 className='text-base text-black dark:text-slate-50'>
+                # of drafts
+              </h3>
+              <div className='flex w-[24px] justify-center rounded-full bg-crimson8'>
+
+                { draftsFetcher.data && (
+                  <p
+                    className='text-base text-slate-50'
+                  >
+                    { draftsFetcher.data.drafts.length }
+                  </p>
+                ) }
               </div>
             </li>
           </ul>

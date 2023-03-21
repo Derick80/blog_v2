@@ -33,16 +33,14 @@ export type TestUser = {
   }
 }
 export async function loader({ request }: LoaderArgs) {
-  const url = new URL(request.url)
 
   const user = await isAuthenticated(request)
   const currentUser = user?.id
 
   const users = await getUsers()
-  const profiles = await getProfiles()
   const userNames = users.map((user) => user.userName)
 
-  return json({ users, profiles, currentUser, userNames })
+  return json({ users,  currentUser, userNames })
 }
 
 export default function Users() {
@@ -52,25 +50,14 @@ export default function Users() {
     currentUser: string
     userNames: string[]
   }>()
-  const [searchValue, onSearchChange] = useState('')
-  const userFetcher = useFetcher()
+
   return (
     <div className='flex w-full flex-col items-center gap-5 '>
       <div className='text-2xl font-semibold'>Users</div>
-      <userFetcher.Form method='get' action={`users/${searchValue}`}>
-        <Select
-          label='Search by username'
-          placeholder='Pick one'
-          searchable
-          searchValue={searchValue}
-          nothingFound='No options'
-          data={data.userNames}
-        />
-        <Button type='submit'>Search</Button>
-      </userFetcher.Form>
+
       {data.users.map((user: UserProps) => (
         <>
-          <UserCard key={user.id} user={user} profiles={data?.profiles} />
+          <UserCard key={user.id} user={user} />
         </>
       ))}
       <Outlet />

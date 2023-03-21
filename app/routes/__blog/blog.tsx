@@ -3,6 +3,7 @@ import type { MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { NavLink, Outlet, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
+import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import type { Post } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
@@ -36,23 +37,7 @@ export default function Index() {
     <div className='mx-auto flex w-[350px] grow flex-col items-center gap-5 md:w-[650px] '>
       <h1 className='text-3xl font-bold'>Blog Feed</h1>
       {user?.role === 'ADMIN' ? (
-        <div className='flex gap-5'>
-          <NavLink prefetch='intent' to='/blog/new'>
-            <Button size='sm' variant='subtle'>
-              New post
-            </Button>
-          </NavLink>
-          <NavLink prefetch='intent' to='/drafts'>
-            <Button size='sm' variant='subtle'>
-              Drafts
-            </Button>
-          </NavLink>
-          <NavLink prefetch='intent' to='/categories'>
-            <Button size='sm' variant='subtle'>
-              Manage categories
-            </Button>
-          </NavLink>
-        </div>
+       <BlogNav />
       ) : null}
       <Divider
         className='w-full'

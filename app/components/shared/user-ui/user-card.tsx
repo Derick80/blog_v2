@@ -1,6 +1,4 @@
-import { Button, Image, Text } from '@mantine/core'
 import { Form, NavLink } from '@remix-run/react'
-import React from 'react'
 import type { Profile } from '~/utils/schemas/profile-schema'
 import type { UserProps } from '~/utils/server/user.server'
 import { useOptionalUser } from '~/utils/utilities'
@@ -13,7 +11,6 @@ export type UserCardProps = {
 export default function UserCard({ user, profiles }: UserCardProps) {
   const optionalUser = useOptionalUser()
   const currentUser = optionalUser?.id
-  const [showMore, setShowMore] = React.useState(false)
   return (
     <>
       {user && (
@@ -47,32 +44,9 @@ export default function UserCard({ user, profiles }: UserCardProps) {
                 <p className='text-base'> {user.userName}</p>
               </NavLink>
 
-              <Button
-                className='ml-auto'
-                variant='outline'
-                size='sm'
-                onClick={() => setShowMore(!showMore)}
-              >
-                more
-              </Button>
-            </div>
-            {showMore &&
-              profiles?.map((profile) => (
-                <div key={profile.id}>
-                  <p className='text-xs italic'>Profile</p>
-                  <p className='text-base'> {profile.userName}</p>
-                  <Text>{profile.firstName}</Text>
-                  <Text>{profile.lastName}</Text>
-                  <Text>{profile.location}</Text>
-                  <Text>{profile.occupation}</Text>
-                  <p dangerouslySetInnerHTML={{ __html: profile.bio }} />
 
-                  <Text>{profile.email}</Text>
-                  <div className='h-24 w-24'>
-                    <Image src={profile.profilePicture} />
-                  </div>
-                </div>
-              ))}
+            </div>
+
 
             <p className='pt-1 text-xs font-bold md:pt-2'>User statistics</p>
             <div

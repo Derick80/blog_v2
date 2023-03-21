@@ -1323,6 +1323,10 @@ video {
   margin-bottom: 0.75rem;
 }
 
+.mb-10{
+  margin-bottom: 2.5rem;
+}
+
 .mb-2{
   margin-bottom: 0.5rem;
 }
@@ -1341,10 +1345,6 @@ video {
 
 .ml-4{
   margin-left: 1rem;
-}
-
-.ml-auto{
-  margin-left: auto;
 }
 
 .mt-0{
@@ -1989,6 +1989,10 @@ video {
   font-weight: 600;
 }
 
+.font-medium{
+  font-weight: 500;
+}
+
 .italic{
   font-style: italic;
 }
@@ -2061,6 +2065,11 @@ video {
 .text-zinc-900{
   --tw-text-opacity: 1;
   color: rgb(24 24 27 / var(--tw-text-opacity));
+}
+
+.text-gray-700{
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
 .opacity-50{
@@ -2178,9 +2187,19 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.focus\:border-indigo-500:focus{
+  --tw-border-opacity: 1;
+  border-color: rgb(99 102 241 / var(--tw-border-opacity));
+}
+
 .focus\:outline-none:focus{
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.focus\:ring-indigo-500:focus{
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(99 102 241 / var(--tw-ring-opacity));
 }
 
 .group:hover .group-hover\:opacity-0{
@@ -2260,6 +2279,13 @@ video {
   .dark\:text-slate1{
     --tw-text-opacity: 1;
     color: rgb(251 252 253 / var(--tw-text-opacity));
+  }
+}
+
+@media (min-width: 640px){
+  .sm\:text-sm{
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
 

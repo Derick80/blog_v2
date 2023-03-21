@@ -8,6 +8,7 @@ import { getUserDrafts } from '~/utils/server/post.server'
 import { Center } from '@mantine/core'
 
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
 
 export const meta: MetaFunction = () => {
   return {
@@ -35,6 +36,7 @@ export default function Drafts() {
   return (
     <>
       <div className='flex grow h-screen flex-col items-center gap-5'>
+        <BlogNav />
         <h1
           className='text-3xl font-bold'
         >Drafts</h1>

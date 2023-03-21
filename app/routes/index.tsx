@@ -15,7 +15,7 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
-    <div className='flex grow flex-col items-center gap-4 '>
+    <div className='flex grow h-screen flex-col items-center gap-4 '>
       <h2 className='text-2xl font-bold'>Latest Post</h2>
       <StatsCard />
       {data.post &&

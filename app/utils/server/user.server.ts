@@ -23,6 +23,7 @@ const defaultUserSelect = {
   userName: true,
   avatarUrl: true,
   role: true,
+  profile: true,
   _count: true
 }
 
