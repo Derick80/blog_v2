@@ -39,10 +39,20 @@ model Book {
   id String @id @default(uuid())
   title String
   review String
-  rating Int @default(3)
+  rating Float @default(3)
   image String
+  bookUrl String
+  dateCompleted DateTime?
   user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
+  categories BookCategory[]
+}
+
+model BookCategory {
+  id String @id @default(uuid())
+  label String
+  value String @unique
+  books Book[]
 }
 
 model JapanImages {

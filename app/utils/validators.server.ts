@@ -22,7 +22,7 @@ export const validateBoolean = (name: boolean) => {
   if (!name !== false || name !== true) return `Please enter a boolean value'`
 }
 export const validateText = (name: string) => {
-  if (!name.length) return `Please enter some text`
+  if (name.length <= 10) return `Please enter some text`
 }
 
 export const validateTitle = (title: string) => {

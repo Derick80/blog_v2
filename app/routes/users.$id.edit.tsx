@@ -1,4 +1,4 @@
-import { Button, Textarea, TextInput, Image } from '@mantine/core'
+import { Button, Textarea, TextInput, Image, Text } from '@mantine/core'
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
@@ -53,6 +53,21 @@ export async function action({ request, params }: ActionArgs) {
   const firstName = await formData.get('firstName')
   const lastName = await formData.get('lastName')
   const email = await formData.get('email')
+
+  if (
+    !bio ||
+    !id ||
+    !profilePicture ||
+    !userName ||
+    !education ||
+    !occupation ||
+    !location ||
+    !firstName ||
+    !lastName ||
+    !email
+  ) {
+    throw new Error('All fields are required')
+  }
 
   const input = {
     id,
@@ -114,48 +129,79 @@ export default function UserProfileRoute() {
             className='flex w-[350px] flex-col gap-2 md:w-[650px]'
           >
             <input type='hidden' name='id' value={id} />
+            <label htmlFor='education' className='text-sm font-semibold'>
+              Education
+            </label>
+
             <input
               className='w-full p-2 text-black shadow-md '
               type='text'
               name='education'
               defaultValue={education}
             />
+            <label htmlFor='occupation' className='text-sm font-semibold'>
+              Occupation
+            </label>
             <input
               className='w-full p-2 text-black shadow-md '
               type='text'
               name='occupation'
               defaultValue={occupation}
             />
+            <label htmlFor='location' className='text-sm font-semibold'>
+              Location
+            </label>
             <input
               type='text'
               name='location'
               className='w-full p-2 text-black shadow-md '
               defaultValue={location}
             />
+            <label htmlFor='userName' className='text-sm font-semibold'>
+              Username
+            </label>
+
             <input
               type='text'
               className='w-full p-2 text-black shadow-md '
               name='userName'
               defaultValue={userName}
             />
+            <label htmlFor='firstName' className='text-sm font-semibold'>
+              First Name
+            </label>
+
             <input
               type='text'
               className='w-full p-2 text-black shadow-md '
               name='firstName'
               defaultValue={firstName}
             />
+
+            <label htmlFor='lastName' className='text-sm font-semibold'>
+              Last Name
+            </label>
+
             <input
               type='text'
               className='w-full p-2 text-black shadow-md '
               name='lastName'
               defaultValue={lastName}
             />
+            <label htmlFor='bio' className='text-sm font-semibold'>
+              Bio
+            </label>
+
             <input
               type='text'
               name='bio'
               className='w-full p-2 text-black shadow-md '
               defaultValue={bio}
             />
+
+            <label htmlFor='email' className='text-sm font-semibold'>
+              Email
+            </label>
 
             <input
               type='email'
@@ -167,7 +213,7 @@ export default function UserProfileRoute() {
             <input
               type='hidden'
               name='profilePicture'
-              value={userPictureFetcher?.data?.imageUrl}
+              value={userPictureFetcher?.data?.imageUrl || profilePicture}
             />
           </Form>
           <div className='flex flex-col gap-2'>
@@ -204,13 +250,13 @@ export default function UserProfileRoute() {
               </div>
             ) : null}
           </div>
-          <Button type='submit' form='edit-profile'>
-            {text}
-          </Button>
         </>
       ) : (
         <div>Profile not found</div>
       )}
+      <Button type='submit' variant='outline' form='edit-profile'>
+        {text}
+      </Button>
     </div>
   )
 }

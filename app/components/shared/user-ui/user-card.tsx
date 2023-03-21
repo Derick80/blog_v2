@@ -1,3 +1,4 @@
+import { PaperPlaneIcon, TrashIcon } from '@radix-ui/react-icons'
 import { Form, NavLink } from '@remix-run/react'
 import type { Profile } from '~/utils/schemas/profile-schema'
 import type { UserProps } from '~/utils/server/user.server'
@@ -68,7 +69,13 @@ export default function UserCard({ user, profiles }: UserCardProps) {
             {currentUser === user.id && (
               <>
                 <Form action={`/users/${user.id}/edit`}>
-                  <button type='submit'>Edit</button>
+                  <button
+                    type='submit'
+                    className='flex flex-row items-center justify-center gap-1 rounded-md bg-gray-100 p-1 dark:bg-gray-600'
+                  >
+                    <p>Edit</p>
+                    <PaperPlaneIcon />
+                  </button>
                 </Form>
                 <Form
                   method='post'
@@ -81,7 +88,9 @@ export default function UserCard({ user, profiles }: UserCardProps) {
                     }
                   }}
                 >
-                  <button type='submit'>Delete</button>
+                  <button type='submit'>
+                    <TrashIcon />
+                  </button>
                 </Form>
               </>
             )}
