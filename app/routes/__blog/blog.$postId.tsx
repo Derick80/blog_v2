@@ -8,6 +8,7 @@ import type { Post } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPostById } from '~/utils/server/post.server'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
 
 export const meta: MetaFunction = () => {
   return {
@@ -35,7 +36,7 @@ export default function Index() {
 
   return (
     <div className='flex flex-col items-center'>
-      <div>Post ID page</div>
+      <BlogNav />
       {post && (
         <PostCard
           key={post.id}

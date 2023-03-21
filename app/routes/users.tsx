@@ -33,14 +33,13 @@ export type TestUser = {
   }
 }
 export async function loader({ request }: LoaderArgs) {
-
   const user = await isAuthenticated(request)
   const currentUser = user?.id
 
   const users = await getUsers()
   const userNames = users.map((user) => user.userName)
 
-  return json({ users,  currentUser, userNames })
+  return json({ users, currentUser, userNames })
 }
 
 export default function Users() {

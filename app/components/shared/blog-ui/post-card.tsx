@@ -9,7 +9,15 @@ import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { NavLink } from '@remix-run/react'
 import CategoryContainer from '../category-container'
-import { Avatar, Button, Divider, Group, Spoiler, Tooltip } from '@mantine/core'
+import {
+  Avatar,
+  Button,
+  Divider,
+  Group,
+  Spoiler,
+  Switch,
+  Tooltip
+} from '@mantine/core'
 import type { Like } from '~/utils/schemas/like-schema'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
@@ -19,21 +27,6 @@ import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { useOptionalUser } from '~/utils/utilities'
 
 export type ManyPostProps = {
-  data: Post & {
-    comments: CommentWithChildren[]
-  } & {
-    favorites: Favorite[]
-    likes: Like[]
-    _count: {
-      comments: number
-      favorites: number
-      likes: number
-    }
-  }
-  user: User | null
-}
-
-export type EditPostCardProps = {
   data: SerializedPost & {
     comments: CommentWithChildren[]
   } & {
@@ -47,14 +40,7 @@ export type EditPostCardProps = {
   }
   user: User | null
 }
-export type TheBasicCardProps = {
-  showLikes: boolean
-  showFavorites: boolean
-  showComments: boolean
-  showShare: boolean
-  showOptions: boolean
-  showCategories: boolean
-} & EditPostCardProps
+
 export type BasicCardProps = {
   showLikes: boolean
   showFavorites: boolean
@@ -73,7 +59,7 @@ export const PostCard = ({
   showShare,
   showOptions,
   showCategories
-}: BasicCardProps | TheBasicCardProps) => {
+}: BasicCardProps) => {
   const currentUser = useOptionalUser()
   const {
     id,
@@ -138,6 +124,12 @@ export const PostCard = ({
               ></div>
             )}
           </Spoiler>
+          <Switch
+            label='featured'
+            defaultChecked={featured}
+            onChange={() => console.log('changed')}
+            disabled
+          />
         </div>
 
         <div className='flex flex-row items-center justify-between'>
@@ -190,7 +182,7 @@ export const PostCard = ({
         </div>
         <Divider />
         <Group position='right'></Group>
-        {showComments && data.comments && id && (
+        {showComments && data.comments.length > 0 && id && (
           <div className='flex flex-col'>
             {currentUser && <FormComments postId={id} />}
             {open && data.comments && (

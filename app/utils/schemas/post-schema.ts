@@ -20,9 +20,15 @@ export type Post = PrismaPost & {
 
 export type SerializedPost = SerializeFrom<Post>
 
-type EditPosts = PrismaPost & {
+export type SerializedPostAndOthers = SerializeFrom<PrismaPost> & {
+  _count: {
+    comments: number
+    likes: number
+    favorites: number
+  }
+  likes: Like[]
+  comments: CommentWithChildren[]
   categories: Category[]
+  favorites: Favorite[]
   user: User
 }
-
-export type SerializedEditPost = SerializeFrom<EditPosts>

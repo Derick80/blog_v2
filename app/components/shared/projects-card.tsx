@@ -45,7 +45,7 @@ export default function ProjectsCard({ project }: { project: Project }) {
             />
           ))}
         </div>
-          <p className='text-base'>{project.description}</p>
+        <p className='text-base'>{project.description}</p>
       </div>
       <div className='col-span-2'>
         <div className='flex w-full justify-start gap-5 p-1'>

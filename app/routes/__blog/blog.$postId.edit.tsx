@@ -3,6 +3,7 @@ import { json, redirect } from '@remix-run/node'
 import {
   Form,
   NavLink,
+  useActionData,
   useCatch,
   useFetcher,
   useLoaderData,
@@ -24,6 +25,7 @@ import { useState } from 'react'
 import getAllCategories from '~/utils/server/categories.server'
 import { useOptionalUser } from '~/utils/utilities'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
 
 export const meta: MetaFunction = () => {
   return {
@@ -127,6 +129,7 @@ export async function action({ params, request }: ActionArgs) {
 }
 
 export default function EditPost() {
+  const formErrors = useActionData()
   const user = useOptionalUser()
   const navigate = useNavigation()
   const text =
@@ -158,13 +161,13 @@ export default function EditPost() {
       : 'Delete'
   const data = useLoaderData<typeof loader>()
   console.log(data.post.featured, 'featured')
-const imageFetcher = useFetcher()
-const onClick = async () =>
-imageFetcher.submit({
-  imageUrl: 'imageUrl',
-  key: 'imageUrl',
-  action: '/actions/cloudinary'
-})
+  const imageFetcher = useFetcher()
+  const onClick = async () =>
+    imageFetcher.submit({
+      imageUrl: 'imageUrl',
+      key: 'imageUrl',
+      action: '/actions/cloudinary'
+    })
   const {
     title,
     description,
@@ -201,25 +204,7 @@ imageFetcher.submit({
   return (
     <div className='mt-10 flex w-full flex-col items-center'>
       <div className='flex w-full flex-col items-center justify-center'>
-        {user?.role === 'ADMIN' && (
-          <div className='flex gap-5'>
-            <NavLink prefetch='intent' to='/blog/new'>
-              <Button size='sm' variant='subtle'>
-                New post
-              </Button>
-            </NavLink>
-            <NavLink prefetch='intent' to='/drafts'>
-              <Button size='sm' variant='subtle'>
-                Drafts
-              </Button>
-            </NavLink>
-            <NavLink prefetch='intent' to='/blog/categories'>
-              <Button size='sm' variant='subtle'>
-                Manage categories
-              </Button>
-            </NavLink>
-          </div>
-        )}
+        {user?.role === 'ADMIN' && <BlogNav />}
 
         <Form
           method='post'
@@ -236,10 +221,7 @@ imageFetcher.submit({
             className='text-slate12'
             name='title'
             id='title'
-            value={formData.title}
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
+            defaultValue={formData.title}
           />
           <label htmlFor='description'>Description</label>
           <input
@@ -247,25 +229,18 @@ imageFetcher.submit({
             className='text-slate12'
             name='description'
             id='description'
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
+            defaultValue={formData.description}
           />
 
           <label htmlFor='body'>Post Content</label>
           {body && <TipTap content={body} />}
-          <input type='hidden' name='body' value={body} />
+          <input type='hidden' name='body' defaultValue={body} />
           <label htmlFor='featured'>Featured</label>
           <input
             type='checkbox'
             name='featured'
             id='featured'
-            checked={formData.featured || false}
-            onChange={(e) => {
-              console.log(e.target.checked)
-              setFormData({ ...formData, featured: e.target.checked })
-            }}
+            defaultChecked={formData.featured || false}
           />
 
           <MultiSelect
@@ -273,32 +248,24 @@ imageFetcher.submit({
             name='categories'
             id='categories'
             data={mainCategories}
-            value={selected}
-            onChange={(e) => {
-              setSelected(e)
-              setFormData({ ...formData, categories: e })
-            }}
+            defaultValue={selected}
           />
 
-          <Flex justify={'center'}>
-            <input
-              type='hidden'
-              name='imageUrl'
-              id='imageUrl'
-              value={imageFetcher.data?.imageUrl}
-            />
-          </Flex>
-
+          <input
+            type='hidden'
+            name='imageUrl'
+            id='imageUrl'
+            value={imageFetcher.data?.imageUrl || imageUrl}
+          />
         </Form>
-
 
         <div className='flex flex-col gap-2'>
           <imageFetcher.Form
-          method='post'
-          encType='multipart/form-data'
-          action='/actions/cloudinary'
-          className='flex w-[350px] flex-col md:w-1/2'
-          onClick={onClick}
+            method='post'
+            encType='multipart/form-data'
+            action='/actions/cloudinary'
+            className='flex w-[350px] flex-col md:w-1/2'
+            onClick={onClick}
           >
             <label htmlFor='imageUrl' className='text-sm font-semibold'>
               Upload a Project Image
@@ -311,21 +278,20 @@ imageFetcher.submit({
               accept='image/*'
             />
             <button>Upload</button>
-
           </imageFetcher.Form>
-          { imageFetcher.data ? (
+          {imageFetcher.data ? (
             <div className='items-c enter flex flex-col'>
               <p className='text-sm text-gray-500'>Image Uploaded</p>
               <input
                 type='hidden'
                 name='imageUrl'
-                value={ imageFetcher?.data?.imageUrl }
+                value={imageFetcher?.data?.imageUrl}
               />
               <div className='h-[100px] w-[100px] rounded-xl bg-crimson12 text-slate12'>
-                <img src={ imageFetcher?.data?.imageUrl } alt={ '#' } />
+                <img src={imageFetcher?.data?.imageUrl} alt={'#'} />
               </div>
             </div>
-          ) : null }
+          ) : null}
         </div>
         <button
           type='submit'
@@ -334,23 +300,24 @@ imageFetcher.submit({
           form='editPost'
           className='rounded-xl bg-white py-2 px-4 font-bold hover:bg-green-800 dark:bg-green-500'
         >
-          { text }
+          {text}
         </button>
-        { published ? (
-          <Button type='submit'
+        {published ? (
+          <Button
+            type='submit'
             form='editPost'
-            name='_action' value='unpublish'>
-            { unpublishText }
+            name='_action'
+            value='unpublish'
+          >
+            {unpublishText}
           </Button>
         ) : (
-          <Button type='submit'
-            form='editPost'
-            name='_action' value='publish'>
-            { publishText }
+          <Button type='submit' form='editPost' name='_action' value='publish'>
+            {publishText}
           </Button>
-        ) }
+        )}
         <Button type='submit' name='_action' value='delete'>
-          { deleteText }
+          {deleteText}
         </Button>
       </div>
     </div>

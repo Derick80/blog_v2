@@ -1,8 +1,7 @@
-import { Button, Divider } from '@mantine/core'
+import { Divider } from '@mantine/core'
 import type { MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { NavLink, Outlet, useLoaderData } from '@remix-run/react'
-import { badRequest } from 'remix-utils'
+import { Outlet, useLoaderData } from '@remix-run/react'
 import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import type { Post } from '~/utils/schemas/post-schema'
@@ -32,18 +31,19 @@ export async function loader() {
 
 export default function Index() {
   const user = useOptionalUser()
-  const data = useLoaderData()
+  const data = useLoaderData<{
+    posts: Post[]
+  }>()
+
   return (
     <div className='mx-auto flex w-[350px] grow flex-col items-center gap-5 md:w-[650px] '>
       <h1 className='text-3xl font-bold'>Blog Feed</h1>
-      {user?.role === 'ADMIN' ? (
-       <BlogNav />
-      ) : null}
+      {user?.role === 'ADMIN' ? <BlogNav /> : null}
       <Divider
         className='w-full'
         style={{ height: '1px', backgroundColor: '#e2e8f0' }}
       />
-      {data.posts.map((post: Post) => (
+      {data.posts.map((post) => (
         <PostCard
           key={post.id}
           data={post}

@@ -83,8 +83,6 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
-
-
   await createPost({
     title,
     description,
@@ -132,14 +130,14 @@ export default function Uploader() {
         <label htmlFor='title'>Title</label>
         <input
           type='text'
-          className='text-slate12 border rounded-md'
+          className='rounded-md border text-slate12'
           name='title'
           onChange={(e) => console.log(e.target.value)}
         />
         <label htmlFor='description'>Description</label>
         <input
           type='text'
-          className='text-black rounded-md border'
+          className='rounded-md border text-black'
           name='description'
           onChange={(e) => console.log(e.target.value)}
         />
@@ -153,12 +151,12 @@ export default function Uploader() {
           }}
         />
 
-      <Switch
-        label='Featured'
-        name='featured'
-        onChange={(e) => console.log(e.target.value)}
-        defaultChecked={false}
-      />
+        <Switch
+          label='Featured'
+          name='featured'
+          onChange={(e) => console.log(e.target.value)}
+          defaultChecked={false}
+        />
 
         <input type='hidden' name='categories' value={selected} />
       </Form>

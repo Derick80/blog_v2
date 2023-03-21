@@ -25,29 +25,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           Derick Hoskinson PhD
         </div>
         <div className='hidden flex-col items-center gap-5 md:flex md:flex-row'>
-          <NavLink prefetch='intent'
-            aria-label='Go to Home'
-          to='/'>
+          <NavLink prefetch='intent' aria-label='Go to Home' to='/'>
             <h3 className='font-semibold'>Home</h3>
           </NavLink>
-          <NavLink prefetch='intent'
-            aria-label='Go to Blog'
-          to='/blog'>
+          <NavLink prefetch='intent' aria-label='Go to Blog' to='/blog'>
             <h3 className='font-semibold'>Blog</h3>
           </NavLink>
-          <NavLink prefetch='intent'
-            aria-label='Go to About'
-          to='/about'>
+          <NavLink prefetch='intent' aria-label='Go to About' to='/about'>
             <h3 className='font-semibold'>About</h3>
           </NavLink>
-          <NavLink prefetch='intent'
-            aria-label='Go to Projects'
-          to='/projects'>
+          <NavLink prefetch='intent' aria-label='Go to Projects' to='/projects'>
             <h3 className='font-semibold'>Projects</h3>
           </NavLink>
-          <NavLink prefetch='intent'
-            aria-label='Go to Travel'
-          to='/travel'>
+          <NavLink prefetch='intent' aria-label='Go to Travel' to='/travel'>
             <h3 className='font-semibold'>Travel</h3>
           </NavLink>
           {/* <NavLink prefetch='intent'
@@ -90,9 +80,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             transitionTimingFunction='ease'
           >
             <div className='flex flex-col items-center gap-5 md:flex-row'>
-              <NavLink prefetch='intent'
+              <NavLink
+                prefetch='intent'
                 aria-label='Go to Home'
-              to='/' onClick={() => setOpen(!open)}>
+                to='/'
+                onClick={() => setOpen(!open)}
+              >
                 <h3 className='font-semibold'>Home</h3>
               </NavLink>
               <NavLink

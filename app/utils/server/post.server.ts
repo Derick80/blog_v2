@@ -56,7 +56,8 @@ export async function getHeroPost() {
 export async function getUserPosts(userId: string) {
   const posts = await prisma.post.findMany({
     where: {
-      userId
+      userId,
+      published: true
     },
     include: {
       categories: true,
@@ -78,8 +79,20 @@ export async function getUserPosts(userId: string) {
               id: true,
               userName: true,
               avatarUrl: true,
-              email: true,
-              password: false
+              email: true
+            }
+          },
+          children: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  userName: true,
+                  avatarUrl: true,
+                  email: true,
+                  password: false
+                }
+              }
             }
           }
         }
@@ -88,7 +101,59 @@ export async function getUserPosts(userId: string) {
   })
   return posts
 }
+export async function getPublishedUserPostsByUserId(userId: string) {
+  const posts = await prisma.post.findMany({
+    where: {
+      userId,
+      published: true
+    },
 
+    include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              userName: true,
+              avatarUrl: true,
+              email: true
+            }
+          },
+          children: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  userName: true,
+                  avatarUrl: true,
+                  email: true,
+                  password: false
+                }
+              }
+            }
+          }
+        }
+      },
+      user: {
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          password: false
+        }
+      },
+      categories: true,
+      _count: true,
+      likes: true,
+      favorites: true
+    },
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
+  return posts
+}
 export async function getPosts() {
   return await prisma.post.findMany({
     where: {

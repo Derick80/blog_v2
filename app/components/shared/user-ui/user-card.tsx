@@ -43,10 +43,7 @@ export default function UserCard({ user, profiles }: UserCardProps) {
                 <p className='text-xs italic'>Username</p>
                 <p className='text-base'> {user.userName}</p>
               </NavLink>
-
-
             </div>
-
 
             <p className='pt-1 text-xs font-bold md:pt-2'>User statistics</p>
             <div

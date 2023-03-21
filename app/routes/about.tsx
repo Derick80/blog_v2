@@ -23,13 +23,10 @@ export default function Page() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <div
-    className='flex grow h-screen items-center gap-4'
-    >
+    <div className='flex h-screen grow items-center gap-4'>
       {data.about.map((about) => (
         <AboutCard key={about.id} about={about} />
       ))}
-
     </div>
   )
 }

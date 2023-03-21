@@ -53,7 +53,6 @@ export default function AboutCard({ about }: AboutProps) {
             <button type='button' className='flex items-center gap-2'>
               <span className='ml-2 text-xs'>Edit</span>
               <Pencil1Icon />
-
             </button>
           </Link>
         ) : null}

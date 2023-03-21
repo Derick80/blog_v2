@@ -1,21 +1,18 @@
-import { useFetcher } from '@remix-run/react'
+import { NavLink, useFetcher } from '@remix-run/react'
 import React from 'react'
 import { useMatchesData, useOptionalUser, useUser } from '~/utils/utilities'
 
 export default function StatsCard() {
   const user = useOptionalUser()
-  const draftsFetcher = useFetcher(
-
-  )
+  const draftsFetcher = useFetcher()
 
   React.useEffect(() => {
-    if (draftsFetcher.type === "init") {
-      draftsFetcher.load("/drafts")
+    if (draftsFetcher.type === 'init') {
+      draftsFetcher.load('/drafts')
     }
-  }, [draftsFetcher]);
+  }, [draftsFetcher])
 
-  console.log(draftsFetcher.data, 'drafts');
-
+  console.log(draftsFetcher.data, 'draftsFetcher.data')
 
   return (
     <>
@@ -44,29 +41,29 @@ export default function StatsCard() {
               </div>
             </li>
             <li className='flex flex-col items-center gap-3'>
-              <h3 className='text-base text-black dark:text-slate-50'>
-                # of posts
-              </h3>
-              <div className='flex w-[24px] justify-center rounded-full bg-crimson8'>
-                <p className='text-base text-slate-50'>{user._count.posts}</p>
-
-              </div>
+              <NavLink to={`/users/${user.id}/posts`}>
+                <h3 className='text-base text-black dark:text-slate-50'>
+                  # of posts
+                </h3>
+                <div className='flex w-[24px] justify-center rounded-full bg-crimson8'>
+                  <p className='text-base text-slate-50'>{user._count.posts}</p>
+                </div>
+              </NavLink>
             </li>
-            <li className='flex flex-col items-center gap-3'>
-              <h3 className='text-base text-black dark:text-slate-50'>
-                # of drafts
-              </h3>
-              <div className='flex w-[24px] justify-center rounded-full bg-crimson8'>
-
-                { draftsFetcher.data && (
-                  <p
-                    className='text-base text-slate-50'
-                  >
-                    { draftsFetcher.data.drafts.length }
-                  </p>
-                ) }
-              </div>
-            </li>
+            {draftsFetcher.data && (
+              <li className='flex flex-col items-center gap-3'>
+                <NavLink to='/drafts'>
+                  <h3 className='text-base text-black dark:text-slate-50'>
+                    # of drafts
+                  </h3>
+                  <div className='flex w-[24px] justify-center rounded-full bg-crimson8'>
+                    <p className='text-base text-slate-50'>
+                      {draftsFetcher.data.posts.length || ''}
+                    </p>
+                  </div>
+                </NavLink>
+              </li>
+            )}
           </ul>
         </>
       )}

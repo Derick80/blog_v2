@@ -9,6 +9,8 @@ import { Center } from '@mantine/core'
 
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
+import type { Post } from '~/utils/schemas/post-schema'
+import type { User } from '@prisma/client'
 
 export const meta: MetaFunction = () => {
   return {
@@ -22,46 +24,40 @@ export async function loader({ request }: LoaderArgs) {
     return { redirect: '/login' }
   }
 
-  const drafts = await getUserDrafts(user.id)
-  invariant(drafts, 'drafts are required')
-  return json({ user, drafts })
+  const posts = await getUserDrafts(user.id)
+  invariant(posts, 'drafts are required')
+  return json({ user, posts })
 }
 
 export default function Drafts() {
   const data = useLoaderData<{
-    user: SerializeFrom<typeof isAuthenticated>
-    drafts: SerializeFrom<typeof getUserDrafts>
+    user: SerializeFrom<User>
+    posts: SerializeFrom<Post>[]
   }>()
 
   return (
     <>
-      <div className='flex grow h-screen flex-col items-center gap-5'>
+      <div className='flex h-screen grow flex-col items-center gap-5'>
         <BlogNav />
-        <h1
-          className='text-3xl font-bold'
-        >Drafts</h1>
-        {data.drafts.length > 0 ? (
-          data.drafts.map((draft) => (
-            <PostCard
-              key={draft.id}
-              data={draft}
-              showCategories={true}
-              showComments={false}
-              showOptions={true}
-              showLikes={false}
-              showFavorites={false}
-              showShare={false}
-              user={data.user}
-            />
-
-          ))
+        <h1 className='text-3xl font-bold'>Drafts</h1>
+        {data.posts.length === 0 ? (
+          <Center>
+            <h1 className='text-2xl font-bold'>No drafts</h1>
+          </Center>
         ) : (
-          <div
-            className='flex flex-col items-center gap-5'
-          >
-            <h2 className='text-2xl italic'>You have no drafts</h2>
-
-          </div>
+          data.posts.map((post) => (
+            <PostCard
+              key={post.id}
+              data={post}
+              user={data.user}
+              showCategories={true}
+              showLikes={true}
+              showComments={true}
+              showFavorites={true}
+              showOptions={true}
+              showShare={true}
+            />
+          ))
         )}
       </div>
     </>
