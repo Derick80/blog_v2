@@ -83,9 +83,7 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
 
-  if (!featured) {
-    throw new Error('featured is required')
-  }
+
 
   await createPost({
     title,
@@ -95,7 +93,7 @@ export const action: ActionFunction = async ({ request }) => {
     createdBy: user.userName,
     userId: user.id,
     category: category,
-    featured
+    featured: featured || false
   })
 
   return redirect('/drafts')
@@ -114,7 +112,7 @@ export default function Uploader() {
     fetcher.submit({
       imageUrl: 'imageUrl',
       key: 'imageUrl',
-      action: '/actions/image'
+      action: '/actions/cloudinary'
     })
 
   return (
@@ -168,7 +166,7 @@ export default function Uploader() {
         <fetcher.Form
           method='post'
           encType='multipart/form-data'
-          action='/actions/image'
+          action='/actions/cloudinary'
           onClick={onClick}
           className='flex flex-col gap-5'
         >

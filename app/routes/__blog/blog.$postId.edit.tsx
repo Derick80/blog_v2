@@ -4,6 +4,7 @@ import {
   Form,
   NavLink,
   useCatch,
+  useFetcher,
   useLoaderData,
   useNavigation
 } from '@remix-run/react'
@@ -157,7 +158,13 @@ export default function EditPost() {
       : 'Delete'
   const data = useLoaderData<typeof loader>()
   console.log(data.post.featured, 'featured')
-
+const imageFetcher = useFetcher()
+const onClick = async () =>
+imageFetcher.submit({
+  imageUrl: 'imageUrl',
+  key: 'imageUrl',
+  action: '/actions/cloudinary'
+})
   const {
     title,
     description,
@@ -217,6 +224,7 @@ export default function EditPost() {
         <Form
           method='post'
           action={`/blog/${id}/edit`}
+          id='editPost'
           className='flex w-[350px] flex-col md:w-1/2'
         >
           <input type='hidden' name='postId' value={id} />
@@ -277,30 +285,73 @@ export default function EditPost() {
               type='hidden'
               name='imageUrl'
               id='imageUrl'
-              value={imageUrl}
+              value={imageFetcher.data?.imageUrl}
             />
           </Flex>
-          <button
-            type='submit'
-            name='_action'
-            value='save'
-            className='rounded-xl bg-white py-2 px-4 font-bold hover:bg-green-800 dark:bg-green-500'
-          >
-            {text}
-          </button>
-          {published ? (
-            <Button type='submit' name='_action' value='unpublish'>
-              {unpublishText}
-            </Button>
-          ) : (
-            <Button type='submit' name='_action' value='publish'>
-              {publishText}
-            </Button>
-          )}
-          <Button type='submit' name='_action' value='delete'>
-            {deleteText}
-          </Button>
+
         </Form>
+
+
+        <div className='flex flex-col gap-2'>
+          <imageFetcher.Form
+          method='post'
+          encType='multipart/form-data'
+          action='/actions/cloudinary'
+          className='flex w-[350px] flex-col md:w-1/2'
+          onClick={onClick}
+          >
+            <label htmlFor='imageUrl' className='text-sm font-semibold'>
+              Upload a Project Image
+            </label>
+            <input
+              type='file'
+              name='imageUrl'
+              id='imageUrl'
+              className='rounded-md p-2 shadow-md'
+              accept='image/*'
+            />
+            <button>Upload</button>
+
+          </imageFetcher.Form>
+          { imageFetcher.data ? (
+            <div className='items-c enter flex flex-col'>
+              <p className='text-sm text-gray-500'>Image Uploaded</p>
+              <input
+                type='hidden'
+                name='imageUrl'
+                value={ imageFetcher?.data?.imageUrl }
+              />
+              <div className='h-[100px] w-[100px] rounded-xl bg-crimson12 text-slate12'>
+                <img src={ imageFetcher?.data?.imageUrl } alt={ '#' } />
+              </div>
+            </div>
+          ) : null }
+        </div>
+        <button
+          type='submit'
+          name='_action'
+          value='save'
+          form='editPost'
+          className='rounded-xl bg-white py-2 px-4 font-bold hover:bg-green-800 dark:bg-green-500'
+        >
+          { text }
+        </button>
+        { published ? (
+          <Button type='submit'
+            form='editPost'
+            name='_action' value='unpublish'>
+            { unpublishText }
+          </Button>
+        ) : (
+          <Button type='submit'
+            form='editPost'
+            name='_action' value='publish'>
+            { publishText }
+          </Button>
+        ) }
+        <Button type='submit' name='_action' value='delete'>
+          { deleteText }
+        </Button>
       </div>
     </div>
   )
