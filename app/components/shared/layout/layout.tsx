@@ -25,22 +25,35 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           Derick Hoskinson PhD
         </div>
         <div className='hidden flex-col items-center gap-5 md:flex md:flex-row'>
-          <NavLink prefetch='intent' to='/'>
+          <NavLink prefetch='intent'
+            aria-label='Go to Home'
+          to='/'>
             <h3 className='font-semibold'>Home</h3>
           </NavLink>
-          <NavLink prefetch='intent' to='/blog'>
+          <NavLink prefetch='intent'
+            aria-label='Go to Blog'
+          to='/blog'>
             <h3 className='font-semibold'>Blog</h3>
           </NavLink>
-          <NavLink prefetch='intent' to='/about'>
+          <NavLink prefetch='intent'
+            aria-label='Go to About'
+          to='/about'>
             <h3 className='font-semibold'>About</h3>
           </NavLink>
-          <NavLink prefetch='intent' to='/projects'>
+          <NavLink prefetch='intent'
+            aria-label='Go to Projects'
+          to='/projects'>
             <h3 className='font-semibold'>Projects</h3>
           </NavLink>
-          <NavLink prefetch='intent' to='/travel'>
+          <NavLink prefetch='intent'
+            aria-label='Go to Travel'
+          to='/travel'>
             <h3 className='font-semibold'>Travel</h3>
           </NavLink>
-          <NavLink prefetch='intent' to='/users' onClick={() => setOpen(!open)}>
+          <NavLink prefetch='intent'
+            aria-label='Go to Users'
+          to='/users'
+          >
             <h3 className='font-semibold'>Users</h3>
           </NavLink>
 
@@ -77,11 +90,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             transitionTimingFunction='ease'
           >
             <div className='flex flex-col items-center gap-5 md:flex-row'>
-              <NavLink prefetch='intent' to='/' onClick={() => setOpen(!open)}>
+              <NavLink prefetch='intent'
+                aria-label='Go to Home'
+              to='/' onClick={() => setOpen(!open)}>
                 <h3 className='font-semibold'>Home</h3>
               </NavLink>
               <NavLink
                 prefetch='intent'
+                aria-label='Go to Blog'
                 to='/blog'
                 onClick={() => setOpen(!open)}
               >
@@ -89,6 +105,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </NavLink>
               <NavLink
                 prefetch='intent'
+                aria-label='Go to About'
                 to='/about'
                 onClick={() => setOpen(!open)}
               >
@@ -96,6 +113,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </NavLink>
               <NavLink
                 prefetch='intent'
+                aria-label='Go to Projects'
                 to='/projects'
                 onClick={() => setOpen(!open)}
               >
@@ -110,6 +128,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </NavLink>
               <NavLink
                 prefetch='intent'
+                aria-label='Go to Users'
                 to='/users'
                 onClick={() => setOpen(!open)}
               >

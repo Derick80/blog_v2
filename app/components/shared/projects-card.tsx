@@ -45,9 +45,7 @@ export default function ProjectsCard({ project }: { project: Project }) {
             />
           ))}
         </div>
-        <div>
-          <p className='indent-1 text-base'>{project.description}</p>
-        </div>
+          <p className='text-base'>{project.description}</p>
       </div>
       <div className='col-span-2'>
         <div className='flex w-full justify-start gap-5 p-1'>
@@ -66,7 +64,7 @@ export default function ProjectsCard({ project }: { project: Project }) {
         <div className='flex w-full justify-end gap-5 p-1'>
           <a
             href={project.githubUrl}
-            className='flex items-center space-x-1'
+            className='flex items-center'
             target='_blank'
             rel='noreferrer'
           >

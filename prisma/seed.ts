@@ -83,7 +83,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
           email: "derickchoskinson@gmail.com",
           phone: "312-871-8067",
           location: "Chicago, IL",
-          blurb: "I am a clinical scientist with a passion for data science and genetics. I have a PhD in Genetics from Tufts University School of Biomedical Sciences. I have experience in the fields of inherited genetics, cancer genetics, and clinical research. I am currently working as a Senior Clinical Scientist at Tempus Labs. I am looking for a position where I can apply my skills to solve real-world problems.",
+          blurb:`As a clinical scientist deeply passionate about data science and genetics, I hold a PhD in Genetics from Tufts University School of Biomedical Sciences, where my studies primarily centered around the molecular mechanisms of mRNA formation and maturation. Since then, I have expanded my expertise through postdoctoral studies in inherited genetics, cancer genetics, and clinical research. Presently, as a Senior Clinical Scientist at Tempus Labs, I have had the opportunity to work on groundbreaking research and development, applying my knowledge and experience to solve complex problems in the field. However, I am eager to take on new challenges and put my skills to use in tackling real-world issues. I am confident that my dedication to innovation and attention to detail, coupled with my multidisciplinary background, make me a strong candidate for any position where I can make a positive impact through my work. `,
           userId: user.id,
       }
   })
@@ -418,7 +418,7 @@ profilePicture:'https://blogphotosbucket.s3.us-east-2.amazonaws.com/profileimage
 await prisma.project.create({
       data: {
         title: "Social Media Blog V2",
-        description: "A social media blog built with React and Typescript and Tailwindcss with new functionality",
+        description: "A social media blog built with React and Typescript and Tailwindcss with new functionality including favoriting a post, commenting on a post, user information",
         projectImg:"https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/blogv2.png",
         projectUrl: "derickhoskinson.com",
         githubUrl:'https://github.com/Derick80/blog',
@@ -471,7 +471,7 @@ await prisma.project.create({
     await prisma.project.create({
       data: {
         title:"Budget App",
-        description: "A budget app built with React and Typescript and Tailwindcss and Remix-run metaframework",
+        description: "A budget app built with React and Typescript and Tailwindcss and Remix-run metaframework.  This app allows you to add and delete transactions and see your balance",
         projectImg:"https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/bankapp.png",
         projectUrl: "https://bank23-jhumheegh-derick80.vercel.app/",
         githubUrl:'https://github.com/Derick80/bank23',
@@ -518,7 +518,7 @@ await prisma.project.create({
     await prisma.project.create({
       data: {
           title: "Japan 2023 Image Carousel",
-          description: "An Image Carousel built with React and Typescript and Tailwindcss",
+          description: "An Image Carousel built with React and Typescript and Tailwindcss.  This app was a small project that I used while vacationing in Japan to showcase my photos and practice some coding skills",
           projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/photogallery.png",
 
           projectUrl: "https://photogallery-3r9pc82rg-derick80.vercel.app/",
@@ -568,7 +568,7 @@ await prisma.project.create({
   await prisma.project.create({
     data: {
         title: "Personal Blog 1.0 ",
-        description: "A personal blog built with Remix and Typescript. This was the first first largely non-tutorial app that I built",
+        description: "A personal blog built with Remix and Typescript. This was the first first largely non-tutorial app that I built. Primarily featuring the ability to like posts. ",
         projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/blogV1.png",
 
         projectUrl: "https://derickcurtis.com/",
@@ -620,7 +620,7 @@ await prisma.project.create({
   await prisma.project.create({
     data: {
         title: "Memory Game",
-        description: "A simple memory game built with React and Typescript",
+        description: "A simple memory game built with React and Typescript.  This was a small project that I used to practice some coding skills and to learn more about Typescript.",
         projectImg: "https://remix-bucket.s3.us-east-2.amazonaws.com/mystock/memory.png",
 
         projectUrl: "https://codesandbox.io/s/wow-memory-game-02b34",

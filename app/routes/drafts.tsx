@@ -34,8 +34,10 @@ export default function Drafts() {
 
   return (
     <>
-      <div className='flex grow flex-col items-center gap-5'>
-        <h1>Drafts</h1>
+      <div className='flex grow h-screen flex-col items-center gap-5'>
+        <h1
+          className='text-3xl font-bold'
+        >Drafts</h1>
         {data.drafts.length > 0 ? (
           data.drafts.map((draft) => (
             <PostCard
@@ -50,21 +52,14 @@ export default function Drafts() {
               user={data.user}
             />
 
-            //             <div key={draft.id}>
-
-            //               <div className='flex flex-col'>
-            // {draft.title}
-            //                 <div className='flex flex-col'>
-            //                   <p dangerouslySetInnerHTML={{ __html: draft.body }} />
-
-            //                   </div>
-            //                   </div>
-            //               </div>
           ))
         ) : (
-          <Center>
-            <h2>You have no drafts</h2>
-          </Center>
+          <div
+            className='flex flex-col items-center gap-5'
+          >
+            <h2 className='text-2xl italic'>You have no drafts</h2>
+
+          </div>
         )}
       </div>
     </>
