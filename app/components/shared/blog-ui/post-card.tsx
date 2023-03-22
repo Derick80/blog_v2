@@ -125,7 +125,9 @@ export const PostCard = ({
             )}
           </Spoiler>
           <Switch
-            label='featured'
+          className='text-slate-50'
+          color={featured ? 'red' : 'blue'}
+            label='Featured Post'
             defaultChecked={featured}
             onChange={() => console.log('changed')}
             disabled

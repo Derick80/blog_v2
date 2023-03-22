@@ -31,6 +31,7 @@ import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
 import { wait } from '~/utils/server/functions.server'
 import { badRequest } from 'remix-utils'
+import { TrashIcon } from '@radix-ui/react-icons'
 
 export const meta: MetaFunction = () => {
   return {
@@ -56,7 +57,6 @@ export async function loader({ params, request }: LoaderArgs) {
 }
 
 export async function action({ params, request }: ActionArgs) {
-  await wait()
   const user = await isAuthenticated(request)
   invariant(user, 'user is required')
   const formData = await request.formData()
@@ -83,13 +83,13 @@ export async function action({ params, request }: ActionArgs) {
     typeof imageUrl !== 'string'
   ) {
     return badRequest({
-      formErrors: null,
+      fieldErrors: null,
       fields: null,
       formError: 'Invalid form data'
     })
   }
 
-  const formErrors = {
+  const fieldErrors = {
     title: validateSmallTextLength(title),
     description: validateText(description),
     body: validateText(body),
@@ -107,12 +107,14 @@ export async function action({ params, request }: ActionArgs) {
     action,
     featured
   }
-  if (Object.values(formErrors).some(Boolean)) {
+  if (Object.values(fieldErrors).some(Boolean)) {
     return badRequest({
-      formErrors,
+      fieldErrors,
       fields,
       formError: null
     })
+
+
   }
   const cats = categories?.split(',')
   const category = cats.map((cat) => {
@@ -120,6 +122,7 @@ export async function action({ params, request }: ActionArgs) {
       value: cat
     }
   })
+
   switch (action) {
     case 'save':
       await savePost({
@@ -143,7 +146,7 @@ export async function action({ params, request }: ActionArgs) {
       return redirect(`/blog/${postId}`)
     case 'delete':
       await deletePost(postId)
-      return redirect(`/`)
+      return redirect(`/blog`)
   }
 }
 
@@ -152,36 +155,41 @@ export default function EditPost() {
 
   const actionData = useActionData<typeof action>()
   const user = useOptionalUser()
-  const navigate = useNavigation()
+  const saveNav = useNavigation()
+  const pubNav = useNavigation()
+  const unPubNav = useNavigation()
+  const deleteNav = useNavigation()
+
   const text =
-    navigate.state === 'submitting'
+    saveNav.state === 'submitting'
       ? 'Saving...'
-      : navigate.state === 'loading'
+      : saveNav.state === 'loading'
       ? 'Saved!'
       : 'Save'
 
   const publishText =
-    navigate.state === 'submitting'
+    pubNav.state === 'submitting'
       ? 'Publishing...'
-      : navigate.state === 'loading'
+      : pubNav.state === 'loading'
       ? 'Published!'
       : 'Publish'
 
   const unpublishText =
-    navigate.state === 'submitting'
+    unPubNav.state === 'submitting'
       ? 'Unpublishing...'
-      : navigate.state === 'loading'
+      : unPubNav.state === 'loading'
       ? 'Unpublished!'
       : 'Unpublish'
 
   const deleteText =
-    navigate.state === 'submitting'
+    deleteNav.state === 'submitting'
       ? 'Deleting...'
-      : navigate.state === 'loading'
+      : deleteNav.state === 'loading'
       ? 'Deleted!'
       : 'Delete'
-  console.log(data.post.featured, 'featured')
-  const imageFetcher = useFetcher()
+
+
+      const imageFetcher = useFetcher()
   const onClick = async () =>
     imageFetcher.submit({
       imageUrl: 'imageUrl',
@@ -242,11 +250,10 @@ export default function EditPost() {
             className='text-slate12'
             name='title'
             id='title'
-            value={formData.title}
-            defaultValue={actionData ? actionData.title : ''}
+            defaultValue={actionData ? actionData.title : formData.title}
           />
-          {actionData?.formErrors?.title && (
-            <p className='text-red-500'>{actionData.formErrors.title}</p>
+          {actionData?.fieldErrors?.title && (
+            <p className='text-red-500'>{actionData.fieldErrors.title}</p>
           )}
           <label htmlFor='description'>Description</label>
           <input
@@ -254,10 +261,10 @@ export default function EditPost() {
             className='text-slate12'
             name='description'
             id='description'
-            defaultValue={actionData ? actionData.description : ''}
+            defaultValue={actionData ? actionData.description : formData.description}
           />
-          {actionData?.formErrors?.description && (
-            <p className='text-red-500'>{actionData.formErrors.description}</p>
+          {actionData?.fieldErrors?.description && (
+            <p className='text-red-500'>{actionData.fieldErrors.description}</p>
           )}
           <label htmlFor='body'>Post Content</label>
           {body && <TipTap content={body} />}
@@ -343,7 +350,9 @@ export default function EditPost() {
             {publishText}
           </button>
         )}
-        <button type='submit' name='_action' value='delete'>
+        <button type='submit'
+        form='editPost'
+        name='_action' value='delete'>
           {deleteText}
         </button>
       </div>
