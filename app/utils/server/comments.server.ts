@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Comment, Prisma } from '@prisma/client'
+import type { Comment, Prisma } from '@prisma/client'
 import { prisma } from './prisma.server'
 
 export async function getChildCommentsByParentId({

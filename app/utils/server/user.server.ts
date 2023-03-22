@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import { createPasswordHash } from './auth/auth-service.server'
 import { prisma } from './prisma.server'
 

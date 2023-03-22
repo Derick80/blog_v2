@@ -10,7 +10,7 @@ export default function Footer({ children }: { children?: React.ReactNode }) {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <GitHubLogoIcon />{' '}
+          <GitHubLogoIcon />
         </a>
 
         <Text>Copyrite {new Date().getFullYear()}</Text>
@@ -19,7 +19,7 @@ export default function Footer({ children }: { children?: React.ReactNode }) {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <LinkedInLogoIcon />{' '}
+          <LinkedInLogoIcon />
         </a>
       </div>
     </footer>

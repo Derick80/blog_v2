@@ -1,4 +1,5 @@
-import { ActionArgs, json, LoaderArgs, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import {
   Form,
   useCatch,
@@ -7,7 +8,7 @@ import {
   useParams,
   useRouteLoaderData
 } from '@remix-run/react'
-import { Categories } from '~/utils/schemas/projects-schema'
+import type { Categories } from '~/utils/schemas/projects-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
 import { getProjectById } from '~/utils/server/project.server'

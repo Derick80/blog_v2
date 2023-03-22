@@ -1,12 +1,11 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { useLoaderData, Outlet } from '@remix-run/react'
-import Dropdown from '~/components/shared/blog-ui/dropdown'
-import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import { Image, Text, Title } from '@mantine/core'
+import { useLoaderData } from '@remix-run/react'
+import { Image, Title } from '@mantine/core'
 import { Carousel } from '@mantine/carousel'
-import { TravelLog } from '@prisma/client'
-import { getAlbums, CitiesAndAlbums } from '~/utils/server/travel.server'
+import type { TravelLog } from '@prisma/client'
+import type { CitiesAndAlbums } from '~/utils/server/travel.server'
+import { getAlbums } from '~/utils/server/travel.server'
 export async function loader({ request, params }: LoaderArgs) {
   const albums = (await getAlbums()) as CitiesAndAlbums
   const byGroup = albums.reduce((acc, item) => {

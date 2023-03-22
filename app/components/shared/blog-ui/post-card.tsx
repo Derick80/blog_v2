@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger-with-children */
-import type { Post, SerializedPost } from '~/utils/schemas/post-schema'
+import type { SerializedPost } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import PostOptions from './post-options'
 import FavoriteContainer from './favorite-container'

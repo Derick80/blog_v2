@@ -1,13 +1,16 @@
-import { ActionArgs, LoaderArgs, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { redirect } from '@remix-run/node'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createNewBookReview } from '~/utils/server/book.server'
 import { json } from '@remix-run/node'
-import { Form, useActionData, useFetcher } from '@remix-run/react'
+import { Form, useActionData, useCatch, useFetcher } from '@remix-run/react'
 import TipTap from '~/components/shared/tip-tap'
-import { useNavigation, useRouteLoaderData } from 'react-router-dom'
+import { useNavigation } from 'react-router-dom'
 import { Button, MultiSelect, Rating } from '@mantine/core'
-import { BookCategory } from '@prisma/client'
+import type { BookCategory } from '@prisma/client'
 import React, { useEffect } from 'react'
+import { wait } from '~/utils/server/functions.server'
+import { validateText, validateTitle } from '~/utils/validators.server'
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
 
@@ -17,6 +20,7 @@ export async function loader({ request }: LoaderArgs) {
   return json({ user })
 }
 export async function action({ request }: ActionArgs) {
+  await wait()
   const user = await isAuthenticated(request)
   if (!user) {
     throw new Error('Not Authenticated')
@@ -29,9 +33,20 @@ export async function action({ request }: ActionArgs) {
   const rating = Number(formData.get('rating'))
   const image = formData.get('imageUrl')
   const bookUrl = formData.get('bookUrl')
+  const bookBlurb = formData.get('bookBlurb')
   const dateCompleted = formData.get('dateCompleted')
-  const categories = formData.get('categories') as string
-
+  const categories = formData.get('categories')
+  if (
+    typeof title !== 'string' ||
+    typeof review !== 'string' ||
+    typeof image !== 'string' ||
+    typeof bookUrl !== 'string' ||
+    typeof bookBlurb !== 'string' ||
+    typeof dateCompleted !== 'string' ||
+    typeof categories !== 'string'
+  ) {
+    throw new Error('title is required')
+  }
   const cats = categories?.split(',')
 
   const category = cats.map((cat) => {
@@ -39,11 +54,43 @@ export async function action({ request }: ActionArgs) {
       value: cat
     }
   })
+
+  const formErrors = {
+    title: validateText(title),
+    review: validateTitle(review),
+    image: validateText(image),
+    bookUrl: validateText(bookUrl),
+    bookBlurb: validateText(bookBlurb),
+    dateCompleted: validateText(dateCompleted),
+    categories: validateText(categories)
+  }
+
+  if (Object.values(formErrors).some(Boolean)) {
+    return json(
+      {
+        formErrors,
+        fields: {
+          title,
+          review,
+          rating,
+          image,
+          bookBlurb,
+          bookUrl,
+          dateCompleted,
+          categories
+        },
+        form: action
+      },
+      { status: 400 }
+    )
+  }
+
   const book = {
     title,
     review,
     rating,
     image,
+    bookBlurb,
     bookUrl,
     dateCompleted,
     userId,
@@ -59,6 +106,13 @@ export default function NewBookRoute() {
   const navigation = useNavigation()
   const actionData = useActionData<typeof action>()
   const bookCategoryFetcher = useFetcher()
+
+  const text =
+    navigation.state === 'submitting'
+      ? 'Saving...'
+      : navigation.state === 'loading'
+      ? 'Saved!'
+      : 'Save'
 
   useEffect(() => {
     if (bookCategoryFetcher.type === 'init') {
@@ -91,11 +145,21 @@ export default function NewBookRoute() {
           name='title'
           id='title'
         />
-        {actionData && actionData.errors.name ? (
-          <p style={{ color: 'red' }}>{actionData.errors.name}</p>
+        {actionData && actionData.formErrors ? (
+          <p style={{ color: 'red' }}>{actionData.formErrors.title}</p>
         ) : null}
         <label htmlFor='review'>Review</label>
         <TipTap />
+        <label htmlFor='bookBlurb'>Book Blurb</label>
+        <textarea
+          name='bookBlurb'
+          id='bookBlurb'
+          defaultValue={actionData ? actionData.formErrors.bookBlurb : ''}
+          className='rounded-xl border text-slate12'
+        />
+        {actionData && actionData.formErrors ? (
+          <p style={{ color: 'red' }}>{actionData.formErrors.bookBlurb}</p>
+        ) : null}
         <label htmlFor='rating'>Rating</label>
         <Rating name='rating' id='rating' fractions={2} defaultValue={3} />
         <label htmlFor='dateCompleted'>Date Completed</label>
@@ -104,9 +168,13 @@ export default function NewBookRoute() {
           type='hidden'
           className='rounded-xl text-slate12'
           name='imageUrl'
+          defaultValue={actionData ? actionData.formErrors.image : ''}
           value={bookImageFetcher?.data?.imageUrl}
           onChange={(e) => console.log(e.target.value)}
         />
+        {actionData && actionData.formErrors ? (
+          <p style={{ color: 'red' }}>{actionData.formErrors.image}</p>
+        ) : null}
         <label htmlFor='categories'>Categories</label>
         {bookCategoryFetcher?.data?.categories ? (
           <MultiSelect
@@ -120,13 +188,24 @@ export default function NewBookRoute() {
         ) : null}
         <input
           type='hidden'
+          defaultValue={actionData ? actionData.formErrors.categories : ''}
           name='categories'
           id='categories'
           value={selected}
-        />
-
+        />{' '}
+        {actionData && actionData.formErrors ? (
+          <p style={{ color: 'red' }}>{actionData.formErrors.categories}</p>
+        ) : null}
         <label htmlFor='bookUrl'>Book Url</label>
-        <input type='text' name='bookUrl' id='bookUrl' />
+        <input
+          type='text'
+          name='bookUrl'
+          id='bookUrl'
+          defaultValue={actionData ? actionData.formErrors.bookUrl : ''}
+        />
+        {actionData && actionData.formErrors ? (
+          <p style={{ color: 'red' }}>{actionData.formErrors.bookUrl}</p>
+        ) : null}
       </Form>
 
       <div className='flex flex-col gap-5'>
@@ -164,8 +243,22 @@ export default function NewBookRoute() {
         ) : null}
       </div>
       <button type='submit' form='new-book'>
-        Submit
+        {text}
       </button>
+    </div>
+  )
+}
+
+export function CatchBoundary() {
+  const caught = useCatch()
+
+  return (
+    <div>
+      <h1>Caught</h1>
+      <p>Status: {caught.status}</p>
+      <pre>
+        <code>{JSON.stringify(caught.data, null, 2)}</code>
+      </pre>
     </div>
   )
 }

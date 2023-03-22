@@ -1,23 +1,19 @@
-import { Button, Textarea, TextInput, Image, Text } from '@mantine/core'
+import { Button, Image } from '@mantine/core'
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import {
   Form,
-  useActionData,
   useCatch,
   useFetcher,
   useLoaderData,
   useNavigation,
   useParams
 } from '@remix-run/react'
-import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
-import TipTap from '~/components/shared/tip-tap'
 import { prisma } from '~/utils/server/prisma.server'
 
 import { editUserProfile } from '~/utils/server/profile.server'
-import { getUserProfile } from '~/utils/server/profile.server'
 import { getUserById } from '~/utils/server/user.server'
 
 export async function loader({ params }: LoaderArgs) {
@@ -265,7 +261,7 @@ export function CatchBoundary() {
   const caught = useCatch()
   const params = useParams()
   if (caught.status === 404) {
-    return <div>Profile with ID {params.userId} not found</div>
+    return <div>User with ID {params.id} not found</div>
   }
   throw new Error(`unexpected caught response with status: ${caught.status}`)
 }

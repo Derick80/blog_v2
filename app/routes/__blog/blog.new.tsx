@@ -1,11 +1,13 @@
-import { Button, MultiSelect, Switch } from '@mantine/core'
+import { MultiSelect, Switch } from '@mantine/core'
 import type { ActionFunction, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import {
   Form,
+  useActionData,
   useCatch,
   useFetcher,
+  useNavigation,
   useParams,
   useRouteLoaderData
 } from '@remix-run/react'
@@ -15,6 +17,12 @@ import type { Category } from '~/utils/schemas/category-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createPost } from '~/utils/server/post.server'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+import { badRequest } from 'remix-utils'
+import {
+  validateLargeTextLength,
+  validateSmallTextLength,
+  validateText
+} from '~/utils/validators.server'
 
 export const meta: MetaFunction = () => {
   return {
@@ -58,30 +66,42 @@ export const action: ActionFunction = async ({ request }) => {
     typeof body !== 'string' ||
     typeof categories !== 'string'
   ) {
-    return json({
-      errorMsg: 'Something went wrong while uploading'
+    return badRequest({
+      fieldErrors: null,
+      fields: null,
+      formError: 'Invalid form data'
     })
   }
+
+  const fieldErrors = {
+    title: validateSmallTextLength(title),
+    description: validateText(description),
+    body: validateLargeTextLength(body),
+    imageUrl: validateText(imageUrl),
+    categories: validateText(categories)
+  }
+
+  const fields = {
+    title,
+    description,
+    body,
+    imageUrl,
+    categories
+  }
+  if (Object.values(fieldErrors).some(Boolean)) {
+    return badRequest({
+      fieldErrors,
+      fields,
+      formError: null
+    })
+  }
+
   const cats = categories?.split(',')
   const category = cats.map((cat) => {
     return {
       value: cat
     }
   })
-
-  console.log(imageUrl, 'imageUrl')
-
-  if (!imageUrl) {
-    return json({
-      errorMsg: 'Something went wrong while uploading'
-    })
-  }
-
-  if (!title) {
-    return json({
-      errorMsg: 'Something went wrong while uploading'
-    })
-  }
 
   await createPost({
     title,
@@ -98,9 +118,18 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function Uploader() {
+  const actionData = useActionData<typeof action>()
+
+  const navigation = useNavigation()
   const { categories } = useRouteLoaderData('root') as {
     categories: Category[]
   }
+  const text =
+    navigation.state === 'submitting'
+      ? 'Saving...'
+      : navigation.state === 'loading'
+      ? 'Saved!'
+      : 'Save'
 
   const fetcher = useFetcher<ActionData>()
 
@@ -114,10 +143,10 @@ export default function Uploader() {
     })
 
   return (
-    <div className='mx-auto mb-7 flex w-[350px] flex-col bg-white p-2 text-slate12 dark:bg-zinc-900 dark:text-slate1 md:w-full'>
+    <div className='mx-auto mb-7 flex w-[350px] flex-col items-center bg-white p-2 text-slate12 dark:bg-zinc-900 dark:text-slate1 md:w-full'>
       <Form
         id='newPost'
-        className='flex flex-col gap-5 rounded-xl bg-white text-slate12 shadow-md dark:bg-zinc-900 dark:text-slate-50'
+        className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-zinc-900 dark:text-slate-50'
         method='post'
       >
         <input
@@ -132,75 +161,120 @@ export default function Uploader() {
           type='text'
           className='rounded-md border text-slate12'
           name='title'
+          defaultValue={actionData?.fields?.title}
+          aria-invalid={Boolean(actionData?.fieldErrors?.title) || undefined}
+          aria-errormessage={
+            actionData?.fieldErrors?.title ? 'title-error' : undefined
+          }
           onChange={(e) => console.log(e.target.value)}
         />
+        {actionData?.fieldErrors?.title && (
+          <p id='title-error' className='text-red-500'>
+            {actionData?.fieldErrors?.title}
+          </p>
+        )}
         <label htmlFor='description'>Description</label>
         <input
           type='text'
           className='rounded-md border text-black'
           name='description'
+          defaultValue={actionData?.fields?.description}
+          aria-invalid={
+            Boolean(actionData?.fieldErrors?.description) || undefined
+          }
+          aria-errormessage={
+            actionData?.fieldErrors?.description
+              ? 'description-error'
+              : undefined
+          }
           onChange={(e) => console.log(e.target.value)}
         />
-        <label htmlFor='body'>Body</label>
-        <TipTap />
-        <label htmlFor='categories'>Categories</label>
-        <MultiSelect
-          data={categories}
-          onChange={(e) => {
-            setSelected(e.join(','))
-          }}
-        />
+        {actionData?.fieldErrors?.description && (
+          <p id='description-error' role='alert' className='text-red-500'>
+            {actionData?.fieldErrors?.description}
+          </p>
+        )}
 
-        <Switch
-          label='Featured'
-          name='featured'
-          onChange={(e) => console.log(e.target.value)}
-          defaultChecked={false}
-        />
+        <div className='mb-5 flex flex-col gap-5'>
+          <label htmlFor='body'>Body</label>
+          <TipTap />
+        </div>
+        <div className='flex flex-col gap-5 text-slate12 dark:text-slate-50'>
+          <label
+            className='text-slate12 dark:text-slate-50'
+            htmlFor='categories'
+          >
+            Categories
+          </label>
+
+          <MultiSelect
+            shadow='xl'
+            data={categories}
+            onChange={(e) => {
+              setSelected(e.join(','))
+            }}
+          />
+        </div>
+
+        <div className='mt-5 mb-5 flex flex-col items-center gap-5 text-slate12 dark:text-slate-50'>
+          <label htmlFor='featured'>Featured</label>
+          <Switch
+            name='featured'
+            onChange={(e) => console.log(e.target.value)}
+            defaultChecked={false}
+          />
+        </div>
 
         <input type='hidden' name='categories' value={selected} />
       </Form>
-      <div className='flex flex-col gap-5'>
+      <div className='flex flex-col items-center justify-center gap-5'>
         <fetcher.Form
           method='post'
           encType='multipart/form-data'
           action='/actions/cloudinary'
           onClick={onClick}
-          className='flex flex-col gap-5'
+          className='mx-auto flex flex-col items-center gap-5'
         >
-          <label htmlFor='imageUrl'>Upload an Image</label>
+          <label className='text-slate12 dark:text-slate-50' htmlFor='imageUrl'>
+            Upload an Image
+          </label>
           <input
             id='imageUrl'
-            className='block rounded-xl bg-crimson12 text-slate12'
+            className='block rounded-xl p-2 text-slate12 dark:text-slate-50'
             type='file'
             name='imageUrl'
             accept='image/*'
           />
-          <Button color={'blue'} variant='subtle' type='submit'>
+          <button
+            className='w-60 rounded-xl bg-green-500 py-2 px-4 font-bold dark:bg-blue-500'
+            type='submit'
+          >
             Upload Image
-          </Button>
+          </button>
         </fetcher.Form>
-        {fetcher.data ? (
-          <div className='flex  flex-col items-center'>
-            <p className='text-white'>File has been uploaded</p>
-            <input
-              type='hidden'
-              name='imageUrl'
-              value={fetcher?.data?.imageUrl}
-            />
-            <div className='h-[100px] w-[100px] rounded-xl bg-crimson12 text-slate12'>
-              <img src={fetcher?.data?.imageUrl} alt={'#'} />
+        <div className='flex flex-col items-center gap-5'>
+          {fetcher.data ? (
+            <div className='flex  flex-col items-center'>
+              <p className='text-white'>File has been uploaded</p>
+              <input
+                type='hidden'
+                name='imageUrl'
+                value={fetcher?.data?.imageUrl}
+              />
+              <div className='h-[100px] w-[100px] rounded-xl text-slate12'>
+                <img src={fetcher?.data?.imageUrl} alt={'no'} />
+              </div>
             </div>
-          </div>
-        ) : null}
+          ) : null}
+        </div>
+        <button
+          type='submit'
+          form='newPost'
+          className='w-60 rounded-xl bg-green-500 py-2 px-4 font-bold dark:bg-blue-500'
+        >
+          {text}
+        </button>
       </div>
-      <button
-        type='submit'
-        form='newPost'
-        className='rounded-xl bg-white py-2 px-4 font-bold hover:bg-green-500 dark:bg-green-800'
-      >
-        Save
-      </button>
     </div>
   )
 }

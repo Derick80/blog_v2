@@ -1,10 +1,15 @@
 import { Divider } from '@mantine/core'
-import { Skill, CVExperience, Education, Publication } from '@prisma/client'
+import type {
+  Skill,
+  CVExperience,
+  Education,
+  Publication
+} from '@prisma/client'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { format } from 'date-fns'
-import { CV } from '~/utils/schemas/cv-schema'
+import type { CV } from '~/utils/schemas/cv-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
 

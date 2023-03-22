@@ -1,10 +1,8 @@
 import { TextInput, Button, Title } from '@mantine/core'
 import { Cross2Icon } from '@radix-ui/react-icons'
 import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Form, useLoaderData } from '@remix-run/react'
-import CategoryContainer from '~/components/shared/category-container'
 import { Modal } from '~/components/shared/modal'
 import getAllCategories, {
   createCategory

@@ -1,15 +1,12 @@
 import type { LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Outlet, useFetcher, useLoaderData } from '@remix-run/react'
+import { Outlet, useLoaderData } from '@remix-run/react'
 import UserCard from '~/components/shared/user-ui/user-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import type { UserProps } from '~/utils/server/user.server'
 import { getUsers } from '~/utils/server/user.server'
 import type { UserType } from '~/utils/schemas/user-schema'
-import { Button, Select } from '@mantine/core'
-import { getProfiles } from '~/utils/server/profile.server'
 import type { Profile } from '~/utils/schemas/profile-schema'
-import { useState } from 'react'
 export const meta: MetaFunction = () => {
   return {
     title: `Derick's Personal Blog | Users`,

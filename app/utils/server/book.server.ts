@@ -1,4 +1,4 @@
-import { Book } from '../schemas/book-schema'
+import type { Book } from '../schemas/book-schema'
 import { prisma } from './prisma.server'
 
 export async function getAllBooks() {
@@ -59,6 +59,7 @@ export async function createNewBookReview(book: Omit<Book, 'id' | 'user'>) {
       title: book.title,
       review: book.review,
       rating: book.rating,
+      bookBlurb: book.bookBlurb,
       image: book.image,
       bookUrl: book.bookUrl,
       dateCompleted: new Date(book.dateCompleted),
@@ -94,6 +95,7 @@ export async function updateBookReview(book: Omit<Book, 'user'>) {
       title: book.title,
       review: book.review,
       rating: book.rating,
+      bookBlurb: book.bookBlurb,
       image: book.image,
       bookUrl: book.bookUrl,
       dateCompleted: new Date(book.dateCompleted),
@@ -102,6 +104,16 @@ export async function updateBookReview(book: Omit<Book, 'user'>) {
           value: category.value
         }))
       }
+    }
+  })
+
+  return bookreview
+}
+
+export async function deleteBookReview(id: string) {
+  const bookreview = await prisma.book.delete({
+    where: {
+      id: id
     }
   })
 

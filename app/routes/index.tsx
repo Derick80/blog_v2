@@ -1,9 +1,8 @@
-import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import StatsCard from '~/components/shared/stats-card'
-import type { Post } from '~/utils/schemas/post-schema'
 import { getHeroPost } from '~/utils/server/post.server'
 
 export async function loader({ request }: LoaderArgs) {

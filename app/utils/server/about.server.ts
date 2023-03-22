@@ -1,4 +1,4 @@
-import { About } from '@prisma/client'
+import type { About } from '@prisma/client'
 import { prisma } from './prisma.server'
 
 export async function getAbout() {

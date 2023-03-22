@@ -1,18 +1,18 @@
 import { useOptionalUser } from '~/utils/utilities'
-import { Button, Divider, Drawer, Text } from '@mantine/core'
+import { Divider, Drawer } from '@mantine/core'
 import { BrandIcon } from '../icons'
 import { Form, Link, NavLink } from '@remix-run/react'
 import Footer from './footer'
 import React from 'react'
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-  HamburgerMenuIcon
-} from '@radix-ui/react-icons'
+import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { motion } from 'framer-motion'
+import MainMenu from './main-menu'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
+  const activeStyle = {
+    textDecoration: 'underline'
+  }
 
   const [open, setOpen] = React.useState(false)
   return (
@@ -25,40 +25,35 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           Derick Hoskinson PhD
         </div>
         <div className='hidden flex-col items-center gap-5 md:flex md:flex-row'>
-          <NavLink prefetch='intent' aria-label='Go to Home' to='/'>
+          <NavLink
+            prefetch='intent'
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            aria-label='Go to Home'
+            to='/'
+          >
             <h3 className='font-semibold'>Home</h3>
           </NavLink>
-          <NavLink prefetch='intent' aria-label='Go to Blog' to='/blog'>
+          <NavLink
+            prefetch='intent'
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            aria-label='Go to Blog'
+            to='/blog'
+          >
+            <Divider orientation='vertical' size='md' />
+
             <h3 className='font-semibold'>Blog</h3>
           </NavLink>
-          <NavLink prefetch='intent' aria-label='Go to About' to='/about'>
+          <NavLink
+            prefetch='intent'
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+            aria-label='Go to About'
+            to='/about'
+          >
+            <Divider orientation='vertical' />
+
             <h3 className='font-semibold'>About</h3>
           </NavLink>
-          <NavLink prefetch='intent' aria-label='Go to Projects' to='/projects'>
-            <h3 className='font-semibold'>Projects</h3>
-          </NavLink>
-          <NavLink prefetch='intent' aria-label='Go to Travel' to='/travel'>
-            <h3 className='font-semibold'>Travel</h3>
-          </NavLink>
-          <NavLink prefetch='intent' aria-label='Go to Users' to='/users'>
-            <h3 className='font-semibold'>Users</h3>
-          </NavLink>
-          <NavLink aria-label='go to Book Reviews' to='/books'>
-            <h3 className='font-semibold'>Book Reviews</h3>
-          </NavLink>
-          {user ? (
-            <Form method='post' action='/logout'>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                type='submit'
-              >
-                Logout
-              </motion.button>
-            </Form>
-          ) : (
-            <Link to='/login'>Login</Link>
-          )}
+          <MainMenu />
         </div>
         <button
           className='block text-crimson9 md:hidden'
@@ -87,6 +82,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               >
                 <h3 className='font-semibold'>Home</h3>
               </NavLink>
+
               <NavLink
                 prefetch='intent'
                 aria-label='Go to Blog'
@@ -113,10 +109,26 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </NavLink>
               <NavLink
                 prefetch='intent'
+                aria-label='Go to Curriculum Vitae'
+                to='/cv'
+                onClick={() => setOpen(!open)}
+              >
+                <h3 className='font-semibold'>Curriculum Vitae</h3>
+              </NavLink>
+              <NavLink
+                prefetch='intent'
                 to='/travel'
                 onClick={() => setOpen(!open)}
               >
                 <h3 className='font-semibold'>Travel</h3>
+              </NavLink>
+              <NavLink
+                prefetch='intent'
+                aria-label='Go to Book Reviews'
+                to='/books'
+                onClick={() => setOpen(!open)}
+              >
+                <h3 className='font-semibold'>Book Reviews</h3>
               </NavLink>
               <NavLink
                 prefetch='intent'

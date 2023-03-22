@@ -27,3 +27,13 @@ export default function Index() {
     </>
   )
 }
+export function ErrorBoundary({ error }: any) {
+  return (
+    <div>
+      <h1 className='text-3xl font-bold'>Incomes root ERROR</h1>
+      <p>{error.message}</p>
+      <p>The stack trace is:</p>
+      <pre>{error.stack}</pre>
+    </div>
+  )
+}

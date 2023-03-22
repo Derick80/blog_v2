@@ -5,8 +5,7 @@ import { PostCard } from '~/components/shared/blog-ui/post-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import {
   getPosts,
-  getPublishedUserPostsByUserId,
-  getUserPosts
+  getPublishedUserPostsByUserId
 } from '~/utils/server/post.server'
 import type { Post } from '~/utils/schemas/post-schema'
 import type { User } from '@prisma/client'

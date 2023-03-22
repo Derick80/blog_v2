@@ -53,54 +53,6 @@ export async function getHeroPost() {
   return post
 }
 
-export async function getUserPosts(userId: string) {
-  const posts = await prisma.post.findMany({
-    where: {
-      userId,
-      published: true
-    },
-    include: {
-      categories: true,
-      user: {
-        select: {
-          id: true,
-          userName: true,
-          avatarUrl: true,
-          email: true,
-          _count: true,
-          password: false
-        }
-      },
-      likes: true,
-      comments: {
-        include: {
-          user: {
-            select: {
-              id: true,
-              userName: true,
-              avatarUrl: true,
-              email: true
-            }
-          },
-          children: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  userName: true,
-                  avatarUrl: true,
-                  email: true,
-                  password: false
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  })
-  return posts
-}
 export async function getPublishedUserPostsByUserId(userId: string) {
   const posts = await prisma.post.findMany({
     where: {
@@ -246,36 +198,6 @@ export async function getPostById(id: string) {
   return post
 }
 
-export async function getMyPosts(email: string) {
-  const posts = await prisma.post.findMany({
-    where: {
-      user: {
-        email
-      }
-    },
-
-    include: {
-      _count: true,
-      categories: true,
-      likes: true,
-      comments: {
-        include: {
-          user: {
-            select: {
-              id: true,
-              userName: true,
-              avatarUrl: true,
-              email: true,
-              password: false
-            }
-          }
-        }
-      }
-    }
-  })
-  return posts
-}
-
 //  typesafe getPostToEdit function
 export async function getPostToEdit(id: string) {
   const post = await prisma.post.findUnique({
@@ -371,6 +293,9 @@ export async function getUserDrafts(userId: string) {
       },
       likes: true,
       favorites: true
+    },
+    orderBy: {
+      createdAt: 'desc'
     }
   })
 

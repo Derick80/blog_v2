@@ -1,5 +1,6 @@
 import { PlusCircledIcon } from '@radix-ui/react-icons'
-import { json, LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { NavLink, useLoaderData } from '@remix-run/react'
 import BookCard from '~/components/shared/books-ui/book-card'
 import { getBookByBookId } from '~/utils/server/book.server'

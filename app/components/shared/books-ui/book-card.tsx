@@ -1,8 +1,9 @@
-import { Card, Text, Rating, Flex, Image, Box, Group } from '@mantine/core'
-import { SerializeFrom } from '@remix-run/node'
-import { Link } from '@remix-run/react'
+import { Card, Rating, Image, Button, Spoiler } from '@mantine/core'
+import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
+import type { SerializeFrom } from '@remix-run/node'
+import { Form, Link } from '@remix-run/react'
 import dayjs from 'dayjs'
-import { Book } from '~/utils/schemas/book-schema'
+import type { Book } from '~/utils/schemas/book-schema'
 import { useOptionalUser } from '~/utils/utilities'
 
 export default function BookCard({ book }: { book: SerializeFrom<Book> }) {
@@ -13,25 +14,16 @@ export default function BookCard({ book }: { book: SerializeFrom<Book> }) {
         withBorder
         shadow='sm'
         radius='md'
-        className='mb-5 flex '
+        className='mb-5 flex w-[350px] flex-col items-center justify-center gap-5 p-2 md:w-[650px]'
         key={book.id}
-        sx={{
-          width: '350px'
-        }}
       >
-        <Flex direction='column' align='center'>
-          <h1 className='text-2xl font-bold'>{book.title}</h1>
-          <Flex
-            direction='row'
-            align='center'
-            justify='center'
-            sx={{
-              width: '100%',
-              height: '100%'
-            }}
-          >
+        <div className='flex w-full flex-col justify-between'>
+          <p className='text-xl font-bold'>Book in Review</p>
+          <h1 className='mb-2 text-2xl font-bold italic'>{book.title}</h1>
+
+          <div className='flex flex-row items-center justify-center gap-2'>
             <Image src={book.image} fit='cover' />
-          </Flex>
+          </div>
 
           <div className='flex w-full flex-row items-center justify-between gap-5'>
             <Rating
@@ -42,37 +34,60 @@ export default function BookCard({ book }: { book: SerializeFrom<Book> }) {
               readOnly
             />
             {book.dateCompleted && (
-              <Text className='text-sm italic'>
+              <p className='text-sm italic'>
                 {dayjs(book.dateCompleted).format('MMMM D, YYYY')}
-              </Text>
+              </p>
             )}
           </div>
           <div
-            className='text-sm '
+            className='prose text-sm '
             dangerouslySetInnerHTML={{ __html: book.review }}
           />
-          <Box>
+          <Spoiler maxHeight={60} showLabel='more...' hideLabel='...less'>
+            <h3 className='text-xl font-bold'>Blurb</h3>
+            <p className='prose text-sm italic'>{book.bookBlurb}</p>
+          </Spoiler>
+          {/* below should be actions container for this card */}
+          <div className='flex items-center'>
             <a
               href={book.bookUrl || 'buy'}
               target='_blank'
               rel='noopener noreferrer'
             >
-              <button className='rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700'>
+              <button className='rounded py-2 px-4 font-bold text-black hover:bg-blue-700'>
                 Buy on Amazon
               </button>
             </a>
-          </Box>
-          <Group position='center'>
+            <p>Likes container</p>
+          </div>
+          <div className='flex w-full justify-between text-sm'>
+            {' '}
             {book.userId === user?.id && (
-              <Link
-                to={`/books/${book.id}/edit`}
-                className='text-blue-500 hover:text-blue-700'
-              >
-                Edit
-              </Link>
+              <>
+                <Link
+                  to={`/books/${book.id}/edit`}
+                  className='flex items-center gap-2 text-green-500'
+                >
+                  <Pencil1Icon />
+                </Link>
+                <Form
+                  action={`/books/${book.id}/delete`}
+                  method='post'
+                  id='deleteBook'
+                  reloadDocument
+                >
+                  <Button
+                    type='submit'
+                    form='deleteBook'
+                    className='text-red-500 hover:text-red-700'
+                  >
+                    <TrashIcon />
+                  </Button>
+                </Form>
+              </>
             )}
-          </Group>
-        </Flex>
+          </div>
+        </div>
       </Card>
     </>
   )

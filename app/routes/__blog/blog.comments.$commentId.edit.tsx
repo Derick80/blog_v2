@@ -1,9 +1,9 @@
-import { ActionArgs, json, LoaderArgs } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { Form, useLoaderData } from '@remix-run/react'
 import { Modal } from '~/components/shared/modal'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
-import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+import type { MetaFunction, ActionArgs, LoaderArgs } from '@remix-run/node' // or cloudflare/deno
 
 export const meta: MetaFunction = () => {
   return {

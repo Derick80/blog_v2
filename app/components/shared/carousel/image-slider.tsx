@@ -1,4 +1,4 @@
-import { Button, Flex, Text, Title } from '@mantine/core'
+import { Button, Flex } from '@mantine/core'
 import type { TravelLog } from '@prisma/client'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 import { Link } from '@remix-run/react'

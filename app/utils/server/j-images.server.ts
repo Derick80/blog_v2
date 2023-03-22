@@ -1,4 +1,4 @@
-import { JapanImages } from '@prisma/client'
+import type { JapanImages } from '@prisma/client'
 import { prisma } from './prisma.server'
 
 export async function getJImages() {

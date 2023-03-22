@@ -1,9 +1,14 @@
 import { PlusCircledIcon } from '@radix-ui/react-icons'
-import { ActionArgs, json, LoaderArgs, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import { NavLink, useLoaderData } from '@remix-run/react'
 import EditBookReview from '~/components/shared/books-ui/book-edit'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import { getBookByBookId, updateBookReview } from '~/utils/server/book.server'
+import {
+  deleteBookReview,
+  getBookByBookId,
+  updateBookReview
+} from '~/utils/server/book.server'
 import { validateText } from '~/utils/validators.server'
 import { Text } from '@mantine/core'
 export async function loader({ request, params }: LoaderArgs) {
@@ -34,9 +39,11 @@ export async function action({ request, params }: ActionArgs) {
     throw new Error('id is required')
   }
   const formData = await request.formData()
+  const action = formData.get('_action') as string
   const title = formData.get('title') as string
   const review = formData.get('body') as string
   const rating = Number(formData.get('rating'))
+  const bookBlurb = formData.get('bookBlurb') as string
   const image = formData.get('imageUrl') as string
   const bookUrl = formData.get('bookUrl') as string
   const dateCompleted = new Date(formData.get('dateCompleted') as string)
@@ -61,6 +68,7 @@ export async function action({ request, params }: ActionArgs) {
     title,
     review,
     rating,
+    bookBlurb,
     image,
     bookUrl,
     dateCompleted,
@@ -76,6 +84,7 @@ export async function action({ request, params }: ActionArgs) {
           title,
           review,
           rating,
+          bookBlurb,
           image,
           bookUrl,
           dateCompleted,
@@ -89,7 +98,16 @@ export async function action({ request, params }: ActionArgs) {
     )
   }
 
-  await updateBookReview(book)
+  switch (action) {
+    case 'save':
+      await updateBookReview(book)
+      return redirect(`/books/${id}`)
+    case 'delete':
+      await deleteBookReview(id)
+      return redirect(`/books`)
+    default:
+      break
+  }
 
   return redirect(`/books/${id}`)
 }

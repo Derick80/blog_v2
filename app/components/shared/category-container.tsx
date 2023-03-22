@@ -1,5 +1,5 @@
-import { Badge, Button } from '@mantine/core'
-import { Form, Link, NavLink, useParams } from '@remix-run/react'
+import { Button } from '@mantine/core'
+import { Form, NavLink } from '@remix-run/react'
 
 export interface CategoryContainerProps {
   value: string[]

@@ -1,8 +1,6 @@
-import { Button, Divider } from '@mantine/core'
-import { Post } from '@prisma/client'
-import { useLoaderData, NavLink, Outlet } from '@remix-run/react'
+import { Button } from '@mantine/core'
+import { NavLink } from '@remix-run/react'
 import { useOptionalUser } from '~/utils/utilities'
-import { PostCard } from './post-card'
 
 export default function BlogNav() {
   const user = useOptionalUser()

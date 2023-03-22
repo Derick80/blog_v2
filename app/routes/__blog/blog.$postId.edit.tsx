@@ -18,7 +18,10 @@ import {
   savePost,
   unPublishPost
 } from '~/utils/server/post.server'
-import { validateText } from '~/utils/validators.server'
+import {
+  validateSmallTextLength,
+  validateText
+} from '~/utils/validators.server'
 import { Button, Flex, MultiSelect, Textarea } from '@mantine/core'
 import TipTap from '~/components/shared/tip-tap'
 import { useState } from 'react'
@@ -26,6 +29,8 @@ import getAllCategories from '~/utils/server/categories.server'
 import { useOptionalUser } from '~/utils/utilities'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
+import { wait } from '~/utils/server/functions.server'
+import { badRequest } from 'remix-utils'
 
 export const meta: MetaFunction = () => {
   return {
@@ -51,56 +56,70 @@ export async function loader({ params, request }: LoaderArgs) {
 }
 
 export async function action({ params, request }: ActionArgs) {
+  await wait()
   const user = await isAuthenticated(request)
   invariant(user, 'user is required')
   const formData = await request.formData()
-  const action = formData.get('_action') as string
-  const postId = formData.get('postId') as string
-  const userId = formData.get('userId') as string
-  const title = formData.get('title') as string
-  const description = formData.get('description') as string
-  const body = formData.get('body')?.toString()
-  const imageUrl = formData.get('imageUrl') as string
+  const action = formData.get('_action')
+  const postId = formData.get('postId')
+  const userId = formData.get('userId')
+  const title = formData.get('title')
+  const createdBy = formData.get('createdBy')
+  const description = formData.get('description')
+  const body = formData.get('body')
+  const imageUrl = formData.get('imageUrl')
   const featured = Boolean(formData.get('featured'))
-  const categories = formData.get('categories') as string
-  console.log(body, 'featured')
-  if (typeof body !== 'string') {
-    throw new Error('body is required')
-  }
-  const createdBy = user.userName
+  const categories = formData.get('categories')
 
-  const cats = categories?.split(',')
-  const category = cats.map((cat) => {
-    return {
-      value: cat
-    }
-  })
+  if (
+    typeof body !== 'string' ||
+    typeof categories !== 'string' ||
+    typeof action !== 'string' ||
+    typeof postId !== 'string' ||
+    typeof userId !== 'string' ||
+    typeof title !== 'string' ||
+    typeof createdBy !== 'string' ||
+    typeof description !== 'string' ||
+    typeof imageUrl !== 'string'
+  ) {
+    return badRequest({
+      formErrors: null,
+      fields: null,
+      formError: 'Invalid form data'
+    })
+  }
+
   const formErrors = {
-    title: validateText(title),
+    title: validateSmallTextLength(title),
     description: validateText(description),
     body: validateText(body),
     imageUrl: validateText(imageUrl),
     action: validateText(action),
     createdBy: validateText(createdBy)
   }
-
-  if (Object.values(formErrors).some(Boolean)) {
-    return json(
-      {
-        formErrors,
-        fields: {
-          title,
-          description,
-          body,
-          imageUrl,
-          createdBy
-        },
-        form: action
-      },
-      { status: 400 }
-    )
+  const fields = {
+    title,
+    description,
+    body,
+    imageUrl,
+    createdBy,
+    categories,
+    action,
+    featured
   }
-
+  if (Object.values(formErrors).some(Boolean)) {
+    return badRequest({
+      formErrors,
+      fields,
+      formError: null
+    })
+  }
+  const cats = categories?.split(',')
+  const category = cats.map((cat) => {
+    return {
+      value: cat
+    }
+  })
   switch (action) {
     case 'save':
       await savePost({
@@ -129,7 +148,9 @@ export async function action({ params, request }: ActionArgs) {
 }
 
 export default function EditPost() {
-  const formErrors = useActionData()
+  const data = useLoaderData<typeof loader>()
+
+  const actionData = useActionData<typeof action>()
   const user = useOptionalUser()
   const navigate = useNavigation()
   const text =
@@ -159,7 +180,6 @@ export default function EditPost() {
       : navigate.state === 'loading'
       ? 'Deleted!'
       : 'Delete'
-  const data = useLoaderData<typeof loader>()
   console.log(data.post.featured, 'featured')
   const imageFetcher = useFetcher()
   const onClick = async () =>
@@ -212,6 +232,7 @@ export default function EditPost() {
           id='editPost'
           className='flex w-[350px] flex-col md:w-1/2'
         >
+          <input type='hidden' name='createdBy' value={user?.userName} />
           <input type='hidden' name='postId' value={id} />
           <input type='hidden' name='userId' value={userId} />
 
@@ -221,17 +242,23 @@ export default function EditPost() {
             className='text-slate12'
             name='title'
             id='title'
-            defaultValue={formData.title}
+            value={formData.title}
+            defaultValue={actionData ? actionData.title : ''}
           />
+          {actionData?.formErrors?.title && (
+            <p className='text-red-500'>{actionData.formErrors.title}</p>
+          )}
           <label htmlFor='description'>Description</label>
           <input
             type='text'
             className='text-slate12'
             name='description'
             id='description'
-            defaultValue={formData.description}
+            defaultValue={actionData ? actionData.description : ''}
           />
-
+          {actionData?.formErrors?.description && (
+            <p className='text-red-500'>{actionData.formErrors.description}</p>
+          )}
           <label htmlFor='body'>Post Content</label>
           {body && <TipTap content={body} />}
           <input type='hidden' name='body' defaultValue={body} />
@@ -303,22 +330,22 @@ export default function EditPost() {
           {text}
         </button>
         {published ? (
-          <Button
+          <button
             type='submit'
             form='editPost'
             name='_action'
             value='unpublish'
           >
             {unpublishText}
-          </Button>
+          </button>
         ) : (
-          <Button type='submit' form='editPost' name='_action' value='publish'>
+          <button type='submit' form='editPost' name='_action' value='publish'>
             {publishText}
-          </Button>
+          </button>
         )}
-        <Button type='submit' name='_action' value='delete'>
+        <button type='submit' name='_action' value='delete'>
           {deleteText}
-        </Button>
+        </button>
       </div>
     </div>
   )

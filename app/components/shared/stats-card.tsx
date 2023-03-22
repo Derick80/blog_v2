@@ -1,6 +1,6 @@
 import { NavLink, useFetcher } from '@remix-run/react'
 import React from 'react'
-import { useMatchesData, useOptionalUser, useUser } from '~/utils/utilities'
+import { useOptionalUser } from '~/utils/utilities'
 
 export default function StatsCard() {
   const user = useOptionalUser()

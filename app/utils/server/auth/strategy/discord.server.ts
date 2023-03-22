@@ -1,5 +1,4 @@
 // app/auth.server.ts
-import { User } from '@prisma/client'
 import { Authenticator } from 'remix-auth'
 import type { DiscordProfile } from 'remix-auth-discord'
 import { DiscordStrategy } from 'remix-auth-discord'

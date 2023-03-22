@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion'
-
 // use this to change icons in other places
 export function BrandIcon() {
   return (

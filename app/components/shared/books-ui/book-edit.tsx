@@ -1,11 +1,13 @@
 import { Rating, MultiSelect, Button } from '@mantine/core'
-import { BookCategory } from '@prisma/client'
+import type { BookCategory } from '@prisma/client'
+import { TrashIcon } from '@radix-ui/react-icons'
 import { Form, useFetcher, useLoaderData } from '@remix-run/react'
-import { format } from 'date-fns'
 import React from 'react'
-import { loader } from '~/routes/__books/books.$id.edit'
+import type { loader } from '~/routes/__books/books.$id.edit'
 import TipTap from '../tip-tap'
-
+import utc from 'dayjs/plugin/utc'
+import dayjs from 'dayjs'
+dayjs.extend(utc)
 export default function EditBookReview() {
   const data = useLoaderData<typeof loader>()
   const bookCategoryFetcher = useFetcher()
@@ -54,19 +56,22 @@ export default function EditBookReview() {
           fractions={2}
           defaultValue={data.book?.rating ? data.book?.rating : 3}
         />
+
+        <label htmlFor='bookBlurb'>Book Blurb</label>
+        <input type='text' name='bookBlurb' id='bookBlurb' />
+
         <label htmlFor='dateCompleted'>Date Completed</label>
-        {data.book?.dateCompleted ? (
-          <input
-            type='date'
-            name='dateCompleted'
-            className='rounded-md border text-black'
-            defaultValue={format(
-              new Date(data.book.dateCompleted),
-              'yyyy-MM-dd'
-            )}
-            id='dateCompleted'
-          />
-        ) : null}
+
+        <input
+          type='date'
+          name='dateCompleted'
+          className='rounded-md border text-black'
+          defaultValue={dayjs(data.book.dateCompleted)
+            .utcOffset(10)
+            .format('YYYY-MM-DD')}
+          id='dateCompleted'
+        />
+
         <input
           type='hidden'
           className='rounded-xl text-slate12'
@@ -134,9 +139,19 @@ export default function EditBookReview() {
           </div>
         ) : null}
       </div>
-      <button type='submit' form='new-book'>
+      <button type='submit' form='new-book' name='_action' value='save'>
         Submit
       </button>
+
+      <Form
+        method='post'
+        action={`/books/${data.book.id}/delete`}
+        id='delete-book'
+      >
+        <button form='delete-book' type='submit' name='_action' value='delete'>
+          Delete <TrashIcon />
+        </button>
+      </Form>
     </>
   )
 }

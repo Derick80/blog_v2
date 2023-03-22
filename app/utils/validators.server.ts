@@ -22,9 +22,18 @@ export const validateBoolean = (name: boolean) => {
   if (!name !== false || name !== true) return `Please enter a boolean value'`
 }
 export const validateText = (name: string) => {
-  if (name.length <= 10) return `Please enter some text`
+  if (!name.length) return `Please enter some text`
 }
 
+export const validateSmallTextLength = (name: string) => {
+  if (!name.length || name.length < 10)
+    return `Please enter some text that is more than 10 characters`
+}
+
+export const validateLargeTextLength = (name: string) => {
+  if (!name.length || name.length > 10000)
+    return `Please enter some text that is less than 1000 characters`
+}
 export const validateTitle = (title: string) => {
   if (!title.length || title.length > 25)
     return `Please create a title that is less than 25 characters`

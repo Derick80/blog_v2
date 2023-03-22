@@ -1,5 +1,5 @@
-import { ActionArgs, json, LoaderArgs } from '@remix-run/node'
-import { redirect } from 'react-router'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import {
