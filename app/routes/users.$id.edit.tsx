@@ -42,8 +42,6 @@ export async function loader({ params }: LoaderArgs) {
 }
 
 export async function action({ request, params }: ActionArgs) {
-
-
   const formData = await request.formData()
   const bio = await formData.get('bio')
   const id = await formData.get('id')

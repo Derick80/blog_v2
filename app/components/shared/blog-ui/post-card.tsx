@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger-with-children */
-import type { Post, SerializedPost } from '~/utils/schemas/post-schema'
+import type { SerializedPost } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import PostOptions from './post-options'
 import FavoriteContainer from './favorite-container'
@@ -15,6 +15,7 @@ import {
   Divider,
   Group,
   Spoiler,
+  Switch,
   Tooltip
 } from '@mantine/core'
 import type { Like } from '~/utils/schemas/like-schema'
@@ -26,21 +27,6 @@ import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { useOptionalUser } from '~/utils/utilities'
 
 export type ManyPostProps = {
-  data: Post & {
-    comments: CommentWithChildren[]
-  } & {
-    favorites: Favorite[]
-    likes: Like[]
-    _count: {
-      comments: number
-      favorites: number
-      likes: number
-    }
-  }
-  user: User | null
-}
-
-export type EditPostCardProps = {
   data: SerializedPost & {
     comments: CommentWithChildren[]
   } & {
@@ -54,14 +40,7 @@ export type EditPostCardProps = {
   }
   user: User | null
 }
-export type TheBasicCardProps = {
-  showLikes: boolean
-  showFavorites: boolean
-  showComments: boolean
-  showShare: boolean
-  showOptions: boolean
-  showCategories: boolean
-} & EditPostCardProps
+
 export type BasicCardProps = {
   showLikes: boolean
   showFavorites: boolean
@@ -80,7 +59,7 @@ export const PostCard = ({
   showShare,
   showOptions,
   showCategories
-}: BasicCardProps | TheBasicCardProps) => {
+}: BasicCardProps) => {
   const currentUser = useOptionalUser()
   const {
     id,
@@ -135,15 +114,24 @@ export const PostCard = ({
               ))}
             </div>
           )}
+          {/* I ALMOST removed show more from Mantine because it was breaking with page refresh in both production and development but then I remembered that the <p> tag in the dangerouslSetInnerHtml element was breaking and I have to use div for a reason unknown to me */}
 
-          <Spoiler maxHeight={120} showLabel='Show more' hideLabel='Hide'>
+          <Spoiler maxHeight={120} showLabel='More...' hideLabel='...less'>
             {body && (
-              <p
+              <div
                 dangerouslySetInnerHTML={{ __html: body }}
                 className='prose prose-sm h-full p-1 indent-1 dark:prose-invert'
-              ></p>
+              ></div>
             )}
           </Spoiler>
+          <Switch
+            className='text-slate-50'
+            color={featured ? 'red' : 'blue'}
+            label='Featured Post'
+            defaultChecked={featured}
+            onChange={() => console.log('changed')}
+            disabled
+          />
         </div>
 
         <div className='flex flex-row items-center justify-between'>
@@ -196,7 +184,7 @@ export const PostCard = ({
         </div>
         <Divider />
         <Group position='right'></Group>
-        {showComments && data.comments && id && (
+        {showComments && data.comments.length > 0 && id && (
           <div className='flex flex-col'>
             {currentUser && <FormComments postId={id} />}
             {open && data.comments && (

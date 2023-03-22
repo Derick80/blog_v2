@@ -18,20 +18,20 @@ export default function Index() {
     <div className='flex grow flex-col items-center gap-4 '>
       <h2 className='text-2xl font-bold'>Latest Post</h2>
       <StatsCard />
-      {data.post && data.post.map((item) => (
-        <PostCard
-          key={item.id}
-          data={item}
-          user={item.user}
-          showCategories={true}
-          showComments={false}
-          showFavorites={true}
-          showLikes={true}
-          showOptions={true}
-          showShare={true}
-        />
-      )
-      )}
+      {data.post &&
+        data.post.map((item) => (
+          <PostCard
+            key={item.id}
+            data={item}
+            user={item.user}
+            showCategories={true}
+            showComments={false}
+            showFavorites={true}
+            showLikes={true}
+            showOptions={true}
+            showShare={true}
+          />
+        ))}
     </div>
   )
 }
