@@ -3,7 +3,9 @@ import { json, redirect } from '@remix-run/node'
 import {
   Form,
   NavLink,
+  useActionData,
   useCatch,
+  useFetcher,
   useLoaderData,
   useNavigation
 } from '@remix-run/react'
@@ -16,13 +18,20 @@ import {
   savePost,
   unPublishPost
 } from '~/utils/server/post.server'
-import { validateText } from '~/utils/validators.server'
+import {
+  validateSmallTextLength,
+  validateText
+} from '~/utils/validators.server'
 import { Button, Flex, MultiSelect, Textarea } from '@mantine/core'
 import TipTap from '~/components/shared/tip-tap'
 import { useState } from 'react'
 import getAllCategories from '~/utils/server/categories.server'
 import { useOptionalUser } from '~/utils/utilities'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
+import { wait } from '~/utils/server/functions.server'
+import { badRequest } from 'remix-utils'
+import { TrashIcon } from '@radix-ui/react-icons'
 
 export const meta: MetaFunction = () => {
   return {
@@ -51,52 +60,66 @@ export async function action({ params, request }: ActionArgs) {
   const user = await isAuthenticated(request)
   invariant(user, 'user is required')
   const formData = await request.formData()
-  const action = formData.get('_action') as string
-  const postId = formData.get('postId') as string
-  const userId = formData.get('userId') as string
-  const title = formData.get('title') as string
-  const description = formData.get('description') as string
-  const body = formData.get('body')?.toString()
-  const imageUrl = formData.get('imageUrl') as string
+  const action = formData.get('_action')
+  const postId = formData.get('postId')
+  const userId = formData.get('userId')
+  const title = formData.get('title')
+  const createdBy = formData.get('createdBy')
+  const description = formData.get('description')
+  const body = formData.get('body')
+  const imageUrl = formData.get('imageUrl')
   const featured = Boolean(formData.get('featured'))
-  const categories = formData.get('categories') as string
-console.log(body, 'featured');
-if(typeof body !== 'string') {
-  throw new Error('body is required')
-}
-  const createdBy = user.userName
+  const categories = formData.get('categories')
 
-  const cats = categories?.split(',')
-  const category = cats.map((cat) => {
-    return {
-      value: cat
-    }
-  })
-  const formErrors = {
-    title: validateText(title),
+  if (
+    typeof body !== 'string' ||
+    typeof categories !== 'string' ||
+    typeof action !== 'string' ||
+    typeof postId !== 'string' ||
+    typeof userId !== 'string' ||
+    typeof title !== 'string' ||
+    typeof createdBy !== 'string' ||
+    typeof description !== 'string' ||
+    typeof imageUrl !== 'string'
+  ) {
+    return badRequest({
+      fieldErrors: null,
+      fields: null,
+      formError: 'Invalid form data'
+    })
+  }
+
+  const fieldErrors = {
+    title: validateSmallTextLength(title),
     description: validateText(description),
     body: validateText(body),
     imageUrl: validateText(imageUrl),
     action: validateText(action),
     createdBy: validateText(createdBy)
   }
-
-  if (Object.values(formErrors).some(Boolean)) {
-    return json(
-      {
-        formErrors,
-        fields: {
-          title,
-          description,
-          body,
-          imageUrl,
-          createdBy
-        },
-        form: action
-      },
-      { status: 400 }
-    )
+  const fields = {
+    title,
+    description,
+    body,
+    imageUrl,
+    createdBy,
+    categories,
+    action,
+    featured
   }
+  if (Object.values(fieldErrors).some(Boolean)) {
+    return badRequest({
+      fieldErrors,
+      fields,
+      formError: null
+    })
+  }
+  const cats = categories?.split(',')
+  const category = cats.map((cat) => {
+    return {
+      value: cat
+    }
+  })
 
   switch (action) {
     case 'save':
@@ -109,7 +132,7 @@ if(typeof body !== 'string') {
         createdBy,
         userId,
         category,
-        featured,
+        featured
       })
       return redirect(`/blog/${postId}`)
 
@@ -121,43 +144,55 @@ if(typeof body !== 'string') {
       return redirect(`/blog/${postId}`)
     case 'delete':
       await deletePost(postId)
-      return redirect(`/`)
+      return redirect(`/blog`)
   }
 }
 
 export default function EditPost() {
+  const data = useLoaderData<typeof loader>()
+
+  const actionData = useActionData<typeof action>()
   const user = useOptionalUser()
-  const navigate = useNavigation()
+  const saveNav = useNavigation()
+  const pubNav = useNavigation()
+  const unPubNav = useNavigation()
+  const deleteNav = useNavigation()
+
   const text =
-    navigate.state === 'submitting'
+    saveNav.state === 'submitting'
       ? 'Saving...'
-      : navigate.state === 'loading'
+      : saveNav.state === 'loading'
       ? 'Saved!'
       : 'Save'
 
   const publishText =
-    navigate.state === 'submitting'
+    pubNav.state === 'submitting'
       ? 'Publishing...'
-      : navigate.state === 'loading'
+      : pubNav.state === 'loading'
       ? 'Published!'
       : 'Publish'
 
   const unpublishText =
-    navigate.state === 'submitting'
+    unPubNav.state === 'submitting'
       ? 'Unpublishing...'
-      : navigate.state === 'loading'
+      : unPubNav.state === 'loading'
       ? 'Unpublished!'
       : 'Unpublish'
 
   const deleteText =
-    navigate.state === 'submitting'
+    deleteNav.state === 'submitting'
       ? 'Deleting...'
-      : navigate.state === 'loading'
+      : deleteNav.state === 'loading'
       ? 'Deleted!'
       : 'Delete'
-  const data = useLoaderData<typeof loader>()
-console.log(data.post.featured, 'featured');
 
+  const imageFetcher = useFetcher()
+  const onClick = async () =>
+    imageFetcher.submit({
+      imageUrl: 'imageUrl',
+      key: 'imageUrl',
+      action: '/actions/cloudinary'
+    })
   const {
     title,
     description,
@@ -188,37 +223,21 @@ console.log(data.post.featured, 'featured');
     categories: pickedCategories,
     id,
     published,
-    featured,
+    featured
   })
 
   return (
     <div className='mt-10 flex w-full flex-col items-center'>
       <div className='flex w-full flex-col items-center justify-center'>
-        {user?.role === 'ADMIN' && (
-          <div className='flex gap-5'>
-            <NavLink prefetch='intent' to='/blog/new'>
-              <Button size='sm' variant='subtle'>
-                New post
-              </Button>
-            </NavLink>
-            <NavLink prefetch='intent' to='/drafts'>
-              <Button size='sm' variant='subtle'>
-                Drafts
-              </Button>
-            </NavLink>
-            <NavLink prefetch='intent' to='/blog/categories'>
-              <Button size='sm' variant='subtle'>
-                Manage categories
-              </Button>
-            </NavLink>
-          </div>
-        )}
+        {user?.role === 'ADMIN' && <BlogNav />}
 
         <Form
           method='post'
           action={`/blog/${id}/edit`}
-          className='flex w-[350px] md:w-1/2 flex-col'
+          id='editPost'
+          className='flex w-[350px] flex-col md:w-1/2'
         >
+          <input type='hidden' name='createdBy' value={user?.userName} />
           <input type='hidden' name='postId' value={id} />
           <input type='hidden' name='userId' value={userId} />
 
@@ -226,38 +245,35 @@ console.log(data.post.featured, 'featured');
           <input
             type='text'
             className='text-slate12'
-
             name='title'
             id='title'
-            value={formData.title}
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
+            defaultValue={actionData ? actionData.title : formData.title}
           />
+          {actionData?.fieldErrors?.title && (
+            <p className='text-red-500'>{actionData.fieldErrors.title}</p>
+          )}
           <label htmlFor='description'>Description</label>
           <input
             type='text'
             className='text-slate12'
-
             name='description'
             id='description'
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
+            defaultValue={
+              actionData ? actionData.description : formData.description
             }
           />
-
+          {actionData?.fieldErrors?.description && (
+            <p className='text-red-500'>{actionData.fieldErrors.description}</p>
+          )}
           <label htmlFor='body'>Post Content</label>
           {body && <TipTap content={body} />}
-          <input type='hidden' name='body' value={body} />
+          <input type='hidden' name='body' defaultValue={body} />
           <label htmlFor='featured'>Featured</label>
-          <input type='checkbox' name='featured' id='featured'
-            checked={formData.featured || false}
-            onChange={(e) => {
-              console.log(e.target.checked);
-              setFormData({ ...formData, featured: e.target.checked })
-            }}
-
+          <input
+            type='checkbox'
+            name='featured'
+            id='featured'
+            defaultChecked={formData.featured || false}
           />
 
           <MultiSelect
@@ -265,42 +281,77 @@ console.log(data.post.featured, 'featured');
             name='categories'
             id='categories'
             data={mainCategories}
-            value={selected}
-            onChange={(e) => {
-              setSelected(e)
-              setFormData({ ...formData, categories: e })
-            }}
+            defaultValue={selected}
           />
 
-          <Flex justify={'center'}>
+          <input
+            type='hidden'
+            name='imageUrl'
+            id='imageUrl'
+            value={imageFetcher.data?.imageUrl || imageUrl}
+          />
+        </Form>
+
+        <div className='flex flex-col gap-2'>
+          <imageFetcher.Form
+            method='post'
+            encType='multipart/form-data'
+            action='/actions/cloudinary'
+            className='flex w-[350px] flex-col md:w-1/2'
+            onClick={onClick}
+          >
+            <label htmlFor='imageUrl' className='text-sm font-semibold'>
+              Upload a Project Image
+            </label>
             <input
-              type='hidden'
+              type='file'
               name='imageUrl'
               id='imageUrl'
-              value={imageUrl}
+              className='rounded-md p-2 shadow-md'
+              accept='image/*'
             />
-          </Flex>
+            <button>Upload</button>
+          </imageFetcher.Form>
+          {imageFetcher.data ? (
+            <div className='items-c enter flex flex-col'>
+              <p className='text-sm text-gray-500'>Image Uploaded</p>
+              <input
+                type='hidden'
+                name='imageUrl'
+                value={imageFetcher?.data?.imageUrl}
+              />
+              <div className='h-[100px] w-[100px] rounded-xl bg-crimson12 text-slate12'>
+                <img src={imageFetcher?.data?.imageUrl} alt={'#'} />
+              </div>
+            </div>
+          ) : null}
+        </div>
+        <button
+          type='submit'
+          name='_action'
+          value='save'
+          form='editPost'
+          className='rounded-xl bg-white py-2 px-4 font-bold hover:bg-green-800 dark:bg-green-500'
+        >
+          {text}
+        </button>
+        {published ? (
           <button
             type='submit'
+            form='editPost'
             name='_action'
-            value='save'
-            className='rounded-xl bg-white py-2 px-4 font-bold hover:bg-green-800 dark:bg-green-500'
+            value='unpublish'
           >
-            {text}
+            {unpublishText}
           </button>
-          {published ? (
-            <Button type='submit' name='_action' value='unpublish'>
-              {unpublishText}
-            </Button>
-          ) : (
-            <Button type='submit' name='_action' value='publish'>
-              {publishText}
-            </Button>
-          )}
-          <Button type='submit' name='_action' value='delete'>
-            {deleteText}
-          </Button>
-        </Form>
+        ) : (
+          <button type='submit' form='editPost' name='_action' value='publish'>
+            {publishText}
+          </button>
+        )}
+        <button type='submit' form='editPost' name='_action' value='delete'>
+          {deleteText}
+        </button>
       </div>
     </div>
   )

@@ -12,7 +12,7 @@ const TipTap = ({ content }: { content?: string }) => {
   const editor = useEditor({
     content,
     extensions: [
-Image,
+      Image,
       Link.configure({
         openOnClick: false
       }),
@@ -40,7 +40,7 @@ Image,
     return null
   }
 
-    return (
+  return (
     <>
       <RichTextEditor editor={editor}>
         <RichTextEditor.Toolbar sticky stickyOffset={60}>
@@ -66,18 +66,18 @@ Image,
             <RichTextEditor.AlignCenter />
             <RichTextEditor.AlignJustify />
             <RichTextEditor.AlignRight />
-
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
-              <Button type='button'
+            <Button
+              type='button'
               size='xs'
               variant='outline'
-              onClick={ addImage }>
-                <ImageIcon />
-              </Button>
+              onClick={addImage}
+            >
+              <ImageIcon />
+            </Button>
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
-
 
         <RichTextEditor.Content />
       </RichTextEditor>
@@ -86,6 +86,5 @@ Image,
     </>
   )
 }
-
 
 export default TipTap

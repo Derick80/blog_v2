@@ -7,3 +7,6 @@ export function formatDate(dateString: string | Date, format = 'MMM dd yy') {
   }
   return dateFns.format(new Date(dateString), format)
 }
+
+export const wait = () =>
+  new Promise((resolve) => setTimeout(resolve, Math.random() * 4000))

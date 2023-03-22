@@ -13,6 +13,17 @@ export const validatePassword = (password: string): string | undefined => {
     return 'Please enter a password that is at least 5 characters long'
   }
 }
+export const validateSmallTextLength = (text: string): string | undefined => {
+  if (text.length > 25) {
+    return 'Please enter a value that is less than 25 characters'
+  }
+}
+
+export const validateLargeTextLength = (text: string): string | undefined => {
+  if (text.length > 5000) {
+    return 'Please enter a value that is less than 100 characters'
+  }
+}
 
 export const validateName = (name: string): string | undefined => {
   if (!name.length) return `Please enter a value`

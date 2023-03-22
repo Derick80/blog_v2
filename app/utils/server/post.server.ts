@@ -4,10 +4,10 @@ export type CategoryForm = {
 }[]
 export async function getHeroPost() {
   const post = await prisma.post.findMany({
-  where:{
-    featured: true,
-    published: true
-  },
+    where: {
+      featured: true,
+      published: true
+    },
     select: {
       id: true,
       title: true,
