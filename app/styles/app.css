@@ -2288,10 +2288,6 @@ video {
     margin-top: 1.25rem;
   }
 
-  .md\:flex{
-    display: flex;
-  }
-
   .md\:hidden{
     display: none;
   }
@@ -2345,11 +2341,6 @@ video {
 
   .md\:pt-2{
     padding-top: 0.5rem;
-  }
-
-  .md\:text-3xl{
-    font-size: 1.875rem;
-    line-height: 2.25rem;
   }
 
   .md\:text-5xl{
