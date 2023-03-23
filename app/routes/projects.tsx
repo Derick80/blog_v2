@@ -19,7 +19,7 @@ export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
     <>
-      <div className='flex flex-col justify-center gap-5 md:flex-row'>
+      <div className='flex flex-col flex-wrap justify-center gap-5 md:flex-row'>
         {data.projects.map((project) => (
           <ProjectsCard key={project.id} project={project} />
         ))}

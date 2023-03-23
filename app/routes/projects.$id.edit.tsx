@@ -44,6 +44,7 @@ export async function action({ request, params }: ActionArgs) {
     throw new Error('id is required')
   }
   const formData = await request.formData()
+  const action = formData.get('_action')
   const title = formData.get('title')
   const description = formData.get('description')
   const projectUrl = formData.get('projectUrl')
@@ -70,29 +71,62 @@ export async function action({ request, params }: ActionArgs) {
     })
   }
 
-  await prisma.project.update({
-    where: {
-      id: id
-    },
-    data: {
-      title: title,
-      description: description,
-      projectUrl: projectUrl,
-      githubUrl: githubUrl,
-      categories: {
-        connectOrCreate: {
-          where: {
-            value: categories
+ switch(action){
+  case 'update':
+     await prisma.project.update({
+       where: {
+         id: id
+       },
+       data: {
+         title: title,
+         description: description,
+         projectUrl: projectUrl,
+         githubUrl: githubUrl,
+         categories: {
+           connectOrCreate: {
+             where: {
+               value: categories
+             },
+             create: {
+               value: categories,
+               label: categories
+             }
+           }
+         },
+         projectImg: imageUrl
+       }
+     })
+     case 'new':
+      await prisma.project.create({
+        data: {
+          title: title,
+          description: description,
+          projectUrl: projectUrl,
+          githubUrl: githubUrl,
+          user:{
+            connect:{
+              id: user.id
+
           },
-          create: {
-            value: categories,
-            label: categories
-          }
-        }
-      },
-      projectImg: imageUrl
-    }
-  })
+        },
+          categories: {
+            connectOrCreate: {
+              where: {
+                value: categories
+              },
+              create: {
+                value: categories,
+                label: categories
+
+              },
+            },
+          },
+          projectImg: imageUrl,
+        },
+      })
+
+
+ }
 
   return redirect(`/projects`)
 }
@@ -215,6 +249,8 @@ export default function Index() {
       </div>
       <button
         type='submit'
+        name='_action'
+        value='update'
         form='projectForm'
         className='rounded-md bg-blue-500 p-2 text-white shadow-md'
       >

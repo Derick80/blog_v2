@@ -90,7 +90,7 @@ export async function action({ params, request }: ActionArgs) {
   }
 
   const fieldErrors = {
-    title: validateSmallTextLength(title),
+    title: validateText(title),
     description: validateText(description),
     body: validateText(body),
     imageUrl: validateText(imageUrl),

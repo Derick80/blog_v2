@@ -74,7 +74,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const fieldErrors = {
-    title: validateSmallTextLength(title),
+    title: validateLargeTextLength(title),
     description: validateText(description),
     body: validateLargeTextLength(body),
     imageUrl: validateText(imageUrl),
@@ -143,10 +143,10 @@ export default function Uploader() {
     })
 
   return (
-    <div className='mx-auto mb-7 flex w-[350px] flex-col items-center bg-white p-2 text-slate12 dark:bg-zinc-900 dark:text-slate1 md:w-full'>
+    <div className='mx-auto mb-7 flex w-[350px] flex-col items-center bg-white p-2 text-slate12 dark:bg-crimson1 dark:text-slate1 md:w-[550px]'>
       <Form
         id='newPost'
-        className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-zinc-900 dark:text-slate-50'
+        className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-crimson1 dark:text-slate-50'
         method='post'
       >
         <input
@@ -195,7 +195,7 @@ export default function Uploader() {
           </p>
         )}
 
-        <div className='mb-5 flex flex-col gap-5'>
+        <div className='mb-5'>
           <label htmlFor='body'>Body</label>
           <TipTap />
         </div>

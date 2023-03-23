@@ -16,13 +16,13 @@ type Props = {
 }
 
 const iconClassName =
-  'bg-slate-100 rounded-full p-3 text-slate-500 transition hover:text-primary-dark hover:bg-primary-bg dark:bg-slate-600 dark:text-slate-200 dark:hover:text-primary-light'
+  'bg-slate-100 rounded-full p-3 text-slate-500 transition hover:text-primary-dark hover:bg-primary-bg dark:bg-slate-600 dark:text-slate-200 dark:hover:text-primary-light border-none'
 
 export const ShareButton = ({ id }: Props) => {
   const { toast } = useToast()
   const [isOpen, setIsOpen] = useState(false)
   const ref = useRef<HTMLInputElement | null>(null)
-  const postUrl = `http//localhost/blog/${id}`
+  const postUrl = `https://derickhoskinson.com/blog/${id}`
   const encodedPostUrl = encodeURIComponent(postUrl)
 
   const copyLink = () => {
@@ -34,7 +34,7 @@ export const ShareButton = ({ id }: Props) => {
 
   return (
     <>
-      <Popover width={200} position='top' withArrow shadow='md'>
+      <Popover width={300} position='top' withArrow>
         <Popover.Target>
           <Button
             type='button'
@@ -81,23 +81,23 @@ export const ShareButton = ({ id }: Props) => {
             </a>
           </Flex>
           <Divider>Or share with link</Divider>
-          <div className='relative'>
+          <div className='flex items-center gap-1 mt-2 w-full'>
             <input
               id='share'
               type='text'
-              className='w-11/12 rounded border-0 text-center transition dark:bg-slate9'
+              className='w-full p-3 text-xs text-slate-500 bg-slate-100 rounded-md dark:bg-slate-600 dark:text-slate-200'
               value={postUrl}
               onClick={copyLink}
               ref={ref}
               readOnly
             />
-            <Button
+            <button
               type='button'
-              className='absolute  right-3 -top-1 p-2 transition'
+              className='p-3 text-slate-500 bg-slate-100 rounded-md hover:text-primary-dark hover:bg-primary-bg dark:bg-slate-600 dark:text-slate-200 dark:hover:text-primary-light'
               onClick={copyLink}
             >
               <CopyIcon />
-            </Button>
+            </button>
           </div>
         </Popover.Dropdown>
       </Popover>

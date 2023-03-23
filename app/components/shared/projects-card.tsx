@@ -13,7 +13,7 @@ export default function ProjectsCard({ project }: { project: Project }) {
   return (
     <div
       key={project.id}
-      className='mx-auto grid w-[350px] grid-cols-3 rounded-md p-2 shadow-2xl dark:bg-zinc-800'
+      className='mx-auto  grid w-[350px] grid-cols-3 rounded-md p-2 shadow-2xl dark:bg-zinc-800'
     >
       <div className='col-span-4'>
         <a
@@ -46,7 +46,7 @@ export default function ProjectsCard({ project }: { project: Project }) {
           ))}
         </div>
         <div>
-          <p className='indent-1 text-base'>{project.description}</p>
+          <p className='indent-1 text-base h-20 overflow-auto'>{project.description}</p>
         </div>
       </div>
       <div className='col-span-2'>

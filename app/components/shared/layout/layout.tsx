@@ -72,8 +72,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             transition='slide-down'
             transitionDuration={450}
             transitionTimingFunction='ease'
+            className='bg-white dark:bg-crimson6 text-black dark:text-slate-50 overflow-auto'
           >
-            <div className='flex flex-col items-center gap-5 md:flex-row'>
+            <div className='flex flex-col items-center gap-2 md:flex-row text-black text-sm dark:text-slate-50'>
               <NavLink
                 prefetch='intent'
                 aria-label='Go to Home'

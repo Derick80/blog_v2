@@ -15,7 +15,6 @@ import {
   Divider,
   Group,
   Spoiler,
-  Switch,
   Tooltip
 } from '@mantine/core'
 import type { Like } from '~/utils/schemas/like-schema'
@@ -63,6 +62,7 @@ export const PostCard = ({
   const currentUser = useOptionalUser()
   const {
     id,
+    userId,
     title,
     description,
     body,
@@ -80,11 +80,17 @@ export const PostCard = ({
     <>
       <div
         key={id}
-        className='w-[350px] rounded-2xl text-black shadow-2xl dark:text-slate-50 md:w-[650px]'
+        className='w-[350px] h-full transition dark:bg-gradient-to-r from-crimson3 to-crimson2 duration-300 group transform hover:-translate-y-2 text-black shadow-md dark:text-slate-50 md:w-[550px] rounded-xl'
       >
-        <div>
+
+        <div
+          className='flex flex-col items-center mx-auto  p-2'
+        >
           {imageUrl && (
-            <img className='h-auto max-w-full' src={imageUrl} alt={title} />
+            <img
+              style={{ width: '100%', height: '100%' , objectFit: 'cover',
+              }}
+            src={imageUrl} alt={title} />
           )}
         </div>
 
@@ -124,17 +130,28 @@ export const PostCard = ({
               ></div>
             )}
           </Spoiler>
-          <Switch
-            className='text-slate-50'
-            color={featured ? 'red' : 'blue'}
-            label='Featured Post'
-            defaultChecked={featured}
-            onChange={() => console.log('changed')}
-            disabled
-          />
-        </div>
 
-        <div className='flex flex-row items-center justify-between'>
+
+
+        </div>
+<div className='flex flex-row space-x-2 p-2 justify-end'>
+          <div className='flex flex-col items-center space-x-2'>
+            { user?.avatarUrl && (
+              <Tooltip label={ user?.userName } position='top'>
+                <Avatar
+                  src={ user?.avatarUrl }
+                  variant='filled'
+                  radius='xl'
+                  size='sm'
+                />
+              </Tooltip>
+            ) }
+            <p className='text-xs text-black dark:text-slate-50'>
+              { createdAt && new Date(createdAt).toLocaleDateString() }
+            </p>
+          </div>
+        </div>
+        <div className='flex flex-row flex-wsrap items-center gap-2'>
           <div className='flex flex-row space-x-2 p-2'>
             {showLikes && likes && currentUser && (
               <LikeContainer
@@ -164,27 +181,13 @@ export const PostCard = ({
               </Button>
             )}
             {showShare && id && <ShareButton id={id} />}
-            {showOptions && <PostOptions postId={id} />}
+            {showOptions && currentUser?.id === userId && <PostOptions postId={id} />}
           </div>
-          <div className='flex flex-col items-center space-x-2'>
-            {user?.avatarUrl && (
-              <Tooltip label={user?.userName} position='top'>
-                <Avatar
-                  src={user?.avatarUrl}
-                  variant='filled'
-                  radius='xl'
-                  size='sm'
-                />
-              </Tooltip>
-            )}
-            <p className='text-xs text-gray-200'>
-              {createdAt && new Date(createdAt).toLocaleDateString()}
-            </p>
-          </div>
+
         </div>
         <Divider />
         <Group position='right'></Group>
-        {showComments && data.comments.length > 0 && id && (
+        {showComments && id && (
           <div className='flex flex-col'>
             {currentUser && <FormComments postId={id} />}
             {open && data.comments && (
