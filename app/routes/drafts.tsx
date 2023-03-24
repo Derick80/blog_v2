@@ -49,17 +49,6 @@ export default function Drafts() {
               showShare={false}
               user={data.user}
             />
-
-            //             <div key={draft.id}>
-
-            //               <div className='flex flex-col'>
-            // {draft.title}
-            //                 <div className='flex flex-col'>
-            //                   <p dangerouslySetInnerHTML={{ __html: draft.body }} />
-
-            //                   </div>
-            //                   </div>
-            //               </div>
           ))
         ) : (
           <Center>

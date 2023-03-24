@@ -1,5 +1,8 @@
 /* eslint-disable react/no-danger-with-children */
-import type { SerializedPost } from '~/utils/schemas/post-schema'
+import type {
+  PostWithChildren,
+  SerializedPost
+} from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
 import PostOptions from './post-options'
 import FavoriteContainer from './favorite-container'
@@ -9,14 +12,7 @@ import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { NavLink } from '@remix-run/react'
 import CategoryContainer from '../category-container'
-import {
-  Avatar,
-  Button,
-  Divider,
-  Group,
-  Spoiler,
-  Tooltip
-} from '@mantine/core'
+import { Avatar, Button, Divider, Group, Spoiler, Tooltip } from '@mantine/core'
 import type { Like } from '~/utils/schemas/like-schema'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
@@ -26,18 +22,8 @@ import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { useOptionalUser } from '~/utils/utilities'
 
 export type ManyPostProps = {
-  data: SerializedPost & {
-    comments: CommentWithChildren[]
-  } & {
-    favorites: Favorite[]
-    likes: Like[]
-    _count: {
-      comments: number
-      favorites: number
-      likes: number
-    }
-  }
-  user: User | null
+  data: PostWithChildren
+  user: User
 }
 
 export type BasicCardProps = {
@@ -80,17 +66,15 @@ export const PostCard = ({
     <>
       <div
         key={id}
-        className='w-[350px] h-full transition dark:bg-gradient-to-r from-crimson3 to-crimson2 duration-300 group transform hover:-translate-y-2 text-black shadow-md dark:text-slate-50 md:w-[550px] rounded-xl'
+        className='group h-full w-[350px] transform rounded-xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50 md:w-[550px]'
       >
-
-        <div
-          className='flex flex-col items-center mx-auto  p-2'
-        >
+        <div className='mx-auto flex flex-col items-center  p-2'>
           {imageUrl && (
             <img
-              style={{ width: '100%', height: '100%' , objectFit: 'cover',
-              }}
-            src={imageUrl} alt={title} />
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              src={imageUrl}
+              alt={title}
+            />
           )}
         </div>
 
@@ -130,28 +114,25 @@ export const PostCard = ({
               ></div>
             )}
           </Spoiler>
-
-
-
         </div>
-<div className='flex flex-row space-x-2 p-2 justify-end'>
+        <div className='flex flex-row justify-end space-x-2 p-2'>
           <div className='flex flex-col items-center space-x-2'>
-            { user?.avatarUrl && (
-              <Tooltip label={ user?.userName } position='top'>
+            {user?.avatarUrl && (
+              <Tooltip label={user?.userName} position='top'>
                 <Avatar
-                  src={ user?.avatarUrl }
+                  src={user?.avatarUrl}
                   variant='filled'
                   radius='xl'
                   size='sm'
                 />
               </Tooltip>
-            ) }
+            )}
             <p className='text-xs text-black dark:text-slate-50'>
-              { createdAt && new Date(createdAt).toLocaleDateString() }
+              {createdAt && new Date(createdAt).toLocaleDateString()}
             </p>
           </div>
         </div>
-        <div className='flex flex-row flex-wsrap items-center gap-2'>
+        <div className='flex-wsrap flex flex-row items-center gap-2'>
           <div className='flex flex-row space-x-2 p-2'>
             {showLikes && likes && currentUser && (
               <LikeContainer
@@ -163,8 +144,8 @@ export const PostCard = ({
             )}
             {showFavorites && currentUser && (
               <FavoriteContainer
+                favorites={favorites as Favorite[]}
                 postId={id}
-                favorites={favorites}
                 currentUser={currentUser.id}
               />
             )}
@@ -181,9 +162,10 @@ export const PostCard = ({
               </Button>
             )}
             {showShare && id && <ShareButton id={id} />}
-            {showOptions && currentUser?.id === userId && <PostOptions postId={id} />}
+            {showOptions && currentUser?.id === userId && (
+              <PostOptions postId={id} />
+            )}
           </div>
-
         </div>
         <Divider />
         <Group position='right'></Group>

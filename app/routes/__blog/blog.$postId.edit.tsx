@@ -134,11 +134,11 @@ export async function action({ params, request }: ActionArgs) {
         category,
         featured
       })
-      return redirect(`/blog/${postId}`)
+      return redirect(`/blog/`)
 
     case 'publish':
       await publishPost(postId)
-      return redirect(`/blog/${postId}`)
+      return redirect(`/blog`)
     case 'unpublish':
       await unPublishPost(postId)
       return redirect(`/blog/${postId}`)

@@ -3,7 +3,7 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 
 export default function Footer({ children }: { children?: React.ReactNode }) {
   return (
-    <footer className='flex mt-5 w-full items-center justify-center gap-5'>
+    <footer className='mt-5 flex w-full items-center justify-center gap-5'>
       <div className='flex items-center gap-5'>
         <a
           href='https://github.com/Derick80'

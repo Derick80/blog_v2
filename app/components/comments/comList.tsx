@@ -12,18 +12,33 @@ import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import { useOptionalUser } from '~/utils/utilities'
 import FormComments from './com-form'
 
+function getReplyCountText(count: number) {
+  if (count === 0) {
+    return 'No replies'
+  }
+
+  if (count === 1) {
+    return '1 reply'
+  }
+
+  return `${count} replies`
+}
+
 function CommentActions({
   commentId,
   postId,
   userId,
-  message
+  message,
+  replyCount
 }: {
   postId: string
   commentId: string
   userId: string
   message?: string
+  replyCount: number
 }) {
   const [replying, setReplying] = useState(false)
+
   const user = useOptionalUser()
   const currentUser = user?.id
   const deleteCommentFetcher = useFetcher()
@@ -31,6 +46,7 @@ function CommentActions({
   return (
     <>
       <div className='flex flex-row items-center justify-between'>
+        <div>{getReplyCountText(replyCount)}</div>
         {user ? (
           <Button
             size='sm'
@@ -137,16 +153,15 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
         commentId={comment.id}
         userId={comment.user.id}
         message={comment.message}
+        replyCount={comment.children?.length}
       />
 
-      {comment.children && comment.children.length > 0 && (
-        <ListComments comments={comment.children} />
-      )}
+      {comment.children ? <ListComments comments={comment.children} /> : null}
     </Paper>
   )
 }
 
-function ListComments({ comments }: { comments: Array<CommentWithChildren> }) {
+function ListComments({ comments }: { comments: CommentWithChildren[] }) {
   return (
     <Box>
       {comments.map((comment) => {

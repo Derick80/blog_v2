@@ -1,4 +1,13 @@
 import { prisma } from './prisma.server'
+
+const defaultUserSelect = {
+  id: true,
+  userName: true,
+  avatarUrl: true,
+  email: true,
+  password: false,
+  role: true
+}
 export type CategoryForm = {
   value: string
 }[]
@@ -19,15 +28,10 @@ export async function getHeroPost() {
       published: true,
       createdBy: true,
       userId: true,
+      featured: true,
       categories: true,
       user: {
-        select: {
-          id: true,
-          userName: true,
-          avatarUrl: true,
-          email: true,
-          password: false
-        }
+        select: defaultUserSelect
       },
       comments: {
         include: {
@@ -37,13 +41,16 @@ export async function getHeroPost() {
               userName: true,
               avatarUrl: true,
               email: true,
-              password: false
+              password: false,
+              role: true
             }
-          }
+          },
+          children: true
         }
       },
       favorites: true,
-      likes: true
+      likes: true,
+      _count: true
     },
     orderBy: {
       createdAt: 'desc'

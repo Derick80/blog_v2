@@ -46,7 +46,9 @@ export default function ProjectsCard({ project }: { project: Project }) {
           ))}
         </div>
         <div>
-          <p className='indent-1 text-base h-20 overflow-auto'>{project.description}</p>
+          <p className='h-20 overflow-auto indent-1 text-base'>
+            {project.description}
+          </p>
         </div>
       </div>
       <div className='col-span-2'>

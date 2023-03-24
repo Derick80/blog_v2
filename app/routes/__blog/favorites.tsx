@@ -31,16 +31,13 @@ export default function FavoritePosts() {
   const data = useLoaderData<{ favorites: Favorite[] }>()
 
   return (
-    <Container>
-      <Group position='center'>
-        <h1>Favorite Posts</h1>
-        <Dropdown />
-      </Group>
+    <div className='flex grow flex-col items-center gap-4 '>
+      <h1 className='mb-5 text-3xl font-bold'>Favorite Posts</h1>
+      <Dropdown />
       {data.favorites.map((favorite) => (
         <PostCard
           key={favorite.post.id}
           data={favorite.post}
-          user={favorite.post.user}
           showLikes={true}
           showCategories={true}
           showComments={true}
@@ -49,6 +46,11 @@ export default function FavoritePosts() {
           showShare={true}
         />
       ))}
-    </Container>
+      <details className='w-1/2 text-xs text-gray-500 dark:text-gray-400' å>
+        <pre className='text-xs text-gray-500 dark:text-gray-400'>
+          {JSON.stringify(data, null, 2)}
+        </pre>
+      </details>
+    </div>
   )
 }
