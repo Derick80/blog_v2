@@ -3,7 +3,7 @@ import type { MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { NavLink, Outlet, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
-import { PostCard } from '~/components/shared/blog-ui/post-card'
+import { ManyPostProps, PostCard } from '~/components/shared/blog-ui/post-card'
 import type { Post } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPosts } from '~/utils/server/post.server'
@@ -17,21 +17,22 @@ export const meta: MetaFunction = () => {
 }
 
 export async function loader() {
-  const posts = await getPosts()
+  const post = await getPosts()
 
-  if (!posts) throw new Error('Error')
+  if (!post) throw new Error('Error')
 
   // get all Categoiries for posts use this for useMatches, etc
   const categories = await getAllCategories()
   // get all comments for posts use this for useMatches, etc
-  const comments = posts.map((post) => post.comments).flat()
+  const comments = post.map((post) => post.comments).flat()
 
-  return json({ posts, categories, comments })
+  return json({ post, categories, comments })
 }
 
 export default function Index() {
   const user = useOptionalUser()
-  const data = useLoaderData()
+  const data = useLoaderData<typeof loader>()
+
   return (
     <div className='mx-auto flex w-[350px] grow flex-col items-center gap-5 md:w-[550px] '>
       {user?.role === 'ADMIN' ? (
@@ -57,11 +58,10 @@ export default function Index() {
         className='w-full'
         style={{ height: '1px', backgroundColor: '#e2e8f0' }}
       />
-      {data.posts.map((post: Post) => (
+      {data.post.map((post) => (
         <PostCard
           key={post.id}
           data={post}
-          user={post.user}
           showCategories={true}
           showLikes={true}
           showComments={true}

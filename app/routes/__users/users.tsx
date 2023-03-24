@@ -33,8 +33,6 @@ export type TestUser = {
   }
 }
 export async function loader({ request }: LoaderArgs) {
-  const url = new URL(request.url)
-
   const user = await isAuthenticated(request)
   const currentUser = user?.id
 
@@ -52,6 +50,7 @@ export default function Users() {
     currentUser: string
     userNames: string[]
   }>()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchValue, onSearchChange] = useState('')
   const userFetcher = useFetcher()
   return (

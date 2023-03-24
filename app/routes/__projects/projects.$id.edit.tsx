@@ -1,4 +1,5 @@
-import { ActionArgs, json, LoaderArgs, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import {
   Form,
   useCatch,
@@ -7,7 +8,7 @@ import {
   useParams,
   useRouteLoaderData
 } from '@remix-run/react'
-import { Categories } from '~/utils/schemas/projects-schema'
+import type { Categories } from '~/utils/schemas/projects-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
 import { getProjectById } from '~/utils/server/project.server'
@@ -71,44 +72,17 @@ export async function action({ request, params }: ActionArgs) {
     })
   }
 
- switch(action){
-  case 'update':
-     await prisma.project.update({
-       where: {
-         id: id
-       },
-       data: {
-         title: title,
-         description: description,
-         projectUrl: projectUrl,
-         githubUrl: githubUrl,
-         categories: {
-           connectOrCreate: {
-             where: {
-               value: categories
-             },
-             create: {
-               value: categories,
-               label: categories
-             }
-           }
-         },
-         projectImg: imageUrl
-       }
-     })
-     case 'new':
-      await prisma.project.create({
+  switch (action) {
+    case 'update':
+      await prisma.project.update({
+        where: {
+          id: id
+        },
         data: {
           title: title,
           description: description,
           projectUrl: projectUrl,
           githubUrl: githubUrl,
-          user:{
-            connect:{
-              id: user.id
-
-          },
-        },
           categories: {
             connectOrCreate: {
               where: {
@@ -117,23 +91,46 @@ export async function action({ request, params }: ActionArgs) {
               create: {
                 value: categories,
                 label: categories
-
-              },
-            },
+              }
+            }
           },
-          projectImg: imageUrl,
-        },
+          projectImg: imageUrl
+        }
       })
-
-
- }
+    case 'new':
+      await prisma.project.create({
+        data: {
+          title: title,
+          description: description,
+          projectUrl: projectUrl,
+          githubUrl: githubUrl,
+          user: {
+            connect: {
+              id: user.id
+            }
+          },
+          categories: {
+            connectOrCreate: {
+              where: {
+                value: categories
+              },
+              create: {
+                value: categories,
+                label: categories
+              }
+            }
+          },
+          projectImg: imageUrl
+        }
+      })
+  }
 
   return redirect(`/projects`)
 }
 export default function Index() {
   const data = useLoaderData<typeof loader>()
   const { categories } = useRouteLoaderData('root') as Categories
-  const imageFetcher = useFetcher()
+  const imageFetcher = useFetcher<ActionData>()
   const onClick = async () =>
     imageFetcher.submit({
       imageUrl: 'imageUrl',

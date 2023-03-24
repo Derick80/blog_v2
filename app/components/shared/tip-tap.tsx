@@ -3,16 +3,26 @@ import { RichTextEditor } from '@mantine/tiptap'
 import * as Toolbar from '@radix-ui/react-toolbar'
 import Link from '@tiptap/extension-link'
 import { EditorContent, useEditor } from '@tiptap/react'
+import Underline from '@tiptap/extension-underline';
+import Superscript from '@tiptap/extension-superscript'
+import SubScript from '@tiptap/extension-subscript'
 import StarterKit from '@tiptap/starter-kit'
 import { useCallback } from 'react'
 import Image from '@tiptap/extension-image'
 import { ImageIcon } from '@radix-ui/react-icons'
+import Highlight from '@tiptap/extension-highlight'
+import TextAlign from '@tiptap/extension-text-align'
 
 const TipTap = ({ content }: { content?: string }) => {
   const editor = useEditor({
     content,
     extensions: [
       Image,
+      Underline,
+      Superscript,
+      SubScript,
+      Highlight,
+      TextAlign,
       Link.configure({
         openOnClick: false
       }),
@@ -24,7 +34,7 @@ const TipTap = ({ content }: { content?: string }) => {
     editorProps: {
       attributes: {
         class:
-          'flex-1 p-4 h-auto mx-auto text-slate12  m-5 focus:outline-none rounded-xl mt-0'
+          'flex-1 p-4 h-auto mx-auto text-slate12 w-full text-sm m-5 focus:outline-none rounded-xl mt-0'
       }
     }
   })
@@ -49,6 +59,9 @@ const TipTap = ({ content }: { content?: string }) => {
             <RichTextEditor.Italic />
             <RichTextEditor.Underline />
             <RichTextEditor.Strikethrough />
+            <RichTextEditor.Superscript />
+            <RichTextEditor.Subscript />
+
             <RichTextEditor.ClearFormatting />
             <RichTextEditor.Highlight />
             <RichTextEditor.Code />
@@ -77,7 +90,29 @@ const TipTap = ({ content }: { content?: string }) => {
               <ImageIcon />
             </Button>
           </RichTextEditor.ControlsGroup>
-        </RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.ColorPicker
+
+              colors={ [
+                '#25262b',
+                '#868e96',
+                '#fa5252',
+                '#e64980',
+                '#be4bdb',
+                '#7950f2',
+                '#4c6ef5',
+                '#228be6',
+                '#15aabf',
+                '#12b886',
+                '#40c057',
+                '#82c91e',
+                '#fab005',
+                '#fd7e14',
+              ] }
+            />
+
+            </RichTextEditor.ControlsGroup>
+            </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content />
       </RichTextEditor>

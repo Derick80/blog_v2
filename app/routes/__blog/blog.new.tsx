@@ -20,7 +20,6 @@ import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 import { badRequest } from 'remix-utils'
 import {
   validateLargeTextLength,
-  validateSmallTextLength,
   validateText
 } from '~/utils/validators.server'
 
@@ -159,7 +158,7 @@ export default function Uploader() {
         <label htmlFor='title'>Title</label>
         <input
           type='text'
-          className='rounded-md border text-slate12'
+          className='rounded-md border text-slate12 text-sm'
           name='title'
           defaultValue={actionData?.fields?.title}
           aria-invalid={Boolean(actionData?.fieldErrors?.title) || undefined}
@@ -176,7 +175,7 @@ export default function Uploader() {
         <label htmlFor='description'>Description</label>
         <input
           type='text'
-          className='rounded-md border text-black'
+          className='rounded-md border text-slate12 text-sm'
           name='description'
           defaultValue={actionData?.fields?.description}
           aria-invalid={
@@ -209,6 +208,7 @@ export default function Uploader() {
 
           <MultiSelect
             shadow='xl'
+
             data={categories}
             onChange={(e) => {
               setSelected(e.join(','))

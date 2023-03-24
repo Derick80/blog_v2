@@ -1,10 +1,15 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/node'
+import type {
+  ActionFunction,
+  LoaderArgs,
+  LoaderFunction
+} from '@remix-run/node'
 import { json } from '@remix-run/node'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createLike, deleteLike } from '~/utils/server/likes.server'
 
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+import { getPostById } from '~/utils/server/post.server'
 
 export const meta: MetaFunction = () => {
   return {
@@ -12,8 +17,25 @@ export const meta: MetaFunction = () => {
     description: "Like a post on Derick's blog"
   }
 }
-export const loader: LoaderFunction = () => {
-  throw new Response("This page doesn't exists.", { status: 404 })
+export async function loader({ request, params }: LoaderArgs) {
+  const user = await isAuthenticated(request)
+
+  if (!user) {
+    throw new Error('You need to be authenticated to like a post')
+  }
+  const postId = params.postId
+  if (!postId) {
+    throw new Error('You need to provide a postId to like a post')
+  }
+
+  const posts = await getPostById(postId)
+  if (!posts) {
+    throw new Error('Post not found')
+  }
+
+  const likes = posts.likes.map((like) => like)
+
+  return json({ likes })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {

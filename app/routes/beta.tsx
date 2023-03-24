@@ -1,22 +1,8 @@
-import { Divider } from '@mantine/core'
-import type {
-  CVExperience,
-  Education,
-  Publication,
-  Skill
-} from '@prisma/client'
-import {
-  CheckCircledIcon,
-  StarFilledIcon,
-  StarIcon
-} from '@radix-ui/react-icons'
+import { StarFilledIcon, StarIcon } from '@radix-ui/react-icons'
 import { json } from '@remix-run/node'
 import { Form, useLoaderData } from '@remix-run/react'
-import { format } from 'date-fns'
 import React from 'react'
-import type { CV } from '~/utils/schemas/cv-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import { prisma } from '~/utils/server/prisma.server'
 
 export async function loader({ request }: { request: Request }) {
   const user = await isAuthenticated(request)

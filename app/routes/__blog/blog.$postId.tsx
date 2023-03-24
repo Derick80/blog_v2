@@ -4,10 +4,11 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
-import type { Post } from '~/utils/schemas/post-schema'
+import type { Post, PostWithChildren } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPostById } from '~/utils/server/post.server'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+import { User } from '~/utils/schemas/user-schema'
 
 export const meta: MetaFunction = () => {
   return {
@@ -27,7 +28,7 @@ export async function loader({ request, params }: LoaderArgs) {
 
 export default function Index() {
   const data = useLoaderData<{
-    post: Post
+    post: SerializeFrom<typeof getPostById>
     categories: SerializeFrom<typeof getAllCategories>
   }>()
 
@@ -40,7 +41,6 @@ export default function Index() {
         <PostCard
           key={post.id}
           data={post}
-          user={post.user}
           showCategories={true}
           showComments={true}
           showFavorites={true}

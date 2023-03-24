@@ -1,10 +1,9 @@
-import { Button, Textarea, TextInput, Image } from '@mantine/core'
+import { Button, Image } from '@mantine/core'
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import {
   Form,
-  useActionData,
   useCatch,
   useFetcher,
   useLoaderData,
@@ -13,11 +12,9 @@ import {
 } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
-import TipTap from '~/components/shared/tip-tap'
 import { prisma } from '~/utils/server/prisma.server'
 
 import { editUserProfile } from '~/utils/server/profile.server'
-import { getUserProfile } from '~/utils/server/profile.server'
 import { getUserById } from '~/utils/server/user.server'
 
 export async function loader({ params }: LoaderArgs) {
@@ -53,6 +50,21 @@ export async function action({ request, params }: ActionArgs) {
   const firstName = await formData.get('firstName')
   const lastName = await formData.get('lastName')
   const email = await formData.get('email')
+
+  if (
+    typeof bio !== 'string' ||
+    typeof id !== 'string' ||
+    typeof profilePicture !== 'string' ||
+    typeof userName !== 'string' ||
+    typeof education !== 'string' ||
+    typeof occupation !== 'string' ||
+    typeof location !== 'string' ||
+    typeof firstName !== 'string' ||
+    typeof lastName !== 'string' ||
+    typeof email !== 'string'
+  ) {
+    return badRequest({ message: 'Invalid form data' })
+  }
 
   const input = {
     id,

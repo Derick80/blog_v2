@@ -1,10 +1,9 @@
-import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
-import StatsCard from '~/components/shared/stats-card'
-import type { Post } from '~/utils/schemas/post-schema'
+import StatsCard from '~/components/shared/blog-ui/stats-card'
 import { getHeroPost } from '~/utils/server/post.server'
 
 export async function loader({ request }: LoaderArgs) {
@@ -17,7 +16,7 @@ export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
     <div className='flex grow flex-col items-center gap-4 '>
-      <h1 className='text-3xl font-bold mb-5'>Latest Post</h1>
+      <h1 className='mb-5 text-3xl font-bold'>Latest Post</h1>
       <StatsCard />
       <BlogNav />
       {data.post &&
@@ -25,7 +24,6 @@ export default function Index() {
           <PostCard
             key={item.id}
             data={item}
-            user={item.user}
             showCategories={true}
             showComments={false}
             showFavorites={true}
@@ -34,6 +32,11 @@ export default function Index() {
             showShare={true}
           />
         ))}
+      <details className='w-1/2 text-xs text-gray-500 dark:text-gray-400'>
+        <pre className='text-xs text-gray-500 dark:text-gray-400'>
+          {JSON.stringify(data, null, 2)}
+        </pre>
+      </details>
     </div>
   )
 }

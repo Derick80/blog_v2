@@ -2,13 +2,13 @@ import type { Comment as PrismaComment } from '@prisma/client'
 import type { SerializeFrom } from '@remix-run/node'
 import type { User } from './user-schema'
 
-export type Comments = PrismaComment & {
+// using this type to get the comments without the user and for formatting the comments
+export type Comments = SerializeFrom<PrismaComment>
+export type Comment = PrismaComment & {
   user: User
+  children: Array<Comments>
 }
-
-export type Comment = SerializeFrom<Comments>
-
-export type OnlyComments = Omit<Comments, 'user'>
-export type CommentWithChildren = Comment & {
-  children: Array<CommentWithChildren>
+export type CommentWithChildren = Comments & {
+  children: Array<Comments>
+  user: User
 }

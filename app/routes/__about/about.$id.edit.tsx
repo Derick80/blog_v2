@@ -1,4 +1,5 @@
-import { ActionArgs, json, LoaderArgs, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import { Form, useFetcher, useLoaderData } from '@remix-run/react'
 import TipTap from '~/components/shared/tip-tap'
 import { editAbout, getAboutById } from '~/utils/server/about.server'

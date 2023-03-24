@@ -1,9 +1,9 @@
 import type {
-  Comment,
+  Comments,
   CommentWithChildren
 } from '~/utils/schemas/comment-schema'
 
-function formComments(comments: Array<Comment>) {
+function formComments(comments: Array<Comments>) {
   const map = new Map()
 
   const roots: Array<CommentWithChildren> = []

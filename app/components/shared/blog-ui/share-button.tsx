@@ -81,11 +81,11 @@ export const ShareButton = ({ id }: Props) => {
             </a>
           </Flex>
           <Divider>Or share with link</Divider>
-          <div className='flex items-center gap-1 mt-2 w-full'>
+          <div className='mt-2 flex w-full items-center gap-1'>
             <input
               id='share'
               type='text'
-              className='w-full p-3 text-xs text-slate-500 bg-slate-100 rounded-md dark:bg-slate-600 dark:text-slate-200'
+              className='w-full rounded-md bg-slate-100 p-3 text-xs text-slate-500 dark:bg-slate-600 dark:text-slate-200'
               value={postUrl}
               onClick={copyLink}
               ref={ref}
@@ -93,7 +93,7 @@ export const ShareButton = ({ id }: Props) => {
             />
             <button
               type='button'
-              className='p-3 text-slate-500 bg-slate-100 rounded-md hover:text-primary-dark hover:bg-primary-bg dark:bg-slate-600 dark:text-slate-200 dark:hover:text-primary-light'
+              className='hover:text-primary-dark hover:bg-primary-bg dark:hover:text-primary-light rounded-md bg-slate-100 p-3 text-slate-500 dark:bg-slate-600 dark:text-slate-200'
               onClick={copyLink}
             >
               <CopyIcon />

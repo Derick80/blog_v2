@@ -1,4 +1,13 @@
 import { prisma } from './prisma.server'
+
+const defaultUserSelect = {
+  id: true,
+  userName: true,
+  avatarUrl: true,
+  email: true,
+  password: false,
+  role: true
+}
 export type CategoryForm = {
   value: string
 }[]
@@ -19,15 +28,10 @@ export async function getHeroPost() {
       published: true,
       createdBy: true,
       userId: true,
+      featured: true,
       categories: true,
       user: {
-        select: {
-          id: true,
-          userName: true,
-          avatarUrl: true,
-          email: true,
-          password: false
-        }
+        select: defaultUserSelect
       },
       comments: {
         include: {
@@ -37,13 +41,16 @@ export async function getHeroPost() {
               userName: true,
               avatarUrl: true,
               email: true,
-              password: false
+              password: false,
+              role: true
             }
-          }
+          },
+          children: true
         }
       },
       favorites: true,
-      likes: true
+      likes: true,
+      _count: true
     },
     orderBy: {
       createdAt: 'desc'
@@ -103,7 +110,8 @@ export async function getPosts() {
               id: true,
               userName: true,
               avatarUrl: true,
-              email: true
+              email: true,
+              role: true
             }
           },
           children: {
@@ -153,6 +161,7 @@ export async function getPostById(id: string) {
               userName: true,
               avatarUrl: true,
               email: true,
+              role: true,
               password: false
             }
           },
@@ -164,6 +173,7 @@ export async function getPostById(id: string) {
                   userName: true,
                   avatarUrl: true,
                   email: true,
+                  role: true,
                   password: false
                 }
               }
@@ -171,7 +181,16 @@ export async function getPostById(id: string) {
           }
         }
       },
-
+      user: {
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          role: true,
+          password: false
+        }
+      },
       categories: true,
       _count: true,
       likes: true,
@@ -274,7 +293,7 @@ export async function createPost(data: PostInput) {
 }
 
 export async function getUserDrafts(userId: string) {
-  const posts = await prisma.post.findMany({
+  const post = await prisma.post.findMany({
     where: {
       published: false,
       userId
@@ -288,6 +307,7 @@ export async function getUserDrafts(userId: string) {
           userName: true,
           avatarUrl: true,
           email: true,
+          role: true,
           password: false
         }
       },
@@ -309,7 +329,7 @@ export async function getUserDrafts(userId: string) {
     }
   })
 
-  return posts
+  return post
 }
 
 export async function savePost(data: Partial<PostInput> & { postId: string }) {

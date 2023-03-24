@@ -38,7 +38,7 @@ export default function Dropdown() {
             </NavLink>
           </Menu.Item>
           <Menu.Item icon={<Pencil2Icon />}>
-            <Link to='/blog/categories' onClick={() => setOpen(!open)}>
+            <Link to='/categories' onClick={() => setOpen(!open)}>
               <Text>Categories add one</Text>
             </Link>
           </Menu.Item>

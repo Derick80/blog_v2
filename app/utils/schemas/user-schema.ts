@@ -1,6 +1,8 @@
 import type { User as PrismaUser } from '@prisma/client'
 
-export type User = Omit<PrismaUser, 'password' | 'createdAt' | 'updatedAt'>
+export type User = Omit<PrismaUser, 'password' | 'createdAt' | 'updatedAt'> & {
+  role: string
+}
 
 export type UserType = User & {
   _count: {

@@ -12,7 +12,8 @@ export async function getFavoriteList(userId: string) {
     include: {
       post: {
         include: {
-          user: true
+          user: true,
+          categories: true
         }
       }
     }
