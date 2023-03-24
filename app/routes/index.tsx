@@ -9,6 +9,8 @@ import { getHeroPost } from '~/utils/server/post.server'
 export async function loader({ request }: LoaderArgs) {
   const post = await getHeroPost()
 
+
+
   return json({ post })
 }
 

@@ -110,7 +110,8 @@ export async function getPosts() {
               id: true,
               userName: true,
               avatarUrl: true,
-              email: true
+              email: true,
+              role: true
             }
           },
           children: {
@@ -160,7 +161,9 @@ export async function getPostById(id: string) {
               userName: true,
               avatarUrl: true,
               email: true,
+              role: true,
               password: false
+
             }
           },
           children: {
@@ -171,6 +174,7 @@ export async function getPostById(id: string) {
                   userName: true,
                   avatarUrl: true,
                   email: true,
+                  role: true,
                   password: false
                 }
               }
@@ -178,7 +182,16 @@ export async function getPostById(id: string) {
           }
         }
       },
-
+      user: {
+        select: {
+          id: true,
+          userName: true,
+          avatarUrl: true,
+          email: true,
+          role: true,
+          password: false
+        }
+      },
       categories: true,
       _count: true,
       likes: true,
@@ -281,7 +294,7 @@ export async function createPost(data: PostInput) {
 }
 
 export async function getUserDrafts(userId: string) {
-  const posts = await prisma.post.findMany({
+  const post = await prisma.post.findMany({
     where: {
       published: false,
       userId
@@ -295,6 +308,7 @@ export async function getUserDrafts(userId: string) {
           userName: true,
           avatarUrl: true,
           email: true,
+          role: true,
           password: false
         }
       },
@@ -316,7 +330,7 @@ export async function getUserDrafts(userId: string) {
     }
   })
 
-  return posts
+  return post
 }
 
 export async function savePost(data: Partial<PostInput> & { postId: string }) {

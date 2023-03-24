@@ -2,7 +2,7 @@ import type { User as PrismaUser } from '@prisma/client'
 
 export type User = Omit<
   PrismaUser,
-  'password' | 'createdAt' | 'updatedAt' | 'role'
+  'password' | 'createdAt' | 'updatedAt'
 > & {
   role: string
 }

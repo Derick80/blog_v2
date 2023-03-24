@@ -23,7 +23,6 @@ import { useOptionalUser } from '~/utils/utilities'
 
 export type ManyPostProps = {
   data: PostWithChildren
-  user: User
 }
 
 export type BasicCardProps = {
@@ -37,7 +36,6 @@ export type BasicCardProps = {
 
 export const PostCard = ({
   data,
-  user,
   showComments,
   showLikes,
   showFavorites,
@@ -117,10 +115,10 @@ export const PostCard = ({
         </div>
         <div className='flex flex-row justify-end space-x-2 p-2'>
           <div className='flex flex-col items-center space-x-2'>
-            {user?.avatarUrl && (
-              <Tooltip label={user?.userName} position='top'>
+            {data.user?.avatarUrl && (
+              <Tooltip label={data.user?.userName} position='top'>
                 <Avatar
-                  src={user?.avatarUrl}
+                  src={data.user?.avatarUrl}
                   variant='filled'
                   radius='xl'
                   size='sm'

@@ -8,6 +8,7 @@ import { getUserDrafts } from '~/utils/server/post.server'
 import { Center } from '@mantine/core'
 
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+import { PostWithChildren } from '~/utils/schemas/post-schema'
 
 export const meta: MetaFunction = () => {
   return {
@@ -21,23 +22,20 @@ export async function loader({ request }: LoaderArgs) {
     return { redirect: '/login' }
   }
 
-  const drafts = await getUserDrafts(user.id)
-  invariant(drafts, 'drafts are required')
-  return json({ user, drafts })
+  const post = await getUserDrafts(user.id)
+  invariant(post, 'drafts are required')
+  return json({  post })
 }
 
 export default function Drafts() {
-  const data = useLoaderData<{
-    user: SerializeFrom<typeof isAuthenticated>
-    drafts: SerializeFrom<typeof getUserDrafts>
-  }>()
+  const data = useLoaderData<SerializeFrom<{ post: PostWithChildren[] }>>()
 
   return (
     <>
       <div className='flex grow flex-col items-center gap-5'>
         <h1>Drafts</h1>
-        {data.drafts.length > 0 ? (
-          data.drafts.map((draft) => (
+        {data ? (
+          data.post.map((draft: PostWithChildren) => (
             <PostCard
               key={draft.id}
               data={draft}
@@ -47,7 +45,6 @@ export default function Drafts() {
               showLikes={false}
               showFavorites={false}
               showShare={false}
-              user={data.user}
             />
           ))
         ) : (
