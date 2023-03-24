@@ -8,7 +8,7 @@ import { getUserDrafts } from '~/utils/server/post.server'
 import { Center } from '@mantine/core'
 
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
-import { PostWithChildren } from '~/utils/schemas/post-schema'
+import type { PostWithChildren } from '~/utils/schemas/post-schema'
 
 export const meta: MetaFunction = () => {
   return {
@@ -24,7 +24,7 @@ export async function loader({ request }: LoaderArgs) {
 
   const post = await getUserDrafts(user.id)
   invariant(post, 'drafts are required')
-  return json({  post })
+  return json({ post })
 }
 
 export default function Drafts() {

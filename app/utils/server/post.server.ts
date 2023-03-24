@@ -163,7 +163,6 @@ export async function getPostById(id: string) {
               email: true,
               role: true,
               password: false
-
             }
           },
           children: {

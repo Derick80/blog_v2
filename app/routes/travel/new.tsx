@@ -25,17 +25,14 @@ type ActionData = {
   imageUrl?: string
 }
 
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   invariant(user, 'You must be signed in to view this page')
 
   return json({ user })
 }
 
-export const action: ActionFunction = async ({
-  request,
-  params
-}: ActionArgs) => {
+export const action: ActionFunction = async ({ request }: ActionArgs) => {
   const user = await isAuthenticated(request)
   invariant(user, 'You must be signed in to view this page')
   const formData = await request.formData()
@@ -121,22 +118,6 @@ export default function NewTravelLog() {
     field: string
   ) => {
     setFormData((form) => ({ ...form, [field]: event.target.value }))
-  }
-  const handleFileUpload = async (file: File) => {
-    const inputFormData = new FormData()
-    inputFormData.append('imageUrl', file)
-    const response = await fetch('/image', {
-      method: 'POST',
-      body: inputFormData
-    })
-
-    const { imageUrl } = await response.json()
-    console.log('imageUrl', imageUrl)
-
-    setFormData({
-      ...formData,
-      imageUrl: imageUrl
-    })
   }
 
   return (

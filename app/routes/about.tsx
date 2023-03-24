@@ -3,7 +3,6 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import MyProfile from '~/components/shared/about-me'
 import { getAbout } from '~/utils/server/about.server'
-import { useOptionalUser } from '~/utils/utilities'
 
 export const meta: MetaFunction = () => {
   return {

@@ -58,7 +58,7 @@ export default function Index() {
         className='w-full'
         style={{ height: '1px', backgroundColor: '#e2e8f0' }}
       />
-      {data.post.map((post ) => (
+      {data.post.map((post) => (
         <PostCard
           key={post.id}
           data={post}

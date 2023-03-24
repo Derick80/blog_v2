@@ -1,4 +1,5 @@
-import { ActionArgs, json, LoaderArgs, redirect } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { Form, Link } from 'react-router-dom'
 import invariant from 'tiny-invariant'

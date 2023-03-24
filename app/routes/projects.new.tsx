@@ -1,14 +1,9 @@
-import { ActionArgs, json, redirect } from '@remix-run/node'
-import {
-  useLoaderData,
-  useRouteLoaderData,
-  useFetcher,
-  Form
-} from '@remix-run/react'
-import { Categories } from '~/utils/schemas/projects-schema'
+import type { ActionArgs } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
+import { useRouteLoaderData, useFetcher, Form } from '@remix-run/react'
+import type { Categories } from '~/utils/schemas/projects-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
-import { loader } from '.'
 
 export async function action({ request }: ActionArgs) {
   const user = await isAuthenticated(request)
