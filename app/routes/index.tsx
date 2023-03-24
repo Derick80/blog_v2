@@ -3,7 +3,7 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
-import StatsCard from '~/components/shared/stats-card'
+import StatsCard from '~/components/shared/blog-ui/stats-card'
 import { getHeroPost } from '~/utils/server/post.server'
 
 export async function loader({ request }: LoaderArgs) {
