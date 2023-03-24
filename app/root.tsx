@@ -53,7 +53,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className='bg-white text-zinc-900 dark:bg-black/90 dark:text-slate-50'>
+      <body className='bg-white text-zinc-900  dark:bg-black/90 dark:text-slate-50'>
         <Layout>
           <Outlet />
           <ScrollRestoration />

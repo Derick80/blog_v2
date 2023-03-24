@@ -65,9 +65,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Drawer
             opened={open}
             onClose={() => setOpen(false)}
+            withCloseButton
             title='Menu'
             padding='xl'
-            size='lg'
+            size='md'
             position='top'
             transition='slide-down'
             transitionDuration={450}
@@ -159,7 +160,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
 
       <div className='flex w-full flex-row items-center'>
-        <div className='mt-1 flex h-full w-[250px] grow flex-col gap-5 md:w-3/4'>
+        <div className='w-full'>
           {children}
         </div>
       </div>

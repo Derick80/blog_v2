@@ -16,36 +16,29 @@ export async function loader({ request }: { request: Request }) {
 
 export default function BetaRoute() {
   const data = useLoaderData()
-  const [rating, setRating] = React.useState(4)
+  const [open, setOpen] = React.useState(false)
   return (
-    <div className='flex w-[350px] flex-col items-center p-2 md:w-full'>
-      <Form className='flex  h-40 w-full items-center justify-center rounded-md bg-gray-100'>
-        {[...Array(5)].map((star, index) => {
-          const ratingValue = index + 1
-          const isRated = ratingValue <= rating
+    <div className='relative grid grid-cols-12 max-w-2xl mx-auto h-screen'>
 
-          return (
-            <>
-              <label key={index} className='flex cursor-pointer items-center'>
-                <input
-                  type='radio'
-                  name='rating'
-                  className='hidden'
-                  value={ratingValue}
-                  onClick={() => setRating(ratingValue)}
-                />
-
-                {isRated ? (
-                  <StarFilledIcon className='text-yellow-500' />
-                ) : (
-                  <StarIcon className='text-black' />
-                )}
-              </label>
-            </>
-          )
-        })}
-      </Form>
-      <button onClick={() => console.log(rating)}>Submit</button>
+        {/* <div
+          className='hidden relative md:flex md:col-span-2 col-start-1 h-sfull bg-blue-500 w-full' > */}
+{
+  open && (
+    <div className='absolute top-0 left-0 w-[250px] h-full bg-crimson8'>
+      stuf headers
     </div>
+  )
+}
+      <button className='absolute right-0 md:left-auto flex  text-crimson8'
+        onClick={ () => setOpen(!open) }
+      >
+        <StarIcon />
+      </button>
+        {/* </div> */}
+        <div className='col-span-12 md:col-span-12 flex col-stsart-3 w-fsull bg-purple-500 h-scrseen'>
+
+
+        </div>
+</div>
   )
 }

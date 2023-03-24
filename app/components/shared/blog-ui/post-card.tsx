@@ -64,7 +64,7 @@ export const PostCard = ({
     <>
       <div
         key={id}
-        className='group h-full w-[350px] transform rounded-xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50 md:w-[550px]'
+        className='group transform rounded-xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50'
       >
         <div className='mx-auto flex flex-col items-center  p-2'>
           {imageUrl && (
