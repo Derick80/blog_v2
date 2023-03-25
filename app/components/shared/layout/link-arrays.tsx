@@ -10,20 +10,98 @@ import {
   MixIcon
 } from '@radix-ui/react-icons'
 import { NavLink } from '@remix-run/react'
+import React from 'react'
 import Divider from '../divider'
 
-export const SiteNavLinks = [
+export const allLinks = [
   {
+    category: 'Blog',
     name: 'Blog',
     href: 'blog',
     icon: <FileTextIcon />
   },
   {
+    category: 'Blog',
+
     name: 'About',
     href: '/about',
     icon: <PersonIcon />
   },
   {
+    category: 'Blog',
+
+    name: 'Beta',
+    href: '/beta',
+    icon: <ChevronDownIcon />
+  },
+  {
+    category: 'Personal',
+    name: 'About',
+    href: '/about',
+    icon: <PersonIcon />
+  },
+  {
+    category: 'Personal',
+
+    name: 'Travel',
+    href: '/travel',
+    icon: <RocketIcon />
+  },
+  {
+    category: 'Personal',
+
+    name: 'Book Reviews',
+    href: '/books',
+    icon: <GlobeIcon />
+  },
+  {
+    category: 'Admin',
+    name: 'New',
+    href: '/blog/new',
+    icon: <PlusCircledIcon />
+  },
+  {
+    category: 'Admin',
+    name: 'Drafts',
+    href: '/drafts',
+    icon: <Pencil1Icon />
+  },
+  {
+    category: 'Admin',
+    name: 'Categories',
+    href: '/categories',
+    icon: <MixIcon />
+  },
+  {
+    category: 'Career',
+    name: 'Projects',
+    href: '/projects',
+    icon: <RulerSquareIcon />
+  },
+  {
+    category: 'Career',
+    name: 'Curriculum Vitae',
+    href: '/cv',
+    icon: <FileTextIcon />
+  }
+]
+export const SiteNavLinks = [
+  {
+    category: 'Blog',
+    name: 'Blog',
+    href: 'blog',
+    icon: <FileTextIcon />
+  },
+  {
+    category: 'Blog',
+
+    name: 'About',
+    href: '/about',
+    icon: <PersonIcon />
+  },
+  {
+    category: 'Blog',
+
     name: 'Beta',
     href: '/beta',
     icon: <ChevronDownIcon />
@@ -133,6 +211,7 @@ export function CareerLinks() {
 }
 
 export function AdminMenu() {
+  const [open, setOpen] = React.useState(false)
   const adminMenuLinkArray = [
     {
       category: 'Admin',
@@ -168,6 +247,9 @@ export function AdminMenu() {
           to={item.href}
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
           className='flex items-center justify-start gap-2 p-2'
+          onClick={() => {
+            setOpen(false)
+          }}
         >
           {item.icon}
           <p className='p'>{item.name}</p>

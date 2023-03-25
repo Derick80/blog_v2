@@ -1,9 +1,9 @@
-import { Divider } from '@mantine/core'
 import { Skill, CVExperience, Education, Publication } from '@prisma/client'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { format } from 'date-fns'
+import Divider from '~/components/shared/divider'
 import { CV } from '~/utils/schemas/cv-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
@@ -45,9 +45,10 @@ export default function BetaRoute() {
     },
     {} as { [key: string]: Skill[] }
   )
+  console.log(itemsBycategory, 'itemsBycategory')
 
   return (
-    <div className='flex w-[350px] flex-col items-center p-2 md:w-full'>
+    <div className='flex w-full flex-col items-center p-2 md:w-full'>
       <h1 className='text-3xl font-bold'>Curriculum Vitae</h1>
 
       <div className='gap-5'>

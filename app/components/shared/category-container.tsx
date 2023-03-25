@@ -1,5 +1,4 @@
-import { Badge, Button } from '@mantine/core'
-import { Form, Link, NavLink, useParams } from '@remix-run/react'
+import * as react from '@remix-run/react'
 
 export interface CategoryContainerProps {
   value: string[]
@@ -26,24 +25,25 @@ export default function CategoryContainer({
         key={index}
       >
         {isLink ? (
-          <NavLink
+          <react.NavLink
             prefetch='intent'
             to={`/categories/${value}`}
             className='text-decoration-none text-xs text-black dark:text-slate-50'
           >
             {value}
-          </NavLink>
+          </react.NavLink>
         ) : (
           <div className='text-decoration-none text-xs text-black dark:text-slate-50'>
             {value}
           </div>
         )}
         {isEditable && (
-          <Form method='delete' action={`/blog/categories/${value}/delete`}>
-            <Button variant='subtle' size='xs'>
-              delete
-            </Button>
-          </Form>
+          <react.Form
+            method='delete'
+            action={`/blog/categories/${value}/delete`}
+          >
+            <button className='btn-primary-danger'>delete</button>
+          </react.Form>
         )}
       </div>
     </>

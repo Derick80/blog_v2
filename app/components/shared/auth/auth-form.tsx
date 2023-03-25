@@ -1,4 +1,3 @@
-import { Button } from '@mantine/core'
 import { Form, useActionData, useSearchParams } from '@remix-run/react'
 import { useEffect } from 'react'
 import { useToast } from '../toaster'
@@ -87,9 +86,9 @@ export const AuthForm = ({ authType }: Props) => {
         </>
       )}
 
-      <Button variant='outline' color='blue' className='mt-5' type='submit'>
+      <button className='btn-primary' type='submit'>
         {button}
-      </Button>
+      </button>
     </Form>
   )
 }

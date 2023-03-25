@@ -1,11 +1,7 @@
-import { TextInput, Button, Title } from '@mantine/core'
 import { Cross2Icon } from '@radix-ui/react-icons'
 import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Form, useLoaderData } from '@remix-run/react'
-import CategoryContainer from '~/components/shared/category-container'
-import { Modal } from '~/components/shared/modal'
 import getAllCategories, {
   createCategory
 } from '~/utils/server/categories.server'
@@ -42,42 +38,45 @@ export default function CategoryIndex() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <Modal
-      isOpen={true}
-      ariaLabel='Edit categories'
-      className='h-3/4 w-full md:w-1/2 lg:w-2/3'
-    >
-      <div className='flex flex-col items-center gap-4'>
-        <Title>Existing Categories</Title>
-        <div className='flex flex-row flex-wrap justify-start gap-2'>
-          {data.categories.map((category: { id: string; value: string }) => (
-            <div
-              key={category.id}
-              className='flex flex-col justify-start gap-4 rounded-sm outline'
-            >
-              <div className='flex items-center'>
-                <div className='m-0.5 flex-grow text-sm'>{category.value}</div>
-                <Form
-                  method='post'
-                  action={`/blog/categories/${category.id}/delete`}
-                  className='inline-flex items-center border-l-2'
-                >
-                  <button type='submit' className=' '>
-                    <Cross2Icon />
-                  </button>
-                </Form>
-              </div>
+    <div className='flex w-full flex-col items-center gap-4 p-2'>
+      <h3 className='h3'>Existing Categories</h3>
+      <div className='flex flex-row flex-wrap justify-start gap-2'>
+        {data.categories.map((category: { id: string; value: string }) => (
+          <div
+            key={category.id}
+            className='flex flex-col justify-start gap-4 rounded-sm outline'
+          >
+            <div className='flex items-center'>
+              <div className='m-0.5 flex-grow text-sm'>{category.value}</div>
+              <Form
+                method='post'
+                action={`/blog/categories/${category.id}/delete`}
+                className='inline-flex items-center border-l-2'
+              >
+                <button type='submit' className=' '>
+                  <Cross2Icon />
+                </button>
+              </Form>
             </div>
-          ))}
-        </div>
-        <Title>New Category</Title>
-        <form method='post'>
-          <div className='flex flex-col'>
-            <TextInput name='categoryName' label='Category Name' />
-            <Button type='submit'>Create</Button>
           </div>
-        </form>
+        ))}
       </div>
-    </Modal>
+      <h3 className='h3'>New Category</h3>
+      <form method='post'>
+        <div className='flex flex-col'>
+          <label htmlFor='categoryName'>Category Name</label>
+          <input
+            type='text'
+            className='rounded-md border text-sm text-slate12'
+            name='categoryName'
+            id='categoryName'
+          />
+
+          <button className='btn-primary' type='submit'>
+            Create
+          </button>
+        </div>
+      </form>
+    </div>
   )
 }

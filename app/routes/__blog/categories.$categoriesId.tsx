@@ -33,12 +33,11 @@ export default function CategoryRoute() {
   return (
     <div className='flex grow flex-col items-center gap-5'>
       <h1 className='text-2xl font-bold'> {data.categoryId}</h1>
-      {data &&
+      {data ? (
         data.posts.map((post) => (
           <PostCard
             key={post.id}
             data={post}
-            user={post.user}
             showCategories={true}
             showComments={false}
             showFavorites={true}
@@ -46,7 +45,10 @@ export default function CategoryRoute() {
             showOptions={true}
             showShare={true}
           />
-        ))}
+        ))
+      ) : (
+        <NoPosts />
+      )}
     </div>
   )
 }

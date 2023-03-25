@@ -1,12 +1,8 @@
-import { Drawer, Menu } from '@mantine/core'
-import { ChevronLeftIcon, DropdownMenuIcon } from '@radix-ui/react-icons'
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import React from 'react'
-import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
-import StatsCard from '~/components/shared/blog-ui/stats-card'
 import { getHeroPost } from '~/utils/server/post.server'
 
 export async function loader({ request }: LoaderArgs) {

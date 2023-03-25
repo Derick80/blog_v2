@@ -15,6 +15,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
+    "@headlessui/react": "^1.7.13",
     "@mantine/carousel": "^5.10.2",
     "@mantine/core": "^5.10.2",
     "@mantine/dates": "^5.10.2",
@@ -72,6 +73,7 @@
   "devDependencies": {
     "@remix-run/dev": "*",
     "@remix-run/eslint-config": "*",
+    "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.8",
     "@types/bcryptjs": "^2.4.2",
     "@types/chroma-js": "^2.1.4",

@@ -1,4 +1,3 @@
-import { Container, Group } from '@mantine/core'
 import type { LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
@@ -46,7 +45,7 @@ export default function FavoritePosts() {
           showShare={true}
         />
       ))}
-      <details className='w-1/2 text-xs text-gray-500 dark:text-gray-400' å>
+      <details className='w-1/2 text-xs text-gray-500 dark:text-gray-400'>
         <pre className='text-xs text-gray-500 dark:text-gray-400'>
           {JSON.stringify(data, null, 2)}
         </pre>

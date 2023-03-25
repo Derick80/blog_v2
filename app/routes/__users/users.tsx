@@ -6,7 +6,7 @@ import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import type { UserProps } from '~/utils/server/user.server'
 import { getUsers } from '~/utils/server/user.server'
 import type { UserType } from '~/utils/schemas/user-schema'
-import { Button, Select } from '@mantine/core'
+import { Select } from '@mantine/core'
 import { getProfiles } from '~/utils/server/profile.server'
 import type { Profile } from '~/utils/schemas/profile-schema'
 import { useState } from 'react'
@@ -65,7 +65,9 @@ export default function Users() {
           nothingFound='No options'
           data={data.userNames}
         />
-        <Button type='submit'>Search</Button>
+        <button className='btn-primary' type='submit'>
+          Search
+        </button>
       </userFetcher.Form>
       {data.users.map((user: UserProps) => (
         <>

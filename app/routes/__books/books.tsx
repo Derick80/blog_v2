@@ -3,7 +3,6 @@ import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { NavLink, useCatch, useLoaderData } from '@remix-run/react'
 import BookCard from '~/components/shared/books-ui/book-card'
-import { Text } from '@mantine/core'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 
 import { useOptionalUser } from '~/utils/utilities'
@@ -36,7 +35,7 @@ export default function BookIndex() {
           className='flex flex-row-reverse items-center gap-2 text-black dark:text-slate-50'
         >
           <PlusCircledIcon />
-          <Text size='sm'>Add Book</Text>
+          <h3 className='h3'>Add Book</h3>
         </NavLink>
       )}
 

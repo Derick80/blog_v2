@@ -1,15 +1,19 @@
 import { useOptionalUser } from '~/utils/utilities'
 import Footer from './footer'
 import React from 'react'
-import { ChevronDownIcon, ChevronLeftIcon, Cross2Icon, ExitIcon } from '@radix-ui/react-icons'
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  Cross2Icon,
+  ExitIcon
+} from '@radix-ui/react-icons'
 import TopNav from './top-nav'
 import SideBar from './sidebar'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-
   return (
     <>
-      <div className='relsative mx-auto mt-5 h-screen max-w-sm md:grid md:max-w-2xl md:grid-cols-12'>
+      <div className='relative mx-auto mt-5 h-screen max-w-sm md:grid md:max-w-2xl md:grid-cols-12'>
         <TopNav />
 
         <main className='relative col-span-10 flex h-full w-full flex-grow  overflow-scroll md:col-span-12'>

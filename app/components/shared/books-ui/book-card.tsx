@@ -33,11 +33,6 @@ export default function BookCard({ book }: { book: SerializeFrom<Book> }) {
               size='lg'
               readOnly
             />
-            {book.dateCompleted && (
-              <p className='text-sm italic'>
-                {dayjs(book.dateCompleted).format('MMMM D, YYYY')}
-              </p>
-            )}
           </div>
           <div
             className='prose text-sm '
@@ -45,19 +40,9 @@ export default function BookCard({ book }: { book: SerializeFrom<Book> }) {
           />
           <Spoiler maxHeight={60} showLabel='more...' hideLabel='...less'>
             <h3 className='text-xl font-bold'>Blurb</h3>
-            <p className='prose text-sm italic'>{book.bookBlurb}</p>
           </Spoiler>
           {/* below should be actions container for this card */}
           <div className='flex items-center'>
-            <a
-              href={book.bookUrl || 'buy'}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              <button className='rounded py-2 px-4 font-bold text-black hover:bg-blue-700'>
-                Buy on Amazon
-              </button>
-            </a>
             <p>Likes container</p>
           </div>
           <div className='flex w-full justify-between text-sm'>

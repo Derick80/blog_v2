@@ -1,4 +1,3 @@
-import { Text } from '@mantine/core'
 import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 
 export default function Footer({ children }: { children?: React.ReactNode }) {

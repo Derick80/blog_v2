@@ -1,14 +1,11 @@
-import { Flex } from '@mantine/core'
 import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
-import type { Post, PostWithChildren } from '~/utils/schemas/post-schema'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPostById } from '~/utils/server/post.server'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
-import { User } from '~/utils/schemas/user-schema'
 
 export const meta: MetaFunction = () => {
   return {

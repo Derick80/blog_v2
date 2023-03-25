@@ -100,6 +100,8 @@ darkMode:   'media', // or 'media' or 'class'
   },
   plugins: [
     require('@tailwindcss/typography'),
+        require('@tailwindcss/forms'),
+
 
   ],
 }

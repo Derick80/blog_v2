@@ -24,7 +24,6 @@ import { useState } from 'react'
 import getAllCategories from '~/utils/server/categories.server'
 import { useOptionalUser } from '~/utils/utilities'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
-import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
 import { badRequest } from 'remix-utils'
 
 export const meta: MetaFunction = () => {
@@ -221,10 +220,8 @@ export default function EditPost() {
   })
 
   return (
-    <div className='mx-auto mb-7 flex w-full flex-col items-center border-2 bg-white p-2 text-slate12 dark:bg-crimson1 dark:text-slate1 '>
+    <div className='mx-auto mb-7 mt-5 flex w-full flex-col items-center border-2 bg-white p-2 text-slate12 dark:bg-crimson1 dark:text-slate1 '>
       <div className='flex w-full flex-col items-center justify-center'>
-        {user?.role === 'ADMIN' && <BlogNav />}
-
         <Form
           method='post'
           action={`/blog/${id}/edit`}

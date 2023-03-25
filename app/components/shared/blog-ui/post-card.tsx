@@ -1,19 +1,13 @@
 /* eslint-disable react/no-danger-with-children */
-import type {
-  PostWithChildren,
-  SerializedPost
-} from '~/utils/schemas/post-schema'
-import type { User } from '~/utils/schemas/user-schema'
+import type { PostWithChildren } from '~/utils/schemas/post-schema'
 import PostOptions from './post-options'
 import FavoriteContainer from './favorite-container'
 import LikeContainer from './like-container'
 import { ShareButton } from './share-button'
-import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { NavLink } from '@remix-run/react'
 import CategoryContainer from '../category-container'
-import { Button, Group, Spoiler, Tooltip } from '@mantine/core'
-import type { Like } from '~/utils/schemas/like-schema'
+import { Button, Spoiler, Tooltip } from '@mantine/core'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
 import formatComments from './format-comments'

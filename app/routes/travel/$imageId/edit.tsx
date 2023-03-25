@@ -173,19 +173,16 @@ export default function EditRoute() {
           />
         </div>
         <div className='flex space-x-4'>
-          <Button
-            type='submit'
-            className='btn-base btn-solid-success space-x-1'
-          >
+          <button type='submit' className='btn-primary'>
             <p>{transition.state === 'submitting' ? 'Saving...' : 'Save'}</p>
-          </Button>
-          <Button
+          </button>
+          <button
             type='button'
-            className='btn-base btn-solid-danger'
+            className='btn-primary'
             onClick={() => navigate('/travel')}
           >
             Cancel
-          </Button>
+          </button>
         </div>
       </Form>
     </Stack>

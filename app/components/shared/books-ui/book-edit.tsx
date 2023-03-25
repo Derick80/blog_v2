@@ -1,5 +1,4 @@
-import { Rating, MultiSelect, Button } from '@mantine/core'
-import type { BookCategory } from '@prisma/client'
+import { Rating, Button } from '@mantine/core'
 import { TrashIcon } from '@radix-ui/react-icons'
 import { Form, useFetcher, useLoaderData } from '@remix-run/react'
 import React from 'react'
@@ -19,9 +18,6 @@ export default function EditBookReview() {
   }, [bookCategoryFetcher])
 
   console.log(bookCategoryFetcher?.data?.categories, 'bookCategoryFetcher.data')
-  const [selected, setSelected] = React.useState<string[]>(
-    data.book.categories.map((item) => item.value)
-  )
 
   const bookImageFetcher = useFetcher()
   const onClick = async () =>
@@ -60,45 +56,12 @@ export default function EditBookReview() {
         <label htmlFor='bookBlurb'>Book Blurb</label>
         <input type='text' name='bookBlurb' id='bookBlurb' />
 
-        <label htmlFor='dateCompleted'>Date Completed</label>
-
-        <input
-          type='date'
-          name='dateCompleted'
-          className='rounded-md border text-black'
-          defaultValue={dayjs(data.book.dateCompleted)
-            .utcOffset(10)
-            .format('YYYY-MM-DD')}
-          id='dateCompleted'
-        />
-
         <input
           type='hidden'
           className='rounded-xl text-slate12'
           name='imageUrl'
           value={bookImageFetcher?.data?.imageUrl || data.book?.image}
           onChange={(e) => console.log(e.target.value)}
-        />
-        <label htmlFor='categories'>Categories</label>
-        {bookCategoryFetcher?.data?.categories ? (
-          <MultiSelect
-            label='Categories'
-            name='categories'
-            id='categories'
-            data={bookCategoryFetcher?.data?.categories.map(
-              (category: BookCategory) => category.value
-            )}
-            defaultValue={selected}
-          />
-        ) : null}
-
-        <label htmlFor='bookUrl'>Book Url</label>
-        <input
-          type='text'
-          name='bookUrl'
-          id='bookUrl'
-          className='rounded-md border text-black'
-          defaultValue={data.book?.bookUrl}
         />
       </form>
 
