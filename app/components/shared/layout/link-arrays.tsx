@@ -1,69 +1,16 @@
 import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  Cross1Icon,
-  ExitIcon,
   FileTextIcon,
-  GlobeIcon,
-  MixIcon,
-  Pencil1Icon,
   PersonIcon,
-  PlusCircledIcon,
+  ChevronDownIcon,
   RocketIcon,
+  GlobeIcon,
   RulerSquareIcon,
-  StarFilledIcon,
-  StarIcon
+  PlusCircledIcon,
+  Pencil1Icon,
+  MixIcon
 } from '@radix-ui/react-icons'
-import { json } from '@remix-run/node'
-import { Form, Link, NavLink, useLoaderData } from '@remix-run/react'
-import { motion } from 'framer-motion'
-import React from 'react'
-import BlogNav from '~/components/shared/blog-ui/blog-admin-menu'
-import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import { useOptionalUser } from '~/utils/utilities'
-
-export async function loader({ request }: { request: Request }) {
-  const user = await isAuthenticated(request)
-
-  if (!user) {
-    return json({ error: 'Not authenticated' }, { status: 401 })
-  }
-
-  return json({ user }, { status: 200 })
-}
-
-export default function BetaRoute() {
-  const user = useOptionalUser()
-  const data = useLoaderData()
-  const [open, setOpen] = React.useState(false)
-
-  return (
-    <div className='items-censter flex-start flex h-screen w-full bg-purple-500'>
-      <Sidebar>
-        <MainLink />
-        <PersonalLinks />
-        <CareerLinks />
-        {user?.role === 'ADMIN' && <AdminMenu />}
-        {user ? (
-          <Form method='post' action='/logout'>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              type='submit'
-              className='btn-link flex items-center gap-2'
-            >
-              Logout
-              <ExitIcon />
-            </motion.button>
-          </Form>
-        ) : (
-          <Link to='/login'>Login</Link>
-        )}
-      </Sidebar>
-    </div>
-  )
-}
+import { NavLink } from '@remix-run/react'
+import Divider from '../divider'
 
 export const SiteNavLinks = [
   {
@@ -89,15 +36,16 @@ export function MainLink() {
   }
   return (
     <div className='flex flex-col gap-2'>
-      <h6 className='h6'>Primary Links</h6>
+      <h6 className='h6 italic'>Primary Links</h6>
+      <Divider my={'2'} />
       {SiteNavLinks.map((item) => (
         <NavLink
           key={item.name}
           to={item.href}
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
-          className='flex items-center justify-start gap-2 p-2'
+          className='ml-10 flex items-center justify-start gap-2 p-2'
         >
-          {item.icon}
+          <div>{item.icon}</div>
           <p className='subtitle2'>{item.name}</p>
         </NavLink>
       ))}
@@ -127,7 +75,9 @@ export function PersonalLinks() {
   }
   return (
     <div className='flex flex-col gap-2'>
-      <h6 className='h6'>Primary Links</h6>
+      <h6 className='h6 italic'>Personal Links</h6>
+      <Divider my={'2'} />
+
       {personalLinkArray.map((item) => (
         <NavLink
           key={item.name}
@@ -136,7 +86,7 @@ export function PersonalLinks() {
           className='flex items-center justify-start gap-2 p-2'
         >
           {item.icon}
-          <p className='h6'>{item.name}</p>
+          <p className='subtitle2'>{item.name}</p>
         </NavLink>
       ))}
     </div>
@@ -164,7 +114,9 @@ export function CareerLinks() {
 
   return (
     <div className='flex flex-col gap-2'>
-      <h6 className='h6'>Career Links</h6>
+      <h6 className='h6 italic'>Career Links</h6>
+      <Divider my={'2'} />
+
       {careerLinkArray.map((item) => (
         <NavLink
           key={item.name}
@@ -207,7 +159,9 @@ export function AdminMenu() {
 
   return (
     <div className='flex flex-col gap-2'>
-      <h6 className='h6'>Admin Links</h6>
+      <h6 className='h6 italic'>Admin Links</h6>
+      <Divider my={'2'} />
+
       {adminMenuLinkArray.map((item) => (
         <NavLink
           key={item.name}
@@ -219,13 +173,6 @@ export function AdminMenu() {
           <p className='p'>{item.name}</p>
         </NavLink>
       ))}
-    </div>
-  )
-}
-export function Sidebar({ children }: { children: React.ReactNode }) {
-  return (
-    <div className='mx-auto flex h-full w-[250px] flex-col items-center gap-2 bg-crimson8 p-4 '>
-      {children}
     </div>
   )
 }

@@ -33,32 +33,24 @@ export default function Drafts() {
 
   return (
     <>
-      <div className='max-w-screen-2xl flex flex-row mx-auto gap-2'>
-
-<div className='flex flex-col md:grid md:grid-cols-12 gap-2'>
-
-        <div className='col-span-3 hidden md:flex flex-col w-full h-[100px] md:h-full grow bg-green-500'>
-
-          <Sidebar props={ data.post } />
-        </div>
-<div
-          className='col-span-11 col-start-4 flex grow bg-red-500  gap-2 flex-wrap w-full'
->
-
-          {data.post.map((draft: PostWithChildren) => (
-            <PostCard
-              key={ draft.id }
-              data={ draft }
-              showCategories={ true }
-              showComments={ true }
-              showLikes={ true }
-              showFavorites={ true }
-              showOptions={ true }
-              showShare={ true }
-            />
-          ))
-
-          }
+      <div className='mx-auto flex max-w-screen-2xl flex-row gap-2'>
+        <div className='flex flex-col gap-2 md:grid md:grid-cols-12'>
+          <div className='col-span-3 hidden h-[100px] w-full grow flex-col bg-green-500 md:flex md:h-full'>
+            <Sidebar props={data.post} />
+          </div>
+          <div className='col-span-11 col-start-4 flex w-full grow  flex-wrap gap-2 bg-red-500'>
+            {data.post.map((draft: PostWithChildren) => (
+              <PostCard
+                key={draft.id}
+                data={draft}
+                showCategories={true}
+                showComments={true}
+                showLikes={true}
+                showFavorites={true}
+                showOptions={true}
+                showShare={true}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -66,36 +58,34 @@ export default function Drafts() {
   )
 }
 
-function Sidebar(props: { props:PostWithChildren[] }) {
-  console.log(props);
-console.log(Array.isArray(props.props));
-
+function Sidebar(props: { props: PostWithChildren[] }) {
+  console.log(props)
+  console.log(Array.isArray(props.props))
 
   return (
-    <div
-    className='prose p-2 overflow-auto'
-    >
+    <div className='prose overflow-auto p-2'>
       <h2 className='text-sm md:text-2xl'>Draft quick links</h2>
-        {props.props.map((draft: PostWithChildren) => (
-      <div
-      key={draft.id}
-      className='flex prose w-full justify-between flex-row items-center gap-2 text-xs md:text-sm'>
-        <div className='flex flex-col'>
-              <h3 className='text-xs md:text-sm m-0'>Title</h3>
-              <Link
-
-                to={ `/drafts/${draft.id}` } className='m-0'>
-                <h2 className='text-xs m-0 prose prose-h2:'>{ draft.title.slice(0, 30) }...</h2>
-              </Link>
+      {props.props.map((draft: PostWithChildren) => (
+        <div
+          key={draft.id}
+          className='prose flex w-full flex-row items-center justify-between gap-2 text-xs md:text-sm'
+        >
+          <div className='flex flex-col'>
+            <h3 className='m-0 text-xs md:text-sm'>Title</h3>
+            <Link to={`/drafts/${draft.id}`} className='m-0'>
+              <h2 className='prose-h2: prose m-0 text-xs'>
+                {draft.title.slice(0, 30)}...
+              </h2>
+            </Link>
+          </div>
+          <div className='flex flex-col'>
+            <h3 className='m-0 text-xs md:text-sm'>Created</h3>
+            <p className='m-0 text-xs text-gray-500 md:text-sm'>
+              {dayjs(draft.createdAt).format('MMM d')}
+            </p>
+          </div>
         </div>
-            <div className='flex flex-col'>
-              <h3 className='text-xs md:text-sm m-0'>Created</h3>
-            <p className='text-xs md:text-sm m-0 text-gray-500'>{ dayjs(draft.createdAt).format("MMM d") }</p>
-            </div>
-      </div>
-        ))}
-
-
+      ))}
     </div>
   )
 }

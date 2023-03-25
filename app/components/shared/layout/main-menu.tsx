@@ -9,7 +9,7 @@ import {
 import { Form, Link, NavLink } from '@remix-run/react'
 import { motion } from 'framer-motion'
 import { useOptionalUser } from '~/utils/utilities'
-
+// this can be archived
 export default function MainMenu() {
   const user = useOptionalUser()
   const activeStyle = {

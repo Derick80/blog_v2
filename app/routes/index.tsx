@@ -20,52 +20,23 @@ export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
     <div className='flex grow flex-col items-center gap-4 '>
-      <h1 className='mb-5 text-3xl font-bold'>Latest Post</h1>
-<button className='flex items-center text-crimson9'
-        onClick={() => setOpen(!open)}
-      >
-                  <ChevronLeftIcon />
+      <h1 className='mb-5 text-sm font-bold'>Latest Post</h1>
 
-       <p
-          className='text-sm font-bold'
-          aria-label='Open drawer'
-          aria-controls='drawer'
-          >Menu</p>
-      </button>
-      <Drawer
-        opened={ open }
-        title='Drawer title'
-        position='left'
-        size='md'
-
-        onClose={ () => setOpen(false) }
-        withOverlay
-        className='text-black dark:text-slate-50'
-
-
-
->
- <StatsCard />
-      <BlogNav />
-
-</Drawer>
-
-    <div className='flex flex-col items-center gap-4'>
-      {data.post &&
-        data.post.map((item) => (
-          <PostCard
-            key={item.id}
-            data={item}
-            showCategories={true}
-            showComments={false}
-            showFavorites={true}
-            showLikes={true}
-            showOptions={true}
-            showShare={true}
-          />
-        ))}
-        </div>
-
+      <div className='flex flex-col items-center gap-4'>
+        {data.post &&
+          data.post.map((item) => (
+            <PostCard
+              key={item.id}
+              data={item}
+              showCategories={true}
+              showComments={false}
+              showFavorites={true}
+              showLikes={true}
+              showOptions={true}
+              showShare={true}
+            />
+          ))}
+      </div>
     </div>
   )
 }

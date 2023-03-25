@@ -17,9 +17,7 @@ import {
   savePost,
   unPublishPost
 } from '~/utils/server/post.server'
-import {
-  validateText
-} from '~/utils/validators.server'
+import { validateText } from '~/utils/validators.server'
 import { MultiSelect, Switch } from '@mantine/core'
 import TipTap from '~/components/shared/tip-tap'
 import { useState } from 'react'
@@ -223,15 +221,16 @@ export default function EditPost() {
   })
 
   return (
-    <div className='mx-auto mb-7 flex w-[350px] border-2 flex-col items-center bg-white p-2 text-slate12 dark:bg-crimson1 dark:text-slate1 md:w-[550px]'>
-     <div className='flex w-full flex-col items-center justify-center'>
+    <div className='mx-auto mb-7 flex w-full flex-col items-center border-2 bg-white p-2 text-slate12 dark:bg-crimson1 dark:text-slate1 '>
+      <div className='flex w-full flex-col items-center justify-center'>
         {user?.role === 'ADMIN' && <BlogNav />}
 
         <Form
           method='post'
           action={`/blog/${id}/edit`}
           id='editPost'
-          className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-crimson1 dark:text-slate-50'        >
+          className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-crimson1 dark:text-slate-50'
+        >
           <input type='hidden' name='createdBy' value={user?.userName} />
           <input type='hidden' name='postId' value={id} />
           <input type='hidden' name='userId' value={userId} />
@@ -239,18 +238,20 @@ export default function EditPost() {
           <label htmlFor='title'>Title</label>
           <input
             type='text'
-          className='rounded-md border text-slate12 text-sm'
+            className='rounded-md border text-sm text-slate12'
             name='title'
             id='title'
             defaultValue={actionData ? actionData.title : formData.title}
           />
           {actionData?.fieldErrors?.title && (
-            <p className='text-red-500'>{actionData.fieldErrors.title}</p>
+            <p className='text-base text-red-500'>
+              {actionData.fieldErrors.title}
+            </p>
           )}
           <label htmlFor='description'>Description</label>
           <input
             type='text'
-          className='rounded-md border text-slate12 text-sm'
+            className='rounded-md border text-sm text-slate12'
             name='description'
             id='description'
             defaultValue={
@@ -258,34 +259,36 @@ export default function EditPost() {
             }
           />
           {actionData?.fieldErrors?.description && (
-            <p className='text-red-500'>{actionData.fieldErrors.description}</p>
+            <p className='text-base text-red-500'>
+              {actionData.fieldErrors.description}
+            </p>
           )}
           <label htmlFor='body'>Post Content</label>
           {body && <TipTap content={body} />}
           <input type='hidden' name='body' defaultValue={body} />
 
-        <div className='flex flex-col gap-2 text-slate12 dark:text-slate-50'>
-          <label
-            className='text-slate12 dark:text-slate-50'
-            htmlFor='categories'
-          >
-            Categories
-          </label>
-          <MultiSelect
-            name='categories'
-            id='categories'
-            data={mainCategories}
-            defaultValue={selected}
-          />
-        </div>
-        <div className='mt-5 mb-5 flex flex-row justify-end items-center gap-2 text-slate12 dark:text-slate-50'>
-          <label htmlFor='featured'>Featured</label>
-          <Switch
-            name='featured'
-            onChange={ (e) => console.log(e.target.value) }
-            defaultChecked={ false }
-          />
-        </div>
+          <div className='flex flex-col gap-2 text-slate12 dark:text-slate-50'>
+            <label
+              className='text-slate12 dark:text-slate-50'
+              htmlFor='categories'
+            >
+              Categories
+            </label>
+            <MultiSelect
+              name='categories'
+              id='categories'
+              data={mainCategories}
+              defaultValue={selected}
+            />
+          </div>
+          <div className='mt-5 mb-5 flex flex-row items-center justify-end gap-2 text-slate12 dark:text-slate-50'>
+            <label htmlFor='featured'>Featured</label>
+            <Switch
+              name='featured'
+              onChange={(e) => console.log(e.target.value)}
+              defaultChecked={false}
+            />
+          </div>
           <input
             type='hidden'
             name='imageUrl'
@@ -299,26 +302,24 @@ export default function EditPost() {
             method='post'
             encType='multipart/form-data'
             action='/actions/cloudinary'
-          className='mx-auto flex flex-col items-center gap-2'
+            className='mx-auto flex flex-col items-center gap-2'
             onClick={onClick}
           >
-            <label htmlFor='imageUrl' className='text-xs font-semibold'>
+            <label htmlFor='imageUrl' className='subtitle'>
               Attach an Image
             </label>
             <input
               type='file'
               name='imageUrl'
               id='imageUrl'
-            className='block w-full text-sm border-2 rounded-xl p-2 text-slate12 dark:text-slate-50'
+              className='block w-full rounded-xl border-2 p-2 text-sm text-slate12 dark:text-slate-50'
               accept='image/*'
             />
-            <button
-              className='bg-crimson12 text-slate12 dark:bg-slate12 dark:text-crimson12 rounded-xl p-2 text-sm'
-            >Upload</button>
+            <button className='btn-primary'>Upload</button>
           </imageFetcher.Form>
           {imageFetcher.data ? (
-          <div className='flex flex-col items-center w-full gap-2'>
-              <p className='text-sm text-gray-500'>Image Uploaded</p>
+            <div className='flex w-full flex-col items-center gap-2'>
+              <p className='h6'>Image Uploaded</p>
               <input
                 type='hidden'
                 name='imageUrl'
@@ -326,50 +327,68 @@ export default function EditPost() {
               />
               <div className='flex'>
                 <div className=' rounded-xl  text-slate12'>
-                <img src={imageFetcher?.data?.imageUrl} alt={'#'}
-                style={{ objectFit: 'cover' }}
-                />
+                  <img
+                    src={imageFetcher?.data?.imageUrl}
+                    alt={'#'}
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+                <div className='items-center rounded-xl  text-slate12'>
+                  <img
+                    src={formData.imageUrl}
+                    style={{ objectFit: 'cover' }}
+                    alt={'placeholder'}
+                  />
+                </div>
               </div>
-            <div className='rounded-xl items-center  text-slate12'>
-              <img src={ formData.imageUrl }
-                    style={ { objectFit: 'cover' } }
-
-              alt={ 'placeholder' } />
             </div>
+          ) : (
+            <div className='w-full rounded-xl  text-slate12'>
+              <img src={formData.imageUrl} alt={'#'} />
             </div>
-            </div>
-        ) : <div className='w-full rounded-xl  text-slate12'>
-          <img src={ formData.imageUrl } alt={ '#' } />
-        </div>}
+          )}
         </div>
-        <div className='flex flex-row justify-end items-center gap-2 text-slate12 dark:text-slate-50'>
+        <div className='flex flex-row items-center justify-end gap-2 text-slate12 dark:text-slate-50'>
           <button
             type='submit'
             name='_action'
             value='save'
             form='editPost'
-            className='rounded-xl bg-white py-2 px-4 font-bold hover:bg-green-800 dark:bg-green-500'
+            className='btn-primary'
           >
-            { text }
+            {text}
           </button>
-          { published ? (
+          {published ? (
             <button
               type='submit'
               form='editPost'
               name='_action'
               value='unpublish'
+              className='btn-primary-warning'
             >
-              { unpublishText }
+              {unpublishText}
             </button>
           ) : (
-            <button type='submit' form='editPost' name='_action' value='publish'>
-              { publishText }
+            <button
+              type='submit'
+              form='editPost'
+              name='_action'
+              value='publish'
+              className='btn-secondary'
+            >
+              {publishText}
             </button>
-          ) }
-          <button type='submit' form='editPost' name='_action' value='delete'>
-            { deleteText }
+          )}
+          <button
+            type='submit'
+            form='editPost'
+            name='_action'
+            value='delete'
+            className='btn-primary-danger'
+          >
+            {deleteText}
           </button>
-          </div>
+        </div>
       </div>
     </div>
   )

@@ -12,7 +12,7 @@ import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { NavLink } from '@remix-run/react'
 import CategoryContainer from '../category-container'
-import { Avatar, Button, Divider, Group, Spoiler, Tooltip } from '@mantine/core'
+import { Button, Group, Spoiler, Tooltip } from '@mantine/core'
 import type { Like } from '~/utils/schemas/like-schema'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
@@ -20,6 +20,8 @@ import formatComments from './format-comments'
 import React from 'react'
 import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { useOptionalUser } from '~/utils/utilities'
+import Divider from '../divider'
+import Avatar from '../avatar'
 
 export type ManyPostProps = {
   data: PostWithChildren
@@ -66,7 +68,7 @@ export const PostCard = ({
         key={id}
         className='group transform rounded-xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50'
       >
-        <div className='mx-auto flex flex-col items-center  p-2'>
+        <div className='mx-auto flex flex-col items-center'>
           {imageUrl && (
             <img
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -79,10 +81,10 @@ export const PostCard = ({
         <div>
           <NavLink
             to={`/blog/${id}`}
-            className='text-lg font-bold text-black dark:text-slate-50'
+            className='p font-bold text-black dark:text-slate-50'
             style={{ textDecoration: 'none', color: 'currentcolor' }}
           >
-            <h2 className='indent-1 text-lg font-bold'>{title}</h2>
+            <h4 className='h4 indent-1'>{title}</h4>
           </NavLink>
           <p className='prose p-1 indent-1 italic dark:prose-invert'>
             {description}
@@ -117,12 +119,7 @@ export const PostCard = ({
           <div className='flex flex-col items-center space-x-2'>
             {data.user?.avatarUrl && (
               <Tooltip label={data.user?.userName} position='top'>
-                <Avatar
-                  src={data.user?.avatarUrl}
-                  variant='filled'
-                  radius='xl'
-                  size='sm'
-                />
+                <Avatar h={10} w={10} imageUrl={data.user?.avatarUrl} />
               </Tooltip>
             )}
             <p className='text-xs text-black dark:text-slate-50'>
@@ -155,7 +152,7 @@ export const PostCard = ({
               >
                 <div className='flex flex-row space-x-1'>
                   <ChatBubbleIcon />
-                  <p className='text-xs'> {_count.comments}</p>
+                  <p className='subtitle2'> {_count.comments}</p>
                 </div>
               </Button>
             )}
@@ -165,17 +162,18 @@ export const PostCard = ({
             )}
           </div>
         </div>
-        <Divider />
-        <Group position='right'></Group>
+
+        <Divider my={'7'} />
+
         {showComments && id && (
-          <div className='flex flex-col'>
+          <div className='mt-2 flex flex-col'>
             {currentUser && <FormComments postId={id} />}
             {open && data.comments && (
               <ListComments comments={formatComments(data.comments || [])} />
             )}
-            <Button onClick={() => setOpen(!open)}>
+            <button className='btn-primary' onClick={() => setOpen(!open)}>
               {open ? 'Hide' : 'Show'} Comments
-            </Button>
+            </button>
           </div>
         )}
       </div>
