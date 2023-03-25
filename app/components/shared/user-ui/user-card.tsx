@@ -4,6 +4,7 @@ import React from 'react'
 import type { Profile } from '~/utils/schemas/profile-schema'
 import type { UserProps } from '~/utils/server/user.server'
 import { useOptionalUser } from '~/utils/utilities'
+import Avatar from '../avatar'
 import { UserPlaceHolder } from '../icons'
 
 export type UserCardProps = {
@@ -20,20 +21,16 @@ export default function UserCard({ user, profiles }: UserCardProps) {
         <>
           <div
             key={user.id}
-            className=' my-2 flex w-[350px] flex-col justify-between rounded-md border-2 p-1 md:w-[650px] md:p-2'
+            className=' my-2 flex  w-full flex-col justify-between rounded-md border-2 p-1  md:p-2'
           >
             <div
               // main content
-              className='flex flex-row border-b-2 border-b-red-300 pb-2'
+              className='flex flex-row gap-2 border-b-2 border-b-red-300 pb-2'
             >
               {user?.avatarUrl ? (
-                <img
-                  src={user.avatarUrl}
-                  alt={user.userName}
-                  width='50'
-                  height='50'
-                  className='h-10 w-10 rounded-full'
-                />
+                <>
+                  <Avatar imageUrl={user.avatarUrl} h={10} w={10} />
+                </>
               ) : (
                 <div className='relative h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600'>
                   <UserPlaceHolder />
@@ -43,18 +40,16 @@ export default function UserCard({ user, profiles }: UserCardProps) {
                 className='flex flex-col pl-1 md:pl-2 '
                 to={`/users/${user.userName}`}
               >
-                <p className='text-xs italic'>Username</p>
-                <p className='text-base'> {user.userName}</p>
+                <p className='p italic'>Username</p>
+                <p className='p'> {user.userName}</p>
               </NavLink>
 
-              <Button
-                className='ml-auto'
-                variant='outline'
-                size='sm'
+              <button
+                className='btn-primary'
                 onClick={() => setShowMore(!showMore)}
               >
                 more
-              </Button>
+              </button>
             </div>
             {showMore &&
               profiles?.map((profile) => (

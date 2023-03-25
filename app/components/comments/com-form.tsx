@@ -36,15 +36,14 @@ export default function FormComments({
           className='w-full rounded-md border border-gray-300 p-2 text-black'
         />
 
-        <Button
+        <button
           type='submit'
           name='_action'
-          variant='filled'
-          size='sm'
+          className='btn-primary'
           value={parentId ? 'Reply' : 'Create'}
         >
           {parentId ? 'Post reply' : 'Post a comment'}
-        </Button>
+        </button>
       </commentForm.Form>
     </div>
   )

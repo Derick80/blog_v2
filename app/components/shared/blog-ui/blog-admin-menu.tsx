@@ -5,7 +5,7 @@ import { useOptionalUser } from '~/utils/utilities'
 export default function BlogNav() {
   const user = useOptionalUser()
   return (
-    <div className='mx-auto flex w-[350px] grow flex-cosl items-center gap-5 md:w-[650px] '>
+    <div className='flex-cosl mx-auto flex w-[350px] grow items-center gap-5 md:w-[650px] '>
       {user?.role === 'ADMIN' ? (
         <div className='flex-col gap-5'>
           <NavLink prefetch='intent' to='/blog/new'>
@@ -14,9 +14,7 @@ export default function BlogNav() {
             </Button>
           </NavLink>
           <NavLink prefetch='intent' to='/drafts'>
-            <Button size='sm' variant='subtle'>
-              Drafts
-            </Button>
+            <button className=''>Drafts</button>
           </NavLink>
           <NavLink prefetch='intent' to='/categories'>
             <Button size='sm' variant='subtle'>

@@ -158,7 +158,7 @@ export default function Uploader() {
         <label htmlFor='title'>Title</label>
         <input
           type='text'
-          className='rounded-md border text-slate12 text-sm'
+          className='rounded-md border text-sm text-slate12'
           name='title'
           defaultValue={actionData?.fields?.title}
           aria-invalid={Boolean(actionData?.fieldErrors?.title) || undefined}
@@ -175,7 +175,7 @@ export default function Uploader() {
         <label htmlFor='description'>Description</label>
         <input
           type='text'
-          className='rounded-md border text-slate12 text-sm'
+          className='rounded-md border text-sm text-slate12'
           name='description'
           defaultValue={actionData?.fields?.description}
           aria-invalid={
@@ -208,7 +208,6 @@ export default function Uploader() {
 
           <MultiSelect
             shadow='xl'
-
             data={categories}
             onChange={(e) => {
               setSelected(e.join(','))
@@ -227,53 +226,57 @@ export default function Uploader() {
 
         <input type='hidden' name='categories' value={selected} />
       </Form>
-      <div className='flex flex-col items-center justify-center gap-5'>
+      <div className='flex flex-row gap-2'>
         <fetcher.Form
           method='post'
           encType='multipart/form-data'
           action='/actions/cloudinary'
           onClick={onClick}
-          className='mx-auto flex flex-col items-center gap-5'
+          className='mx-auto flex flex-col items-center gap-2'
         >
-          <label className='text-slate12 dark:text-slate-50' htmlFor='imageUrl'>
-            Upload an Image
+          <label htmlFor='imageUrl' className='subtitle'>
+            Attach an Image
           </label>
           <input
             id='imageUrl'
-            className='block rounded-xl p-2 text-slate12 dark:text-slate-50'
+            className='block w-full rounded-xl border-2 p-2 text-sm text-slate12 dark:text-slate-50'
             type='file'
             name='imageUrl'
             accept='image/*'
           />
-          <button
-            className='w-60 rounded-xl bg-green-500 py-2 px-4 font-bold dark:bg-blue-500'
-            type='submit'
-          >
+          <button className='btn-primary' type='submit'>
             Upload Image
           </button>
         </fetcher.Form>
-        <div className='flex flex-col items-center gap-5'>
+        <div className='flex w-full flex-col items-center gap-5'>
           {fetcher.data ? (
-            <div className='flex  flex-col items-center'>
-              <p className='text-white'>File has been uploaded</p>
+            <div className='flex w-full flex-col items-center gap-2'>
+              <p className='h6'>Image uploaded</p>
               <input
                 type='hidden'
                 name='imageUrl'
                 value={fetcher?.data?.imageUrl}
               />
-              <div className='h-[100px] w-[100px] rounded-xl text-slate12'>
-                <img src={fetcher?.data?.imageUrl} alt={'no'} />
+              <div className='flex'>
+                <div className=' rounded-xl  text-slate12'>
+                  <img
+                    src={fetcher?.data?.imageUrl}
+                    alt={'no'}
+                    style={{
+                      objectFit: 'cover'
+                    }}
+                  />
+                </div>
               </div>
             </div>
           ) : null}
+
+          <div className='flex flex-row items-center justify-center gap-2 text-slate12 dark:text-slate-50'>
+            <button type='submit' form='newPost' className='btn-primary'>
+              {text}
+            </button>
+          </div>
         </div>
-        <button
-          type='submit'
-          form='newPost'
-          className='w-60 rounded-xl bg-green-500 py-2 px-4 font-bold dark:bg-blue-500'
-        >
-          {text}
-        </button>
       </div>
     </div>
   )

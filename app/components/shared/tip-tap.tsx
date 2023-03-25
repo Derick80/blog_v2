@@ -3,7 +3,7 @@ import { RichTextEditor } from '@mantine/tiptap'
 import * as Toolbar from '@radix-ui/react-toolbar'
 import Link from '@tiptap/extension-link'
 import { EditorContent, useEditor } from '@tiptap/react'
-import Underline from '@tiptap/extension-underline';
+import Underline from '@tiptap/extension-underline'
 import Superscript from '@tiptap/extension-superscript'
 import SubScript from '@tiptap/extension-subscript'
 import StarterKit from '@tiptap/starter-kit'
@@ -92,8 +92,7 @@ const TipTap = ({ content }: { content?: string }) => {
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.ColorPicker
-
-              colors={ [
+              colors={[
                 '#25262b',
                 '#868e96',
                 '#fa5252',
@@ -107,12 +106,11 @@ const TipTap = ({ content }: { content?: string }) => {
                 '#40c057',
                 '#82c91e',
                 '#fab005',
-                '#fd7e14',
-              ] }
+                '#fd7e14'
+              ]}
             />
-
-            </RichTextEditor.ControlsGroup>
-            </RichTextEditor.Toolbar>
+          </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content />
       </RichTextEditor>

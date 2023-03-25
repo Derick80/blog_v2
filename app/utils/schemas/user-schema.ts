@@ -13,5 +13,7 @@ export type UserType = User & {
     comments: number
     likes: number
     projects: number
+    books: number
+    messages: number
   }
 }
