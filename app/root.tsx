@@ -1,4 +1,4 @@
-import { json, LinksFunction, LoaderArgs, MetaFunction } from '@remix-run/node'
+import { json, LinksFunction, LoaderArgs, MetaFunction, SerializeFrom } from '@remix-run/node'
 import {
   Links,
   LiveReload,
@@ -17,6 +17,12 @@ import Layout from './components/shared/layout/layout'
 import styles from './styles/app.css'
 import { useIsBot } from './is-bot.context'
 import { getFlash } from './utils/server/auth/session.server'
+import { Analytics } from '@vercel/analytics/react';
+declare global {
+  interface Window {
+    ENV: SerializeFrom<typeof loader>['ENV']
+  }
+}
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: styles },
   {
@@ -34,9 +40,12 @@ export const meta: MetaFunction = () => ({
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   const categories = await getAllCategories()
+
   const { message, headers } = await getFlash(request)
 
-  return json({ user, categories, message }, { headers })
+  return json({ user, categories, message , ENV: {
+    VERCEL_ANALYTICS_ID: process.env.VERCEL_ANALYTICS_ID,
+  }}, { headers })
 }
 export async function action() {
   return { ok: true }
@@ -56,9 +65,16 @@ export default function App() {
       <body className='bg-white text-zinc-900  dark:bg-black/90 dark:text-slate-50'>
         <Layout>
           <Outlet />
+          <Analytics />
           <ScrollRestoration />
           {isBot ? null : <Scripts />}
           <LiveReload />
+          {/* 👇 Write the ENV values to the window */ }
+          <script
+            dangerouslySetInnerHTML={ {
+              __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+            } }
+          />
         </Layout>
       </body>
     </html>
