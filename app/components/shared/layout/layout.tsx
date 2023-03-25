@@ -1,7 +1,7 @@
 import { useOptionalUser } from '~/utils/utilities'
 import Footer from './footer'
 import React from 'react'
-import { ChevronDownIcon, ChevronLeftIcon } from '@radix-ui/react-icons'
+import { ChevronDownIcon, ChevronLeftIcon, Cross2Icon, ExitIcon } from '@radix-ui/react-icons'
 import TopNav from './top-nav'
 import SideBar from './sidebar'
 
@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const [open, setOpen] = React.useState(false)
   const shift = open ? 'translate-x-[]' : ' -translate-x-full'
-
+const buttonShift = open ? 'translate-x-[240px]' : ' translate-x-[]'
   return (
     <>
       <div className='relsative mx-auto mt-5 h-screen max-w-sm md:grid md:max-w-2xl md:grid-cols-12'>
@@ -19,10 +19,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <main className='relative col-span-10 flex h-full w-full flex-grow  overflow-scroll md:col-span-12'>
           <SideBar shift={shift} />
           <button
-            className={`absolute right-1 top-0 z-10 rounded-full bg-crimson8 `}
+            className={`absolute top-0 z-50  delay-150 duration-300 ease-in-out peer-focus:left-0 rounded-full bg-crimson8  ${buttonShift}`}
             onClick={() => setOpen(!open)}
           >
-            {open ? <ChevronLeftIcon /> : <ChevronDownIcon />}
+            {open ? <Cross2Icon /> : <ChevronDownIcon />}
           </button>
           {children}
         </main>

@@ -10,7 +10,7 @@ export default function SideBar({ shift }: { shift: string }) {
 
   return (
     <div
-      className={`absolute z-20 flex h-full w-[250px] flex-col overflow-scroll rounded-r-xl rounded-l-sm bg-crimson3 p-2 delay-150 duration-300 ease-out peer-focus:left-0 ${shift}`}
+      className={`absolute z-10 flex h-full w-[250px] flex-col overflow-scroll rounded-r-xl rounded-l-sm bg-crimson3 p-2 delay-150 duration-300 ease-out peer-focus:left-0 ${shift}`}
     >
       <MainLink />
       <PersonalLinks />
