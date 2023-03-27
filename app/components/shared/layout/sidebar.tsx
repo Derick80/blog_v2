@@ -95,7 +95,7 @@ export default function SideBar() {
             }}
           >
             <FileTextIcon />
-            <p className='p text-slate-50'>Home</p>
+            <p className='p text-slate-50'>Blog Feed</p>
           </NavLink>
           <NavLink
             to='/about'

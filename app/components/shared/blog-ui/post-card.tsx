@@ -60,12 +60,14 @@ export const PostCard = ({
     <>
       <div
         key={id}
-        className='group transform rounded-xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50'
+        // className='max-w-md w-fit m-5 rounded-2xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50'
+                className="my-14 w-full rounded-lg border-2 p-2 shadow-md hover:translate-y-2 "
+
       >
-        <div className='mx-auto flex flex-col items-center'>
+        <div className='mx-auto flex flex-col items-center overflow-hidden'>
           {imageUrl && (
             <img
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', overflow: 'hidden' }}
               src={imageUrl}
               alt={title}
             />
@@ -160,14 +162,17 @@ export const PostCard = ({
         <Divider my={'7'} />
 
         {showComments && id && (
-          <div className='mt-2 flex flex-col'>
+          <div className='mt-2 flex flex-col gap-2'>
             {currentUser && <FormComments postId={id} />}
             {open && data.comments && (
               <ListComments comments={formatComments(data.comments || [])} />
             )}
-            <button className='btn-primary' onClick={() => setOpen(!open)}>
-              {open ? 'Hide' : 'Show'} Comments
-            </button>
+          <div
+          >
+              <button className='btn-primary' onClick={ () => setOpen(!open) }>
+                { open ? 'Hide' : 'Show' } Comments
+              </button>
+              </div>
           </div>
         )}
       </div>

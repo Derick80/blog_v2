@@ -31,7 +31,7 @@ export default function Index() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <div className='mx-auto flex  grow flex-col items-center gap-2 '>
+    <div className='mx-auto flex grow flex-col items-center gap-2 '>
       {data.post.map((post) => (
         <PostCard
           key={post.id}
