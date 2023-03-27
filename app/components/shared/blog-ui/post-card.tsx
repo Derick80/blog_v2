@@ -55,13 +55,13 @@ export const PostCard = ({
     favorites
   } = data
   // this should be set to false outside of active development
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
   return (
     <>
       <div
         key={id}
         // className='max-w-md w-fit m-5 rounded-2xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50'
-                className="my-14 w-full rounded-lg border-2 p-2 shadow-md hover:translate-y-2 "
+                className="my-14 w-[300px] md:w-[650px] rounded-lg border-2 p-2 shadow-md hover:translate-y-2 "
 
       >
         <div className='mx-auto flex flex-col items-center overflow-hidden'>
@@ -88,7 +88,7 @@ export const PostCard = ({
 
           {showCategories && (
             <div
-              className='flex flex-row space-x-2 p-2'
+              className='flex flex-row flex-wrap gap-1 p-2'
               style={{ width: 'fit-content' }}
             >
               {categories.map((category, index) => (
@@ -123,8 +123,8 @@ export const PostCard = ({
             </p>
           </div>
         </div>
-        <div className='flex-wsrap flex flex-row items-center gap-2'>
-          <div className='flex flex-row space-x-2 p-2'>
+        <div className='flex-wrap flex flex-row items-center gap-2'>
+          <div className='flex flex-row gap-2 flex-wrap p-2'>
             {showLikes && likes && currentUser && (
               <LikeContainer
                 postId={id}
@@ -141,22 +141,22 @@ export const PostCard = ({
               />
             )}
             {showComments && data.comments && (
-              <Button
-                type='button'
-                variant='subtle'
+              <button
+              className='text-blue-500'
                 onClick={() => setOpen(!open)}
               >
                 <div className='flex flex-row space-x-1'>
                   <ChatBubbleIcon />
                   <p className='subtitle2'> {_count.comments}</p>
                 </div>
-              </Button>
+              </button>
             )}
             {showShare && id && <ShareButton id={id} />}
-            {showOptions && currentUser?.id === userId && (
-              <PostOptions postId={id} />
-            )}
+
           </div>
+          { showOptions && currentUser?.id === userId && (
+            <PostOptions postId={ id } />
+          ) }
         </div>
 
         <Divider my={'7'} />

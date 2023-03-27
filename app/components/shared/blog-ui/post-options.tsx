@@ -8,9 +8,9 @@ export type OptionProps = {
 export default function PostOptions({ postId }: OptionProps) {
   return (
     <NavLink to={`/blog/${postId}/edit`}>
-      <Button className='' variant='subtle'>
+      <button className='text-blue-500' >
         <Pencil1Icon />
-      </Button>
+      </button>
     </NavLink>
   )
 }
