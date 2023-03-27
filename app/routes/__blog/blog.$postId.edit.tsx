@@ -238,28 +238,17 @@ export default function EditPost() {
             className='rounded-md border text-sm text-slate12'
             name='title'
             id='title'
-            defaultValue={actionData ? actionData.title : formData.title}
           />
-          {actionData?.fieldErrors?.title && (
-            <p className='text-base text-red-500'>
-              {actionData.fieldErrors.title}
-            </p>
-          )}
+
           <label htmlFor='description'>Description</label>
           <input
             type='text'
             className='rounded-md border text-sm text-slate12'
             name='description'
             id='description'
-            defaultValue={
-              actionData ? actionData.description : formData.description
-            }
+
           />
-          {actionData?.fieldErrors?.description && (
-            <p className='text-base text-red-500'>
-              {actionData.fieldErrors.description}
-            </p>
-          )}
+
           <label htmlFor='body'>Post Content</label>
           {body && <TipTap content={body} />}
           <input type='hidden' name='body' defaultValue={body} />

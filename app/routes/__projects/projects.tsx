@@ -1,8 +1,9 @@
 import type { LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { NavLink, useLoaderData } from '@remix-run/react'
 import ProjectsCard from '~/components/shared/projects-card'
 import { getProjects } from '~/utils/server/project.server'
+import { useOptionalUser } from '~/utils/utilities'
 export const meta: MetaFunction = () => {
   return {
     title: `Derick's Personal Blog | Personal Coding Projects`,
@@ -16,10 +17,24 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 export default function Index() {
+  const user = useOptionalUser()
+  const isAdmin = user?.role === 'ADMIN'
   const data = useLoaderData<typeof loader>()
   return (
     <>
-      <div className='flex flex-col flex-wrap justify-center gap-5 md:flex-row'>
+      <div className='flex mt-12 flex-col flex-wrap gap-5 md:flex-row'>
+
+            {isAdmin && (
+              <NavLink
+
+                to='/projects/new'
+                className=' mx-auto w-full'
+              >
+                Add Project
+                </NavLink>
+                )
+                }
+
         {data.projects.map((project) => (
           <ProjectsCard key={project.id} project={project} />
         ))}

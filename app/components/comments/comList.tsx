@@ -64,16 +64,14 @@ function CommentActions({
               method='post'
               action={`${commentId}/delete`}
             >
-              <Button
-                size='xs'
-                color='red'
-                variant='subtle'
+              <button
+                className='flex flex-row items-center justify-center'
                 type='submit'
                 name='_action'
                 value='deleteComment'
               >
                 <TrashIcon />
-              </Button>
+              </button>
             </deleteCommentFetcher.Form>
           </>
         )}
@@ -99,7 +97,6 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
         />
         <div className='ml-4 flex w-full flex-col'>
           <div className='flex w-full flex-row items-center justify-between'>
-            <p>{comment.createdBy} wrote:</p>
             <p>{format(new Date(comment.createdAt), 'MMM d, yyyy')}</p>
           </div>
           <div className='flex w-full flex-row gap-2'>
@@ -131,9 +128,13 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
                 </editCommentFetcher.Form>
               </>
             ) : (
-              <>
-                <p className='w-full text-sm'>{comment.message}</p>
-              </>
+              <div
+              className='flex flex-col w-full gap-2'
+              >
+                  <p>{ comment.createdBy } wrote:</p>
+
+                <p className='w-full text-sm bg-slate8/10 rounded-md'>{comment.message}</p>
+              </div>
             )}
             {comment.userId === currentUser?.id && (
               <Button

@@ -36,9 +36,8 @@ export const ShareButton = ({ id }: Props) => {
     <>
       <Popover width={300} position='top' withArrow>
         <Popover.Target>
-          <Button
-            type='button'
-            variant='subtle'
+          <button
+            className='text-blue-500'
             onClick={() => {
               if (navigator.share) {
                 navigator.share({
@@ -51,7 +50,7 @@ export const ShareButton = ({ id }: Props) => {
             }}
           >
             <Share1Icon />
-          </Button>
+          </button>
         </Popover.Target>
         <Popover.Dropdown>
           <Flex gap={3} justify='space-between'>
@@ -93,7 +92,7 @@ export const ShareButton = ({ id }: Props) => {
             />
             <button
               type='button'
-              className='hover:text-primary-dark hover:bg-primary-bg dark:hover:text-primary-light rounded-md bg-slate-100 p-3 text-slate-500 dark:bg-slate-600 dark:text-slate-200'
+              className='text-blue-500'
               onClick={copyLink}
             >
               <CopyIcon />

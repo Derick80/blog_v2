@@ -4,6 +4,7 @@ import {
   ExitIcon,
   FileTextIcon,
   GlobeIcon,
+  HamburgerMenuIcon,
   HomeIcon,
   MixIcon,
   Pencil1Icon,
@@ -70,15 +71,13 @@ export default function SideBar() {
   const shifty = open ? 'translate-x-[]' : ' -translate-x-full'
   const buttonShift = open ? 'translate-x-[195px]' : ' translate-x-[]'
 
-  console.log(buttonShift, 'buttonShift')
-
   return (
     <div>
       <button
-        className={`right- absolute top-0 z-50 btn-primary bg-crimson9 delay-150 duration-300 ease-in-out peer-focus:left-0 border-none focus:ring-0 ${buttonShift}`}
+        className={`absolute top-0 z-50 btn-primary bg-white text-black dark:text-slate-50 delay-150 duration-300 ease-in-out peer-focus:left-0 border-none focus:ring-0 ${buttonShift}`}
         onClick={() => setOpen(!open)}
       >
-        {open ? <Cross2Icon /> : <h3 className='h3 text-slate-50'>Menu</h3>}
+        {open ? <Cross2Icon /> : <HamburgerMenuIcon />}
       </button>
       <div
         className={`absolute z-10 flex h-full w-[250px] flex-col text-slate-50 overflow-scroll rounded-r-3xl rounded-l-sm bg-crimson3 p-2 delay-150 duration-300 ease-out peer-focus:left-0 ${shifty}`}

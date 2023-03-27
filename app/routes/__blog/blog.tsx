@@ -27,11 +27,13 @@ export async function loader() {
 }
 
 export default function Index() {
-  const user = useOptionalUser()
   const data = useLoaderData<typeof loader>()
 
   return (
     <div className='mx-auto flex grow flex-col items-center gap-2 '>
+      <div>
+       <h5 className='h5'>Blog Feed</h5>
+      </div>
       {data.post.map((post) => (
         <PostCard
           key={post.id}
