@@ -15,6 +15,7 @@ export default function FormComments({
   useEffect(() => {
     if (commentForm.type === 'done') {
       formRef.current?.reset()
+
     }
   }, [commentForm.type])
   return (

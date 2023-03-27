@@ -7,6 +7,7 @@ import {
 } from '@radix-ui/react-icons'
 import { Link, NavLink, useFetcher } from '@remix-run/react'
 import { format } from 'date-fns'
+import React from 'react'
 import { useState } from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import { useOptionalUser } from '~/utils/utilities'
@@ -85,7 +86,12 @@ function CommentActions({
 function Comment({ comment }: { comment: CommentWithChildren }) {
   const currentUser = useOptionalUser()
   const editCommentFetcher = useFetcher()
-
+  let formRef = React.useRef<HTMLFormElement>(null)
+  React.useEffect(() => {
+    if (editCommentFetcher.type === 'done') {
+      formRef.current?.reset()
+    }
+  }, [editCommentFetcher.type])
   const [editing, setEditing] = useState(false)
   return (
     <Paper withBorder radius='md' mb='md' p='md'>
@@ -103,6 +109,8 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
             {editing ? (
               <>
                 <editCommentFetcher.Form
+                // I don't think this is working
+                ref={formRef}
                   method='post'
                   action={`comments/${comment.id}/edit`}
                   className='flex w-full gap-2'
@@ -116,15 +124,13 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
                     name='message'
                     defaultValue={comment.message}
                   />
-                  <Button
-                    type='submit'
-                    variant='subtle'
-                    size='xs'
+                  <button
+
                     name='_action'
                     value='editComment'
                   >
                     <CheckIcon />
-                  </Button>
+                  </button>
                 </editCommentFetcher.Form>
               </>
             ) : (
@@ -137,13 +143,11 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
               </div>
             )}
             {comment.userId === currentUser?.id && (
-              <Button
-                size='xs'
-                variant='subtle'
+              <button
                 onClick={() => setEditing(!editing)}
               >
                 {editing ? <Cross2Icon /> : <Pencil1Icon />}
-              </Button>
+              </button>
             )}
           </div>
         </div>
