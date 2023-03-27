@@ -13,7 +13,7 @@ import { useOptionalUser } from '~/utils/utilities'
 import FormComments from './com-form'
 
 function getReplyCountText(count: number) {
-  if (count === 0) {
+  if (count === 0 || count === undefined) {
     return 'No replies'
   }
 
@@ -153,10 +153,10 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
         commentId={comment.id}
         userId={comment.user.id}
         message={comment.message}
-        replyCount={comment.children?.length}
+        replyCount={comment?.children?.length}
       />
 
-      {comment.children ? <ListComments comments={comment.children} /> : null}
+      {comment.children ? <ListComments comments={comment?.children} /> : null}
     </Paper>
   )
 }

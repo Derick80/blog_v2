@@ -164,8 +164,9 @@ export const PostCard = ({
         {showComments && id && (
           <div className='mt-2 flex flex-col gap-2'>
             {currentUser && <FormComments postId={id} />}
+            {/* if I remove the formatCOmments this works.  */}
             {open && data.comments && (
-              <ListComments comments={formatComments(data.comments || [])} />
+              <ListComments comments={data.comments || []} />
             )}
           <div
           >
