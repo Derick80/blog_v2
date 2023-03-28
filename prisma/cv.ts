@@ -3,18 +3,21 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function seed() {
+  await prisma.curriculumVitae.deleteMany()
   const cv = await prisma.curriculumVitae.create({
+
     data: {
       title: 'Derick Hoskinson PHD',
       email: 'derickchoskinson@gmail.com',
       phone: '312-871-8067',
       location: 'Chicago, IL',
       blurb:
-        'I am a clinical scientist with a passion for data science and genetics. I have a PhD in Genetics from Tufts University School of Biomedical Sciences. I have experience in the fields of inherited genetics, cancer genetics, and clinical research. I am currently working as a Senior Clinical Scientist at Tempus Labs. I am looking for a position where I can apply my skills to solve real-world problems.'
+        'I am a clinical scientist with a passion for data science and genetics. I have a PhD in Genetics from Tufts University School of Biomedical Sciences. I have experience in the fields of inherited genetics, cancer genetics, and clinical research. I am currently working as a Senior Clinical Scientist at Tempus Labs. I am looking for a position where I can apply my skills to solve real-world problems.',
+      userId: '6d11174e-9d65-4bef-949f-8e1ea3496ad3'
     }
   })
 
-  async function seedEducation() {
+
     await prisma.education.createMany({
       data: [
         {
@@ -35,8 +38,8 @@ async function seed() {
         }
       ]
     })
-  }
-  const experiences = await prisma.cVExperience.createMany({
+
+  await prisma.cVExperience.createMany({
     data: [
       {
         title: 'Clinical Scientist',
@@ -82,7 +85,7 @@ async function seed() {
     ]
   })
 
-  const skills = await prisma.skill.createMany({
+ await prisma.skill.createMany({
     data: [
       {
         name: 'Genetics',
@@ -211,11 +214,42 @@ async function seed() {
       }
     ]
   })
+  const publications = await prisma.publication.createMany({
+    data: [
+      {
+        title:
+          'Tumor Mutational Burden From Tumor-Only Sequencing Compared With Germline Subtraction From Paired Tumor and Normal Specimens',
+        year: '2020',
+        journal: 'JAMA',
+        authors: [
+          'Parikh K, Huether R, White K, Hoskinson D, Beaubier N, Dong H, Adjei AA, Mansfield AS'
+        ],
+        edition: `2020 Feb 5;3(2):e200202. PMID: 32108894; PMCID: PMC7049088.`,
+        type: 'published',
+        url: `https://doi.org/10.1001/jamanetworkopen.2020.0202`,
+        cvId: cv.id
+      },
 
+      {
+        title:
+          'Integrated genomic profiling expands clinical options for patients with cancer ',
+        year: '2020',
+        journal: 'Nature Biotechnology',
+        authors: [
+          'Beaubier, N., Bontrager, M., Huether, R., Igartua, C., Lau, D., Tell, R., Bobe, A. M., Bush, S., Chang, A. L., Hoskinson, D. C., Khan, A. A., Kudalkar, E., Leibowitz, B. D., Lozachmeur, A., Michuda, J., Parsons, J., Perera, J. F., Salahudeen, A., Shah, K. P., Taxter, T., … White, K. P. (2019) '
+        ],
+        edition: `37(11), 1351–1360`,
+        type: 'published',
+        url: `https://www.nature.com/articles/s41587-019-0259-z`,
+        cvId: cv.id
+      }
+    ]
+  })
   console.log(`Database has been seeded. 🌱`)
 }
 
 seed()
+
   .catch((e) => {
     console.error(e)
     process.exit(1)

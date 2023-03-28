@@ -33,12 +33,12 @@ export default function Drafts() {
 
   return (
     <>
-      <div className='mx-auto flex max-w-screen-2xl flex-row gap-2'>
+      <div className='mx-auto flex mt-10 max-w-screen-2xl flex-row gap-2'>
         <div className='flex flex-col gap-2 md:grid md:grid-cols-12'>
-          <div className='col-span-3 hidden h-[100px] w-full grow flex-col bg-green-500 md:flex md:h-full'>
+          <div className='col-span-3 hidden h-[100px] w-full grow flex-col  md:flex md:h-full'>
             <Sidebar props={data.post} />
           </div>
-          <div className='col-span-11 col-start-4 flex w-full grow  flex-wrap gap-2 bg-red-500'>
+          <div className='col-span-11 col-start-4 flex w-full grow  flex-wrap gap-2'>
             {data.post.map((draft: PostWithChildren) => (
               <PostCard
                 key={draft.id}
@@ -59,8 +59,6 @@ export default function Drafts() {
 }
 
 function Sidebar(props: { props: PostWithChildren[] }) {
-  console.log(props)
-  console.log(Array.isArray(props.props))
 
   return (
     <div className='prose overflow-auto p-2'>
@@ -72,7 +70,7 @@ function Sidebar(props: { props: PostWithChildren[] }) {
         >
           <div className='flex flex-col'>
             <h3 className='m-0 text-xs md:text-sm'>Title</h3>
-            <Link to={`/drafts/${draft.id}`} className='m-0'>
+            <Link to={`/blog/${draft.id}`} className='m-0'>
               <h2 className='prose-h2: prose m-0 text-xs'>
                 {draft.title.slice(0, 30)}...
               </h2>
