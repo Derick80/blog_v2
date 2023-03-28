@@ -74,7 +74,7 @@ export default function SideBar() {
   return (
     <div>
       <button
-        className={`absolute top-0 z-50 btn-primary bg-white text-black dark:text-slate-50 delay-150 duration-300 ease-in-out peer-focus:left-0 border-none focus:ring-0 ${buttonShift}`}
+        className={`absolute top-0 z-50 btn-primary bg-none text-black dark:text-slate-50 delay-150 duration-300 ease-in-out peer-focus:left-0 border-none focus:ring-0 ${buttonShift}`}
         onClick={() => setOpen(!open)}
       >
         {open ? <Cross2Icon /> : <HamburgerMenuIcon />}
