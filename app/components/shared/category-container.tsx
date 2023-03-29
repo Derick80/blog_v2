@@ -28,12 +28,12 @@ export default function CategoryContainer({
           <react.NavLink
             prefetch='intent'
             to={`/categories/${value}`}
-            className='text-decoration-none text-xs text-black dark:text-slate-50'
+            className='text-decoration-none text-xs text-black dark:text-black'
           >
             {value}
           </react.NavLink>
         ) : (
-          <div className='text-decoration-none text-xs text-black dark:text-slate-50'>
+          <div className='text-decoration-none text-xs text-black dark:text-black'>
             {value}
           </div>
         )}

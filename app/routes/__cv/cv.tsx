@@ -228,7 +228,7 @@ function Pubs({
           <div className='flex flex-row justify-between text-sm text-slate-400'>
             <div className='flex flex-col gap-1'>
               <p className='text-xs'>{authors}</p>
-              <p className='text-xl font-bold italic text-black dark:text-slate-50'>
+              <p className='text-xl font-bold italic text-black dark:text-black'>
                 {title}
               </p>
             </div>

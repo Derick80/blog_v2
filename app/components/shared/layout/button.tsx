@@ -24,8 +24,8 @@ export default function Button({
   }
   const variantClasses = {
     regular: 'bg-slate-50 text-slate-900',
-    outline: 'border border-slate-50 text-slate-50',
-    unfilled: 'bg-transparent text-slate-50'
+    outline: 'border border-slate-50 text-black',
+    unfilled: 'bg-transparent text-black'
   }
   return (
     <button

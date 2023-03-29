@@ -61,8 +61,8 @@ export const PostCard = ({
     <>
       <div
         key={id}
-        // className='max-w-md w-fit m-5 rounded-2xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50'
-        className='mx-auto my-5 w-[350px] rounded-lg  p-2 shadow-md hover:translate-y-2 md:w-[650px] '
+
+        className='mx-auto my-5 rounded-lg  p-2 shadow-md hover:translate-y-2 md:w-[650px] '
       >
         <div className='overflow-hiddens mx-auto flex flex-col items-center'>
           {imageUrl && (
@@ -82,12 +82,12 @@ export const PostCard = ({
         <div>
           <NavLink
             to={`/blog/${id}`}
-            className='p font-bold text-black dark:text-slate-50'
+            className='p font-bold text-black dark:text-black'
             style={{ textDecoration: 'none', color: 'currentcolor' }}
           >
             <h4 className='h4 indent-1'>{title}</h4>
           </NavLink>
-          <p className='prose p-1 indent-1 italic dark:prose-invert'>
+          <p className='prose p-1 indent-1 italic '>
             {description}
           </p>
 
@@ -111,16 +111,16 @@ export const PostCard = ({
             {body && (
               <div
                 dangerouslySetInnerHTML={{ __html: body }}
-                className='prose prose-sm h-full p-1 indent-1 dark:prose-invert'
+                className='prose prose-sm h-full p-1 indent-1 '
               ></div>
             )}
           </Spoiler>
         </div>
         <div className='flex flex-row justify-end space-x-2 p-2'>
           <div className='flex flex-row items-center space-x-2'>
-            <p className='text-xs text-black dark:text-slate-50'>
+            <p className='text-xs text-black dark:text-black'>
               by {data.user?.userName}
-              <p className='text-xs italic text-black dark:text-slate-50'>
+              <p className='text-xs italic text-black dark:text-black'>
                 {dayjs(createdAt).format('MMM D')}
               </p>
             </p>

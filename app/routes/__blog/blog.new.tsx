@@ -145,7 +145,7 @@ export default function Uploader() {
     <div className='mx-auto mb-7 flex w-[350px] flex-col items-center rounded-md bg-white p-2 text-slate12 dark:bg-crimson2 dark:text-slate1 md:w-[550px]'>
       <Form
         id='newPost'
-        className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-crimson1 dark:text-slate-50'
+        className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-crimson1 dark:text-black'
         method='post'
       >
         <input
@@ -198,9 +198,9 @@ export default function Uploader() {
           <label htmlFor='body'>Body</label>
           <TipTap />
         </div>
-        <div className='flex flex-col gap-5 text-slate12 dark:text-slate-50'>
+        <div className='flex flex-col gap-5 text-slate12 dark:text-black'>
           <label
-            className='text-slate12 dark:text-slate-50'
+            className='text-slate12 dark:text-black'
             htmlFor='categories'
           >
             Categories
@@ -215,7 +215,7 @@ export default function Uploader() {
           />
         </div>
 
-        <div className='mb-5 mt-5 flex flex-col items-center gap-5 text-slate12 dark:text-slate-50'>
+        <div className='mb-5 mt-5 flex flex-col items-center gap-5 text-slate12 dark:text-black'>
           <label htmlFor='featured'>Featured</label>
           <Switch
             name='featured'
@@ -239,7 +239,7 @@ export default function Uploader() {
           </label>
           <input
             id='imageUrl'
-            className='block w-full rounded-xl border-2 p-2 text-sm text-slate12 dark:text-slate-50'
+            className='block w-full rounded-xl border-2 p-2 text-sm text-slate12 dark:text-black'
             type='file'
             name='imageUrl'
             accept='image/*'
@@ -271,7 +271,7 @@ export default function Uploader() {
             </div>
           ) : null}
 
-          <div className='flex flex-row items-center justify-center gap-2 text-slate12 dark:text-slate-50'>
+          <div className='flex flex-row items-center justify-center gap-2 text-slate12 dark:text-black'>
             <button type='submit' form='newPost' className='btn-primary'>
               {text}
             </button>

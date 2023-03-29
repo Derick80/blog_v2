@@ -16,7 +16,7 @@ type Props = {
 }
 
 const iconClassName =
-  'bg-slate-100 rounded-full p-3 text-slate-500 transition hover:text-primary-dark hover:bg-primary-bg dark:bg-slate-600 dark:text-slate-200 dark:hover:text-primary-light border-none'
+  'bg-slate-100 rounded-full p-3 text-black0 transition hover:text-primary-dark hover:bg-primary-bg dark:bg-slate-600 dark:text-slate-200 dark:hover:text-primary-light border-none'
 
 export const ShareButton = ({ id }: Props) => {
   const { toast } = useToast()
@@ -84,7 +84,7 @@ export const ShareButton = ({ id }: Props) => {
             <input
               id='share'
               type='text'
-              className='w-full rounded-md bg-slate-100 p-3 text-xs text-slate-500 dark:bg-slate-600 dark:text-slate-200'
+              className='w-full rounded-md bg-slate-100 p-3 text-xs text-black0 dark:bg-slate-600 dark:text-slate-200'
               value={postUrl}
               onClick={copyLink}
               ref={ref}

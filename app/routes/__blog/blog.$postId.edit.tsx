@@ -226,7 +226,7 @@ export default function EditPost() {
           method='post'
           action={`/blog/${id}/edit`}
           id='editPost'
-          className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-crimson1 dark:text-slate-50'
+          className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-crimson1 dark:text-black'
         >
           <input type='hidden' name='createdBy' value={user?.userName} />
           <input type='hidden' name='postId' value={id} />
@@ -254,9 +254,9 @@ export default function EditPost() {
           {body && <TipTap content={body} />}
           <input type='hidden' name='body' defaultValue={body} />
 
-          <div className='flex flex-col gap-2 text-slate12 dark:text-slate-50'>
+          <div className='flex flex-col gap-2 text-slate12 dark:text-black'>
             <label
-              className='text-slate12 dark:text-slate-50'
+              className='text-slate12 dark:text-black'
               htmlFor='categories'
             >
               Categories
@@ -284,7 +284,7 @@ export default function EditPost() {
               defaultValue={selected}
             />
           </div>
-          <div className='mb-5 mt-5 flex flex-row items-center justify-end gap-2 text-slate12 dark:text-slate-50'>
+          <div className='mb-5 mt-5 flex flex-row items-center justify-end gap-2 text-slate12 dark:text-black'>
             <label htmlFor='featured'>Featured</label>
             <Switch
               name='featured'
@@ -315,7 +315,7 @@ export default function EditPost() {
               type='file'
               name='imageUrl'
               id='imageUrl'
-              className='block w-full rounded-xl border-2 p-2 text-sm text-slate12 dark:text-slate-50'
+              className='block w-full rounded-xl border-2 p-2 text-sm text-slate12 dark:text-black'
               accept='image/*'
             />
             <button className='btn-primary'>Upload</button>
@@ -351,7 +351,7 @@ export default function EditPost() {
             </div>
           )}
         </div>
-        <div className='flex flex-row items-center justify-end gap-2 text-slate12 dark:text-slate-50'>
+        <div className='flex flex-row items-center justify-end gap-2 text-slate12 dark:text-black'>
           <button
             type='submit'
             name='_action'
