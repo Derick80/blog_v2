@@ -15,7 +15,7 @@ import {
 } from '@radix-ui/react-icons'
 import { Form, Link, NavLink } from '@remix-run/react'
 import { motion } from 'framer-motion'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useOptionalUser } from '~/utils/utilities'
 import StatsCard from '../blog-ui/stats-card'
 import Divider from '../divider'
@@ -32,57 +32,35 @@ const linksByCategory = allLinks.reduce(
   {}
 )
 
-export function NewSideBar() {
-  const activeStyle = {
-    textDecoration: 'underline'
-  }
-  return (
-    <div className='flex flex-col gap-2'>
-      {Object.entries(linksByCategory).map(([category, links]) => (
-        <div key={category} className='flex flex-col gap-2'>
-          <h6 className='h6 italic text-slate-50'>{category}</h6>
-          <Divider my={'2'} isSidebar={true} />
-          <ul className='flex flex-col gap-2'>
-            {links.map((link) => (
-              <li key={link.name}>
-                <NavLink
-                  to={link.href}
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                >
-                  {link.icon}
-                  <span className='ml-2'>{link.name}</span>
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  )
-}
 
-export default function SideBar() {
+export default function SideBar ({ status }: { status: boolean }) {
   const user = useOptionalUser()
   const activeStyle = {
     textDecoration: 'underline'
   }
+console.log(status);
 
-  const [open, setOpen] = React.useState(false)
-  const shifty = open ? 'translate-x-[]' : ' -translate-x-full'
-  const buttonShift = open ? 'translate-x-[195px]' : ' translate-x-[]'
+
+  const [open, setOpen] = React.useState(status)
+
+  console.log(open);
+React.useEffect(()=>{
+  setOpen(status)
+},[status])
+  const shifty = open ? '-translate-x-[250px]' : ' md:hidden translate-x-full'
 
   return (
     <div>
-      <button
-        className={`btn-primary absolute top-0 z-50 border-none bg-none text-black delay-150 duration-300 ease-in-out focus:ring-0 peer-focus:left-0 dark:text-slate-50 ${buttonShift}`}
-        onClick={() => setOpen(!open)}
-      >
-        {open ? <Cross2Icon /> : <HamburgerMenuIcon />}
-      </button>
+
       <div
-        className={`absolute z-10 flex h-full w-[250px] flex-col overflow-scroll rounded-l-sm rounded-r-3xl bg-crimson3 p-2 text-slate-50 delay-150 duration-300 ease-out peer-focus:left-0 ${shifty}`}
+        className={`absolute mt-1  z-10 flex h-full w-[250px] flex-col   rounded-l-2xl rounded-r-2xl bg-crimson3 p-1 text-slate-50 delay-150 duration-300 ease-out peer-focus:left-0 ${shifty}`}
       >
         <div className='flex flex-col gap-2 text-slate-50'>
+        <div className='flex items-center justify-start'>
+            <button className='btn primary ' onClick={ () => setOpen(!open) }>
+              <Cross2Icon />
+            </button>
+        </div>
           <h6 className='h6 italic text-slate-50'>Primary Links</h6>
           <Divider my={'2'} isSidebar={true} />
           <NavLink

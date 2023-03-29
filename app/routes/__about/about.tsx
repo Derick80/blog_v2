@@ -25,10 +25,7 @@ export default function Page() {
       {data.about.map((about) => (
         <MyProfile key={about.id} about={about} />
       ))}
-      <details>
-        <summary>View Raw Data</summary>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      </details>
+
     </>
   )
 }

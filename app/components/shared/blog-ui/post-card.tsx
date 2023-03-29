@@ -61,9 +61,9 @@ export const PostCard = ({
       <div
         key={id}
         // className='max-w-md w-fit m-5 rounded-2xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50'
-        className='my-14 w-[300px] rounded-lg border-2 p-2 shadow-md hover:translate-y-2 md:w-[650px] '
+        className='my-5 w-[300px] rounded-lg border-2 p-2 shadow-md hover:translate-y-2 md:w-[650px] '
       >
-        <div className='mx-auto flex flex-col items-center overflow-hidden'>
+        <div className='mx-auto flex flex-col items-center overflow-hiddens'>
           {imageUrl && (
             <img
               style={{

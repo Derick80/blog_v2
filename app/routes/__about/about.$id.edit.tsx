@@ -85,7 +85,7 @@ export default function AboutEdit() {
       action: '/actions/cloudinary'
     })
   return (
-    <div className='flex flex-col items-center justify-center py-2'>
+    <div className='h-full items-center justify-center py-2'>
       <h1>Edit About</h1>
       <Form
         method='post'
@@ -96,7 +96,7 @@ export default function AboutEdit() {
           User Name
         </label>
         <input
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-black shadow-md text-sm rounded-md'
           id='userName'
           name='userName'
           type='text'
@@ -106,7 +106,7 @@ export default function AboutEdit() {
           First Name
         </label>
         <input
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-black shadow-md text-sm rounded-md'
           id='firstName'
           name='firstName'
           type='text'
@@ -116,7 +116,7 @@ export default function AboutEdit() {
           Last Name
         </label>
         <input
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-black shadow-md text-sm rounded-md'
           id='lastName'
           name='lastName'
           type='text'
@@ -124,7 +124,7 @@ export default function AboutEdit() {
         />
         <label htmlFor='email'>Email</label>
         <input
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-black shadow-md text-sm rounded-md'
           id='email'
           name='email'
           type='text'
@@ -140,7 +140,7 @@ export default function AboutEdit() {
           Location
         </label>
         <input
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-black shadow-md text-sm rounded-md'
           id='location'
           name='location'
           type='text'
@@ -150,7 +150,7 @@ export default function AboutEdit() {
           Education
         </label>
         <input
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-black shadow-md text-sm rounded-md'
           id='education'
           name='education'
           type='text'
@@ -160,7 +160,7 @@ export default function AboutEdit() {
           Occupation
         </label>
         <input
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-black shadow-md text-sm rounded-md'
           id='occupation'
           name='occupation'
           type='text'

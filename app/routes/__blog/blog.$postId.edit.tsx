@@ -259,6 +259,22 @@ export default function EditPost() {
             >
               Categories
             </label>
+
+            {/* <select name='categories' id='categories' multiple
+            defaultValue={selected}
+            onChange={(e) => {
+              setSelected(Array.from(e.target.selectedOptions, (item) => item.value))
+            }}
+            >
+              {mainCategories.map((item) => {
+                return (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                )
+              })}
+            </select> */}
+
             <MultiSelect
               name='categories'
               id='categories'

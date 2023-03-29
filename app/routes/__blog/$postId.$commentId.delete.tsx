@@ -2,7 +2,7 @@ import { json } from '@remix-run/node'
 import { badRequest } from 'remix-utils'
 import { prisma } from '~/utils/server/prisma.server'
 import type { MetaFunction, ActionArgs, LoaderArgs } from '@remix-run/node' // or cloudflare/deno
-
+// I might be able to delete this file
 export const meta: MetaFunction = () => {
   return {
     title: 'Delete comment',

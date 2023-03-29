@@ -46,7 +46,7 @@ export default function ProjectsCard({ project }: { project: Project }) {
           ))}
         </div>
         <div>
-          <p className='h-20 overflow-auto indent-1 text-base'>
+          <p className='h-full overflow-auto indent-1 text-sm'>
             {project.description}
           </p>
         </div>

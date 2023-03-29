@@ -24,7 +24,7 @@ export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
     <>
-      <div className='mt-12 flex flex-col flex-wrap gap-5 md:flex-row'>
+      <div className='flex flex-col md:flesx-row gap-2'>
         {isAdmin && (
           <NavLink to='/projects/new' className=' mx-auto w-full'>
             Add Project
