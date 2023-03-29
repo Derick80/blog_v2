@@ -158,7 +158,7 @@ export default function BetaRoute() {
     </div>
   )
 }
-
+// display data
 function DisplayEducationData({
   id,
   place,
