@@ -44,7 +44,6 @@ export async function loader({ params, request }: LoaderArgs) {
     })
   }
 
-
   return json({ user })
 }
 
@@ -71,16 +70,12 @@ export async function action({ params, request }: ActionArgs) {
   }
 
   const fieldErrors = {
-
     message: validateText(message),
-    imageUrl: validateText(imageUrl),
-
+    imageUrl: validateText(imageUrl)
   }
   const fields = {
-
     message,
-    imageUrl,
-
+    imageUrl
   }
   if (Object.values(fieldErrors).some(Boolean)) {
     return badRequest({
@@ -90,50 +85,47 @@ export async function action({ params, request }: ActionArgs) {
     })
   }
 
-await prisma.miniPostWithImage.create({
-  data: {
-    message,
-    imageUrl,
-    user:{
-      connect:{
-        id:userId
+  await prisma.miniPostWithImage.create({
+    data: {
+      message,
+      imageUrl,
+      user: {
+        connect: {
+          id: userId
+        }
+      }
     }
-  }
-  }
-})
-
-  return json({
-    message: 'Post created successfully',
   })
 
+  return json({
+    message: 'Post created successfully'
+  })
 }
 
 export default function EditPost() {
   const data = useLoaderData<typeof loader>()
-const imageFetcher = useFetcher()
+  const imageFetcher = useFetcher()
   const actionData = useActionData<typeof action>()
 
-const onSubmit = async ()=>{
-  const response = await imageFetcher.submit
-  console.log(response)
-}
+  const onSubmit = async () => {
+    const response = await imageFetcher.submit
+    console.log(response)
+  }
 
   return (
-    <div
-    className='mx-auto'
-    >
-<Form method='post'
-className='flex flex-col gap-4 text-black'
-onSubmit={onSubmit}
->
+    <div className='mx-auto'>
+      <Form
+        method='post'
+        className='flex flex-col gap-4 text-black'
+        onSubmit={onSubmit}
+      >
         <label htmlFor='userid'>userid</label>
         <input type='text' name='userId' value={data.user.id} />
         <label htmlFor='imageUrl'>imageUrl</label>
 
         <label htmlFor='message'>message</label>
-        <input type='text' name='message'  />
-      <button type='submit'>Submit</button>
-
+        <input type='text' name='message' />
+        <button type='submit'>Submit</button>
       </Form>
     </div>
   )

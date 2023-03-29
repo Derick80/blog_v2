@@ -12,10 +12,9 @@ export const meta: MetaFunction = () => {
 }
 export async function loader({ request }: LoaderArgs) {
   const { projects } = await getProjects()
-if(!projects){
-  throw new Error("No projects found");
-
-}
+  if (!projects) {
+    throw new Error('No projects found')
+  }
   return json({ projects })
 }
 
@@ -25,18 +24,12 @@ export default function Index() {
   const data = useLoaderData<typeof loader>()
   return (
     <>
-      <div className='flex mt-12 flex-col flex-wrap gap-5 md:flex-row'>
-
-            {isAdmin && (
-              <NavLink
-
-                to='/projects/new'
-                className=' mx-auto w-full'
-              >
-                Add Project
-                </NavLink>
-                )
-                }
+      <div className='mt-12 flex flex-col flex-wrap gap-5 md:flex-row'>
+        {isAdmin && (
+          <NavLink to='/projects/new' className=' mx-auto w-full'>
+            Add Project
+          </NavLink>
+        )}
 
         {data.projects.map((project) => (
           <ProjectsCard key={project.id} project={project} />
@@ -45,15 +38,15 @@ export default function Index() {
     </>
   )
 }
-export function CatchBoundary () {
+export function CatchBoundary() {
   const caught = useCatch()
 
   return (
     <div>
       <h1>Caught</h1>
-      <p>Status: { caught.status }</p>
+      <p>Status: {caught.status}</p>
       <pre>
-        <code>{ JSON.stringify(caught.data, null, 2) }</code>
+        <code>{JSON.stringify(caught.data, null, 2)}</code>
       </pre>
     </div>
   )

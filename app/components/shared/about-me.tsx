@@ -12,7 +12,7 @@ export default function AboutMe({ about }: AboutProps) {
   const user = useOptionalUser()
   const isOwner = user?.id === about.userId
   return (
-    <article className='mx-auto mt-5 mb-5 flex  w-fit max-w-prose flex-col rounded-md shadow-xl transition-shadow  duration-200 ease-in-out hover:shadow-2xl md:w-fit'>
+    <article className='mx-auto mb-5 mt-5 flex  w-fit max-w-prose flex-col rounded-md shadow-xl transition-shadow  duration-200 ease-in-out hover:shadow-2xl md:w-fit'>
       <h1 className='my-3 border-b-2 border-black text-left text-3xl'>
         {about.firstName} {about.lastName}, PhD
       </h1>

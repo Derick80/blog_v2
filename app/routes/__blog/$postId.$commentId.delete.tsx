@@ -10,10 +10,7 @@ export const meta: MetaFunction = () => {
   }
 }
 export async function action({ request, params }: ActionArgs) {
-  console.log(params, 'params')
-
   const commentId = params?.commentId
-  console.log(commentId, 'commentId')
 
   if (typeof commentId !== 'string')
     return badRequest({ message: 'Invalid commentId' })

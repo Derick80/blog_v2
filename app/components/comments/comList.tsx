@@ -109,8 +109,8 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
             {editing ? (
               <>
                 <editCommentFetcher.Form
-                // I don't think this is working
-                ref={formRef}
+                  // I don't think this is working
+                  ref={formRef}
                   method='post'
                   action={`comments/${comment.id}/edit`}
                   className='flex w-full gap-2'
@@ -124,28 +124,22 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
                     name='message'
                     defaultValue={comment.message}
                   />
-                  <button
-
-                    name='_action'
-                    value='editComment'
-                  >
+                  <button name='_action' value='editComment'>
                     <CheckIcon />
                   </button>
                 </editCommentFetcher.Form>
               </>
             ) : (
-              <div
-              className='flex flex-col w-full gap-2'
-              >
-                  <p>{ comment.createdBy } wrote:</p>
+              <div className='flex w-full flex-col gap-2'>
+                <p>{comment.createdBy} wrote:</p>
 
-                <p className='w-full text-sm bg-slate8/10 rounded-md'>{comment.message}</p>
+                <p className='w-full rounded-md bg-slate8/10 text-sm'>
+                  {comment.message}
+                </p>
               </div>
             )}
             {comment.userId === currentUser?.id && (
-              <button
-                onClick={() => setEditing(!editing)}
-              >
+              <button onClick={() => setEditing(!editing)}>
                 {editing ? <Cross2Icon /> : <Pencil1Icon />}
               </button>
             )}

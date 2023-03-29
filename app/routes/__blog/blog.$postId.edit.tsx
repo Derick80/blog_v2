@@ -246,7 +246,6 @@ export default function EditPost() {
             className='rounded-md border text-sm text-slate12'
             name='description'
             id='description'
-
           />
 
           <label htmlFor='body'>Post Content</label>
@@ -267,7 +266,7 @@ export default function EditPost() {
               defaultValue={selected}
             />
           </div>
-          <div className='mt-5 mb-5 flex flex-row items-center justify-end gap-2 text-slate12 dark:text-slate-50'>
+          <div className='mb-5 mt-5 flex flex-row items-center justify-end gap-2 text-slate12 dark:text-slate-50'>
             <label htmlFor='featured'>Featured</label>
             <Switch
               name='featured'

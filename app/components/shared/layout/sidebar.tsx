@@ -41,7 +41,7 @@ export function NewSideBar() {
       {Object.entries(linksByCategory).map(([category, links]) => (
         <div key={category} className='flex flex-col gap-2'>
           <h6 className='h6 italic text-slate-50'>{category}</h6>
-          <Divider my={'2'} isSidebar={true}  />
+          <Divider my={'2'} isSidebar={true} />
           <ul className='flex flex-col gap-2'>
             {links.map((link) => (
               <li key={link.name}>
@@ -74,17 +74,17 @@ export default function SideBar() {
   return (
     <div>
       <button
-        className={`absolute top-0 z-50 btn-primary bg-none text-black dark:text-slate-50 delay-150 duration-300 ease-in-out peer-focus:left-0 border-none focus:ring-0 ${buttonShift}`}
+        className={`btn-primary absolute top-0 z-50 border-none bg-none text-black delay-150 duration-300 ease-in-out focus:ring-0 peer-focus:left-0 dark:text-slate-50 ${buttonShift}`}
         onClick={() => setOpen(!open)}
       >
         {open ? <Cross2Icon /> : <HamburgerMenuIcon />}
       </button>
       <div
-        className={`absolute z-10 flex h-full w-[250px] flex-col text-slate-50 overflow-scroll rounded-r-3xl rounded-l-sm bg-crimson3 p-2 delay-150 duration-300 ease-out peer-focus:left-0 ${shifty}`}
+        className={`absolute z-10 flex h-full w-[250px] flex-col overflow-scroll rounded-l-sm rounded-r-3xl bg-crimson3 p-2 text-slate-50 delay-150 duration-300 ease-out peer-focus:left-0 ${shifty}`}
       >
         <div className='flex flex-col gap-2 text-slate-50'>
           <h6 className='h6 italic text-slate-50'>Primary Links</h6>
-          <Divider my={'2'} isSidebar={true}  />
+          <Divider my={'2'} isSidebar={true} />
           <NavLink
             to='/blog'
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -110,7 +110,7 @@ export default function SideBar() {
         </div>
 
         <h6 className='h6 italic text-slate-50'>Personal Links</h6>
-        <Divider my={'2'} isSidebar={true}  />
+        <Divider my={'2'} isSidebar={true} />
         <NavLink
           to='/travel'
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -135,7 +135,7 @@ export default function SideBar() {
         </NavLink>
 
         <h6 className='h6 italic text-slate-50'>Career Links</h6>
-        <Divider my={'2'} isSidebar={true}  />
+        <Divider my={'2'} isSidebar={true} />
         <NavLink
           to='/projects'
           style={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -162,7 +162,7 @@ export default function SideBar() {
         {user?.role === 'ADMIN' && (
           <>
             <h6 className='h6 italic text-slate-50'>Admin Links</h6>
-            <Divider my={'2'} isSidebar={true}  />
+            <Divider my={'2'} isSidebar={true} />
             <NavLink
               to='/blog/new'
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -206,7 +206,7 @@ export default function SideBar() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               type='submit'
-              className='btn-link text-slate-50 flex items-center gap-2'
+              className='btn-link flex items-center gap-2 text-slate-50'
             >
               Logout
               <ExitIcon />

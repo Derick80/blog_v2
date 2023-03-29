@@ -50,7 +50,7 @@ export default function Login() {
   return (
     <div className='mx-auto mt-10 flex h-fit flex-col shadow-2xl md:mt-20'>
       <AuthForm authType='login' />
-      <div className='mt-2 mb-2 flex h-full flex-col items-center justify-center md:mt-5 md:mb-5'>
+      <div className='mb-2 mt-2 flex h-full flex-col items-center justify-center md:mb-5 md:mt-5'>
         <h3 className='text-sm italic'>OR</h3>
         <p className='text-sm italic'>Login with your social account</p>
       </div>
@@ -70,7 +70,7 @@ export default function Login() {
         </SocialLoginForm>
       </div>
 
-      <div className='mt-2 mb-2 flex flex-col items-center justify-center md:mt-5 md:mb-5'>
+      <div className='mb-2 mt-2 flex flex-col items-center justify-center md:mb-5 md:mt-5'>
         <h3 className='text-sm italic'>OR</h3>
 
         <Link to='/register'>

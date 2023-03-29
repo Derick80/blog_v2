@@ -5,4 +5,3 @@ export type AuthInput = {
   redirectTo?: string
   token?: string
 }
-

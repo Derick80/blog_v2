@@ -32,7 +32,7 @@ export default function Drafts() {
 
   return (
     <>
-      <div className='mx-auto flex mt-10 max-w-screen-2xl flex-row gap-2'>
+      <div className='mx-auto mt-10 flex max-w-screen-2xl flex-row gap-2'>
         <div className='flex flex-col gap-2 md:grid md:grid-cols-12'>
           <div className='col-span-3 hidden h-[100px] w-full grow flex-col  md:flex md:h-full'>
             <Sidebar props={data.post} />
@@ -58,7 +58,6 @@ export default function Drafts() {
 }
 
 function Sidebar(props: { props: PostWithChildren[] }) {
-
   return (
     <div className='prose overflow-auto p-2'>
       <h2 className='text-sm md:text-2xl'>Draft quick links</h2>
@@ -86,15 +85,15 @@ function Sidebar(props: { props: PostWithChildren[] }) {
     </div>
   )
 }
-export function CatchBoundary () {
+export function CatchBoundary() {
   const caught = useCatch()
 
   return (
     <div>
       <h1>Caught</h1>
-      <p>Status: { caught.status }</p>
+      <p>Status: {caught.status}</p>
       <pre>
-        <code>{ JSON.stringify(caught.data, null, 2) }</code>
+        <code>{JSON.stringify(caught.data, null, 2)}</code>
       </pre>
     </div>
   )

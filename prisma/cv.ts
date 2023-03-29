@@ -5,7 +5,6 @@ const prisma = new PrismaClient()
 async function seed() {
   await prisma.curriculumVitae.deleteMany()
   const cv = await prisma.curriculumVitae.create({
-
     data: {
       title: 'Derick Hoskinson PHD',
       email: 'derickchoskinson@gmail.com',
@@ -17,27 +16,26 @@ async function seed() {
     }
   })
 
-
-    await prisma.education.createMany({
-      data: [
-        {
-          institution: 'Tufts University School of Biomedical Sciences',
-          degree: 'PhD',
-          location: 'Boston, MA',
-          startDate: '2006-09-01',
-          endDate: '2014-05-01',
-          cvId: cv.id
-        },
-        {
-          institution: 'University of Massachusetts Boston',
-          degree: 'bachelors of science',
-          location: 'Boston, MA',
-          startDate: '2001-09-01',
-          endDate: '2006-06-01',
-          cvId: cv.id
-        }
-      ]
-    })
+  await prisma.education.createMany({
+    data: [
+      {
+        institution: 'Tufts University School of Biomedical Sciences',
+        degree: 'PhD',
+        location: 'Boston, MA',
+        startDate: '2006-09-01',
+        endDate: '2014-05-01',
+        cvId: cv.id
+      },
+      {
+        institution: 'University of Massachusetts Boston',
+        degree: 'bachelors of science',
+        location: 'Boston, MA',
+        startDate: '2001-09-01',
+        endDate: '2006-06-01',
+        cvId: cv.id
+      }
+    ]
+  })
 
   await prisma.cVExperience.createMany({
     data: [
@@ -85,7 +83,7 @@ async function seed() {
     ]
   })
 
- await prisma.skill.createMany({
+  await prisma.skill.createMany({
     data: [
       {
         name: 'Genetics',
@@ -249,7 +247,6 @@ async function seed() {
 }
 
 seed()
-
   .catch((e) => {
     console.error(e)
     process.exit(1)

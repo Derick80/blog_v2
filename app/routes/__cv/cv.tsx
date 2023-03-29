@@ -1,10 +1,15 @@
-import type { Skill, CVExperience, Education, Publication } from '@prisma/client'
+import type {
+  Skill,
+  CVExperience,
+  Education,
+  Publication
+} from '@prisma/client'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { json } from '@remix-run/node'
 import { NavLink, Outlet, useCatch, useLoaderData } from '@remix-run/react'
 import { format } from 'date-fns'
 import Divider from '~/components/shared/divider'
-import type{ CV } from '~/utils/schemas/cv-schema'
+import type { CV } from '~/utils/schemas/cv-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
 import { useOptionalUser } from '~/utils/utilities'
@@ -28,7 +33,7 @@ export async function loader({ request }: { request: Request }) {
 }
 
 export default function BetaRoute() {
-  const {cv} = useLoaderData()
+  const { cv } = useLoaderData()
   const user = useOptionalUser()
 
   const skills = cv.map((skill: CV) => skill.skills).flat()
@@ -37,15 +42,18 @@ export default function BetaRoute() {
   console.table(publications)
 
   // Sort the experiences by start date
-  const experiences = cv.map((exp: CV) => exp.cvExperiences).flat().sort((a: { startDate: number }, b: { startDate: number }) => {
-    if (a.startDate < b.startDate) {
-      return 1
-    }
-    if (a.startDate > b.startDate) {
-      return -1
-    }
-    return 0
-  })
+  const experiences = cv
+    .map((exp: CV) => exp.cvExperiences)
+    .flat()
+    .sort((a: { startDate: number }, b: { startDate: number }) => {
+      if (a.startDate < b.startDate) {
+        return 1
+      }
+      if (a.startDate > b.startDate) {
+        return -1
+      }
+      return 0
+    })
 
   // Group the items by category using reduce not sure about assigning the type to the object at the end
   const itemsBycategory = skills.reduce(
@@ -67,28 +75,27 @@ export default function BetaRoute() {
       <div className='gap-5'>
         <div className='flex flex-row gap-5'>
           <div className='flex flex-col gap-5'>
-            <h2 className='text-2xl mt-5 mb-5 font-bold'>Work Experience</h2>
+            <h2 className='mb-5 mt-5 text-2xl font-bold'>Work Experience</h2>
 
             <Divider />
 
             {experiences.map((exp: CVExperience) => (
               <>
-
-              <DisplayEducationData
-                key={exp.id}
-                id={exp.id}
-                title={exp.title}
-                place={exp.company}
-                startDate={exp.startDate}
-                endDate={exp.endDate}
-                responsibilities={exp.responsibilities}
-              />
+                <DisplayEducationData
+                  key={exp.id}
+                  id={exp.id}
+                  title={exp.title}
+                  place={exp.company}
+                  startDate={exp.startDate}
+                  endDate={exp.endDate}
+                  responsibilities={exp.responsibilities}
+                />
               </>
             ))}
           </div>
         </div>
         <div className='flex flex-col justify-between gap-5'>
-          <h2 className='mt-5 mb-5 text-2xl font-bold'>Education</h2>
+          <h2 className='mb-5 mt-5 text-2xl font-bold'>Education</h2>
           <Divider />
 
           {education.map((edu: Education) => (
@@ -102,7 +109,7 @@ export default function BetaRoute() {
             />
           ))}
         </div>
-        <h2 className='mt-5 mb-5 text-2xl font-bold'>Publications</h2>
+        <h2 className='mb-5 mt-5 text-2xl font-bold'>Publications</h2>
         <Divider />
 
         {publications.map((pub: Publication) => (
@@ -118,19 +125,19 @@ export default function BetaRoute() {
           />
         ))}
 
-        <h2 className='mt-5 mb-5 h2 font-bold'>Skills</h2>
+        <h2 className='h2 mb-5 mt-5 font-bold'>Skills</h2>
         <Divider />
-        <div className='mt-5 mx-auto flex flex-col gap-5'>
-          <span className='flex gap-5 mx-auto'>
+        <div className='mx-auto mt-5 flex flex-col gap-5'>
+          <span className='mx-auto flex gap-5'>
             <CheckCircledIcon className='text-blue-500' />
             Mastered
             <CheckCircledIcon className='text-amber-500' />
             Familiar
           </span>
-          </div>
+        </div>
         {Object.entries(itemsBycategory).map(([category, items]) => (
           <div className='' key={category}>
-            <h2 className='font-bold h2'>{category}</h2>
+            <h2 className='h2 font-bold'>{category}</h2>
             <ul className='flex flex-wrap gap-2'>
               {items.map((item) => (
                 <li key={item.id} className='flex flex-row items-center gap-2'>
@@ -143,16 +150,13 @@ export default function BetaRoute() {
                       <CheckCircledIcon className='text-amber-500' />
                     </div>
                   )}
-                  <p
-                    className='h6'
-                  >{item.name}</p>
+                  <p className='h6'>{item.name}</p>
                 </li>
               ))}
             </ul>
           </div>
         ))}
       </div>
-
     </div>
   )
 }
@@ -232,9 +236,9 @@ function Pubs({
         )}
 
         <div className='flex flex-col justify-between text-sm text-gray-500'>
-          <p className='font-bold text-xs'>{journal}</p>
+          <p className='text-xs font-bold'>{journal}</p>
 
-          <p className='font-bold italic text-xs'>{edition}</p>
+          <p className='text-xs font-bold italic'>{edition}</p>
         </div>
         <a
           href={url}
@@ -249,15 +253,15 @@ function Pubs({
   )
 }
 
-export function CatchBoundary () {
+export function CatchBoundary() {
   const caught = useCatch()
 
   return (
     <div>
       <h1>Caught</h1>
-      <p>Status: { caught.status }</p>
+      <p>Status: {caught.status}</p>
       <pre>
-        <code>{ JSON.stringify(caught.data, null, 2) }</code>
+        <code>{JSON.stringify(caught.data, null, 2)}</code>
       </pre>
     </div>
   )

@@ -90,11 +90,7 @@ export const ShareButton = ({ id }: Props) => {
               ref={ref}
               readOnly
             />
-            <button
-              type='button'
-              className='text-blue-500'
-              onClick={copyLink}
-            >
+            <button type='button' className='text-blue-500' onClick={copyLink}>
               <CopyIcon />
             </button>
           </div>

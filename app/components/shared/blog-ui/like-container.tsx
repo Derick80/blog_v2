@@ -49,9 +49,7 @@ export default function LikeContainer({
   return (
     <>
       {currentUser ? (
-        <button
-          className='text-blue-500'
-        onClick={toggleLike}>
+        <button className='text-blue-500' onClick={toggleLike}>
           {isLiked ? (
             <div className='flex flex-row space-x-1'>
               <HeartFilledIcon style={{ color: 'red', fill: 'red' }} />

@@ -44,13 +44,13 @@ export async function editUserProfile({
       location: input.location,
       occupation: input.occupation,
       education: input.education,
-      user:{
-        update:{
+      user: {
+        update: {
           userName: input.userName,
           email: input.email,
           avatarUrl: input.profilePicture
+        }
       }
-    },
     }
   })
 

@@ -61,13 +61,17 @@ export const PostCard = ({
       <div
         key={id}
         // className='max-w-md w-fit m-5 rounded-2xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50'
-                className="my-14 w-[300px] md:w-[650px] rounded-lg border-2 p-2 shadow-md hover:translate-y-2 "
-
+        className='my-14 w-[300px] rounded-lg border-2 p-2 shadow-md hover:translate-y-2 md:w-[650px] '
       >
         <div className='mx-auto flex flex-col items-center overflow-hidden'>
           {imageUrl && (
             <img
-              style={{ width: '100%', height: '100%', objectFit: 'cover', overflow: 'hidden' }}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                overflow: 'hidden'
+              }}
               src={imageUrl}
               alt={title}
             />
@@ -123,8 +127,8 @@ export const PostCard = ({
             </p>
           </div>
         </div>
-        <div className='flex-wrap flex flex-row items-center gap-2'>
-          <div className='flex flex-row gap-2 flex-wrap p-2'>
+        <div className='flex flex-row flex-wrap items-center gap-2'>
+          <div className='flex flex-row flex-wrap gap-2 p-2'>
             {showLikes && likes && currentUser && (
               <LikeContainer
                 postId={id}
@@ -141,10 +145,7 @@ export const PostCard = ({
               />
             )}
             {showComments && data.comments && (
-              <button
-              className='text-blue-500'
-                onClick={() => setOpen(!open)}
-              >
+              <button className='text-blue-500' onClick={() => setOpen(!open)}>
                 <div className='flex flex-row space-x-1'>
                   <ChatBubbleIcon />
                   <p className='subtitle2'> {_count.comments}</p>
@@ -152,11 +153,10 @@ export const PostCard = ({
               </button>
             )}
             {showShare && id && <ShareButton id={id} />}
-
           </div>
-          { showOptions && currentUser?.id === userId && (
-            <PostOptions postId={ id } />
-          ) }
+          {showOptions && currentUser?.id === userId && (
+            <PostOptions postId={id} />
+          )}
         </div>
 
         <Divider my={'7'} />
@@ -168,12 +168,11 @@ export const PostCard = ({
             {open && data.comments && (
               <ListComments comments={data.comments || []} />
             )}
-          <div
-          >
-              <button className='btn-primary' onClick={ () => setOpen(!open) }>
-                { open ? 'Hide' : 'Show' } Comments
+            <div>
+              <button className='btn-primary' onClick={() => setOpen(!open)}>
+                {open ? 'Hide' : 'Show'} Comments
               </button>
-              </div>
+            </div>
           </div>
         )}
       </div>

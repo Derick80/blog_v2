@@ -11,9 +11,7 @@ export default function TopNav() {
       <div className='h-20 w-20'>
         <BrandIcon />
       </div>
-      <div className='md:h4 h4 '>
-        Derick Hoskinson PhD
-      </div>
+      <div className='md:h4 h4 '>Derick Hoskinson PhD</div>
       <NavLink
         prefetch='intent'
         style={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -21,13 +19,11 @@ export default function TopNav() {
         to='/'
         className='btn-navlink'
       >
-
-
         <h4 className='h4 font-semibold'>Home</h4>
       </NavLink>
       <NavLink
         prefetch='intent'
-        style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
+        style={({ isActive }) => (isActive ? activeStyle : undefined)}
         aria-label='Go to Blog'
         to='/blog'
         className='btn-navlink'

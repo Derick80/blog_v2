@@ -1,6 +1,11 @@
 import type { ActionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { useRouteLoaderData, useFetcher, Form, useCatch } from '@remix-run/react'
+import {
+  useRouteLoaderData,
+  useFetcher,
+  Form,
+  useCatch
+} from '@remix-run/react'
 import type { Categories } from '~/utils/schemas/projects-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
@@ -29,7 +34,6 @@ export async function action({ request }: ActionArgs) {
   ) {
     return json({ error: 'Invalid form data' }, { status: 400 })
   }
-
 
   if (!imageUrl) {
     return json({
@@ -181,15 +185,15 @@ export default function Index() {
   )
 }
 
-export function CatchBoundary () {
+export function CatchBoundary() {
   const caught = useCatch()
 
   return (
     <div>
       <h1>Caught</h1>
-      <p>Status: { caught.status }</p>
+      <p>Status: {caught.status}</p>
       <pre>
-        <code>{ JSON.stringify(caught.data, null, 2) }</code>
+        <code>{JSON.stringify(caught.data, null, 2)}</code>
       </pre>
     </div>
   )

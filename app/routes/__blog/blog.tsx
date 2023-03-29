@@ -32,7 +32,7 @@ export default function Index() {
   return (
     <div className='mx-auto flex grow flex-col items-center gap-2 '>
       <div>
-       <h5 className='h5'>Blog Feed</h5>
+        <h5 className='h5'>Blog Feed</h5>
       </div>
       {data.post.map((post) => (
         <PostCard

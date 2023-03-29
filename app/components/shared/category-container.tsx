@@ -21,7 +21,7 @@ export default function CategoryContainer({
   return (
     <>
       <div
-        className='flex w-fit flex-row items-center gap-2 rounded-md border py-1 px-1'
+        className='flex w-fit flex-row items-center gap-2 rounded-md border px-1 py-1'
         key={index}
       >
         {isLink ? (

@@ -76,15 +76,15 @@ export default function Index() {
     </div>
   )
 }
-export function CatchBoundary () {
+export function CatchBoundary() {
   const caught = useCatch()
 
   return (
     <div>
       <h1>Caught</h1>
-      <p>Status: { caught.status }</p>
+      <p>Status: {caught.status}</p>
       <pre>
-        <code>{ JSON.stringify(caught.data, null, 2) }</code>
+        <code>{JSON.stringify(caught.data, null, 2)}</code>
       </pre>
     </div>
   )

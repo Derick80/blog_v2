@@ -215,7 +215,7 @@ export default function Uploader() {
           />
         </div>
 
-        <div className='mt-5 mb-5 flex flex-col items-center gap-5 text-slate12 dark:text-slate-50'>
+        <div className='mb-5 mt-5 flex flex-col items-center gap-5 text-slate12 dark:text-slate-50'>
           <label htmlFor='featured'>Featured</label>
           <Switch
             name='featured'

@@ -41,9 +41,7 @@ export default function FavoriteContainer({
 
   return (
     <>
-      <button
-        className='text-blue-500'
-      onClick={toggleFavorite}>
+      <button className='text-blue-500' onClick={toggleFavorite}>
         {isFavorite ? (
           <BookmarkFilledIcon style={{ color: 'red', fill: 'red' }} />
         ) : (
