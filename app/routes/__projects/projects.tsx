@@ -24,7 +24,7 @@ export default function Index() {
   const isAdmin = user?.role === 'ADMIN'
   const data = useLoaderData<typeof loader>()
   return (
-    <div className='flex h-full flex-col items-center gap-2'>
+    <div className='flex h-full flex-row flex-wrap items-center gap-4 p-6'>
       {isAdmin && (
         <NavLink to='/projects/new' className=' mx-auto w-full'>
           <Button variant='outline' size='base'>
@@ -33,7 +33,7 @@ export default function Index() {
         </NavLink>
       )}
 
-      <div>
+      <div className='flex flex-col gap-4'>
         {data.projects.map((project) => (
           <ProjectsCard key={project.id} project={project} />
         ))}

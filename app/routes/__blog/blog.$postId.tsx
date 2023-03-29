@@ -35,12 +35,12 @@ export default function Index() {
         <PostCard
           key={data.post.id}
           data={data.post}
-          showCategories={false}
-          showComments={false}
-          showFavorites={false}
-          showLikes={false}
-          showShare={false}
-          showOptions={false}
+          showCategories={true}
+          showComments={true}
+          showFavorites={true}
+          showLikes={true}
+          showShare={true}
+          showOptions={true}
         />
       )}
     </div>
