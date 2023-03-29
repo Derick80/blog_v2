@@ -220,13 +220,13 @@ export default function EditPost() {
   })
 
   return (
-    <div className='mx-auto mb-7 mt-5 flex w-full flex-col items-center border-2 bg-white p-2 text-slate12 dark:bg-crimson1 dark:text-slate1 '>
+    <div className='mx-auto mb-7 mt-5 flex w-full flex-col items-center border-2  p-2 text-slate12  '>
       <div className='flex w-full flex-col items-center justify-center'>
         <Form
           method='post'
           action={`/blog/${id}/edit`}
           id='editPost'
-          className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-crimson1 dark:text-slate-50'
+          className='flex flex-col gap-5 rounded-xl  text-slate12  '
         >
           <input type='hidden' name='createdBy' value={user?.userName} />
           <input type='hidden' name='postId' value={id} />
@@ -254,11 +254,8 @@ export default function EditPost() {
           {body && <TipTap content={body} />}
           <input type='hidden' name='body' defaultValue={body} />
 
-          <div className='flex flex-col gap-2 text-slate12 dark:text-slate-50'>
-            <label
-              className='text-slate12 dark:text-slate-50'
-              htmlFor='categories'
-            >
+          <div className='flex flex-col gap-2 text-slate12'>
+            <label className='text-slate12' htmlFor='categories'>
               Categories
             </label>
 
@@ -284,7 +281,7 @@ export default function EditPost() {
               defaultValue={selected}
             />
           </div>
-          <div className='mb-5 mt-5 flex flex-row items-center justify-end gap-2 text-slate12 dark:text-slate-50'>
+          <div className='mb-5 mt-5 flex flex-row items-center justify-end gap-2 text-slate12'>
             <label htmlFor='featured'>Featured</label>
             <Switch
               name='featured'
@@ -315,10 +312,10 @@ export default function EditPost() {
               type='file'
               name='imageUrl'
               id='imageUrl'
-              className='block w-full rounded-xl border-2 p-2 text-sm text-slate12 dark:text-slate-50'
+              className='block w-full rounded-xl border-2 p-2 text-sm text-slate12'
               accept='image/*'
             />
-            <button className='btn-primary'>Upload</button>
+            <button className=''>Upload</button>
           </imageFetcher.Form>
           {imageFetcher.data ? (
             <div className='flex w-full flex-col items-center gap-2'>
@@ -351,13 +348,13 @@ export default function EditPost() {
             </div>
           )}
         </div>
-        <div className='flex flex-row items-center justify-end gap-2 text-slate12 dark:text-slate-50'>
+        <div className='flex flex-row items-center justify-end gap-2 text-slate12'>
           <button
             type='submit'
             name='_action'
             value='save'
             form='editPost'
-            className='btn-primary'
+            className=''
           >
             {text}
           </button>
@@ -367,7 +364,7 @@ export default function EditPost() {
               form='editPost'
               name='_action'
               value='unpublish'
-              className='btn-primary-warning'
+              className='-warning'
             >
               {unpublishText}
             </button>
@@ -387,7 +384,7 @@ export default function EditPost() {
             form='editPost'
             name='_action'
             value='delete'
-            className='btn-primary-danger'
+            className='-danger'
           >
             {deleteText}
           </button>

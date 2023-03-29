@@ -158,7 +158,7 @@ export default function Index() {
           type='text'
           name='title'
           defaultValue={data.project.title}
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-slate12 shadow-md '
         />
         <label htmlFor='description' className='text-sm font-semibold'>
           Description
@@ -166,14 +166,14 @@ export default function Index() {
         <textarea
           name='description'
           defaultValue={data.project.description}
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-slate12 shadow-md '
         />
         {data.project.categories && (
           <select
             multiple
             name='categories'
             id='categories'
-            className='rounded-md border p-2 text-black shadow-sm'
+            className='rounded-md border p-2 text-slate12 shadow-sm'
           >
             {categories.map((category) => {
               return (
@@ -197,7 +197,7 @@ export default function Index() {
           type='text'
           name='projectUrl'
           defaultValue={data.project.projectUrl}
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-slate12 shadow-md '
         />
         <label htmlFor='githubUrl' className='text-sm font-semibold'>
           Github Url
@@ -206,7 +206,7 @@ export default function Index() {
           type='text'
           name='githubUrl'
           defaultValue={data.project.githubUrl}
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-slate12 shadow-md '
         />
       </Form>
 
@@ -238,7 +238,7 @@ export default function Index() {
               name='imageUrl'
               value={imageFetcher?.data?.imageUrl}
             />
-            <div className='h-[100px] w-[100px] rounded-xl bg-crimson12 text-slate12'>
+            <div className='h-[100px] w-[100px] rounded-xl  text-slate12'>
               <img src={imageFetcher?.data?.imageUrl} alt={'#'} />
             </div>
           </div>

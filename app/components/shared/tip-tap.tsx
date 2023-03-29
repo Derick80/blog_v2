@@ -1,4 +1,3 @@
-import { Button } from '@mantine/core'
 import { RichTextEditor } from '@mantine/tiptap'
 import Link from '@tiptap/extension-link'
 import { useEditor } from '@tiptap/react'
@@ -11,6 +10,7 @@ import Image from '@tiptap/extension-image'
 import { ImageIcon } from '@radix-ui/react-icons'
 import Highlight from '@tiptap/extension-highlight'
 import TextAlign from '@tiptap/extension-text-align'
+import Button from './layout/button'
 
 const TipTap = ({ content }: { content?: string }) => {
   const editor = useEditor({
@@ -80,12 +80,7 @@ const TipTap = ({ content }: { content?: string }) => {
             <RichTextEditor.AlignRight />
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
-            <Button
-              type='button'
-              size='xs'
-              variant='outline'
-              onClick={addImage}
-            >
+            <Button size='small' variant='outline' onClick={addImage}>
               <ImageIcon />
             </Button>
           </RichTextEditor.ControlsGroup>

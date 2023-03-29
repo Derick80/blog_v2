@@ -15,21 +15,20 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData<{ post: PostWithChildren[] }>()
   return (
-
-      <div className='flex flex-col items-center gap-4'>
-        {data.post &&
-          data.post.map((item: PostWithChildren) => (
-            <PostCard
-              key={item.id}
-              data={item}
-              showCategories={true}
-              showComments={true}
-              showFavorites={true}
-              showLikes={true}
-              showOptions={true}
-              showShare={true}
-            />
-          ))}
+    <div className='flex flex-col items-center gap-4'>
+      {data.post &&
+        data.post.map((item: PostWithChildren) => (
+          <PostCard
+            key={item.id}
+            data={item}
+            showCategories={true}
+            showComments={true}
+            showFavorites={true}
+            showLikes={true}
+            showOptions={true}
+            showShare={true}
+          />
+        ))}
     </div>
   )
 }

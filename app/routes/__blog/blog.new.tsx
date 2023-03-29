@@ -142,10 +142,10 @@ export default function Uploader() {
     })
 
   return (
-    <div className='mx-auto mb-7 flex w-[350px] flex-col items-center rounded-md bg-white p-2 text-slate12 dark:bg-crimson2 dark:text-slate1 md:w-[550px]'>
+    <div className='mx-auto mb-7 flex flex-col items-center rounded-md p-6 text-slate12 '>
       <Form
         id='newPost'
-        className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-crimson1 dark:text-slate-50'
+        className='flex flex-col gap-5 rounded-xl  text-slate12  '
         method='post'
       >
         <input
@@ -198,11 +198,8 @@ export default function Uploader() {
           <label htmlFor='body'>Body</label>
           <TipTap />
         </div>
-        <div className='flex flex-col gap-5 text-slate12 dark:text-slate-50'>
-          <label
-            className='text-slate12 dark:text-slate-50'
-            htmlFor='categories'
-          >
+        <div className='flex flex-col gap-5 text-slate12'>
+          <label className='text-slate12' htmlFor='categories'>
             Categories
           </label>
 
@@ -215,7 +212,7 @@ export default function Uploader() {
           />
         </div>
 
-        <div className='mb-5 mt-5 flex flex-col items-center gap-5 text-slate12 dark:text-slate-50'>
+        <div className='mb-5 mt-5 flex flex-col items-center gap-5 text-slate12'>
           <label htmlFor='featured'>Featured</label>
           <Switch
             name='featured'
@@ -239,12 +236,12 @@ export default function Uploader() {
           </label>
           <input
             id='imageUrl'
-            className='block w-full rounded-xl border-2 p-2 text-sm text-slate12 dark:text-slate-50'
+            className='block w-full rounded-xl border-2 p-2 text-sm text-slate12'
             type='file'
             name='imageUrl'
             accept='image/*'
           />
-          <button className='btn-primary' type='submit'>
+          <button className='' type='submit'>
             Upload Image
           </button>
         </fetcher.Form>
@@ -271,8 +268,8 @@ export default function Uploader() {
             </div>
           ) : null}
 
-          <div className='flex flex-row items-center justify-center gap-2 text-slate12 dark:text-slate-50'>
-            <button type='submit' form='newPost' className='btn-primary'>
+          <div className='flex flex-row items-center justify-center gap-2 text-slate12'>
+            <button type='submit' form='newPost' className=''>
               {text}
             </button>
           </div>

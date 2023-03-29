@@ -115,47 +115,47 @@ export default function EditPost() {
 
   return (
     <div className='flex w-screen flex-col  gap-4'>
-      <div className='flex flex-row gap-4'>
+      <div className='flex flex-row items-center gap-4'>
         regular
-        <Button variant='regular' size='regular'>
+        <Button variant='filled' size='small'>
           Create
         </Button>
-        <Button variant='regular' size='large'>
+        <Button variant='filled' size='base'>
           Create
         </Button>
-        <Button variant='regular' size='small'>
+        <Button variant='filled' size='large'>
           Create
         </Button>
       </div>
-      <div className='flex flex-row gap-4'>
+      <div className='flex flex-row items-center gap-4'>
         outline
-        <Button variant='outline' size='regular'>
+        <Button variant='outline' size='small'>
+          Create
+        </Button>
+        <Button variant='outline' size='base'>
           Create
         </Button>
         <Button variant='outline' size='large'>
           Create
         </Button>
-        <Button variant='outline' size='small'>
-          Create
-        </Button>
       </div>
 
-      <div className='flex flex-row gap-4'>
+      <div className='flex flex-row items-center gap-4'>
         Unfilled
-        <Button variant='unfilled' size='regular'>
+        <Button variant='unfilled' size='small'>
+          Create
+        </Button>
+        <Button variant='unfilled' size='base'>
           Create
         </Button>
         <Button variant='unfilled' size='large'>
-          Create
-        </Button>
-        <Button variant='unfilled' size='small'>
           Create
         </Button>
       </div>
 
       <div>
         regular
-        <Button variant='regular' size='small'>
+        <Button variant='filled' size='small'>
           Create <PlusCircledIcon />
         </Button>
         unfilled

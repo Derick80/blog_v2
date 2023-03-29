@@ -29,20 +29,18 @@ export default function Index() {
     categories: SerializeFrom<typeof getAllCategories>
   }>()
 
-  const post = data.post
-
   return (
-    <div className='flex flex-col items-center'>
-      {post && (
+    <div className='flex  h-full w-full items-center'>
+      {data.post && (
         <PostCard
-          key={post.id}
-          data={post}
-          showCategories={true}
-          showComments={true}
-          showFavorites={true}
-          showLikes={true}
-          showShare={true}
-          showOptions={true}
+          key={data.post.id}
+          data={data.post}
+          showCategories={false}
+          showComments={false}
+          showFavorites={false}
+          showLikes={false}
+          showShare={false}
+          showOptions={false}
         />
       )}
     </div>

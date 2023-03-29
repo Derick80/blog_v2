@@ -96,7 +96,7 @@ export default function AboutEdit() {
           User Name
         </label>
         <input
-          className='w-full rounded-md p-2 text-sm text-black shadow-md'
+          className='w-full rounded-md p-2 text-sm text-slate12 shadow-md'
           id='userName'
           name='userName'
           type='text'
@@ -106,7 +106,7 @@ export default function AboutEdit() {
           First Name
         </label>
         <input
-          className='w-full rounded-md p-2 text-sm text-black shadow-md'
+          className='w-full rounded-md p-2 text-sm text-slate12 shadow-md'
           id='firstName'
           name='firstName'
           type='text'
@@ -116,7 +116,7 @@ export default function AboutEdit() {
           Last Name
         </label>
         <input
-          className='w-full rounded-md p-2 text-sm text-black shadow-md'
+          className='w-full rounded-md p-2 text-sm text-slate12 shadow-md'
           id='lastName'
           name='lastName'
           type='text'
@@ -124,7 +124,7 @@ export default function AboutEdit() {
         />
         <label htmlFor='email'>Email</label>
         <input
-          className='w-full rounded-md p-2 text-sm text-black shadow-md'
+          className='w-full rounded-md p-2 text-sm text-slate12 shadow-md'
           id='email'
           name='email'
           type='text'
@@ -140,7 +140,7 @@ export default function AboutEdit() {
           Location
         </label>
         <input
-          className='w-full rounded-md p-2 text-sm text-black shadow-md'
+          className='w-full rounded-md p-2 text-sm text-slate12 shadow-md'
           id='location'
           name='location'
           type='text'
@@ -150,7 +150,7 @@ export default function AboutEdit() {
           Education
         </label>
         <input
-          className='w-full rounded-md p-2 text-sm text-black shadow-md'
+          className='w-full rounded-md p-2 text-sm text-slate12 shadow-md'
           id='education'
           name='education'
           type='text'
@@ -160,7 +160,7 @@ export default function AboutEdit() {
           Occupation
         </label>
         <input
-          className='w-full rounded-md p-2 text-sm text-black shadow-md'
+          className='w-full rounded-md p-2 text-sm text-slate12 shadow-md'
           id='occupation'
           name='occupation'
           type='text'
@@ -205,7 +205,7 @@ export default function AboutEdit() {
               name='imageUrl'
               value={profileImageFetcher?.data?.imageUrl}
             />
-            <div className='h-[100px] w-[100px] rounded-xl bg-crimson12 text-slate12'>
+            <div className='h-[100px] w-[100px] rounded-xl  text-slate12'>
               <img src={profileImageFetcher?.data?.imageUrl} alt={'#'} />
             </div>
           </div>

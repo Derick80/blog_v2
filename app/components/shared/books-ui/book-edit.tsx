@@ -37,7 +37,7 @@ export default function EditBookReview() {
         <label htmlFor='title'>Title</label>
         <input
           type='text'
-          className='rounded-md border text-black'
+          className='rounded-md border text-slate12'
           defaultValue={data.book?.title}
           name='title'
           id='title'
@@ -76,7 +76,7 @@ export default function EditBookReview() {
           <label htmlFor='imageUrl'>Upload an Image</label>
           <input
             id='imageUrl'
-            className='block rounded-xl bg-crimson12 text-slate12'
+            className='block rounded-xl  text-slate12'
             type='file'
             name='imageUrl'
             accept='image/*'
@@ -93,7 +93,7 @@ export default function EditBookReview() {
               name='imageUrl'
               value={bookImageFetcher?.data?.imageUrl}
             />
-            <div className='h-[100px] w-[100px] rounded-xl bg-crimson12 text-slate12'>
+            <div className='h-[100px] w-[100px] rounded-xl  text-slate12'>
               <img
                 src={bookImageFetcher?.data?.imageUrl || data.book.image}
                 alt={'#'}

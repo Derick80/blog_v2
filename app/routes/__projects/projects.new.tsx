@@ -100,20 +100,20 @@ export default function Index() {
         <input
           type='text'
           name='title'
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-slate12 shadow-md '
         />
         <label htmlFor='description' className='text-sm font-semibold'>
           Description
         </label>
         <textarea
           name='description'
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-slate12 shadow-md '
         />
         <select
           multiple
           name='categories'
           id='categories'
-          className='rounded-md border p-2 text-black shadow-sm'
+          className='rounded-md border p-2 text-slate12 shadow-sm'
         >
           {categories.map((category) => {
             return <option key={category.id}>{category.value}</option>
@@ -126,7 +126,7 @@ export default function Index() {
         <input
           type='text'
           name='projectUrl'
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-slate12 shadow-md '
         />
         <label htmlFor='githubUrl' className='text-sm font-semibold'>
           Github Url
@@ -134,7 +134,7 @@ export default function Index() {
         <input
           type='text'
           name='githubUrl'
-          className='w-full p-2 text-black shadow-md '
+          className='w-full p-2 text-slate12 shadow-md '
         />
       </Form>
 
@@ -166,7 +166,7 @@ export default function Index() {
               name='imageUrl'
               value={imageFetcher?.data?.imageUrl}
             />
-            <div className='h-[100px] w-[100px] rounded-xl bg-crimson12 text-slate12'>
+            <div className='h-[100px] w-[100px] rounded-xl  text-slate12'>
               <img src={imageFetcher?.data?.imageUrl} alt={'#'} />
             </div>
           </div>

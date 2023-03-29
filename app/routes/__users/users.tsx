@@ -65,7 +65,7 @@ export default function Users() {
           nothingFound='No options'
           data={data.userNames}
         />
-        <button className='btn-primary' type='submit'>
+        <button className='' type='submit'>
           Search
         </button>
       </userFetcher.Form>

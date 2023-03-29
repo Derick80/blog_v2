@@ -32,7 +32,7 @@ export default function UserCard({ user, profiles }: UserCardProps) {
                   <Avatar imageUrl={user.avatarUrl} h={10} w={10} />
                 </>
               ) : (
-                <div className='relative h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600'>
+                <div className='relative h-10 w-10 overflow-hidden rounded-full'>
                   <UserPlaceHolder />
                 </div>
               )}
@@ -44,10 +44,7 @@ export default function UserCard({ user, profiles }: UserCardProps) {
                 <p className='p'> {user.userName}</p>
               </NavLink>
 
-              <button
-                className='btn-primary'
-                onClick={() => setShowMore(!showMore)}
-              >
+              <button className='' onClick={() => setShowMore(!showMore)}>
                 more
               </button>
             </div>

@@ -13,7 +13,7 @@ export default function ProjectsCard({ project }: { project: Project }) {
   return (
     <div
       key={project.id}
-      className='mx-auto  grid w-[350px] grid-cols-3 rounded-md p-2 shadow-2xl dark:bg-zinc-800'
+      className='mx-auto  grid grid-cols-3 rounded-md p-2 shadow-2xl'
     >
       <div className='col-span-4'>
         <a

@@ -68,7 +68,7 @@ export default function BetaRoute() {
   ) as { [key: string]: Skill[] }
 
   return (
-    <div className='flex w-full flex-col items-center p-2 md:w-full'>
+    <div className='flex h-full w-full flex-col items-center px-5 md:w-full'>
       <Outlet />
       <h1 className='text-3xl font-bold'>Curriculum Vitae</h1>
 
@@ -80,17 +80,15 @@ export default function BetaRoute() {
             <Divider />
 
             {experiences.map((exp: CVExperience) => (
-              <>
-                <DisplayEducationData
-                  key={exp.id}
-                  id={exp.id}
-                  title={exp.title}
-                  place={exp.company}
-                  startDate={exp.startDate}
-                  endDate={exp.endDate}
-                  responsibilities={exp.responsibilities}
-                />
-              </>
+              <DisplayEducationData
+                key={exp.id}
+                id={exp.id}
+                title={exp.title}
+                place={exp.company}
+                startDate={exp.startDate}
+                endDate={exp.endDate}
+                responsibilities={exp.responsibilities}
+              />
             ))}
           </div>
         </div>
@@ -125,7 +123,7 @@ export default function BetaRoute() {
           />
         ))}
 
-        <h2 className='h2 mb-5 mt-5 font-bold'>Skills</h2>
+        <h2 className=' mb-5 mt-5 font-bold'>Skills</h2>
         <Divider />
         <div className='mx-auto mt-5 flex flex-col gap-5'>
           <span className='mx-auto flex gap-5'>
@@ -137,7 +135,7 @@ export default function BetaRoute() {
         </div>
         {Object.entries(itemsBycategory).map(([category, items]) => (
           <div className='' key={category}>
-            <h2 className='h2 font-bold'>{category}</h2>
+            <h2 className=' font-bold'>{category}</h2>
             <ul className='flex flex-wrap gap-2'>
               {items.map((item) => (
                 <li key={item.id} className='flex flex-row items-center gap-2'>
@@ -177,7 +175,7 @@ function DisplayEducationData({
   responsibilities?: string[]
 }) {
   return (
-    <div key={id} className='mt-5 w-full gap-5 '>
+    <div key={id} className='h-full w-full gap-5 px-5 '>
       <div className='flex flex-row justify-between text-sm text-gray-500'>
         <div className='flex flex-col gap-2'>
           <p className='font-bold'>{place}</p>
@@ -228,9 +226,7 @@ function Pubs({
           <div className='flex flex-row justify-between text-sm text-slate-400'>
             <div className='flex flex-col gap-1'>
               <p className='text-xs'>{authors}</p>
-              <p className='text-xl font-bold italic text-black dark:text-slate-50'>
-                {title}
-              </p>
+              <p className='text-xl font-bold italic text-slate12'>{title}</p>
             </div>
           </div>
         )}

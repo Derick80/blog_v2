@@ -24,20 +24,19 @@ export default function Index() {
   const isAdmin = user?.role === 'ADMIN'
   const data = useLoaderData<typeof loader>()
   return (
-    <div className='flex flex-col items-center gap-2'>
-        {isAdmin && (
-          <NavLink to='/projects/new' className=' mx-auto w-full'>
-           <Button
-           variant='outline'
-           size='regular'
-           >Create new</Button>
-          </NavLink>
-        )}
+    <div className='flex h-full flex-col items-center gap-2'>
+      {isAdmin && (
+        <NavLink to='/projects/new' className=' mx-auto w-full'>
+          <Button variant='outline' size='base'>
+            Create new
+          </Button>
+        </NavLink>
+      )}
 
       <div>
-        { data.projects.map((project) => (
-          <ProjectsCard key={ project.id } project={ project } />
-        )) }
+        {data.projects.map((project) => (
+          <ProjectsCard key={project.id} project={project} />
+        ))}
       </div>
     </div>
   )

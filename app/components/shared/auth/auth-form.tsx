@@ -52,11 +52,9 @@ export const AuthForm = ({ authType }: Props) => {
 
       {authType !== 'confirm' && (
         <>
-          <label className='text-sm text-zinc-900 dark:text-slate-200'>
-            Email
-          </label>
+          <label className='text-sm text-zinc-900 '>Email</label>
           <input
-            className='rounded-xl p-2 text-black'
+            className='rounded-xl p-2 text-slate12'
             id='email'
             name='email'
             type='email'
@@ -64,7 +62,7 @@ export const AuthForm = ({ authType }: Props) => {
           />
           <label>Username</label>
           <input
-            className='rounded-xl p-2 text-black'
+            className='rounded-xl p-2 text-slate12'
             id='username'
             name='username'
             type='text'
@@ -76,7 +74,7 @@ export const AuthForm = ({ authType }: Props) => {
         <>
           <label>Password</label>
           <input
-            className='rounded-xl p-2 text-black'
+            className='rounded-xl p-2 text-slate12'
             id='password'
             name='password'
             type='password'
@@ -86,7 +84,7 @@ export const AuthForm = ({ authType }: Props) => {
         </>
       )}
 
-      <button className='btn-primary' type='submit'>
+      <button className='' type='submit'>
         {button}
       </button>
     </Form>

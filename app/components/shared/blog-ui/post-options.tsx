@@ -1,6 +1,6 @@
-import { Button } from '@mantine/core'
 import { Pencil1Icon } from '@radix-ui/react-icons'
 import { NavLink } from '@remix-run/react'
+import Button from '../layout/button'
 
 export type OptionProps = {
   postId: string
@@ -8,9 +8,11 @@ export type OptionProps = {
 export default function PostOptions({ postId }: OptionProps) {
   return (
     <NavLink to={`/blog/${postId}/edit`}>
-      <button className='text-blue-500'>
-        <Pencil1Icon />
-      </button>
+      <Button variant='unfilled' size='small'>
+        <div className='flex flex-row space-x-1 text-blue-500'>
+          <Pencil1Icon />
+        </div>
+      </Button>
     </NavLink>
   )
 }

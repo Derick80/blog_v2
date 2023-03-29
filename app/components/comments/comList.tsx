@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Paper } from '@mantine/core'
+import { Avatar, Box, Paper } from '@mantine/core'
 import {
   CheckIcon,
   Cross2Icon,
@@ -11,6 +11,7 @@ import React from 'react'
 import { useState } from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import { useOptionalUser } from '~/utils/utilities'
+import Button from '../shared/layout/button'
 import FormComments from './com-form'
 
 function getReplyCountText(count: number) {
@@ -50,8 +51,8 @@ function CommentActions({
         <div>{getReplyCountText(replyCount)}</div>
         {user ? (
           <Button
-            size='sm'
-            variant='subtle'
+            variant='filled'
+            size='base'
             onClick={() => setReplying(!replying)}
           >
             Reply
@@ -139,9 +140,13 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
               </div>
             )}
             {comment.userId === currentUser?.id && (
-              <button onClick={() => setEditing(!editing)}>
+              <Button
+                variant='filled'
+                size='base'
+                onClick={() => setEditing(!editing)}
+              >
                 {editing ? <Cross2Icon /> : <Pencil1Icon />}
-              </button>
+              </Button>
             )}
           </div>
         </div>

@@ -29,42 +29,39 @@ export async function loader({ request }: LoaderArgs) {
 
 export default function Drafts() {
   const data = useLoaderData<SerializeFrom<{ post: PostWithChildren[] }>>()
+  console.log(data.post, 'data')
 
   return (
-    <>
-      <div className='mx-auto mt-10 flex max-w-screen-2xl flex-row gap-2'>
-        <div className='flex flex-col gap-2 md:grid md:grid-cols-12'>
-          <div className='col-span-3 hidden h-[100px] w-full grow flex-col  md:flex md:h-full'>
-            <Sidebar props={data.post} />
-          </div>
-          <div className='col-span-11 col-start-4 flex w-full grow  flex-wrap gap-2'>
-            {data.post.map((draft: PostWithChildren) => (
-              <PostCard
-                key={draft.id}
-                data={draft}
-                showCategories={true}
-                showComments={true}
-                showLikes={true}
-                showFavorites={true}
-                showOptions={true}
-                showShare={true}
-              />
-            ))}
-          </div>
-        </div>
+    <div className='mx-auto flex flex-col justify-between gap-4 md:flex-row'>
+      <div>
+        <DraftSideBar props={data.post} />
       </div>
-    </>
+      <div>
+        {data.post.map((draft: PostWithChildren) => (
+          <PostCard
+            key={draft.id}
+            data={draft}
+            showCategories={false}
+            showComments={false}
+            showFavorites={false}
+            showLikes={false}
+            showShare={false}
+            showOptions={false}
+          />
+        ))}
+      </div>
+    </div>
   )
 }
 
-function Sidebar(props: { props: PostWithChildren[] }) {
+function DraftSideBar(props: { props: PostWithChildren[] }) {
   return (
-    <div className='prose overflow-auto p-2'>
+    <div className='hidden w-full overflow-auto p-2 md:block'>
       <h2 className='text-sm md:text-2xl'>Draft quick links</h2>
       {props.props.map((draft: PostWithChildren) => (
         <div
           key={draft.id}
-          className='prose flex w-full flex-row items-center justify-between gap-2 text-xs md:text-sm'
+          className='flex w-full flex-row items-center justify-between gap-2 text-xs md:text-sm'
         >
           <div className='flex flex-col'>
             <h3 className='m-0 text-xs md:text-sm'>Title</h3>
