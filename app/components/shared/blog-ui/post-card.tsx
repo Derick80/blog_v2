@@ -16,6 +16,7 @@ import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { useOptionalUser } from '~/utils/utilities'
 import Divider from '../divider'
 import Avatar from '../avatar'
+import dayjs from 'dayjs'
 
 export type ManyPostProps = {
   data: PostWithChildren
@@ -61,9 +62,9 @@ export const PostCard = ({
       <div
         key={id}
         // className='max-w-md w-fit m-5 rounded-2xl from-crimson3 to-crimson2 text-black shadow-md transition duration-300 hover:-translate-y-2 dark:bg-gradient-to-r dark:text-slate-50'
-        className='my-5 mx-auto w-[350px] rounded-lg border-2 p-2 shadow-md hover:translate-y-2 md:w-[650px] '
+        className='mx-auto my-5 w-[350px] rounded-lg  p-2 shadow-md hover:translate-y-2 md:w-[650px] '
       >
-        <div className='mx-auto flex flex-col items-center overflow-hiddens'>
+        <div className='overflow-hiddens mx-auto flex flex-col items-center'>
           {imageUrl && (
             <img
               style={{
@@ -116,14 +117,12 @@ export const PostCard = ({
           </Spoiler>
         </div>
         <div className='flex flex-row justify-end space-x-2 p-2'>
-          <div className='flex flex-col items-center space-x-2'>
-            {data.user?.avatarUrl && (
-              <Tooltip label={data.user?.userName} position='top'>
-                <Avatar h={10} w={10} imageUrl={data.user?.avatarUrl} />
-              </Tooltip>
-            )}
+          <div className='flex flex-row items-center space-x-2'>
             <p className='text-xs text-black dark:text-slate-50'>
-              {createdAt && new Date(createdAt).toLocaleDateString()}
+              by {data.user?.userName}
+              <p className='text-xs italic text-black dark:text-slate-50'>
+                {dayjs(createdAt).format('MMM D')}
+              </p>
             </p>
           </div>
         </div>
@@ -168,11 +167,6 @@ export const PostCard = ({
             {open && data.comments && (
               <ListComments comments={data.comments || []} />
             )}
-            <div>
-              <button className='btn-primary' onClick={() => setOpen(!open)}>
-                {open ? 'Hide' : 'Show'} Comments
-              </button>
-            </div>
           </div>
         )}
       </div>

@@ -1,7 +1,10 @@
 import type { MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Outlet, useLoaderData } from '@remix-run/react'
+import { NavLink, Outlet, useLoaderData } from '@remix-run/react'
+import dayjs from 'dayjs'
+import Avatar from '~/components/shared/avatar'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
+import Divider from '~/components/shared/divider'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPosts } from '~/utils/server/post.server'
 import { useOptionalUser } from '~/utils/utilities'
@@ -35,18 +38,32 @@ export default function Index() {
         <h5 className='h5'>Blog Feed</h5>
       </div>
       {data.post.map((post) => (
-        <PostCard
+        <div
           key={post.id}
-          data={post}
-          showCategories={true}
-          showLikes={true}
-          showComments={true}
-          showFavorites={true}
-          showOptions={true}
-          showShare={true}
-        />
+          className='items-cent flex w-[350px] flex-row justify-between gap-2 bg-slate-700 shadow-2xl'
+        >
+          <div className='flex flex-col justify-between gap-2 p-1'>
+            <NavLink to={`/blog/${post.id}`}>
+              <h3 className='h3'>{post.title}</h3>
+            </NavLink>
+
+            <div className='flex flex-row items-center gap-2'>
+              {post.user.avatarUrl ? (
+                <Avatar imageUrl={post.user.avatarUrl} h={6} w={6} />
+              ) : null}
+
+              <p className='text-sm'>{dayjs(post.createdAt).format('MMM D')}</p>
+            </div>
+          </div>
+          <div>
+            <img
+              src={post.imageUrl}
+              alt={post.title}
+              className='h-24 w-24 object-cover'
+            />
+          </div>
+        </div>
       ))}
-      <Outlet />
     </div>
   )
 }

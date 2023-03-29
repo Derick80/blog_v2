@@ -32,35 +32,32 @@ const linksByCategory = allLinks.reduce(
   {}
 )
 
-
-export default function SideBar ({ status }: { status: boolean }) {
+export default function SideBar({ status }: { status: boolean }) {
   const user = useOptionalUser()
   const activeStyle = {
     textDecoration: 'underline'
   }
-console.log(status);
-
+  console.log(status)
 
   const [open, setOpen] = React.useState(status)
 
-  console.log(open);
-React.useEffect(()=>{
-  setOpen(status)
-},[status])
+  console.log(open)
+  React.useEffect(() => {
+    setOpen(status)
+  }, [status])
   const shifty = open ? '-translate-x-[250px]' : ' md:hidden translate-x-full'
 
   return (
     <div>
-
       <div
-        className={`absolute mt-1  z-10 flex h-full w-[250px] flex-col   rounded-l-2xl rounded-r-2xl bg-crimson3 p-1 text-slate-50 delay-150 duration-300 ease-out peer-focus:left-0 ${shifty}`}
+        className={`absolute z-10  mt-4 flex h-fit flex-col rounded-l-2xl rounded-r-2xl bg-crimson3 p-1 text-slate-50 delay-150 duration-500 ease-in-out peer-focus:left-0 ${shifty}`}
       >
         <div className='flex flex-col gap-2 text-slate-50'>
-        <div className='flex items-center justify-start'>
-            <button className='btn primary ' onClick={ () => setOpen(!open) }>
+          {/* <div className='flex items-center justify-start'>
+            <button className='btn primary ' onClick={() => setOpen(!open)}>
               <Cross2Icon />
             </button>
-        </div>
+          </div> */}
           <h6 className='h6 italic text-slate-50'>Primary Links</h6>
           <Divider my={'2'} isSidebar={true} />
           <NavLink
@@ -176,7 +173,9 @@ React.useEffect(()=>{
             </NavLink>
           </>
         )}
-        <StatsCard />
+        <div className='flex w-full items-center justify-center'>
+          <StatsCard />
+        </div>
 
         {user ? (
           <Form method='post' action='/logout'>

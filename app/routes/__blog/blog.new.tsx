@@ -142,7 +142,7 @@ export default function Uploader() {
     })
 
   return (
-    <div className='mx-auto mb-7 flex w-[350px] flex-col items-center bg-white p-2 text-slate12 dark:bg-crimson1 dark:text-slate1 md:w-[550px]'>
+    <div className='mx-auto mb-7 flex w-[350px] flex-col items-center rounded-md bg-white p-2 text-slate12 dark:bg-crimson2 dark:text-slate1 md:w-[550px]'>
       <Form
         id='newPost'
         className='flex flex-col gap-5 rounded-xl bg-white text-slate12  dark:bg-crimson1 dark:text-slate-50'

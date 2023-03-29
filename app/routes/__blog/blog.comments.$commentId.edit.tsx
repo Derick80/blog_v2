@@ -1,7 +1,7 @@
 import { json } from '@remix-run/node'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
-import type { MetaFunction , ActionArgs, LoaderArgs } from '@remix-run/node' // or cloudflare/deno
+import type { MetaFunction, ActionArgs, LoaderArgs } from '@remix-run/node' // or cloudflare/deno
 
 export const meta: MetaFunction = () => {
   return {

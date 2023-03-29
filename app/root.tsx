@@ -68,7 +68,7 @@ export async function action() {
 export default function App() {
   const data = useLoaderData<typeof loader>()
   let isBot = useIsBot()
-
+  // bg-gradient-to-b from-[#2e026d] to-[#15162c]
   return (
     <html lang='en'>
       <head>
@@ -76,7 +76,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className='bg-white text-zinc-900  dark:bg-black/90 dark:text-slate-50'>
+      <body className='bg-gradient-to-b from-crimson3 to-crimson1 text-slate-50'>
         <Layout>
           <Outlet />
           <Analytics />

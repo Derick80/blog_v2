@@ -38,7 +38,7 @@ export default function FormComments({
         <button
           type='submit'
           name='_action'
-          className='btn-primary'
+          className='btn-primary text-xs'
           value={parentId ? 'Reply' : 'Create'}
         >
           {parentId ? 'Post reply' : 'Post a comment'}

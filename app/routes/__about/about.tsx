@@ -25,7 +25,6 @@ export default function Page() {
       {data.about.map((about) => (
         <MyProfile key={about.id} about={about} />
       ))}
-
     </>
   )
 }

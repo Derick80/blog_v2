@@ -1775,6 +1775,10 @@ select{
   left: -0.25rem;
 }
 
+.bottom-0{
+  bottom: 0px;
+}
+
 .left-0{
   left: 0px;
 }
@@ -1789,18 +1793,6 @@ select{
 
 .top-4{
   top: 1rem;
-}
-
-.bottom-0{
-  bottom: 0px;
-}
-
-.top-0{
-  top: 0px;
-}
-
-.-bottom-0{
-  bottom: -0px;
 }
 
 .z-10{
@@ -2012,10 +2004,6 @@ select{
   height: 1px;
 }
 
-.h-screen{
-  height: 100vh;
-}
-
 .max-h-screen{
   max-height: 100vh;
 }
@@ -2068,10 +2056,6 @@ select{
   width: 250px;
 }
 
-.w-\[300px\]{
-  width: 300px;
-}
-
 .w-\[350px\]{
   width: 350px;
 }
@@ -2087,6 +2071,10 @@ select{
 
 .w-full{
   width: 100%;
+}
+
+.w-\[250psx\]{
+  width: 250psx;
 }
 
 .min-w-\[200px\]{
@@ -2400,6 +2388,11 @@ select{
   background-color: rgb(248 250 252 / var(--tw-bg-opacity));
 }
 
+.bg-slate-700{
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+}
+
 .bg-slate-800{
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
@@ -2423,12 +2416,34 @@ select{
   --tw-bg-opacity: 0.8;
 }
 
+.bg-gradient-to-b{
+  background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+}
+
+.from-\[\#2e026d\]{
+  --tw-gradient-from: #2e026d var(--tw-gradient-from-position);
+  --tw-gradient-from-position:  ;
+  --tw-gradient-to: rgb(46 2 109 / 0)  var(--tw-gradient-from-position);
+  --tw-gradient-to-position:  ;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .from-crimson3{
   --tw-gradient-from: #3c1827 var(--tw-gradient-from-position);
   --tw-gradient-from-position:  ;
   --tw-gradient-to: rgb(60 24 39 / 0)  var(--tw-gradient-from-position);
   --tw-gradient-to-position:  ;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-\[\#15162c\]{
+  --tw-gradient-to: #15162c var(--tw-gradient-to-position);
+  --tw-gradient-to-position:  ;
+}
+
+.to-crimson1{
+  --tw-gradient-to: #1d1418 var(--tw-gradient-to-position);
+  --tw-gradient-to-position:  ;
 }
 
 .to-crimson2{
@@ -2701,6 +2716,10 @@ select{
   transition-duration: 300ms;
 }
 
+.duration-500{
+  transition-duration: 500ms;
+}
+
 .ease-in-out{
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -2786,13 +2805,14 @@ select{
 }
 
 @media (prefers-color-scheme: dark){
-  .dark\:bg-black\/90{
-    background-color: rgb(0 0 0 / 0.9);
-  }
-
   .dark\:bg-crimson1{
     --tw-bg-opacity: 1;
     background-color: rgb(29 20 24 / var(--tw-bg-opacity));
+  }
+
+  .dark\:bg-crimson2{
+    --tw-bg-opacity: 1;
+    background-color: rgb(39 20 28 / var(--tw-bg-opacity));
   }
 
   .dark\:bg-gray-600{
