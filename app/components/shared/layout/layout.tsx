@@ -1,5 +1,14 @@
 import React from 'react'
-import {  ExitIcon, FileTextIcon, HomeIcon, MixIcon, Pencil1Icon, PlusCircledIcon, ReaderIcon, RulerSquareIcon } from '@radix-ui/react-icons'
+import {
+  ExitIcon,
+  FileTextIcon,
+  HomeIcon,
+  MixIcon,
+  Pencil1Icon,
+  PlusCircledIcon,
+  ReaderIcon,
+  RulerSquareIcon
+} from '@radix-ui/react-icons'
 import { Form, Link, NavLink } from '@remix-run/react'
 import { BrandIcon } from '../icons'
 import { socialLinks } from '~/utils/constants/social-links'
@@ -14,127 +23,126 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
   return (
     <>
-      <div className='flex h-full flex-col'>
+      <div className='flex h-full flex-col text-slate-50'>
         <nav className='flex flex-row items-center justify-around'>
           <div className='h-20 w-20'>
             <BrandIcon />
           </div>
           <div className='md:h4 h4 '>Derick Hoskinson PhD</div>
-
         </nav>
-        <div className='flex w-full mx-4 flex-col gap-4 md:flex-row'>
-          <div className='flex items-center flex-row md:flex-col w-full md:w-1/5  overflow-hidden flex-wrap'>
+        <div className='mx-4 flex w-full flex-col gap-4 md:flex-row'>
+          <div className='flex w-full flex-row flex-wrap items-center overflow-hidden  md:w-1/5 md:flex-col'>
             <div className='hidden md:block'>
               <h6 className='h6 italic text-slate-50'>Home</h6>
 
-              <Divider my={ '2' } isSidebar={ true } />
+              <Divider my={'2'} isSidebar={true} />
             </div>
-            <NavLink to='/home'
-              style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
-            className='flex flex-row justify-between'>
+            <NavLink
+              to='/home'
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              className='flex flex-row justify-between'
+            >
               <Button variant='unfilled' size='small'>
                 Home
                 <HomeIcon />
-
               </Button>
             </NavLink>
-            <NavLink to='/blog'
-              style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
-            className='flex justify-between flex-row '>
+            <NavLink
+              to='/blog'
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              className='flex flex-row justify-between '
+            >
               <Button variant='unfilled' size='small'>
                 Blog
                 <ReaderIcon />
-
               </Button>
             </NavLink>
             <div className='hidden md:block'>
               <h6 className='h6 italic text-slate-50'>Career Links</h6>
 
-              <Divider my={ '2' } isSidebar={ true } />
+              <Divider my={'2'} isSidebar={true} />
             </div>
-            <NavLink to='/projects'
-
-              style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
-              className='flex flex-row justify-between'>
+            <NavLink
+              to='/projects'
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              className='flex flex-row justify-between'
+            >
               <Button variant='unfilled' size='small'>
                 Projects
                 <RulerSquareIcon />
-
               </Button>
             </NavLink>
-            <NavLink to='/cv'
+            <NavLink
+              to='/cv'
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
-            className='flex flex-row justify-between'>
+              className='flex flex-row justify-between'
+            >
               <Button variant='unfilled' size='small'>
                 CV
                 <FileTextIcon />
               </Button>
-              </NavLink>
+            </NavLink>
 
+            {user?.role === 'ADMIN' && (
+              <>
+                <div className='hidden md:block'>
+                  <h6 className='h6 italic text-slate-50'>Admin Links</h6>
 
-{ user?.role === 'ADMIN' &&(
-                <>
-                  <div className='hidden md:block'>
-                    <h6 className='h6 italic text-slate-50'>Admin Links</h6>
-
-                    <Divider my={ '2' } isSidebar={ true } />
-                  </div>{ ' ' }
-                  <NavLink
-                    to='/blog/new'
-                    style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
+                  <Divider my={'2'} isSidebar={true} />
+                </div>{' '}
+                <NavLink
+                  to='/blog/new'
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   className='flex flex-row justify-between'
-                  >
+                >
                   <Button variant='unfilled' size='small'>
                     <PlusCircledIcon />
                     Create
                   </Button>
-
-                  </NavLink>
-                  <NavLink
-                    to='/drafts'
-                    style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
-                    className='flex flex-row justify-between'
-                  >
-                    <Button variant='unfilled' size='small'>
+                </NavLink>
+                <NavLink
+                  to='/drafts'
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  className='flex flex-row justify-between'
+                >
+                  <Button variant='unfilled' size='small'>
                     <Pencil1Icon />
                     Drafts
-                    </Button>
-
-                  </NavLink>
-                  <NavLink
-                    to='/categories'
-                    style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
-                    className='flex flex-row justify-between'
-                  >
+                  </Button>
+                </NavLink>
+                <NavLink
+                  to='/categories'
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  className='flex flex-row justify-between'
+                >
                   <Button variant='unfilled' size='small'>
                     <MixIcon />
                     Categories
                   </Button>
-
-                  </NavLink>
-                </>
-)}
+                </NavLink>
+              </>
+            )}
             <div className='hidden md:block'>
-              <Divider my={ '2' } isSidebar={ true } />
+              <Divider my={'2'} isSidebar={true} />
             </div>
 
-            { user ? (
+            {user ? (
               <Form method='post' action='/logout'>
                 <Button
                   type='submit'
                   variant='unfilled'
                   size='small'
                   className='flex flex-row justify-between'
-                  >
+                >
                   Logout
                   <ExitIcon />
                 </Button>
               </Form>
             ) : (
               <Link to='/login'>Login</Link>
-            ) }
+            )}
           </div>
-          <main className='mx-auto justify-center flex w-fsull flex-grow flex-col  md:flex-row w-full'>
+          <main className='w-fsull mx-auto flex w-full flex-grow flex-col  justify-center md:flex-row'>
             {children}
           </main>
         </div>

@@ -30,7 +30,7 @@ export default function Button({
   return (
     <button
       className={clsx(
-        'flex h-fit w-fit flex-row  md:flex-col items-center gap-2 rounded-md text-xs font-medium transition-all disabled:cursor-not-allowed disabled:opacity-50',
+        'flex h-fit w-fit flex-row  items-center gap-2 rounded-md text-xs font-medium transition-all disabled:cursor-not-allowed disabled:opacity-50 md:flex-col',
         sizeClasses[size],
         variantClasses[variant],
         className

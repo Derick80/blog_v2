@@ -34,11 +34,10 @@ export default function Index() {
 
   return (
     <div className='mx-auto flex flex-col items-center gap-2 p-2'>
-
       {data.post.map((post) => (
         <div
           key={post.id}
-          className='items-cent flex flex-shrink w-full flex-row justify-between gap-2 bg-slate-700/10 shadow-2xl rounded-md overflow-hidden'
+          className='items-cent flex w-full flex-shrink flex-row justify-between gap-2 overflow-hidden rounded-md bg-slate-700/10 shadow-2xl'
         >
           <div className='flex flex-col justify-between gap-2 p-1'>
             <NavLink to={`/blog/${post.id}`}>
@@ -53,7 +52,7 @@ export default function Index() {
             <img
               src={post.imageUrl}
               alt={post.title}
-              className='h-24 w-24 object-cover rounded-l-md'
+              className='h-24 w-24 rounded-l-md object-cover'
             />
           </div>
         </div>
