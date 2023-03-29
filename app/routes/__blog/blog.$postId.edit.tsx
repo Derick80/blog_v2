@@ -238,6 +238,7 @@ export default function EditPost() {
             className='rounded-md border text-sm text-slate12'
             name='title'
             id='title'
+            defaultValue={title}
           />
 
           <label htmlFor='description'>Description</label>
@@ -246,6 +247,7 @@ export default function EditPost() {
             className='rounded-md border text-sm text-slate12'
             name='description'
             id='description'
+            defaultValue={description}
           />
 
           <label htmlFor='body'>Post Content</label>
