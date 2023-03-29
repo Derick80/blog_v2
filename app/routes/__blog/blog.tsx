@@ -48,8 +48,6 @@ export default function Index() {
             </NavLink>
 
             <div className='flex flex-row items-center gap-2'>
-
-
               <p className='text-sm'>{dayjs(post.createdAt).format('MMM D')}</p>
             </div>
           </div>

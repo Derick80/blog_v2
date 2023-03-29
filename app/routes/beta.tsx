@@ -26,8 +26,9 @@ import getAllCategories from '~/utils/server/categories.server'
 import { useOptionalUser } from '~/utils/utilities'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 import { badRequest } from 'remix-utils'
-import { ChevronDownIcon } from '@radix-ui/react-icons'
+import { ChevronDownIcon, PlusCircledIcon } from '@radix-ui/react-icons'
 import { prisma } from '~/utils/server/prisma.server'
+import Button from '~/components/shared/layout/button'
 
 export const meta: MetaFunction = () => {
   return {
@@ -113,20 +114,55 @@ export default function EditPost() {
   }
 
   return (
-    <div className='mx-auto'>
-      <Form
-        method='post'
-        className='flex flex-col gap-4 text-black'
-        onSubmit={onSubmit}
-      >
-        <label htmlFor='userid'>userid</label>
-        <input type='text' name='userId' value={data.user.id} />
-        <label htmlFor='imageUrl'>imageUrl</label>
+    <div className='flex w-screen flex-col  gap-4'>
+      <div className='flex flex-row gap-4'>
+        regular
+        <Button variant='regular' size='regular'>
+          Create
+        </Button>
+        <Button variant='regular' size='large'>
+          Create
+        </Button>
+        <Button variant='regular' size='small'>
+          Create
+        </Button>
+      </div>
+      <div className='flex flex-row gap-4'>
+        outline
+        <Button variant='outline' size='regular'>
+          Create
+        </Button>
+        <Button variant='outline' size='large'>
+          Create
+        </Button>
+        <Button variant='outline' size='small'>
+          Create
+        </Button>
+      </div>
 
-        <label htmlFor='message'>message</label>
-        <input type='text' name='message' />
-        <button type='submit'>Submit</button>
-      </Form>
+      <div className='flex flex-row gap-4'>
+        Unfilled
+        <Button variant='unfilled' size='regular'>
+          Create
+        </Button>
+        <Button variant='unfilled' size='large'>
+          Create
+        </Button>
+        <Button variant='unfilled' size='small'>
+          Create
+        </Button>
+      </div>
+
+      <div>
+        regular
+        <Button variant='regular' size='small'>
+          Create <PlusCircledIcon />
+        </Button>
+        unfilled
+        <Button variant='unfilled' size='small'>
+          <PlusCircledIcon />
+        </Button>
+      </div>
     </div>
   )
 }

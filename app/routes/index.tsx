@@ -15,8 +15,6 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   const data = useLoaderData<{ post: PostWithChildren[] }>()
   return (
-    <div className='flex grow flex-col items-center gap-4 '>
-      <h1 className='mb-5 text-sm font-bold'>Latest Post</h1>
 
       <div className='flex flex-col items-center gap-4'>
         {data.post &&
@@ -32,7 +30,6 @@ export default function Index() {
               showShare={true}
             />
           ))}
-      </div>
     </div>
   )
 }
