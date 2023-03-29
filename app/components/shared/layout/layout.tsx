@@ -22,8 +22,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className='md:h4 h4 '>Derick Hoskinson PhD</div>
 
         </nav>
-        <div className='flex max-w-screen-2xl items-center flex-col mx-auto gap-4 md:flex-row'>
-          <div className='flex  items-center flex-row md:flex-col w-full md:w-1/5 flex-wrap'>
+        <div className='flex w-full mx-4 flex-col gap-4 md:flex-row'>
+          <div className='flex items-center flex-row md:flex-col w-full md:w-1/5  overflow-hidden flex-wrap'>
             <div className='hidden md:block'>
               <h6 className='h6 italic text-slate-50'>Home</h6>
 
@@ -134,7 +134,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link to='/login'>Login</Link>
             ) }
           </div>
-          <main className='mx-auto justify-center flex w-full flex-grow flex-col  md:flex-row'>
+          <main className='mx-auto justify-center flex w-fsull flex-grow flex-col  md:flex-row w-full'>
             {children}
           </main>
         </div>

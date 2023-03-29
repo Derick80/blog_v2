@@ -33,29 +33,27 @@ export default function Index() {
   const data = useLoaderData<typeof loader>()
 
   return (
-    <div className='mx-auto flex grow flex-col items-center gap-2 '>
-      <div>
-        <h5 className='h5'>Blog Feed</h5>
-      </div>
+    <div className='mx-auto flex flex-col items-center gap-2 p-2'>
+
       {data.post.map((post) => (
         <div
           key={post.id}
-          className='items-cent flex w-[350px] flex-row justify-between gap-2 bg-slate-700 shadow-2xl'
+          className='items-cent flex flex-shrink w-full flex-row justify-between gap-2 bg-slate-700/10 shadow-2xl rounded-md overflow-hidden'
         >
           <div className='flex flex-col justify-between gap-2 p-1'>
             <NavLink to={`/blog/${post.id}`}>
-              <h3 className='h3'>{post.title}</h3>
+              <h3 className='text-lg'>{post.title}</h3>
             </NavLink>
 
             <div className='flex flex-row items-center gap-2'>
-              <p className='text-sm'>{dayjs(post.createdAt).format('MMM D')}</p>
+              <p className='text-xs'>{dayjs(post.createdAt).format('MMM D')}</p>
             </div>
           </div>
           <div>
             <img
               src={post.imageUrl}
               alt={post.title}
-              className='h-24 w-24 object-cover'
+              className='h-24 w-24 object-cover rounded-l-md'
             />
           </div>
         </div>
