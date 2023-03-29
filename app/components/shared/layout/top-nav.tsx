@@ -7,7 +7,7 @@ export default function TopNav() {
   }
 
   return (
-    <nav className='col-span-12 mb-5 flex h-[10vh] w-full flex-row items-center justify-between gap-2'>
+    <nav className='col-span-12 mb-5 flex h-[25vh]  w-full flex-row items-center justify-between gap-2'>
       <div className='h-20 w-20'>
         <BrandIcon />
       </div>

@@ -10,3 +10,5 @@ export async function loader({ request, params }: LoaderArgs) {
 
   return json({ comments })
 }
+
+

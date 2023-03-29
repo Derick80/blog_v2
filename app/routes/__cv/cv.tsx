@@ -1,7 +1,7 @@
 import type { Skill, CVExperience, Education, Publication } from '@prisma/client'
 import { CheckCircledIcon } from '@radix-ui/react-icons'
 import { json } from '@remix-run/node'
-import { NavLink, Outlet, useLoaderData } from '@remix-run/react'
+import { NavLink, Outlet, useCatch, useLoaderData } from '@remix-run/react'
 import { format } from 'date-fns'
 import Divider from '~/components/shared/divider'
 import type{ CV } from '~/utils/schemas/cv-schema'
@@ -246,5 +246,19 @@ function Pubs({
         </a>
       </div>
     </>
+  )
+}
+
+export function CatchBoundary () {
+  const caught = useCatch()
+
+  return (
+    <div>
+      <h1>Caught</h1>
+      <p>Status: { caught.status }</p>
+      <pre>
+        <code>{ JSON.stringify(caught.data, null, 2) }</code>
+      </pre>
+    </div>
   )
 }

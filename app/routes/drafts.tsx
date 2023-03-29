@@ -1,11 +1,10 @@
 import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import { Link, useCatch, useLoaderData } from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getUserDrafts } from '~/utils/server/post.server'
-import { Center } from '@mantine/core'
 
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 import type { PostWithChildren } from '~/utils/schemas/post-schema'
@@ -84,6 +83,19 @@ function Sidebar(props: { props: PostWithChildren[] }) {
           </div>
         </div>
       ))}
+    </div>
+  )
+}
+export function CatchBoundary () {
+  const caught = useCatch()
+
+  return (
+    <div>
+      <h1>Caught</h1>
+      <p>Status: { caught.status }</p>
+      <pre>
+        <code>{ JSON.stringify(caught.data, null, 2) }</code>
+      </pre>
     </div>
   )
 }

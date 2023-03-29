@@ -2,7 +2,7 @@ import { Button, Flex } from '@mantine/core'
 import type { TravelLog } from '@prisma/client'
 import type { LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { useLoaderData, Outlet, Link } from '@remix-run/react'
+import { useLoaderData, Outlet, Link, useCatch } from '@remix-run/react'
 import { ImageSlider } from '~/components/shared/carousel/image-slider'
 import type { CitiesAndAlbums } from '~/utils/server/travel.server'
 import { getAlbums } from '~/utils/server/travel.server'
@@ -73,6 +73,19 @@ export default function Index() {
       <div></div>
 
       <Outlet />
+    </div>
+  )
+}
+export function CatchBoundary () {
+  const caught = useCatch()
+
+  return (
+    <div>
+      <h1>Caught</h1>
+      <p>Status: { caught.status }</p>
+      <pre>
+        <code>{ JSON.stringify(caught.data, null, 2) }</code>
+      </pre>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import type { LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { NavLink, useLoaderData } from '@remix-run/react'
+import { NavLink, useCatch, useLoaderData } from '@remix-run/react'
 import ProjectsCard from '~/components/shared/projects-card'
 import { getProjects } from '~/utils/server/project.server'
 import { useOptionalUser } from '~/utils/utilities'
@@ -12,7 +12,10 @@ export const meta: MetaFunction = () => {
 }
 export async function loader({ request }: LoaderArgs) {
   const { projects } = await getProjects()
+if(!projects){
+  throw new Error("No projects found");
 
+}
   return json({ projects })
 }
 
@@ -40,5 +43,18 @@ export default function Index() {
         ))}
       </div>
     </>
+  )
+}
+export function CatchBoundary () {
+  const caught = useCatch()
+
+  return (
+    <div>
+      <h1>Caught</h1>
+      <p>Status: { caught.status }</p>
+      <pre>
+        <code>{ JSON.stringify(caught.data, null, 2) }</code>
+      </pre>
+    </div>
   )
 }

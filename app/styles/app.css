@@ -2016,6 +2016,14 @@ select{
   height: 100vh;
 }
 
+.h-\[20vh\]{
+  height: 20vh;
+}
+
+.h-\[25vh\]{
+  height: 25vh;
+}
+
 .max-h-screen{
   max-height: 100vh;
 }

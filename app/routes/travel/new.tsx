@@ -1,5 +1,5 @@
 import { json, redirect } from '@remix-run/node'
-import { useFetcher, useLoaderData } from '@remix-run/react'
+import { useCatch, useFetcher, useLoaderData } from '@remix-run/react'
 import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
@@ -226,6 +226,19 @@ export default function NewTravelLog() {
           Submit
         </button>
       </form>
+    </div>
+  )
+}
+export function CatchBoundary () {
+  const caught = useCatch()
+
+  return (
+    <div>
+      <h1>Caught</h1>
+      <p>Status: { caught.status }</p>
+      <pre>
+        <code>{ JSON.stringify(caught.data, null, 2) }</code>
+      </pre>
     </div>
   )
 }
