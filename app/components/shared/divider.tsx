@@ -6,7 +6,7 @@ export default function Divider({
   isSidebar?: boolean
 }) {
   const textStyles = isSidebar
-    ? 'bg-slate-50 bg-slate12 '
+    ? 'bg-slate-50 '
     : 'bg-slate12 dark:bg-slate-50'
   return (
     <div className='flex flex-col items-center'>

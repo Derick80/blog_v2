@@ -1,6 +1,7 @@
 import type { LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { NavLink, useCatch, useLoaderData } from '@remix-run/react'
+import Button from '~/components/shared/layout/button'
 import ProjectsCard from '~/components/shared/projects-card'
 import { getProjects } from '~/utils/server/project.server'
 import { useOptionalUser } from '~/utils/utilities'
@@ -23,19 +24,20 @@ export default function Index() {
   const isAdmin = user?.role === 'ADMIN'
   const data = useLoaderData<typeof loader>()
   return (
-    <>
-      <div className='md:flesx-row flex flex-col gap-2'>
+    <div className='flex w-full flex-col items-center p-2 md:w-full'>
         {isAdmin && (
           <NavLink to='/projects/new' className=' mx-auto w-full'>
-            Add Project
+           <Button
+           variant='outline'
+           size='regular'
+           >Create new</Button>
           </NavLink>
         )}
 
         {data.projects.map((project) => (
           <ProjectsCard key={project.id} project={project} />
         ))}
-      </div>
-    </>
+    </div>
   )
 }
 export function CatchBoundary() {

@@ -1,5 +1,6 @@
 import { useFetcher } from '@remix-run/react'
 import React, { useEffect } from 'react'
+import Button from '../shared/layout/button'
 
 export default function FormComments({
   postId,
@@ -35,14 +36,9 @@ export default function FormComments({
           className='w-full rounded-md border border-gray-300 p-2 text-black'
         />
 
-        <button
-          type='submit'
-          name='_action'
-          className='btn-primary text-xs'
-          value={parentId ? 'Reply' : 'Create'}
-        >
+        <Button variant='regular' size='regular' name='_action'>
           {parentId ? 'Post reply' : 'Post a comment'}
-        </button>
+        </Button>
       </commentForm.Form>
     </div>
   )
