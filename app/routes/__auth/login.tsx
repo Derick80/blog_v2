@@ -48,7 +48,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 export default function Login() {
   return (
-    <div className='mx-auto mt-10 flex h-fit flex-col shadow-2xl md:mt-20'>
+    <div className='flex flex-col w-full'>
       <AuthForm authType='login' />
       <div className='mb-2 mt-2 flex h-full flex-col items-center justify-center md:mb-5 md:mt-5'>
         <h3 className='text-sm italic'>OR</h3>
