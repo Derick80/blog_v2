@@ -7,7 +7,7 @@ darkMode:   'media', // or 'media' or 'class'
 
     extend: {
       fontFamily:{
-        sans:['Oswald', 'sans-serif'],
+        sans:['Raleway', 'sans-serif'],
       },
       colors:{
         'crimson1': '#1d1418',

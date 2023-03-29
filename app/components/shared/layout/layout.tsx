@@ -7,6 +7,7 @@ import {
 import SideBar from './sidebar'
 import { NavLink } from '@remix-run/react'
 import { BrandIcon } from '../icons'
+import { socialLinks } from '~/utils/constants/social-links'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const activeStyle = {
@@ -15,7 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = React.useState(false)
   return (
     <>
-      <div className='relative mx-auto mt-5 h-screen max-w-sm md:grid md:max-w-3xl md:grid-cols-12'>
+      <div className='relative mx-auto mt-5 h-full max-w-sm md:grid md:max-w-3xl md:grid-cols-12'>
         <nav className='col-span-12 mb-5 flex h-[25vh]  w-full flex-row items-center justify-between gap-2'>
           <div className='h-20 w-20'>
             <BrandIcon />
@@ -53,9 +54,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 
           {children}
+
         </main>
 
-        <Footer />
+        <footer className='absolute bottom-0 col-span-12 row-start-3 mt-5 flex w-full items-center justify-center gap-5'>
+          <p className='p'>Copyrite { new Date().getFullYear() }</p>
+          {/* map through social links array  */ }
+          { socialLinks.map((social) => (
+            <a
+              key={ social.name }
+              href={ social.href }
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              { social.icon }
+            </a>
+          )) }
+        </footer>
       </div>
       {/* top-24 */}
     </>
