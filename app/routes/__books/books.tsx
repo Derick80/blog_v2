@@ -32,10 +32,10 @@ export default function BookIndex() {
       {user && (
         <NavLink
           to='/books/new'
-          className='flex flex-row-reverse items-center gap-2 text-black dark:text-black'
+          className='flex flex-row-reverse items-center gap-2 text-slate12'
         >
           <PlusCircledIcon />
-          <h3 className='h3'>Add Book</h3>
+          <h3 className=''>Add Book</h3>
         </NavLink>
       )}
 

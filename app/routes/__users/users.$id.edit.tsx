@@ -127,13 +127,13 @@ export default function UserProfileRoute() {
           >
             <input type='hidden' name='id' value={id} />
             <input
-              className='w-full p-2 text-black shadow-md '
+              className='w-full p-2 text-slate12 shadow-md '
               type='text'
               name='education'
               defaultValue={education}
             />
             <input
-              className='w-full p-2 text-black shadow-md '
+              className='w-full p-2 text-slate12 shadow-md '
               type='text'
               name='occupation'
               defaultValue={occupation}
@@ -141,37 +141,37 @@ export default function UserProfileRoute() {
             <input
               type='text'
               name='location'
-              className='w-full p-2 text-black shadow-md '
+              className='w-full p-2 text-slate12 shadow-md '
               defaultValue={location}
             />
             <input
               type='text'
-              className='w-full p-2 text-black shadow-md '
+              className='w-full p-2 text-slate12 shadow-md '
               name='userName'
               defaultValue={userName}
             />
             <input
               type='text'
-              className='w-full p-2 text-black shadow-md '
+              className='w-full p-2 text-slate12 shadow-md '
               name='firstName'
               defaultValue={firstName}
             />
             <input
               type='text'
-              className='w-full p-2 text-black shadow-md '
+              className='w-full p-2 text-slate12 shadow-md '
               name='lastName'
               defaultValue={lastName}
             />
             <input
               type='text'
               name='bio'
-              className='w-full p-2 text-black shadow-md '
+              className='w-full p-2 text-slate12 shadow-md '
               defaultValue={bio}
             />
 
             <input
               type='email'
-              className='w-full p-2 text-black shadow-md '
+              className='w-full p-2 text-slate12 shadow-md '
               name='email'
               defaultValue={email}
             />
@@ -210,7 +210,7 @@ export default function UserProfileRoute() {
                   name='imageUrl'
                   value={userPictureFetcher?.data?.imageUrl}
                 />
-                <div className='h-[100px] w-[100px] rounded-xl bg-crimson12 text-slate12'>
+                <div className='h-[100px] w-[100px] rounded-xl  text-slate12'>
                   <img src={userPictureFetcher?.data?.imageUrl} alt={'#'} />
                 </div>
               </div>

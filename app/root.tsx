@@ -76,7 +76,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      {/* bg-gradient-to-b from-crimson3 to-crimson1 text-black' */}
+      {/* bg-gradient-to-b from-crimson3 to-crimson1 text-slate12' */}
       <body className=''>
         <Layout>
           <Outlet />

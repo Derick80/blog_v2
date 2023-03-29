@@ -28,12 +28,12 @@ export default function CategoryContainer({
           <react.NavLink
             prefetch='intent'
             to={`/categories/${value}`}
-            className='text-decoration-none text-xs text-black dark:text-black'
+            className='text-decoration-none text-xs text-slate12'
           >
             {value}
           </react.NavLink>
         ) : (
-          <div className='text-decoration-none text-xs text-black dark:text-black'>
+          <div className='text-decoration-none text-xs text-slate12'>
             {value}
           </div>
         )}
@@ -42,7 +42,7 @@ export default function CategoryContainer({
             method='delete'
             action={`/blog/categories/${value}/delete`}
           >
-            <button className='btn-primary-danger'>delete</button>
+            <button className='-danger'>delete</button>
           </react.Form>
         )}
       </div>

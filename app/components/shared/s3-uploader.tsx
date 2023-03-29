@@ -69,7 +69,7 @@ export default function Uploader() {
           draggingOver
             ? 'border-rounded border-4 border-dashed border-black border-yellow-300'
             : ''
-        } border-rounded group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full border-black bg-crimson12 transition duration-300 ease-in-out hover:bg-gray-500`}
+        } border-rounded group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-full border-black  transition duration-300 ease-in-out hover:bg-gray-500`}
         style={{
           backgroundSize: 'cover',
           ...(imageUrl ? { backgroundImage: `url(${imageUrl})` } : {})
@@ -87,7 +87,7 @@ export default function Uploader() {
           <div className='absolute h-full w-full rounded-full bg-blue-300 opacity-50 transition duration-300 ease-in-out group-hover:opacity-0' />
         )}
         {
-          <p className='text-bg-crimson12 pointer-events-none z-10 cursor-pointer select-none text-4xl font-extrabold transition duration-300 ease-in-out group-hover:opacity-0'>
+          <p className='text- pointer-events-none z-10 cursor-pointer select-none text-4xl font-extrabold transition duration-300 ease-in-out group-hover:opacity-0'>
             +
           </p>
         }

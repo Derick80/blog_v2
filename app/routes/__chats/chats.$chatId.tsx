@@ -137,7 +137,7 @@ export default function ChatRoute() {
           })
         }}
       >
-        <input type='text' name='content' className='text-black' />
+        <input type='text' name='content' className='text-slate12' />
         <button type='submit' name='action' value='send-message'>
           Send
         </button>

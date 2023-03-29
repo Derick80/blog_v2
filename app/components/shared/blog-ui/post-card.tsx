@@ -7,7 +7,7 @@ import { ShareButton } from './share-button'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { NavLink } from '@remix-run/react'
 import CategoryContainer from '../category-container'
-import { Button, Spoiler, Tooltip } from '@mantine/core'
+import { Spoiler, Tooltip } from '@mantine/core'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
 import formatComments from './format-comments'
@@ -17,6 +17,7 @@ import { useOptionalUser } from '~/utils/utilities'
 import Divider from '../divider'
 import Avatar from '../avatar'
 import dayjs from 'dayjs'
+import Button from '../layout/button'
 
 export type ManyPostProps = {
   data: PostWithChildren
@@ -59,11 +60,7 @@ export const PostCard = ({
   const [open, setOpen] = React.useState(false)
   return (
     <>
-      <div
-        key={id}
-
-        className='mx-auto my-5 rounded-lg  p-2 shadow-md hover:translate-y-2 md:w-[650px] '
-      >
+      <div key={id} className='mx-auto my-5 rounded-lg  p-2 shadow-md'>
         <div className='overflow-hiddens mx-auto flex flex-col items-center'>
           {imageUrl && (
             <img
@@ -82,14 +79,12 @@ export const PostCard = ({
         <div>
           <NavLink
             to={`/blog/${id}`}
-            className='p font-bold text-black dark:text-black'
+            className='p font-bold text-slate12'
             style={{ textDecoration: 'none', color: 'currentcolor' }}
           >
             <h4 className='h4 indent-1'>{title}</h4>
           </NavLink>
-          <p className='prose p-1 indent-1 italic '>
-            {description}
-          </p>
+          <p className='prose p-1 indent-1 italic '>{description}</p>
 
           {showCategories && (
             <div
@@ -118,9 +113,9 @@ export const PostCard = ({
         </div>
         <div className='flex flex-row justify-end space-x-2 p-2'>
           <div className='flex flex-row items-center space-x-2'>
-            <p className='text-xs text-black dark:text-black'>
+            <p className='text-xs text-slate12'>
               by {data.user?.userName}
-              <p className='text-xs italic text-black dark:text-black'>
+              <p className='text-xs italic text-slate12'>
                 {dayjs(createdAt).format('MMM D')}
               </p>
             </p>
@@ -144,12 +139,19 @@ export const PostCard = ({
               />
             )}
             {showComments && data.comments && (
-              <button className='text-blue-500' onClick={() => setOpen(!open)}>
-                <div className='flex flex-row space-x-1'>
+              <Button
+                size='small'
+                variant='unfilled'
+                onClick={() => setOpen(!open)}
+              >
+                <div className='flex flex-row space-x-1 text-blue-500'>
                   <ChatBubbleIcon />
-                  <p className='subtitle2'> {_count.comments}</p>
+                  <p className='first-letter:subtitle2 text-blue-500'>
+                    {' '}
+                    {_count.comments}
+                  </p>
                 </div>
-              </button>
+              </Button>
             )}
             {showShare && id && <ShareButton id={id} />}
           </div>

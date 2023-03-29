@@ -48,7 +48,7 @@ export default function AboutMe({ about }: AboutProps) {
             to={`/about/${about.id}/edit`}
             className='flex'
           >
-            <button type='button' className='btn-primary'>
+            <button type='button' className=''>
               <Pencil1Icon />
             </button>
           </Link>

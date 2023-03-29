@@ -31,7 +31,7 @@ export default function BookRoute() {
         className='flex flex-row-reverse items-center gap-2 text-blue-500'
       >
         <PlusCircledIcon />
-        <h3 className='h3'>Add Book</h3>
+        <h3 className=''>Add Book</h3>
       </NavLink>
       <BookCard book={data.book} />
     </div>

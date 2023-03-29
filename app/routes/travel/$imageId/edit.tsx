@@ -173,12 +173,12 @@ export default function EditRoute() {
           />
         </div>
         <div className='flex space-x-4'>
-          <button type='submit' className='btn-primary'>
+          <button type='submit' className=''>
             <p>{transition.state === 'submitting' ? 'Saving...' : 'Save'}</p>
           </button>
           <button
             type='button'
-            className='btn-primary'
+            className=''
             onClick={() => navigate('/travel')}
           >
             Cancel

@@ -33,10 +33,10 @@ export default function FormComments({
           required
           name='message'
           placeholder='Write your comment here....'
-          className='w-full rounded-md border border-gray-300 p-2 text-black'
+          className='w-full rounded-md border border-gray-300 p-2 text-slate12'
         />
 
-        <Button variant='regular' size='regular' name='_action'>
+        <Button variant='filled' size='regular' name='_action'>
           {parentId ? 'Post reply' : 'Post a comment'}
         </Button>
       </commentForm.Form>
