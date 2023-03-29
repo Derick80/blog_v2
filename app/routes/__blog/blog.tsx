@@ -48,9 +48,7 @@ export default function Index() {
             </NavLink>
 
             <div className='flex flex-row items-center gap-2'>
-              {post.user.avatarUrl ? (
-                <Avatar imageUrl={post.user.avatarUrl} h={6} w={6} />
-              ) : null}
+
 
               <p className='text-sm'>{dayjs(post.createdAt).format('MMM D')}</p>
             </div>

@@ -1971,6 +1971,10 @@ select{
   height: 1.25rem;
 }
 
+.h-6{
+  height: 1.5rem;
+}
+
 .h-8{
   height: 2rem;
 }
@@ -2040,6 +2044,10 @@ select{
   width: 1.25rem;
 }
 
+.w-6{
+  width: 1.5rem;
+}
+
 .w-64{
   width: 16rem;
 }
@@ -2071,10 +2079,6 @@ select{
 
 .w-full{
   width: 100%;
-}
-
-.w-\[250psx\]{
-  width: 250psx;
 }
 
 .min-w-\[200px\]{
@@ -2722,10 +2726,6 @@ select{
 
 .ease-in-out{
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ease-out{
-  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
 @media (prefers-color-scheme: dark){
