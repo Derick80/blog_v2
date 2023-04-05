@@ -9,7 +9,11 @@ export async function getFavoriteList(userId: string) {
     orderBy: {
       createdAt: 'desc'
     },
-    include: {
+    select: {
+      userId: false,
+      postId: false,
+      createdAt: false,
+      updatedAt: false,
       post: {
         include: {
           user: true,

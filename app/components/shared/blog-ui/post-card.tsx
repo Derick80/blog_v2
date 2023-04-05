@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger-with-children */
-import type { PostWithChildren } from '~/utils/schemas/post-schema'
+import type { Post, PostWithChildren } from '~/utils/schemas/post-schema'
 import PostOptions from './post-options'
 import FavoriteContainer from './favorite-container'
 import LikeContainer from './like-container'
@@ -7,15 +7,13 @@ import { ShareButton } from './share-button'
 import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { NavLink } from '@remix-run/react'
 import CategoryContainer from '../category-container'
-import { Spoiler, Tooltip } from '@mantine/core'
+import { Spoiler } from '@mantine/core'
 import FormComments from '~/components/comments/com-form'
 import ListComments from '~/components/comments/comList'
-import formatComments from './format-comments'
 import React from 'react'
 import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { useOptionalUser } from '~/utils/utilities'
 import Divider from '../divider'
-import Avatar from '../avatar'
 import dayjs from 'dayjs'
 import Button from '../layout/button'
 
@@ -60,30 +58,27 @@ export const PostCard = ({
   const [open, setOpen] = React.useState(false)
   return (
     <>
-      <div key={id} className='mx-auto my-5 rounded-lg  p-2 shadow-md'>
-        <div className='overflow-hiddens mx-auto flex flex-col items-center'>
+      <div key={id} className='mx-auto my-5 w-full  rounded-lg p-2 shadow-md'>
+        <NavLink
+          to={`/blog/${id}`}
+          className='p font-bold text-slate12'
+          style={{ textDecoration: 'none', color: 'currentcolor' }}
+        >
+          <h4 className='h4 indent-1'>{title}</h4>
+        </NavLink>
+        <div className=' items-ceter mx-auto flex flex-col'>
           {imageUrl && (
-            <img
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                overflow: 'hidden'
-              }}
-              src={imageUrl}
-              alt={title}
-            />
+            <div className='h-24 w-24'>
+              <img
+                className='h-full w-full rounded-lg object-contain'
+                src={imageUrl}
+                alt={title}
+              />
+            </div>
           )}
         </div>
 
         <div>
-          <NavLink
-            to={`/blog/${id}`}
-            className='p font-bold text-slate12'
-            style={{ textDecoration: 'none', color: 'currentcolor' }}
-          >
-            <h4 className='h4 indent-1'>{title}</h4>
-          </NavLink>
           <p className='prose p-1 indent-1 italic '>{description}</p>
 
           {showCategories && (

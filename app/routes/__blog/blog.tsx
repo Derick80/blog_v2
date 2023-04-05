@@ -52,7 +52,7 @@ export default function Index() {
             <img
               src={post.imageUrl}
               alt={post.title}
-              className='h-24 w-24 rounded-l-md object-cover'
+              className='h-24 w-24 rounded-l-md object-contain'
             />
           </div>
         </div>
