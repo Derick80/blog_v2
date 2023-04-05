@@ -17,6 +17,9 @@ export async function getProjects() {
           email: true
         }
       }
+    },
+    orderBy: {
+      id: 'desc'
     }
   })
 

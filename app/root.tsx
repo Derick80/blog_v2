@@ -112,7 +112,7 @@ export function CatchBoundary() {
 
   switch (caught.status) {
     case 404: {
-      return <h2>User with ID "{params.userId}" not found!</h2>
+      return <h2>Root catch boundry</h2>
     }
     default: {
       // if we don't handle this then all bets are off. Just throw an error

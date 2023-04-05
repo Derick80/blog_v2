@@ -25,6 +25,7 @@ import getAllCategories from '~/utils/server/categories.server'
 import { useOptionalUser } from '~/utils/utilities'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 import { badRequest } from 'remix-utils'
+import ImageUploader from '~/components/shared/image-fetcher'
 
 export const meta: MetaFunction = () => {
   return {
@@ -218,7 +219,7 @@ export default function EditPost() {
     published,
     featured
   })
-
+  const [url, setUrl] = useState(imageUrl)
   return (
     <div className='mx-auto mb-7 mt-5 flex w-full flex-col items-center border-2  p-2 text-slate12  '>
       <div className='flex w-full flex-col items-center justify-center'>
@@ -289,65 +290,11 @@ export default function EditPost() {
               defaultChecked={false}
             />
           </div>
-          <input
-            type='hidden'
-            name='imageUrl'
-            id='imageUrl'
-            value={imageFetcher.data?.imageUrl || imageUrl}
-          />
+          <input type='hidden' name='imageUrl' id='imageUrl' value={url} />
+          <img src={url} alt='post' className='w-1/2' />
         </Form>
 
-        <div className='flex flex-row flex-wrap gap-2'>
-          <imageFetcher.Form
-            method='post'
-            encType='multipart/form-data'
-            action='/actions/cloudinary'
-            className='mx-auto flex flex-col items-center gap-2'
-            onClick={onClick}
-          >
-            <label htmlFor='imageUrl' className='subtitle'>
-              Attach an Image
-            </label>
-            <input
-              type='file'
-              name='imageUrl'
-              id='imageUrl'
-              className='block w-full rounded-xl border-2 p-2 text-sm text-slate12'
-              accept='image/*'
-            />
-            <button className=''>Upload</button>
-          </imageFetcher.Form>
-          {imageFetcher.data ? (
-            <div className='flex w-full flex-col items-center gap-2'>
-              <p className='h6'>Image Uploaded</p>
-              <input
-                type='hidden'
-                name='imageUrl'
-                value={imageFetcher?.data?.imageUrl}
-              />
-              <div className='flex'>
-                <div className=' rounded-xl  text-slate12'>
-                  <img
-                    src={imageFetcher?.data?.imageUrl}
-                    alt={'#'}
-                    style={{ objectFit: 'cover' }}
-                  />
-                </div>
-                <div className='items-center rounded-xl  text-slate12'>
-                  <img
-                    src={formData.imageUrl}
-                    style={{ objectFit: 'cover' }}
-                    alt={'placeholder'}
-                  />
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className='w-full rounded-xl  text-slate12'>
-              <img src={formData.imageUrl} alt={'#'} />
-            </div>
-          )}
-        </div>
+        <ImageUploader onClick={onClick} setUrl={setUrl} />
         <div className='flex flex-row items-center justify-end gap-2 text-slate12'>
           <button
             type='submit'

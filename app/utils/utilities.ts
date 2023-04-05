@@ -65,28 +65,29 @@ export function useUser(): UserType {
   }
   return maybeUser
 }
+type ActionErrors<T> = Partial<Record<keyof T, string>>
 
-export async function validateNewPostAction({
+export async function validateAction<ActionInput>({
   request,
   schema
 }: {
   request: Request
   schema: ZodSchema
 }) {
-  const body = Object.fromEntries(await request.formData())
+  const body = Object.fromEntries(await request.formData()) as ActionInput
 
   try {
-    const formData = schema.parse(body)
+    const formData = schema.parse(body) as ActionInput
     return { formData, errors: null }
   } catch (error) {
     console.log(error)
 
-    const errors = error as ZodError
+    const errors = error as ZodError<ActionInput>
 
     return {
       formData: body,
-      errors: errors.issues.reduce((acc, curr) => {
-        const key = curr.path[0]
+      errors: errors.issues.reduce((acc: ActionErrors<ActionInput>, curr) => {
+        const key = curr.path[0] as keyof ActionInput
 
         acc[key] = curr.message
         return acc

@@ -7,6 +7,7 @@ import {
   Pencil1Icon,
   PlusCircledIcon,
   ReaderIcon,
+  RocketIcon,
   RulerSquareIcon
 } from '@radix-ui/react-icons'
 import { Form, Link, NavLink } from '@remix-run/react'
@@ -30,12 +31,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
           <div className='md:h4 h4 '>Derick Hoskinson PhD</div>
         </nav>
-        <div className='mx-4 flex w-full flex-col gap-4 md:flex-row'>
-          <div className='flex w-full flex-row flex-wrap items-center overflow-hidden  md:w-1/5 md:flex-col'>
+        <div className='mx-4 flex flex-col gap-2 md:flex-row  '>
+          <div className='flex w-full flex-row flex-wrap items-center  md:w-1/5 md:flex-col'>
             <div className='hidden md:block'>
-              <h6 className='h6 italic text-slate12'>Home</h6>
-
-              <Divider my={'2'} />
             </div>
             <NavLink
               to='/home'
@@ -58,9 +56,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </Button>
             </NavLink>
             <div className='hidden md:block'>
-              <h6 className='h6 italic text-slate12'>Career Links</h6>
 
-              <Divider my={'2'} />
+
             </div>
             <NavLink
               to='/projects'
@@ -73,57 +70,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </Button>
             </NavLink>
             <NavLink
-              to='/cv'
+              to='/travel'
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
               className='flex flex-row justify-between text-slate12'
             >
               <Button variant='unfilled' size='small'>
-                CV
-                <FileTextIcon />
+               Travel
+                <RocketIcon />
               </Button>
             </NavLink>
 
-            {user?.role === 'ADMIN' && (
-              <>
-                <div className='hidden md:block'>
-                  <h6 className='h6 italic text-slate12'>Admin Links</h6>
 
-                  <Divider my={'2'} />
-                </div>{' '}
-                <NavLink
-                  to='/blog/new'
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  className='flex flex-row justify-between text-slate12'
-                >
-                  <Button variant='unfilled' size='small'>
-                    <PlusCircledIcon />
-                    Create
-                  </Button>
-                </NavLink>
-                <NavLink
-                  to='/drafts'
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  className='flex flex-row justify-between text-slate12'
-                >
-                  <Button variant='unfilled' size='small'>
-                    <Pencil1Icon />
-                    Drafts
-                  </Button>
-                </NavLink>
-                <NavLink
-                  to='/categories'
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  className='flex flex-row justify-between text-slate12'
-                >
-                  <Button variant='unfilled' size='small'>
-                    <MixIcon />
-                    Categories
-                  </Button>
-                </NavLink>
-              </>
-            )}
             <div className='hidden md:block'>
-              <Divider my={'2'} />
             </div>
 
             {user ? (
@@ -142,9 +100,51 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link to='/login'>Login</Link>
             )}
           </div>
-          <main className=' mx-auto flex h-full w-full flex-grow flex-col justify-center md:flex-row'>
+          <main className='w- mx-auto flex h-full w-full flex-grow flex-col justify-center md:flex-row md:w-3/5'>
             {children}
           </main>
+          <div className='flex flex-col w-full md:w-1/5  items-center'>
+
+            { user?.role === 'ADMIN' && (
+              <>
+                <div className='hidden md:block'>
+                  <h6 className='h6 italic text-slate12'>Admin Links</h6>
+
+                </div>
+                <NavLink
+                  to='/blog/new'
+                  style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
+                  className='flex flex-row justify-between text-slate12'
+                >
+                  <Button variant='unfilled' size='small'>
+                    <PlusCircledIcon />
+                    Create
+                  </Button>
+                </NavLink>
+                <NavLink
+                  to='/drafts'
+                  style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
+                  className='flex flex-row justify-between text-slate12'
+                >
+                  <Button variant='unfilled' size='small'>
+                    <Pencil1Icon />
+                    Drafts
+                  </Button>
+                </NavLink>
+                <NavLink
+                  to='/categories'
+                  style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
+                  className='flex flex-row justify-between text-slate12'
+                >
+                  <Button variant='unfilled' size='small'>
+                    <MixIcon />
+                    Categories
+                  </Button>
+                </NavLink>
+              </>
+            ) }
+          </div>
+
         </div>
       </div>
 

@@ -6,11 +6,10 @@ import {
   Form,
   useActionData,
   useCatch,
-  useFetcher,
   useNavigation,
-  useParams,
   useRouteLoaderData
 } from '@remix-run/react'
+import { z } from 'zod'
 import { useState } from 'react'
 import TipTap from '~/components/shared/tip-tap'
 import type { Category } from '~/utils/schemas/category-schema'
@@ -22,6 +21,9 @@ import {
   validateLargeTextLength,
   validateText
 } from '~/utils/validators.server'
+import ImageUploader from '~/components/shared/image-fetcher'
+import React from 'react'
+import { validateAction } from '~/utils/utilities'
 
 export const meta: MetaFunction = () => {
   return {
@@ -42,6 +44,21 @@ export async function loader({ request }: LoaderArgs) {
   }
   return json({ user })
 }
+const schema = z.object({
+  imageUrl: z.string().min(1, 'Image url is required'),
+  title: z
+    .string()
+    .min(10, 'please enter a title with at leasat 10 characters'),
+  description: z
+    .string()
+    .min(10, 'please enter a description longer than 10 characters'),
+  body: z
+    .string()
+    .min(10, 'please enter a description longer than 10 characters'),
+  featured: z.coerce.boolean(),
+  categories: z.string()
+})
+export type ActionInput = z.TypeOf<typeof schema>
 
 export const action: ActionFunction = async ({ request }) => {
   const user = await isAuthenticated(request)
@@ -49,51 +66,21 @@ export const action: ActionFunction = async ({ request }) => {
     throw new Response('Not authenticated', { status: 401 })
   }
 
-  const formData = await request.formData()
+  const { formData, errors } = await validateAction<ActionInput>({
+    request,
+    schema
+  })
 
-  const imageUrl = formData.get('imageUrl')
-  const title = formData.get('title')
-  const description = formData.get('description')
-  const body = formData.get('body')
-  const featured = Boolean(formData.get('featured'))
-  const categories = formData.get('categories')
-
-  if (
-    typeof imageUrl !== 'string' ||
-    typeof title !== 'string' ||
-    typeof description !== 'string' ||
-    typeof body !== 'string' ||
-    typeof categories !== 'string'
-  ) {
-    return badRequest({
-      fieldErrors: null,
-      fields: null,
-      formError: 'Invalid form data'
-    })
+  if (errors) {
+    return json(
+      { errors },
+      {
+        status: 400
+      }
+    )
   }
-
-  const fieldErrors = {
-    title: validateLargeTextLength(title),
-    description: validateText(description),
-    body: validateLargeTextLength(body),
-    imageUrl: validateText(imageUrl),
-    categories: validateText(categories)
-  }
-
-  const fields = {
-    title,
-    description,
-    body,
-    imageUrl,
-    categories
-  }
-  if (Object.values(fieldErrors).some(Boolean)) {
-    return badRequest({
-      fieldErrors,
-      fields,
-      formError: null
-    })
-  }
+  const { title, imageUrl, description, body, categories, featured } =
+    formData as ActionInput
 
   const cats = categories?.split(',')
   const category = cats.map((cat) => {
@@ -118,6 +105,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Uploader() {
   const actionData = useActionData<typeof action>()
+  const [url, setUrl] = React.useState('')
 
   const navigation = useNavigation()
   const { categories } = useRouteLoaderData('root') as {
@@ -130,16 +118,7 @@ export default function Uploader() {
       ? 'Saved!'
       : 'Save'
 
-  const fetcher = useFetcher<ActionData>()
-
   const [selected, setSelected] = useState<string>('')
-
-  const onClick = async () =>
-    fetcher.submit({
-      imageUrl: 'imageUrl',
-      key: 'imageUrl',
-      action: '/actions/cloudinary'
-    })
 
   return (
     <div className='mx-auto mb-7 flex flex-col items-center rounded-md p-6 text-slate12 '>
@@ -152,7 +131,7 @@ export default function Uploader() {
           type='hidden'
           className='rounded-xl text-slate12'
           name='imageUrl'
-          value={fetcher?.data?.imageUrl}
+          value={url}
           onChange={(e) => console.log(e.target.value)}
         />
         <label htmlFor='title'>Title</label>
@@ -161,15 +140,15 @@ export default function Uploader() {
           className='rounded-md border text-sm text-slate12'
           name='title'
           defaultValue={actionData?.fields?.title}
-          aria-invalid={Boolean(actionData?.fieldErrors?.title) || undefined}
+          aria-invalid={Boolean(actionData?.errors?.title) || undefined}
           aria-errormessage={
-            actionData?.fieldErrors?.title ? 'title-error' : undefined
+            actionData?.errors?.title ? 'title-error' : undefined
           }
           onChange={(e) => console.log(e.target.value)}
         />
-        {actionData?.fieldErrors?.title && (
+        {actionData?.errors?.title && (
           <p id='title-error' className='text-red-500'>
-            {actionData?.fieldErrors?.title}
+            {actionData?.errors?.title}
           </p>
         )}
         <label htmlFor='description'>Description</label>
@@ -178,19 +157,15 @@ export default function Uploader() {
           className='rounded-md border text-sm text-slate12'
           name='description'
           defaultValue={actionData?.fields?.description}
-          aria-invalid={
-            Boolean(actionData?.fieldErrors?.description) || undefined
-          }
+          aria-invalid={Boolean(actionData?.errors?.description) || undefined}
           aria-errormessage={
-            actionData?.fieldErrors?.description
-              ? 'description-error'
-              : undefined
+            actionData?.errors?.description ? 'description-error' : undefined
           }
           onChange={(e) => console.log(e.target.value)}
         />
-        {actionData?.fieldErrors?.description && (
+        {actionData?.errors?.description && (
           <p id='description-error' role='alert' className='text-red-500'>
-            {actionData?.fieldErrors?.description}
+            {actionData?.errors?.description}
           </p>
         )}
 
@@ -224,50 +199,8 @@ export default function Uploader() {
         <input type='hidden' name='categories' value={selected} />
       </Form>
       <div className='flex flex-row gap-2'>
-        <fetcher.Form
-          method='post'
-          encType='multipart/form-data'
-          action='/actions/cloudinary'
-          onClick={onClick}
-          className='mx-auto flex flex-col items-center gap-2'
-        >
-          <label htmlFor='imageUrl' className='subtitle'>
-            Attach an Image
-          </label>
-          <input
-            id='imageUrl'
-            className='block w-full rounded-xl border-2 p-2 text-sm text-slate12'
-            type='file'
-            name='imageUrl'
-            accept='image/*'
-          />
-          <button className='' type='submit'>
-            Upload Image
-          </button>
-        </fetcher.Form>
+        <ImageUploader setUrl={setUrl} />
         <div className='flex w-full flex-col items-center gap-5'>
-          {fetcher.data ? (
-            <div className='flex w-full flex-col items-center gap-2'>
-              <p className='h6'>Image uploaded</p>
-              <input
-                type='hidden'
-                name='imageUrl'
-                value={fetcher?.data?.imageUrl}
-              />
-              <div className='flex'>
-                <div className=' rounded-xl  text-slate12'>
-                  <img
-                    src={fetcher?.data?.imageUrl}
-                    alt={'no'}
-                    style={{
-                      objectFit: 'cover'
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          ) : null}
-
           <div className='flex flex-row items-center justify-center gap-2 text-slate12'>
             <button type='submit' form='newPost' className=''>
               {text}
@@ -280,11 +213,10 @@ export default function Uploader() {
 }
 export function CatchBoundary() {
   const caught = useCatch()
-  const params = useParams()
 
   switch (caught.status) {
     case 404: {
-      return <h2>User with ID "{params.userId}" not found!</h2>
+      return <h2>Error at blog new</h2>
     }
     default: {
       // if we don't handle this then all bets are off. Just throw an error
