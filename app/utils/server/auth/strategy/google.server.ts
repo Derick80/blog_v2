@@ -1,7 +1,6 @@
 import { Authenticator } from 'remix-auth'
 import { GoogleStrategy } from 'remix-auth-google'
 import { createUser } from '../../user.server'
-import { authenticator } from '../auth.server'
 import { sessionStorage } from '../session.server'
 import { getAccount } from './accountService.server'
 

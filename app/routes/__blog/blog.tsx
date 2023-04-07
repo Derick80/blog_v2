@@ -1,13 +1,9 @@
 import type { MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { NavLink, Outlet, useLoaderData } from '@remix-run/react'
+import { NavLink, useLoaderData } from '@remix-run/react'
 import dayjs from 'dayjs'
-import Avatar from '~/components/shared/avatar'
-import { PostCard } from '~/components/shared/blog-ui/post-card'
-import Divider from '~/components/shared/divider'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPosts } from '~/utils/server/post.server'
-import { useOptionalUser } from '~/utils/utilities'
 
 export const meta: MetaFunction = () => {
   return {

@@ -1588,6 +1588,10 @@ select{
   height: 100px;
 }
 
+.h-\[1px\]{
+  height: 1px;
+}
+
 .h-\[250px\]{
   height: 250px;
 }
@@ -1603,14 +1607,6 @@ select{
 
 .h-full{
   height: 100%;
-}
-
-.h-px{
-  height: 1px;
-}
-
-.h-\[1px\]{
-  height: 1px;
 }
 
 .max-h-screen{
@@ -1726,10 +1722,6 @@ select{
 
 .flex-row{
   flex-direction: row;
-}
-
-.flex-row-reverse{
-  flex-direction: row-reverse;
 }
 
 .flex-col{
@@ -1915,16 +1907,6 @@ select{
 .bg-gray-600{
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
-}
-
-.bg-green-500{
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
-}
-
-.bg-purple-500{
-  --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
 }
 
 .bg-slate-100{

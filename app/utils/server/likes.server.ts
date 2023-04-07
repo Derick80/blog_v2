@@ -1,4 +1,4 @@
-import type { User, Prisma } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import { prisma } from './prisma.server'
 
 export const createLike = async (input: Prisma.LikeCreateInput) => {

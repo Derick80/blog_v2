@@ -32,18 +32,8 @@ model User {
   chats Chat[]
   messages Message[]
   about About[]
-  books Book[]
 }
 
-model Book {
-  id String @id @default(uuid())
-  title String
-  review String
-  rating Float @default(3)
-  image String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
-}
 
 model JapanImages {
   id             Int     @id @unique @default(sequence())

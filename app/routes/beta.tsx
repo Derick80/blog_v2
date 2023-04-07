@@ -1,32 +1,16 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import {
-  Form,
   useActionData,
   useCatch,
   useFetcher,
-  useLoaderData,
-  useNavigation
-} from '@remix-run/react'
-import { Listbox } from '@headlessui/react'
+  useLoaderData} from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
-import { getPostToEdit } from '~/utils/server/post.server'
-import {
-  deletePost,
-  publishPost,
-  savePost,
-  unPublishPost
-} from '~/utils/server/post.server'
 import { validateText } from '~/utils/validators.server'
-import { MultiSelect, Switch } from '@mantine/core'
-import TipTap from '~/components/shared/tip-tap'
-import { useState } from 'react'
-import getAllCategories from '~/utils/server/categories.server'
-import { useOptionalUser } from '~/utils/utilities'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
 import { badRequest } from 'remix-utils'
-import { ChevronDownIcon, PlusCircledIcon } from '@radix-ui/react-icons'
+import { PlusCircledIcon } from '@radix-ui/react-icons'
 import { prisma } from '~/utils/server/prisma.server'
 import Button from '~/components/shared/layout/button'
 
