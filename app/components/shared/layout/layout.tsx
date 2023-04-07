@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   ExitIcon,
-  FileTextIcon,
   HomeIcon,
   MixIcon,
   Pencil1Icon,
@@ -14,7 +13,6 @@ import { Form, Link, NavLink } from '@remix-run/react'
 import { BrandIcon } from '../icons'
 import { socialLinks } from '~/utils/constants/social-links'
 import Button from './button'
-import Divider from '../divider'
 import { useOptionalUser } from '~/utils/utilities'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -33,8 +31,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </nav>
         <div className='mx-4 flex flex-col gap-2 md:flex-row  '>
           <div className='flex w-full flex-row flex-wrap items-center  md:w-1/5 md:flex-col'>
-            <div className='hidden md:block'>
-            </div>
+            <div className='hidden md:block'></div>
             <NavLink
               to='/home'
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -55,10 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <ReaderIcon />
               </Button>
             </NavLink>
-            <div className='hidden md:block'>
-
-
-            </div>
+            <div className='hidden md:block'></div>
             <NavLink
               to='/projects'
               style={({ isActive }) => (isActive ? activeStyle : undefined)}
@@ -75,14 +69,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className='flex flex-row justify-between text-slate12'
             >
               <Button variant='unfilled' size='small'>
-               Travel
+                Travel
                 <RocketIcon />
               </Button>
             </NavLink>
 
-
-            <div className='hidden md:block'>
-            </div>
+            <div className='hidden md:block'></div>
 
             {user ? (
               <Form method='post' action='/logout'>
@@ -100,20 +92,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <Link to='/login'>Login</Link>
             )}
           </div>
-          <main className='w- mx-auto flex h-full w-full flex-grow flex-col justify-center md:flex-row md:w-3/5'>
+          <main className='w- mx-auto flex h-full w-full flex-grow flex-col justify-center md:w-3/5 md:flex-row'>
             {children}
           </main>
-          <div className='flex flex-col w-full md:w-1/5  items-center'>
-
-            { user?.role === 'ADMIN' && (
+          <div className='flex w-full flex-col items-center  md:w-1/5'>
+            {user?.role === 'ADMIN' && (
               <>
                 <div className='hidden md:block'>
                   <h6 className='h6 italic text-slate12'>Admin Links</h6>
-
                 </div>
                 <NavLink
                   to='/blog/new'
-                  style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   className='flex flex-row justify-between text-slate12'
                 >
                   <Button variant='unfilled' size='small'>
@@ -123,7 +113,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </NavLink>
                 <NavLink
                   to='/drafts'
-                  style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   className='flex flex-row justify-between text-slate12'
                 >
                   <Button variant='unfilled' size='small'>
@@ -133,7 +123,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </NavLink>
                 <NavLink
                   to='/categories'
-                  style={ ({ isActive }) => (isActive ? activeStyle : undefined) }
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   className='flex flex-row justify-between text-slate12'
                 >
                   <Button variant='unfilled' size='small'>
@@ -142,9 +132,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </Button>
                 </NavLink>
               </>
-            ) }
+            )}
           </div>
-
         </div>
       </div>
 
