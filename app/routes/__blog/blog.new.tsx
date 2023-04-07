@@ -1,5 +1,5 @@
 import { MultiSelect, Switch } from '@mantine/core'
-import type { ActionFunction, LoaderArgs } from '@remix-run/node'
+import type { ActionArgs, ActionFunction, LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import {
@@ -60,7 +60,7 @@ const schema = z.object({
 })
 export type ActionInput = z.TypeOf<typeof schema>
 
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }:ActionArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
     throw new Response('Not authenticated', { status: 401 })
@@ -139,7 +139,7 @@ export default function Uploader() {
           type='text'
           className='rounded-md border text-sm text-slate12'
           name='title'
-          defaultValue={actionData?.fields?.title}
+          defaultValue={actionData?.errors?.title}
           aria-invalid={Boolean(actionData?.errors?.title) || undefined}
           aria-errormessage={
             actionData?.errors?.title ? 'title-error' : undefined
@@ -156,7 +156,7 @@ export default function Uploader() {
           type='text'
           className='rounded-md border text-sm text-slate12'
           name='description'
-          defaultValue={actionData?.fields?.description}
+          defaultValue={actionData?.errors?.description}
           aria-invalid={Boolean(actionData?.errors?.description) || undefined}
           aria-errormessage={
             actionData?.errors?.description ? 'description-error' : undefined
