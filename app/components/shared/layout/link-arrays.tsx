@@ -78,12 +78,7 @@ export const allLinks = [
     href: '/projects',
     icon: <RulerSquareIcon />
   },
-  {
-    category: 'Career',
-    name: 'Curriculum Vitae',
-    href: '/cv',
-    icon: <FileTextIcon />
-  }
+
 ]
 export const SiteNavLinks = [
   {
@@ -179,12 +174,7 @@ export function CareerLinks() {
       href: '/projects',
       icon: <RulerSquareIcon />
     },
-    {
-      category: 'Career',
-      name: 'Curriculum Vitae',
-      href: '/cv',
-      icon: <FileTextIcon />
-    }
+
   ]
   const activeStyle = {
     textDecoration: 'underline'
