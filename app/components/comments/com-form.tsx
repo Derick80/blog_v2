@@ -36,7 +36,7 @@ export default function FormComments({
           className='w-full rounded-md border border-gray-300 p-2 text-slate12'
         />
 
-        <Button variant='filled' size='regular' name='_action'>
+        <Button variant='filled' name='_action'>
           {parentId ? 'Post reply' : 'Post a comment'}
         </Button>
       </commentForm.Form>

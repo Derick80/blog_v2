@@ -1422,10 +1422,6 @@ select{
   left: -0.25rem;
 }
 
-.bottom-0{
-  bottom: 0px;
-}
-
 .left-0{
   left: 0px;
 }
@@ -1448,10 +1444,6 @@ select{
 
 .col-span-4{
   grid-column: span 4 / span 4;
-}
-
-.row-start-3{
-  grid-row-start: 3;
 }
 
 .m-0{

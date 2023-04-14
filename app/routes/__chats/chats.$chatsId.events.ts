@@ -1,4 +1,4 @@
-import { json, LoaderArgs } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node';
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { EVENTS, chatEmitter } from '~/utils/server/chat.server'

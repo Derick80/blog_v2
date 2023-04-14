@@ -1,4 +1,4 @@
-import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
+import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useCatch, useLoaderData } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
@@ -6,9 +6,7 @@ import { PostCard } from '~/components/shared/blog-ui/post-card'
 import getAllCategories from '~/utils/server/categories.server'
 import { getPostById } from '~/utils/server/post.server'
 import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
-import { Post } from '~/utils/schemas/post-schema'
-import { Categories } from '~/utils/schemas/projects-schema'
-import { PostWithChildren } from '~/utils/schemas/post-schema'
+import type { PostWithChildren } from '~/utils/schemas/post-schema'
 
 export const meta: MetaFunction = () => {
   return {
