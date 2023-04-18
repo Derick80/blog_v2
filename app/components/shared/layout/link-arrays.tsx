@@ -77,8 +77,7 @@ export const allLinks = [
     name: 'Projects',
     href: '/projects',
     icon: <RulerSquareIcon />
-  },
-
+  }
 ]
 export const SiteNavLinks = [
   {
@@ -173,8 +172,7 @@ export function CareerLinks() {
       name: 'Projects',
       href: '/projects',
       icon: <RulerSquareIcon />
-    },
-
+    }
   ]
   const activeStyle = {
     textDecoration: 'underline'

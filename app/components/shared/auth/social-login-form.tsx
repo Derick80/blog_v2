@@ -10,7 +10,7 @@ export const SocialLoginForm = ({
   children
 }: SocialLoginFormProps) => {
   return (
-    <Form className='' method='post' action={`/${provider}`}>
+    <Form className='' method='POST' action={`/${provider}`}>
       {children}
     </Form>
   )

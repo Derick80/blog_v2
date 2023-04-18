@@ -4,13 +4,6 @@ import { useLoaderData } from '@remix-run/react'
 import MyProfile from '~/components/shared/about-me'
 import { getAbout } from '~/utils/server/about.server'
 
-export const meta: MetaFunction = () => {
-  return {
-    title: `Derick's Personal Blog | About this Site`,
-    description: `Read all about me and this site`
-  }
-}
-
 export async function loader({ request }: LoaderArgs) {
   const about = await getAbout()
 

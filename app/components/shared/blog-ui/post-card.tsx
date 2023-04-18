@@ -15,7 +15,7 @@ import { ChatBubbleIcon } from '@radix-ui/react-icons'
 import { useOptionalUser } from '~/utils/utilities'
 import Divider from '../divider'
 import dayjs from 'dayjs'
-import Button from '../layout/button'
+import Button from '../button'
 
 export type ManyPostProps = {
   data: PostWithChildren
@@ -116,7 +116,7 @@ export const PostCard = ({
             </p>
           </div>
         </div>
-        <div className='flex flex-row flex-wrap items-center gap-2'>
+        <div className='flex flex-row flex-wrap items-center justify-between gap-2'>
           <div className='flex flex-row flex-wrap gap-2 p-2'>
             {showLikes && likes && currentUser && (
               <LikeContainer
@@ -136,7 +136,7 @@ export const PostCard = ({
             {showComments && data.comments && (
               <Button
                 size='small'
-                variant='unfilled'
+                variant='icon_unfilled'
                 onClick={() => setOpen(!open)}
               >
                 <div className='flex flex-row space-x-1 text-blue-500'>
@@ -158,7 +158,7 @@ export const PostCard = ({
         <Divider my={'7'} />
 
         {showComments && id && (
-          <div className='mt-2 flex flex-col gap-2'>
+          <div className='flex w-full flex-col gap-2'>
             {currentUser && <FormComments postId={id} />}
             {/* if I remove the formatCOmments this works.  */}
             {open && data.comments && (

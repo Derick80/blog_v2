@@ -6,16 +6,10 @@ import { PostCard } from '~/components/shared/blog-ui/post-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getUserDrafts } from '~/utils/server/post.server'
 
-import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+// or cloudflare/deno
 import type { PostWithChildren } from '~/utils/schemas/post-schema'
 import dayjs from 'dayjs'
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Work on your drafts | Derick's Blog | Drafts",
-    description: 'Work on your drafts and share your knowledge with the world'
-  }
-}
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {

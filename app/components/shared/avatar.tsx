@@ -3,15 +3,17 @@ import { UserPlaceHolder } from './icons'
 export default function Avatar({
   imageUrl,
   w,
-  h
+  h,
+  className
 }: {
-  imageUrl: string
+  imageUrl: string | null
   w?: number
   h?: number
+  className?: string
 }) {
   // use h-10 w-10 for small avatar and h-20 w-20 for large avatar
   return (
-    <div className='flex flex-col items-center'>
+    <div className={`${className + ''}`}>
       {imageUrl ? (
         <img
           src={imageUrl}

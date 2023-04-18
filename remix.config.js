@@ -1,8 +1,14 @@
+
+
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
   ignoredRouteFiles: ["**/.*"],
   future: {
     v2_routeConvention: true,
+    v2_errorBoundary: true,
+    v2_meta: true,
+    v2_normalizeFormMethods: true,
+    unstable_tailwind: true,
   },
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",

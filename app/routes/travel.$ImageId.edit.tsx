@@ -14,14 +14,8 @@ import FormField from '~/components/shared/form-field'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getTravelLogById, updateTravelLog } from '~/utils/server/travel.server'
 
-import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+// or cloudflare/deno
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Derick's Personal Blog | Edit Travel Log",
-    description: 'Edit a travel log'
-  }
-}
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
   invariant(user, 'user is required')

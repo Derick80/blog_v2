@@ -12,7 +12,7 @@ export default function ImageUploader({ setUrl }: any) {
   return (
     <>
       <fetcher.Form
-        method='post'
+        method='POST'
         encType='multipart/form-data'
         action='/actions/cloudinary'
         onClick={onClick}

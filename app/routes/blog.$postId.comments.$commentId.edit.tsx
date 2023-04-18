@@ -1,14 +1,8 @@
-import { json } from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
 import type { MetaFunction, ActionArgs, LoaderArgs } from '@remix-run/node' // or cloudflare/deno
 
-export const meta: MetaFunction = () => {
-  return {
-    title: 'Edit comment',
-    description: "Edit a comment on Derick's blog"
-  }
-}
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
@@ -60,7 +54,7 @@ export async function action({ request, params }: ActionArgs) {
     return json({ error: 'invalid form data' }, { status: 400 })
   }
 
-  return await prisma.comment.update({
+  await prisma.comment.update({
     where: {
       id: commentId
     },
@@ -68,4 +62,6 @@ export async function action({ request, params }: ActionArgs) {
       message
     }
   })
+
+  return json({ success: true })
 }

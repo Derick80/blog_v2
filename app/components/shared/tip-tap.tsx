@@ -10,7 +10,7 @@ import Image from '@tiptap/extension-image'
 import { ImageIcon } from '@radix-ui/react-icons'
 import Highlight from '@tiptap/extension-highlight'
 import TextAlign from '@tiptap/extension-text-align'
-import Button from './layout/button'
+import Button from './button'
 
 const TipTap = ({ content }: { content?: string }) => {
   const editor = useEditor({

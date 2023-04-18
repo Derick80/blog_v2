@@ -37,11 +37,6 @@ export const links: LinksFunction = () => [
     crossOrigin: 'anonymous'
   }
 ]
-export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
-  title: `Derick's blog`,
-  viewport: 'width=device-width,initial-scale=1'
-})
 
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
@@ -94,30 +89,4 @@ export default function App() {
       </body>
     </html>
   )
-}
-export function ErrorBoundary({ error }: any) {
-  return (
-    <div>
-      <h1>ROOT ERROR</h1>
-      <p>{error.message}</p>
-      <p>The stack trace is:</p>
-      <pre>{error.stack}</pre>
-    </div>
-  )
-}
-
-export function CatchBoundary() {
-  const caught = useCatch()
-  const params = useParams()
-
-  switch (caught.status) {
-    case 404: {
-      return <h2>Root catch boundry</h2>
-    }
-    default: {
-      // if we don't handle this then all bets are off. Just throw an error
-      // and let the nearest ErrorBoundary handle this
-      throw new Error(`${caught.status} not handled`)
-    }
-  }
 }

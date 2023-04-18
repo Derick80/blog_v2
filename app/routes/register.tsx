@@ -8,13 +8,6 @@ import {
   AuthorizationError
 } from '~/utils/server/auth/auth.server'
 
-export const meta: MetaFunction = () => {
-  return {
-    title: `Derick's Personal Blog | Register`,
-    description: `Register to Derick's Personal Blog`
-  }
-}
-
 export async function action({ request }: LoaderArgs) {
   try {
     return await authenticator.authenticate('register', request, {

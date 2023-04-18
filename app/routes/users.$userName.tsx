@@ -22,6 +22,7 @@ export async function loader({ request, params }: LoaderArgs) {
       userName: true,
       email: true,
       avatarUrl: true,
+      profile: true,
       chats: loggedInUser
         ? {
             where: {
@@ -114,7 +115,6 @@ export default function UserRoute() {
           )
       )
     : null
-  console.log({ oneOnOneChat })
 
   return (
     <div>
@@ -139,7 +139,6 @@ export default function UserRoute() {
           </Form>
         </>
       )}
-      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   )
 }

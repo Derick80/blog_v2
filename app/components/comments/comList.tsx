@@ -1,18 +1,23 @@
 import { Avatar, Box, Paper } from '@mantine/core'
 import {
   CheckIcon,
+  Cross1Icon,
   Cross2Icon,
   Pencil1Icon,
   TrashIcon
 } from '@radix-ui/react-icons'
-import { Link, NavLink, useFetcher } from '@remix-run/react'
+import { Link, NavLink, useFetcher, useNavigation } from '@remix-run/react'
 import { format } from 'date-fns'
 import React from 'react'
 import { useState } from 'react'
 import type { CommentWithChildren } from '~/utils/schemas/comment-schema'
 import { useOptionalUser } from '~/utils/utilities'
-import Button from '../shared/layout/button'
+import Button from '../shared/button'
 import FormComments from './com-form'
+
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 
 function getReplyCountText(count: number) {
   if (count === 0 || count === undefined) {
@@ -46,41 +51,38 @@ function CommentActions({
   const deleteCommentFetcher = useFetcher()
 
   return (
-    <>
-      <div className='flex flex-row items-center justify-between'>
-        <div>{getReplyCountText(replyCount)}</div>
-        {user ? (
+    <div className='flex flex-row items-center gap-2 '>
+      <p className='text-xs text-gray-500'>{getReplyCountText(replyCount)}</p>
+      {user ? (
+        <>
           <Button
-            variant='filled'
-            size='base'
+            variant='primary_filled'
+            size='small'
             onClick={() => setReplying(!replying)}
           >
             Reply
           </Button>
-        ) : (
+        </>
+      ) : (
+        <Button variant='primary_filled' size='small' disabled>
           <NavLink to='/login'>Login to Reply</NavLink>
-        )}
-        {currentUser === userId && (
-          <>
-            <deleteCommentFetcher.Form
-              method='post'
-              action={`${commentId}/delete`}
-            >
-              <button
-                className='flex flex-row items-center justify-center'
-                type='submit'
-                name='_action'
-                value='deleteComment'
-              >
-                <TrashIcon />
-              </button>
-            </deleteCommentFetcher.Form>
-          </>
-        )}
-      </div>
+        </Button>
+      )}
+      {currentUser === userId && (
+        <>
+          <deleteCommentFetcher.Form
+            method='post'
+            action={`comments/${commentId}/delete`}
+          >
+            <Button variant='danger_filled' size='small'>
+              <TrashIcon />
+            </Button>
+          </deleteCommentFetcher.Form>
+        </>
+      )}
 
       {replying && <FormComments postId={postId} parentId={commentId} />}
-    </>
+    </div>
   )
 }
 
@@ -95,84 +97,124 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
   }, [editCommentFetcher.type])
   const [editing, setEditing] = useState(false)
   return (
-    <Paper withBorder radius='md' mb='md' p='md'>
-      <div className='flex flex-row items-center justify-between'>
-        <Avatar
-          component={Link}
-          to={`/users/${comment.user.id}`}
-          src={comment.user.avatarUrl}
-        />
-        <div className='ml-4 flex w-full flex-col'>
-          <div className='flex w-full flex-row items-center justify-between'>
-            <p>{format(new Date(comment.createdAt), 'MMM d, yyyy')}</p>
-          </div>
-          <div className='flex w-full flex-row gap-2'>
-            {editing ? (
-              <>
-                <editCommentFetcher.Form
-                  // I don't think this is working
-                  ref={formRef}
-                  method='post'
-                  action={`comments/${comment.id}/edit`}
-                  className='flex w-full gap-2'
-                >
-                  <input type='hidden' name='postId' value={comment.postId} />
-                  <input type='hidden' name='commentId' value={comment.id} />
-                  <input type='hidden' name='userId' value={comment.userId} />
-                  <textarea
-                    required
-                    className='w-full'
-                    name='message'
-                    defaultValue={comment.message}
-                  />
-                  <button name='_action' value='editComment'>
-                    <CheckIcon />
-                  </button>
-                </editCommentFetcher.Form>
-              </>
-            ) : (
-              <div className='flex w-full flex-col gap-2'>
-                <p>{comment.createdBy} wrote:</p>
-
-                <p className='w-full rounded-md bg-slate8/10 text-sm'>
-                  {comment.message}
-                </p>
+    <div className='items-center bg-red-400'>
+      <div className='flex w-full flex-col'>
+        {editing ? (
+          <>
+            <Editor comment={comment} setState={setEditing} />
+          </>
+        ) : (
+          <div className='flex items-center'>
+            <p className='prose w-1/2  rounded-md p-1'>{comment.message}</p>
+            <div className='flex w-1/2 flex-col items-center gap-1'>
+              <div className='flex flex-row items-center gap-2'>
+                <p className='text-xs text-gray-500'>Posted by</p>
+                <Avatar
+                  component={Link}
+                  to={`/users/${comment.user.id}`}
+                  src={comment.user.avatarUrl}
+                />
               </div>
-            )}
+              <p className='text-xs text-gray-500'>
+                {dayjs().from(new Date(comment.createdAt), true)} ago..{' '}
+              </p>
+            </div>
             {comment.userId === currentUser?.id && (
               <Button
-                variant='filled'
-                size='base'
+                variant='primary_filled'
+                size='small'
                 onClick={() => setEditing(!editing)}
               >
                 {editing ? <Cross2Icon /> : <Pencil1Icon />}
               </Button>
             )}
           </div>
+        )}
+
+        <div className='flex flex-row justify-center gap-2'>
+          <CommentActions
+            postId={comment.postId}
+            commentId={comment.id}
+            userId={comment.user.id}
+            message={comment.message}
+            replyCount={comment?.children?.length}
+          />
         </div>
       </div>
 
-      <CommentActions
-        postId={comment.postId}
-        commentId={comment.id}
-        userId={comment.user.id}
-        message={comment.message}
-        replyCount={comment?.children?.length}
-      />
-
       {comment.children ? <ListComments comments={comment?.children} /> : null}
-    </Paper>
+    </div>
   )
 }
 
 function ListComments({ comments }: { comments: CommentWithChildren[] }) {
   return (
-    <Box>
+    <>
       {comments.map((comment) => {
         return <Comment key={comment.id} comment={comment} />
       })}
-    </Box>
+    </>
   )
 }
 
 export default ListComments
+
+function Editor({
+  comment,
+  setState
+}: {
+  comment: CommentWithChildren
+  setState: any
+}) {
+  const editCommentFetcher = useFetcher()
+  let formRef = React.useRef<HTMLFormElement>(null)
+  const [editing, setEditing] = useState(setState ? false : true)
+  let navigation = useNavigation()
+  navigation.formMethod = 'post'
+  navigation.formAction = `comments/${comment.id}/edit`
+
+  console.log(editing)
+
+  React.useEffect(() => {
+    if (editCommentFetcher.type === 'done') {
+      formRef.current?.reset()
+    }
+  }, [editCommentFetcher.type])
+
+  return (
+    <editCommentFetcher.Form
+      // I don't think this is working
+      ref={formRef}
+      method='POST'
+      action={`comments/${comment.id}/edit`}
+      className='flex w-full gap-2'
+    >
+      <input type='hidden' name='postId' value={comment.postId} />
+      <input type='hidden' name='commentId' value={comment.id} />
+      <input type='hidden' name='userId' value={comment.userId} />
+      <textarea
+        required
+        className='w-full'
+        name='message'
+        defaultValue={comment.message}
+      />
+      <Button
+        variant='primary_filled'
+        size='small'
+        name='_action'
+        value='editComment'
+      >
+        <CheckIcon />
+      </Button>
+      <Button
+        variant='danger_filled'
+        size='small'
+        name='_action'
+        value='cancel'
+        onClick={() => setEditing(!editing)}
+      >
+        {setState(!editing) ? <Pencil1Icon /> : <Cross1Icon />}
+      </Button>
+    </editCommentFetcher.Form>
+  )
+}

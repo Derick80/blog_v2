@@ -103,32 +103,6 @@ export async function getPosts() {
     },
 
     include: {
-      comments: {
-        include: {
-          user: {
-            select: {
-              id: true,
-              userName: true,
-              avatarUrl: true,
-              email: true,
-              role: true
-            }
-          },
-          children: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  userName: true,
-                  avatarUrl: true,
-                  email: true,
-                  password: false
-                }
-              }
-            }
-          }
-        }
-      },
       user: {
         select: {
           id: true,

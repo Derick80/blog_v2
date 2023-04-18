@@ -1,6 +1,6 @@
 import { useFetcher } from '@remix-run/react'
 import React, { useEffect } from 'react'
-import Button from '../shared/layout/button'
+import Button from '../shared/button'
 
 export default function FormComments({
   postId,
@@ -23,7 +23,7 @@ export default function FormComments({
       {/* send to actions/comment to leave a comment */}
       <commentForm.Form
         ref={formRef}
-        method='post'
+        method='POST'
         className='w-full'
         action={`/actions/comment`}
       >
@@ -36,7 +36,7 @@ export default function FormComments({
           className='w-full rounded-md border border-gray-300 p-2 text-slate12'
         />
 
-        <Button variant='filled' name='_action'>
+        <Button variant='primary_filled' name='_action'>
           {parentId ? 'Post reply' : 'Post a comment'}
         </Button>
       </commentForm.Form>

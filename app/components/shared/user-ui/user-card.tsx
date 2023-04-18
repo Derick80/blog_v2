@@ -1,81 +1,64 @@
-import { Button, Image, Text } from '@mantine/core'
+import { Avatar, Image, Text } from '@mantine/core'
 import { Form, NavLink } from '@remix-run/react'
 import React from 'react'
 import type { Profile } from '~/utils/schemas/profile-schema'
 import type { UserProps } from '~/utils/server/user.server'
 import { useOptionalUser } from '~/utils/utilities'
-import Avatar from '../avatar'
 import { UserPlaceHolder } from '../icons'
+import Button from '../button'
+import UserProfileFetcher from '../user-profile-fetcher'
 
 export type UserCardProps = {
   user: UserProps
-  profiles?: Profile[]
 }
-export default function UserCard({ user, profiles }: UserCardProps) {
+export default function UserCard({ user }: UserCardProps) {
   const optionalUser = useOptionalUser()
   const currentUser = optionalUser?.id
-  const [showMore, setShowMore] = React.useState(false)
+
   return (
-    <>
+    <div className='flex w-full flex-col gap-2'>
       {user && (
         <>
           <div
             key={user.id}
-            className=' my-2 flex  w-full flex-col justify-between rounded-md border-2 p-1  md:p-2'
+            className=' my-2 flex w-[350px] flex-col justify-between rounded-md border-2 p-1  md:p-2'
           >
             <div
               // main content
-              className='flex flex-row gap-2 border-b-2 border-b-red-300 pb-2'
+              className='flex flex-row justify-between  gap-2 border-b-2 border-b-red-300 pb-2'
             >
               {user?.avatarUrl ? (
                 <>
-                  <Avatar imageUrl={user.avatarUrl} h={10} w={10} />
+                  <Avatar src={user.avatarUrl} size='sm' radius='xl' />
                 </>
               ) : (
                 <div className='relative h-10 w-10 overflow-hidden rounded-full'>
                   <UserPlaceHolder />
                 </div>
               )}
+
               <NavLink
                 className='flex flex-col pl-1 md:pl-2 '
                 to={`/users/${user.userName}`}
               >
-                <p className='p italic'>Username</p>
-                <p className='p'> {user.userName}</p>
+                <p className='p text-xs italic underline'>Username</p>
+                <p className='text-sm font-semibold'> {user.userName}</p>
               </NavLink>
-
-              <button className='' onClick={() => setShowMore(!showMore)}>
-                more
-              </button>
             </div>
-            {showMore &&
-              profiles?.map((profile) => (
-                <div key={profile.id}>
-                  <p className='text-xs italic'>Profile</p>
-                  <p className='text-base'> {profile.userName}</p>
-                  <Text>{profile.firstName}</Text>
-                  <Text>{profile.lastName}</Text>
-                  <Text>{profile.location}</Text>
-                  <Text>{profile.occupation}</Text>
-                  <p dangerouslySetInnerHTML={{ __html: profile.bio }} />
-
-                  <Text>{profile.email}</Text>
-                  <div className='h-24 w-24'>
-                    <Image src={profile.profilePicture} />
-                  </div>
-                </div>
-              ))}
+            <div className='flex flex-col gap-1'>
+              <UserProfileFetcher userName={user.userName} />
+            </div>
 
             <p className='pt-1 text-xs font-bold md:pt-2'>User statistics</p>
             <div
               // sub content
-              className='flex flex-row items-center justify-between'
+              className='flex flex-row items-center justify-between text-sm'
             >
               <NavLink
-                className='flex flex-row items-center'
+                className='flex flex-row items-center gap-1 text-sm'
                 to={`/users/${user.id}/posts`}
               >
-                <p className='text-sm italic'>User posts:</p>
+                <p className='text-xs italic'>User posts:</p>
                 <p className='text-sm'>{user._count.posts}</p>
               </NavLink>
               <NavLink
@@ -87,10 +70,16 @@ export default function UserCard({ user, profiles }: UserCardProps) {
               </NavLink>
             </div>
             {currentUser === user.id && (
-              <>
-                <Form action={`/users/${user.id}/edit`}>
-                  <button type='submit'>Edit</button>
-                </Form>
+              <div className='flex flex-row gap-1'>
+                <NavLink
+                  className='flex flex-row items-center'
+                  to={`/users/${user.id}/edit`}
+                >
+                  <Button type='button' variant='primary_filled' size='small'>
+                    Edit
+                  </Button>
+                </NavLink>
+
                 <Form
                   method='post'
                   action='destroy'
@@ -102,13 +91,15 @@ export default function UserCard({ user, profiles }: UserCardProps) {
                     }
                   }}
                 >
-                  <button type='submit'>Delete</button>
+                  <Button type='submit' variant='danger_filled' size='small'>
+                    Delete
+                  </Button>
                 </Form>
-              </>
+              </div>
             )}
           </div>
         </>
       )}
-    </>
+    </div>
   )
 }

@@ -1,19 +1,22 @@
 import React from 'react'
 import {
+  ExitFullScreenIcon,
   ExitIcon,
-  HomeIcon,
+  GearIcon,
   MixIcon,
   Pencil1Icon,
   PlusCircledIcon,
-  ReaderIcon,
-  RocketIcon,
-  RulerSquareIcon
+  RocketIcon
 } from '@radix-ui/react-icons'
 import { Form, Link, NavLink } from '@remix-run/react'
-import { BrandIcon } from '../icons'
+import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { CaretDownIcon } from '@radix-ui/react-icons'
 import { socialLinks } from '~/utils/constants/social-links'
-import Button from './button'
+import Button from '../button'
 import { useOptionalUser } from '~/utils/utilities'
+import { Menu } from '@mantine/core'
+import { IconBook2 } from '@tabler/icons-react'
+import UserDropdown from '../user-ui/user-dropdown'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
@@ -21,92 +24,35 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     textDecoration: 'underline'
   }
   return (
-    <>
-      <div className='flex h-full flex-col text-slate12'>
-        <nav className='flex flex-row items-center justify-around'>
-          <div className='h-20 w-20'>
-            <BrandIcon />
-          </div>
-          <div className='md:h4 h4 '>Derick Hoskinson PhD</div>
-        </nav>
-        <div className='mx-4 flex flex-col gap-2 md:flex-row  '>
-          <div className='flex w-full flex-row flex-wrap items-center  md:w-1/5 md:flex-col'>
-            <div className='hidden md:block'></div>
-            <NavLink
-              to='/home'
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              className='flex flex-row justify-between text-slate12'
-            >
-              <Button variant='unfilled' size='small'>
-                Home
-                <HomeIcon />
-              </Button>
-            </NavLink>
-            <NavLink
-              to='/blog'
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              className='flex flex-row justify-between text-slate12 '
-            >
-              <Button variant='unfilled' size='small'>
-                Blog
-                <ReaderIcon />
-              </Button>
-            </NavLink>
-            <div className='hidden md:block'></div>
-            <NavLink
-              to='/projects'
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              className='flex flex-row justify-between text-slate12'
-            >
-              <Button variant='unfilled' size='small'>
-                Projects
-                <RulerSquareIcon />
-              </Button>
-            </NavLink>
-            <NavLink
-              to='/travel'
-              style={({ isActive }) => (isActive ? activeStyle : undefined)}
-              className='flex flex-row justify-between text-slate12'
-            >
-              <Button variant='unfilled' size='small'>
-                Travel
-                <RocketIcon />
-              </Button>
-            </NavLink>
+    <div className='flex flex-col items-center gap-4'>
+      <nav className='flex flex-row items-center gap-4'>
+        <MantineMenu />
+        <ProjectsMenu />
+        <NavLink
+          to='/projects'
+          className={({ isActive }) => {
+            return isActive ? ' text-gray-900 underline' : ' text-gray-900'
+          }}
+        >
+          <Button variant='icon_unfilled' size='small'>
+            Projects
+          </Button>
+        </NavLink>
 
-            <div className='hidden md:block'></div>
+        {user && <UserDropdown user={user} />}
+      </nav>
 
-            {user ? (
-              <Form method='post' action='/logout'>
-                <Button
-                  type='submit'
-                  variant='unfilled'
-                  size='small'
-                  className='flex flex-row justify-between text-slate12'
-                >
-                  Logout
-                  <ExitIcon />
-                </Button>
-              </Form>
-            ) : (
-              <Link to='/login'>Login</Link>
-            )}
-          </div>
-          <main className='w- mx-auto flex h-full w-full flex-grow flex-col justify-center md:w-3/5 md:flex-row'>
-            {children}
-          </main>
-          <div className='flex w-full flex-col items-center  md:w-1/5'>
-            {user?.role === 'ADMIN' && (
-              <>
-                <div className='hidden md:block'>
-                  <h6 className='h6 italic text-slate12'>Admin Links</h6>
-                </div>
+      <main className='mx-auto flex flex-col items-center gap-4'>
+        <div className='flex w-full flex-col items-center  md:w-1/5'>
+          {/* {user?.role === 'ADMIN' && (
+            <ul className='flex flex-col items-center gap-4 p-2'>
+              <li className='flex flex-row items-center gap-4 p-2'>
                 <NavLink
                   to='/blog/new'
                   style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   className='flex flex-row justify-between text-slate12'
                 >
-                  <Button variant='unfilled' size='small'>
+                  <Button variant='primary_filled' size='small'>
                     <PlusCircledIcon />
                     Create
                   </Button>
@@ -116,7 +62,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   className='flex flex-row justify-between text-slate12'
                 >
-                  <Button variant='unfilled' size='small'>
+                  <Button variant='primary_filled' size='small'>
                     <Pencil1Icon />
                     Drafts
                   </Button>
@@ -126,31 +72,147 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   className='flex flex-row justify-between text-slate12'
                 >
-                  <Button variant='unfilled' size='small'>
+                  <Button variant='primary_filled' size='small'>
                     <MixIcon />
                     Categories
                   </Button>
                 </NavLink>
-              </>
-            )}
-          </div>
+              </li>
+            </ul>
+          )} */}
         </div>
-      </div>
+        {children}
+      </main>
 
-      <footer className='flex flex-row items-center justify-center gap-4'>
-        <p className='p'>Copyrite {new Date().getFullYear()}</p>
-        {/* map through social links array  */}
-        {socialLinks.map((social) => (
-          <a
-            key={social.name}
-            href={social.href}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            {social.icon}
-          </a>
-        ))}
+      <footer className='flex flex-col items-center gap-4'>
+        <div className='flex flex-row items-center gap-4'>
+          {socialLinks.map((link) => (
+            <Link key={link.href} to={link.href}>
+              {link.icon}
+            </Link>
+          ))}
+          <p>© {new Date().getFullYear()} Derick Hoskinson</p>
+          {user && (
+            <Form method='post' action='/logout'>
+              <Button type='submit' variant='danger_filled' size='small'>
+                <ExitIcon />
+                <p>Logout</p>
+              </Button>
+            </Form>
+          )}
+        </div>
       </footer>
-    </>
+    </div>
+  )
+}
+
+function MantineMenu() {
+  return (
+    <Menu trigger='hover' shadow='md' width={150}>
+      <Menu.Target>
+        <Button variant='icon_unfilled' className='font-bold' size='small'>
+          {' '}
+          Blog
+        </Button>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Label>Blog Menu</Menu.Label>
+        <Menu.Item icon={<PlusCircledIcon />}>
+          <Link to='/blog/new'>Create</Link>
+        </Menu.Item>
+        <Menu.Item icon={<Pencil1Icon />}>
+          <Link to='/drafts'>Drafts</Link>
+        </Menu.Item>
+        <Menu.Item icon={<MixIcon />}>
+          <Link to='/categories'>Categories</Link>
+        </Menu.Item>
+
+        <Menu.Divider />
+
+        <Menu.Label>Danger zone</Menu.Label>
+
+        <Menu.Item color='red'>
+          <Form method='post' action='/logout'>
+            <Button type='submit' variant='danger_filled' size='small'>
+              <ExitIcon />
+              <p>Logout</p>
+            </Button>
+          </Form>
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  )
+}
+function RadixNavMenu() {
+  return (
+    <NavigationMenu.Root>
+      <NavigationMenu.List>
+        <NavigationMenu.Item>
+          <NavigationMenu.Trigger />
+          <NavigationMenu.Content>
+            <NavigationMenu.Link />
+          </NavigationMenu.Content>
+        </NavigationMenu.Item>
+
+        <NavigationMenu.Item>
+          <NavigationMenu.Link />
+        </NavigationMenu.Item>
+
+        <NavigationMenu.Item>
+          <NavigationMenu.Trigger>
+            <NavigationMenu.Link>Blog</NavigationMenu.Link>
+          </NavigationMenu.Trigger>
+          <NavigationMenu.Content>
+            <NavigationMenu.Sub>
+              <NavigationMenu.List />
+              <NavigationMenu.Viewport />
+            </NavigationMenu.Sub>
+          </NavigationMenu.Content>
+        </NavigationMenu.Item>
+
+        <NavigationMenu.Indicator />
+      </NavigationMenu.List>
+
+      <NavigationMenu.Viewport />
+    </NavigationMenu.Root>
+  )
+}
+function ProjectsMenu() {
+  return (
+    <Menu trigger='hover' shadow='md' width={150}>
+      <Menu.Target>
+        <Button variant='icon_unfilled' className='font-bold' size='small'>
+          {' '}
+          Hobbies
+        </Button>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Label>Hobbies Menu</Menu.Label>
+        <Menu.Item icon={<RocketIcon />}>
+          <Link to='/travel'>Travel</Link>
+        </Menu.Item>
+        <Menu.Item icon={<IconBook2 />}>
+          <Link to='/books'>Books</Link>
+        </Menu.Item>
+        <Menu.Item icon={<MixIcon />}>
+          <Link to='/categories'>Categories</Link>
+        </Menu.Item>
+
+        <Menu.Divider />
+
+        <Menu.Label>Danger zone</Menu.Label>
+
+        <Menu.Item color='red'>
+          <Form method='post' action='/logout'>
+            <Button type='submit' variant='danger_filled' size='small'>
+              <ExitIcon />
+              <p>Logout</p>
+            </Button>
+          </Form>
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
   )
 }

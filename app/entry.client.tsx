@@ -1,13 +1,14 @@
 import { RemixBrowser } from '@remix-run/react';
-import { hydrate } from 'react-dom';
+import { hydrateRoot } from 'react-dom/client'
 import { ClientProvider } from '@mantine/remix';
 import reportWebVitals from './analytics/reportWebVitals'
 import { sendToVercelAnalytics } from './analytics/vitals'
 
-hydrate(
+hydrateRoot(
+ document,
   <ClientProvider>
     <RemixBrowser />
-  </ClientProvider>,
-  document
+  </ClientProvider>
+
 );
 reportWebVitals(sendToVercelAnalytics)

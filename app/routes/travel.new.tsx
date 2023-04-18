@@ -14,12 +14,6 @@ import type {
   LoaderArgs
 } from '@remix-run/node' // or cloudflare/deno
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Derick's Personal Blog | Add Travel Log",
-    description: 'Add a travel log'
-  }
-}
 type ActionData = {
   errorMsg?: string
   imageUrl?: string

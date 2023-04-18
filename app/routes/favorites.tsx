@@ -6,13 +6,6 @@ import type { Favorite } from '~/utils/schemas/favorite.schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { getFavoriteList } from '~/utils/server/favorite.server'
 
-export const meta: MetaFunction = () => {
-  return {
-    title: `Derick's Personal Blog | Favorites`,
-    description: `List all your favorite posts`
-  }
-}
-
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user)

@@ -19,7 +19,7 @@ export async function getProjects() {
       }
     },
     orderBy: {
-      id: 'desc'
+      createdAt: 'desc'
     }
   })
 

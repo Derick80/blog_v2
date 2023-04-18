@@ -10,12 +10,16 @@ import { Select } from '@mantine/core'
 import { getProfiles } from '~/utils/server/profile.server'
 import type { Profile } from '~/utils/schemas/profile-schema'
 import { useState } from 'react'
-export const meta: MetaFunction = () => {
-  return {
-    title: `Derick's Personal Blog | Users`,
-    description: `Registered users may search for other registered users`
-  }
+
+export function meta() {
+  return [
+    { title: 'Blog' },
+    { name: 'description', content: 'User Index Page' },
+    { property: 'og:title', content: 'User' },
+    { property: 'og:description', content: 'User index page' }
+  ]
 }
+
 export type TestUser = {
   [key: string]: {
     id: string
@@ -37,16 +41,14 @@ export async function loader({ request }: LoaderArgs) {
   const currentUser = user?.id
 
   const users = await getUsers()
-  const profiles = await getProfiles()
   const userNames = users.map((user) => user.userName)
 
-  return json({ users, profiles, currentUser, userNames })
+  return json({ users, currentUser, userNames })
 }
 
 export default function Users() {
   const data = useLoaderData<{
     users: UserType[]
-    profiles: Profile[]
     currentUser: string
     userNames: string[]
   }>()
@@ -71,7 +73,7 @@ export default function Users() {
       </userFetcher.Form>
       {data.users.map((user: UserProps) => (
         <>
-          <UserCard key={user.id} user={user} profiles={data?.profiles} />
+          <UserCard key={user.id} user={user} />
         </>
       ))}
       <Outlet />

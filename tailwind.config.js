@@ -5,7 +5,7 @@ module.exports = {
 
     extend: {
       fontFamily:{
-        sans:['Raleway', 'sans-serif'],
+        sans:['Roboto', 'sans-serif'],
       },
       colors:{
         'crimson1': '#1d1418',

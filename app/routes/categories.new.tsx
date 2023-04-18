@@ -1,16 +1,10 @@
 import { Cross2Icon } from '@radix-ui/react-icons'
 import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Form, useLoaderData } from '@remix-run/react'
+import { Form, Outlet, useLoaderData } from '@remix-run/react'
 import getAllCategories, {
   createCategory
 } from '~/utils/server/categories.server'
-export const meta: MetaFunction = () => {
-  return {
-    title: `Derick's Personal Blog | Blog Categories`,
-    description: `Take a look at all the categories for this blog`
-  }
-}
 export async function loader({ request }: LoaderArgs) {
   const categories = await getAllCategories()
 
@@ -78,6 +72,7 @@ export default function CategoryIndex() {
             </button>
           </div>
         </form>
+        <Outlet />
       </div>
     </>
   )

@@ -1,4 +1,3 @@
-import { GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons'
 import { socialLinks } from '~/utils/constants/social-links'
 
 export default function Footer() {

@@ -23,17 +23,10 @@ import TipTap from '~/components/shared/tip-tap'
 import { useState } from 'react'
 import getAllCategories from '~/utils/server/categories.server'
 import { useOptionalUser } from '~/utils/utilities'
-import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+// or cloudflare/deno
 import { badRequest } from 'remix-utils'
 import ImageUploader from '~/components/shared/image-fetcher'
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Edit Post | Derick's Blog",
-    description:
-      "Edit a post on Derick's blog and share your knowledge with the world"
-  }
-}
 export async function loader({ params, request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
@@ -337,19 +330,6 @@ export default function EditPost() {
           </button>
         </div>
       </div>
-    </div>
-  )
-}
-export function CatchBoundary() {
-  const caught = useCatch()
-
-  return (
-    <div>
-      <h1>Caught</h1>
-      <p>Status: {caught.status}</p>
-      <pre>
-        <code>{JSON.stringify(caught.data, null, 2)}</code>
-      </pre>
     </div>
   )
 }

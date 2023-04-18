@@ -5,7 +5,7 @@ import { Link, NavLink } from '@remix-run/react'
 import type { Project } from '~/utils/schemas/projects-schema'
 import { useOptionalUser } from '~/utils/utilities'
 import CategoryContainer from './category-container'
-import Button from './layout/button'
+import Button from './button'
 
 export default function ProjectsCard({ project }: { project: Project }) {
   const user = useOptionalUser()

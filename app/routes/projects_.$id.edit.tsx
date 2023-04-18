@@ -1,22 +1,54 @@
-import type { ActionArgs } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import {
-  useRouteLoaderData,
-  useFetcher,
   Form,
-  useCatch
+  isRouteErrorResponse,
+  useCatch,
+  useFetcher,
+  useLoaderData,
+  useParams,
+  useRouteError,
+  useRouteLoaderData
 } from '@remix-run/react'
+import Button from '~/components/shared/button'
 import type { Categories } from '~/utils/schemas/projects-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
-
-export async function action({ request }: ActionArgs) {
+import { getProjectById } from '~/utils/server/project.server'
+type ActionData = {
+  imageUrl?: string
+}
+export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
     throw new Error('Not Authenticated')
   }
 
+  const { id } = params
+  if (!id) {
+    throw new Error('id is required')
+  }
+
+  const project = await getProjectById(id)
+
+  if (!project) {
+    throw new Error('Project not found')
+  }
+
+  return json({ project })
+}
+
+export async function action({ request, params }: ActionArgs) {
+  const user = await isAuthenticated(request)
+  if (!user) {
+    throw new Error('Not Authenticated')
+  }
+  const { id } = params
+  if (!id) {
+    throw new Error('id is required')
+  }
   const formData = await request.formData()
+  const action = formData.get('_action')
   const title = formData.get('title')
   const description = formData.get('description')
   const projectUrl = formData.get('projectUrl')
@@ -35,44 +67,68 @@ export async function action({ request }: ActionArgs) {
     return json({ error: 'Invalid form data' }, { status: 400 })
   }
 
-  if (!imageUrl) {
-    return json({
-      errorMsg: 'Something went wrong while uploading'
-    })
+  const cats = categories.split(',')
+  console.log(imageUrl, 'imageUrl')
+
+  switch (action) {
+    case 'update':
+      await prisma.project.update({
+        where: {
+          id: id
+        },
+        data: {
+          title: title,
+          description: description,
+          projectUrl: projectUrl,
+          githubUrl: githubUrl,
+          categories: {
+            connectOrCreate: {
+              where: {
+                value: categories
+              },
+              create: {
+                value: categories,
+                label: categories
+              }
+            }
+          },
+          projectImg: imageUrl
+        }
+      })
+    case 'new':
+      await prisma.project.create({
+        data: {
+          title: title,
+          description: description,
+          projectUrl: projectUrl,
+          githubUrl: githubUrl,
+          user: {
+            connect: {
+              id: user.id
+            }
+          },
+          categories: {
+            connectOrCreate: {
+              where: {
+                value: categories
+              },
+              create: {
+                value: categories,
+                label: categories
+              }
+            }
+          },
+          projectImg: imageUrl
+        }
+      })
   }
 
-  await prisma.project.create({
-    data: {
-      title: title,
-      description: description,
-      projectUrl: projectUrl,
-      githubUrl: githubUrl,
-      user: {
-        connect: {
-          id: user.id
-        }
-      },
-      categories: {
-        connectOrCreate: {
-          where: {
-            value: categories
-          },
-          create: {
-            value: categories,
-            label: categories
-          }
-        }
-      },
-      projectImg: imageUrl
-    }
-  })
-
-  return redirect('/projects')
+  return redirect(`/projects`)
 }
-
 export default function Index() {
+  const data = useLoaderData<typeof loader>()
   const { categories } = useRouteLoaderData('root') as Categories
-  const imageFetcher = useFetcher()
+  const imageFetcher = useFetcher<ActionData>()
   const onClick = async () =>
     imageFetcher.submit({
       imageUrl: 'imageUrl',
@@ -83,7 +139,6 @@ export default function Index() {
   return (
     <div className='flex h-full w-full flex-col items-center'>
       <Form
-        action='/projects/new'
         method='post'
         id='projectForm'
         className='flex w-1/2 flex-col gap-2'
@@ -100,6 +155,7 @@ export default function Index() {
         <input
           type='text'
           name='title'
+          defaultValue={data.project.title}
           className='w-full p-2 text-slate12 shadow-md '
         />
         <label htmlFor='description' className='text-sm font-semibold'>
@@ -107,18 +163,30 @@ export default function Index() {
         </label>
         <textarea
           name='description'
+          defaultValue={data.project.description}
           className='w-full p-2 text-slate12 shadow-md '
         />
-        <select
-          multiple
-          name='categories'
-          id='categories'
-          className='rounded-md border p-2 text-slate12 shadow-sm'
-        >
-          {categories.map((category) => {
-            return <option key={category.id}>{category.value}</option>
-          })}
-        </select>
+        {data.project.categories && (
+          <select
+            multiple
+            name='categories'
+            id='categories'
+            className='rounded-md border p-2 text-slate12 shadow-sm'
+          >
+            {categories.map((category) => {
+              return (
+                <option
+                  key={category.id}
+                  selected={data.project.categories?.some(
+                    (cat) => cat.value === category.value
+                  )}
+                >
+                  {category.value}
+                </option>
+              )
+            })}
+          </select>
+        )}
 
         <label htmlFor='projectUrl' className='text-sm font-semibold'>
           Project Url
@@ -126,6 +194,7 @@ export default function Index() {
         <input
           type='text'
           name='projectUrl'
+          defaultValue={data.project.projectUrl}
           className='w-full p-2 text-slate12 shadow-md '
         />
         <label htmlFor='githubUrl' className='text-sm font-semibold'>
@@ -134,6 +203,7 @@ export default function Index() {
         <input
           type='text'
           name='githubUrl'
+          defaultValue={data.project.githubUrl}
           className='w-full p-2 text-slate12 shadow-md '
         />
       </Form>
@@ -172,29 +242,44 @@ export default function Index() {
           </div>
         ) : null}
       </div>
-      <button
+      <Button
+        variant='primary_filled'
+        size='small'
         type='submit'
         name='_action'
-        value='new'
+        value='update'
         form='projectForm'
-        className='rounded-md bg-blue-500 p-2 text-white shadow-md'
       >
         Update
-      </button>
+      </Button>
     </div>
   )
 }
 
-export function CatchBoundary() {
-  const caught = useCatch()
+export function ErrorBoundary() {
+  const error = useRouteError()
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1 className='text-2xl font-bold'>'something went wront'</h1>
+        <p className='text-xl font-semibold'>status{error.status}</p>
+        <p className='text-xl font-semibold'>message{error.data.message}</p>
+      </div>
+    )
+  }
+
+  let errorMessage = 'unknown error'
+  if (error instanceof Error) {
+    errorMessage = error.message
+  } else if (typeof error === 'string') {
+    errorMessage = error
+  }
 
   return (
     <div>
-      <h1>Caught</h1>
-      <p>Status: {caught.status}</p>
-      <pre>
-        <code>{JSON.stringify(caught.data, null, 2)}</code>
-      </pre>
+      <h1 className='text-2xl font-bold'>'something went wront'</h1>
+      <pre>{errorMessage}</pre>
     </div>
   )
 }

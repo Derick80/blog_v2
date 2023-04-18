@@ -8,15 +8,9 @@ import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createLike, deleteLike } from '~/utils/server/likes.server'
 
-import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+// or cloudflare/deno
 import { getPostById } from '~/utils/server/post.server'
 
-export const meta: MetaFunction = () => {
-  return {
-    title: 'Like a post',
-    description: "Like a post on Derick's blog"
-  }
-}
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
 

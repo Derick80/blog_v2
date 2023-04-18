@@ -4,23 +4,17 @@ import {
   useActionData,
   useCatch,
   useFetcher,
-  useLoaderData} from '@remix-run/react'
+  useLoaderData
+} from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { validateText } from '~/utils/validators.server'
-import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
+// or cloudflare/deno
 import { badRequest } from 'remix-utils'
 import { PlusCircledIcon } from '@radix-ui/react-icons'
 import { prisma } from '~/utils/server/prisma.server'
-import Button from '~/components/shared/layout/button'
+import Button from '~/components/shared/button'
 
-export const meta: MetaFunction = () => {
-  return {
-    title: "Edit Post | Derick's Blog",
-    description:
-      "Edit a post on Derick's blog and share your knowledge with the world"
-  }
-}
 export async function loader({ params, request }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
@@ -147,19 +141,6 @@ export default function EditPost() {
           <PlusCircledIcon />
         </Button>
       </div>
-    </div>
-  )
-}
-export function CatchBoundary() {
-  const caught = useCatch()
-
-  return (
-    <div>
-      <h1>Caught</h1>
-      <p>Status: {caught.status}</p>
-      <pre>
-        <code>{JSON.stringify(caught.data, null, 2)}</code>
-      </pre>
     </div>
   )
 }

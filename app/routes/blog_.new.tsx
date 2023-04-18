@@ -15,23 +15,11 @@ import TipTap from '~/components/shared/tip-tap'
 import type { Category } from '~/utils/schemas/category-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createPost } from '~/utils/server/post.server'
-import type { MetaFunction } from '@remix-run/node' // or cloudflare/deno
-import { badRequest } from 'remix-utils'
-import {
-  validateLargeTextLength,
-  validateText
-} from '~/utils/validators.server'
+// or cloudflare/deno
 import ImageUploader from '~/components/shared/image-fetcher'
 import React from 'react'
 import { validateAction } from '~/utils/utilities'
 
-export const meta: MetaFunction = () => {
-  return {
-    title: 'Create a new post',
-    description:
-      "Create a new post on Derick's blog and share your knowledge with the world"
-  }
-}
 type ActionData = {
   imageUrl?: string
 }
@@ -60,7 +48,7 @@ const schema = z.object({
 })
 export type ActionInput = z.TypeOf<typeof schema>
 
-export async function action({ request }:ActionArgs) {
+export async function action({ request }: ActionArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
     throw new Response('Not authenticated', { status: 401 })
