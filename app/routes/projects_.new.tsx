@@ -3,7 +3,6 @@ import type { ActionArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import {
   useRouteLoaderData,
-  useFetcher,
   Form,
   isRouteErrorResponse,
   useRouteError,
@@ -11,9 +10,9 @@ import {
 } from '@remix-run/react'
 import React from 'react'
 import { z } from 'zod'
+import Button from '~/components/shared/button'
 import ImageUploader from '~/components/shared/image-fetcher'
-import { Category } from '~/utils/schemas/category-schema'
-import type { Categories } from '~/utils/schemas/projects-schema'
+import type{ Category } from '~/utils/schemas/category-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
 import { validateAction } from '~/utils/utilities'
@@ -226,15 +225,17 @@ const actionData = useActionData<{ errors: Record<string, string> }>()
           </p>
         ) }
       </div>
-      <button
+      <Button
         type='submit'
         name='_action'
         value='new'
         form='projectForm'
+          variant='primary_filled'
+          size='base'
         className='rounded-md bg-blue-500 p-2 text-white shadow-md'
       >
-        Update
-      </button>
+        Save
+      </Button>
     </div>
   )
 }
