@@ -45,14 +45,12 @@ export async function loader({ request, params }: LoaderArgs) {
   return json({ project })
 }
 const schema = z.object({
-
   title: z.string().min(1, 'Title is required'),
   description: z.string().min(1, 'Description is required'),
   projectUrl: z.string().url('Project URL is not valid'),
   githubUrl: z.string().url('Github URL is not valid'),
   categories: z.string().min(1, 'Categories is required'),
   imageUrl: z.string().min(1, 'Image is required')
-
 })
 export type ActionInput = z.infer<typeof schema>
 
@@ -64,20 +62,19 @@ export async function action({ request, params }: ActionArgs) {
   const { id } = params
   const { formData, errors } = await validateAction({ request, schema })
 
-
   if (errors) {
     return json({ errors }, { status: 400 })
   }
 
-  const { title, description, projectUrl, githubUrl, categories, imageUrl } = formData as ActionInput
+  const { title, description, projectUrl, githubUrl, categories, imageUrl } =
+    formData as ActionInput
 
   const cats = categories?.split(',')
   const category = cats.map((cat) => {
     return {
-      value: cat,
+      value: cat
     }
   })
-
 
   const project = await prisma.project.update({
     where: {
@@ -90,11 +87,10 @@ export async function action({ request, params }: ActionArgs) {
       githubUrl,
       projectImg: imageUrl,
       categories: {
-        set: category.map((category)=>({
+        set: category.map((category) => ({
           value: category.value
         }))
-      },
-
+      }
     }
   })
 
@@ -133,34 +129,36 @@ export default function Index() {
           type='text'
           name='title'
           className='w-full p-2 text-slate12 shadow-md '
-          defaultValue={ actionData?.errors?.title || data.project.title }
-          aria-invalid={ Boolean(actionData?.errors?.title) || undefined }
+          defaultValue={actionData?.errors?.title || data.project.title}
+          aria-invalid={Boolean(actionData?.errors?.title) || undefined}
           aria-errormessage={
             actionData?.errors?.title ? 'title-error' : undefined
           }
         />
-        { actionData?.errors?.title && (
+        {actionData?.errors?.title && (
           <p id='title-error' className='text-red-500'>
-            { actionData?.errors?.title }
+            {actionData?.errors?.title}
           </p>
-        ) }
+        )}
         <label htmlFor='description' className='text-sm font-semibold'>
           Description
         </label>
         <textarea
           name='description'
-
-          className='w-full p-2 text-slate12 shadow-md ' defaultValue={ actionData?.errors?.description || data.project.description }
-          aria-invalid={ Boolean(actionData?.errors?.description) || undefined }
+          className='w-full p-2 text-slate12 shadow-md '
+          defaultValue={
+            actionData?.errors?.description || data.project.description
+          }
+          aria-invalid={Boolean(actionData?.errors?.description) || undefined}
           aria-errormessage={
             actionData?.errors?.description ? 'description-error' : undefined
           }
         />
-        { actionData?.errors?.description && (
+        {actionData?.errors?.description && (
           <p id='description-error' role='alert' className='text-red-500'>
-            { actionData?.errors?.description }
+            {actionData?.errors?.description}
           </p>
-        ) }
+        )}
 
         <label className='text-slate12' htmlFor='categories'>
           Categories
@@ -170,17 +168,15 @@ export default function Index() {
           shadow='xl'
           name='categories'
           id='categories'
-          data={ primaryCategories }
-          defaultValue={ selected }
-
-
+          data={primaryCategories}
+          defaultValue={selected}
         />
 
-        { actionData?.errors?.categories && (
+        {actionData?.errors?.categories && (
           <p id='categories-error' role='alert' className='text-red-500'>
-            { actionData?.errors?.categories }
+            {actionData?.errors?.categories}
           </p>
-        ) }
+        )}
 
         <label htmlFor='projectUrl' className='text-sm font-semibold'>
           Project Url
@@ -188,48 +184,47 @@ export default function Index() {
         <input
           type='text'
           name='projectUrl'
-
           className='w-full p-2 text-slate12 shadow-md '
-          defaultValue={ actionData?.errors?.projectUrl || data.project.projectUrl }
-          aria-invalid={ Boolean(actionData?.errors?.projectUrl) || undefined }
+          defaultValue={
+            actionData?.errors?.projectUrl || data.project.projectUrl
+          }
+          aria-invalid={Boolean(actionData?.errors?.projectUrl) || undefined}
           aria-errormessage={
             actionData?.errors?.projectUrl ? 'projectUrl-error' : undefined
           }
         />
-        { actionData?.errors?.projectUrl && (
+        {actionData?.errors?.projectUrl && (
           <p id='projectUrl-error' role='alert' className='text-red-500'>
-            { actionData?.errors?.projectUrl }
+            {actionData?.errors?.projectUrl}
           </p>
-        ) }
+        )}
         <label htmlFor='githubUrl' className='text-sm font-semibold'>
           Github Url
         </label>
         <input
           type='text'
           name='githubUrl'
-
-          className='w-full p-2 text-slate12 shadow-md ' defaultValue={ actionData?.errors?.githubUrl || data.project.githubUrl }
-          aria-invalid={ Boolean(actionData?.errors?.githubUrl) || undefined }
+          className='w-full p-2 text-slate12 shadow-md '
+          defaultValue={actionData?.errors?.githubUrl || data.project.githubUrl}
+          aria-invalid={Boolean(actionData?.errors?.githubUrl) || undefined}
           aria-errormessage={
             actionData?.errors?.githubUrl ? 'githubUrl-error' : undefined
           }
-
         />
-        { actionData?.errors?.githubUrl && (
+        {actionData?.errors?.githubUrl && (
           <p id='githubUrl-error' role='alert' className='text-red-500'>
-            { actionData?.errors?.githubUrl }
+            {actionData?.errors?.githubUrl}
           </p>
-        ) }
-
+        )}
       </Form>
 
       <div className='flex flex-col gap-2'>
-        <ImageUploader setUrl={ setUrl } />
-        { actionData?.errors?.imageUrl && (
+        <ImageUploader setUrl={setUrl} />
+        {actionData?.errors?.imageUrl && (
           <p id='imageUrl-error' role='alert' className='text-red-500'>
-            { actionData?.errors?.imageUrl }
+            {actionData?.errors?.imageUrl}
           </p>
-        ) }
+        )}
       </div>
       <Button
         variant='primary_filled'
@@ -269,7 +264,7 @@ export function ErrorBoundary() {
     <div>
       <h1 className='text-2xl font-bold'>uh Oh..</h1>
       <p className='text-xl'>something went wrong</p>
-      <pre>{ errorMessage }</pre>
+      <pre>{errorMessage}</pre>
     </div>
   )
 }

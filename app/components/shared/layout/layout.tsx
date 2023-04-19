@@ -1,16 +1,12 @@
 import React from 'react'
 import {
-  ExitFullScreenIcon,
   ExitIcon,
-  GearIcon,
   MixIcon,
   Pencil1Icon,
   PlusCircledIcon,
   RocketIcon
 } from '@radix-ui/react-icons'
 import { Form, Link, NavLink } from '@remix-run/react'
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
-import { CaretDownIcon } from '@radix-ui/react-icons'
 import { socialLinks } from '~/utils/constants/social-links'
 import Button from '../button'
 import { useOptionalUser } from '~/utils/utilities'
@@ -20,14 +16,14 @@ import UserDropdown from '../user-ui/user-dropdown'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = useOptionalUser()
-  const activeStyle = {
-    textDecoration: 'underline'
-  }
+
   return (
-    <div className='flex flex-col items-center gap-4'>
+    <div className='flex flex-col items-center gap-4 '>
       <nav className='flex flex-row items-center gap-4'>
-        <MantineMenu />
-        <ProjectsMenu />
+        <div>
+          <MantineMenu />
+        </div>
+        <HobbiesMenu />
         <NavLink
           to='/projects'
           className={({ isActive }) => {
@@ -108,7 +104,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 function MantineMenu() {
   return (
-    <Menu trigger='hover' shadow='md' width={150}>
+    <Menu withArrow trigger='hover' shadow='md' width={150}>
       <Menu.Target>
         <Button variant='icon_unfilled' className='font-bold' size='small'>
           {' '}
@@ -118,14 +114,17 @@ function MantineMenu() {
 
       <Menu.Dropdown>
         <Menu.Label>Blog Menu</Menu.Label>
+        <Menu.Item icon={<IconBook2 />}>
+          <NavLink to='/blog'>Blog</NavLink>
+        </Menu.Item>
         <Menu.Item icon={<PlusCircledIcon />}>
-          <Link to='/blog/new'>Create</Link>
+          <NavLink to='/blog/new'>Create</NavLink>
         </Menu.Item>
         <Menu.Item icon={<Pencil1Icon />}>
-          <Link to='/drafts'>Drafts</Link>
+          <NavLink to='/drafts'>Drafts</NavLink>
         </Menu.Item>
         <Menu.Item icon={<MixIcon />}>
-          <Link to='/categories'>Categories</Link>
+          <Link to='/categories/new'>Categories</Link>
         </Menu.Item>
 
         <Menu.Divider />
@@ -144,43 +143,10 @@ function MantineMenu() {
     </Menu>
   )
 }
-function RadixNavMenu() {
+
+function HobbiesMenu() {
   return (
-    <NavigationMenu.Root>
-      <NavigationMenu.List>
-        <NavigationMenu.Item>
-          <NavigationMenu.Trigger />
-          <NavigationMenu.Content>
-            <NavigationMenu.Link />
-          </NavigationMenu.Content>
-        </NavigationMenu.Item>
-
-        <NavigationMenu.Item>
-          <NavigationMenu.Link />
-        </NavigationMenu.Item>
-
-        <NavigationMenu.Item>
-          <NavigationMenu.Trigger>
-            <NavigationMenu.Link>Blog</NavigationMenu.Link>
-          </NavigationMenu.Trigger>
-          <NavigationMenu.Content>
-            <NavigationMenu.Sub>
-              <NavigationMenu.List />
-              <NavigationMenu.Viewport />
-            </NavigationMenu.Sub>
-          </NavigationMenu.Content>
-        </NavigationMenu.Item>
-
-        <NavigationMenu.Indicator />
-      </NavigationMenu.List>
-
-      <NavigationMenu.Viewport />
-    </NavigationMenu.Root>
-  )
-}
-function ProjectsMenu() {
-  return (
-    <Menu trigger='hover' shadow='md' width={150}>
+    <Menu trigger='hover' shadow='md' width={150} withArrow>
       <Menu.Target>
         <Button variant='icon_unfilled' className='font-bold' size='small'>
           {' '}

@@ -1,30 +1,32 @@
-import { UserType } from '~/utils/schemas/user-schema'
-import Button from '../button'
+import type { UserType } from '~/utils/schemas/user-schema'
 import Avatar from '../avatar'
 import { Form, NavLink } from '@remix-run/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import React from 'react'
 
 export default function UserDropdown({ user }: { user: UserType }) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
   return (
     <>
-      <Button
-        variant='icon_unfilled'
-        size='base'
-        onClick={() => setOpen(!open)}
-      >
+      <div className='text relative flex flex-row gap-2'>
         <Avatar imageUrl={user?.avatarUrl} h={10} w={10} />
-        <p className='text-xs text-black dark:text-slate-50'>
-          {user.userName}{' '}
-        </p>
-        {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
-      </Button>
+
+        <button
+          type='button'
+          className='flex h-10 w-10 items-center justify-center gap-2 p-2 '
+          onClick={() => setOpen(!open)}
+        >
+          <div className='flex text-xs font-semibold text-black dark:text-slate-50'>
+            {user.userName} {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          </div>
+        </button>
+      </div>
       <div className='relative inline-block text-left'>
         {open ? (
           <div
             id='dropdownAvatarName'
-            className='absolute right-0 top-0 z-10 w-44 divide-y divide-gray-100 rounded-lg bg-slate-400 shadow dark:divide-gray-600 dark:bg-gray-700'
+            className='bg-slate absolute right-0 top-0 z-[300] w-44 divide-y divide-gray-100 rounded-lg bg-slate-400 bg-opacity-100 shadow'
+            onClick={() => setOpen(false)}
           >
             <div className='px-4 py-3 text-sm text-gray-900 dark:text-white'>
               <div className='font-medium '>Hello</div>

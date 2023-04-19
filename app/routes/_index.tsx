@@ -28,8 +28,6 @@ export default function Index() {
   }
   const categories = tags.categories.filter((item) => item._count.posts > 0)
 
-  console.log(categories, 'tags')
-  console.log(Array.isArray(categories), 'isArray')
 
   return (
     <div className='flex flex-col items-center gap-4'>

@@ -4,10 +4,8 @@ import { badRequest } from 'remix-utils'
 import { prisma } from '~/utils/server/prisma.server'
 
 export async function action({ request, params }: ActionArgs) {
-  console.log(params, 'params')
 
   const categoryId = params?.categoriesId
-  console.log(categoryId, 'categoryId')
 
   if (typeof categoryId !== 'string')
     return badRequest({ message: 'Invalid categoryId' })

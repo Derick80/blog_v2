@@ -1,8 +1,6 @@
 import type {
   ActionFunction,
-  LoaderArgs,
-  LoaderFunction
-} from '@remix-run/node'
+  LoaderArgs} from '@remix-run/node'
 import { json } from '@remix-run/node'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
@@ -37,7 +35,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   invariant(user, 'need  user')
   const postId = params.postId
   const userId = user.id
-  console.log('userId', userId)
 
   if (!userId || !postId) {
     return json(

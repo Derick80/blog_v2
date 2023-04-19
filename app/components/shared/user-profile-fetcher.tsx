@@ -5,11 +5,12 @@ import type { Profile } from '~/utils/schemas/profile-schema'
 export default function UserProfileFetcher({ userName }: { userName: string }) {
   const fetcher = useFetcher()
 
+  // might need to revisit this in v2
   React.useEffect(() => {
-    if (fetcher.type === 'init') {
+    if (fetcher.state === 'idle') {
       fetcher.load(`/users/${userName}`)
     }
-  }, [fetcher])
+  }, [])
 
   const profile = fetcher?.data?.user.profile
 
