@@ -8,7 +8,7 @@ export default function UserDropdown({ user }: { user: UserType }) {
   const [open, setOpen] = React.useState(false)
   return (
     <>
-      <div className='text relative flex flex-row gap-2'>
+      <div className='text relative items-center flex flex-row gap-2'>
         <Avatar imageUrl={user?.avatarUrl} h={10} w={10} />
 
         <button
@@ -16,7 +16,7 @@ export default function UserDropdown({ user }: { user: UserType }) {
           className='flex h-10 w-14 items-center justify-center'
           onClick={() => setOpen(!open)}
         >
-          <div className='flex text-lg font-semibold text-black dark:text-slate-50'>
+          <div className='text-lg font-semibold text-black'>
             {user.userName}
           </div>
           {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
