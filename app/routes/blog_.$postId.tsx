@@ -1,6 +1,10 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { isRouteErrorResponse, useLoaderData, useRouteError } from '@remix-run/react'
+import {
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError
+} from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import getAllCategories from '~/utils/server/categories.server'
@@ -36,14 +40,14 @@ export default function Index() {
   )
 }
 
-export function ErrorBoundary () {
+export function ErrorBoundary() {
   const error = useRouteError()
   if (isRouteErrorResponse(error)) {
     return (
       <div>
         <h1>oops</h1>
-        <h1>Status:{ error.status }</h1>
-        <p>{ error.data.message }</p>
+        <h1>Status:{error.status}</h1>
+        <p>{error.data.message}</p>
       </div>
     )
   }
@@ -58,8 +62,7 @@ export function ErrorBoundary () {
     <div>
       <h1 className='text-2xl font-bold'>uh Oh..</h1>
       <p className='text-xl'>something went wrong</p>
-      <pre>{ errorMessage }</pre>
+      <pre>{errorMessage}</pre>
     </div>
   )
 }
-

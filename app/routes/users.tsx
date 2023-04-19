@@ -1,6 +1,12 @@
 import type { LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Outlet, isRouteErrorResponse, useFetcher, useLoaderData, useRouteError } from '@remix-run/react'
+import {
+  Outlet,
+  isRouteErrorResponse,
+  useFetcher,
+  useLoaderData,
+  useRouteError
+} from '@remix-run/react'
 import UserCard from '~/components/shared/user-ui/user-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import type { UserProps } from '~/utils/server/user.server'
@@ -80,14 +86,14 @@ export default function Users() {
     </div>
   )
 }
-export function ErrorBoundary () {
+export function ErrorBoundary() {
   const error = useRouteError()
   if (isRouteErrorResponse(error)) {
     return (
       <div>
         <h1>oops</h1>
-        <h1>Status:{ error.status }</h1>
-        <p>{ error.data.message }</p>
+        <h1>Status:{error.status}</h1>
+        <p>{error.data.message}</p>
       </div>
     )
   }
@@ -102,7 +108,7 @@ export function ErrorBoundary () {
     <div>
       <h1 className='text-2xl font-bold'>uh Oh..</h1>
       <p className='text-xl'>something went wrong</p>
-      <pre>{ errorMessage }</pre>
+      <pre>{errorMessage}</pre>
     </div>
   )
 }

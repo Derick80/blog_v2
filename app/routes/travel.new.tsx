@@ -1,5 +1,11 @@
 import { json, redirect } from '@remix-run/node'
-import { isRouteErrorResponse, useCatch, useFetcher, useLoaderData, useRouteError } from '@remix-run/react'
+import {
+  isRouteErrorResponse,
+  useCatch,
+  useFetcher,
+  useLoaderData,
+  useRouteError
+} from '@remix-run/react'
 import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
@@ -7,12 +13,7 @@ import FormField from '~/components/shared/form-field'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createTravelLog } from '~/utils/server/travel.server'
 import { validateText } from '~/utils/validators.server'
-import type {
-
-  ActionArgs,
-  ActionFunction,
-  LoaderArgs
-} from '@remix-run/node' // or cloudflare/deno
+import type { ActionArgs, ActionFunction, LoaderArgs } from '@remix-run/node' // or cloudflare/deno
 
 type ActionData = {
   errorMsg?: string
@@ -224,14 +225,14 @@ export default function NewTravelLog() {
   )
 }
 
-export function ErrorBoundary () {
+export function ErrorBoundary() {
   const error = useRouteError()
   if (isRouteErrorResponse(error)) {
     return (
       <div>
         <h1>oops</h1>
-        <h1>Status:{ error.status }</h1>
-        <p>{ error.data.message }</p>
+        <h1>Status:{error.status}</h1>
+        <p>{error.data.message}</p>
       </div>
     )
   }
@@ -246,7 +247,7 @@ export function ErrorBoundary () {
     <div>
       <h1 className='text-2xl font-bold'>uh Oh..</h1>
       <p className='text-xl'>something went wrong</p>
-      <pre>{ errorMessage }</pre>
+      <pre>{errorMessage}</pre>
     </div>
   )
 }

@@ -23,35 +23,30 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className='flex flex-col items-center gap-4 '>
       <nav className='flex flex-row items-center gap-4'>
-
-       <NavLink to='/'>
-            <p
-              className='text-base uppercase font-semibold text-slate12'
-            >Home</p>
-            </NavLink>
-       <NavLink to='/blog'>
-            <p
-              className='text-base uppercase font-semibold text-slate12'
-            >Blog</p>
-            </NavLink>
-       <NavLink to='/projects'>
-            <p
-              className='text-base uppercase font-semibold text-slate12'
-            >Projects</p>
-            </NavLink>
-       <NavLink to='/travel'>
-            <p
-              className='text-base uppercase font-semibold text-slate12'
-            >travel</p>
-            </NavLink>
-        {user ?( <UserDropdown user={user} />):
-        (
+        <NavLink to='/'>
+          <p className='text-base font-semibold uppercase text-slate12'>Home</p>
+        </NavLink>
+        <NavLink to='/blog'>
+          <p className='text-base font-semibold uppercase text-slate12'>Blog</p>
+        </NavLink>
+        <NavLink to='/projects'>
+          <p className='text-base font-semibold uppercase text-slate12'>
+            Projects
+          </p>
+        </NavLink>
+        <NavLink to='/travel'>
+          <p className='text-base font-semibold uppercase text-slate12'>
+            travel
+          </p>
+        </NavLink>
+        {user ? (
+          <UserDropdown user={user} />
+        ) : (
           <NavLink to='/login'>
-            <p
-              className='text-base uppercase font-semibold text-slate12'
-            >Login</p>
-            </NavLink>
-
+            <p className='text-base font-semibold uppercase text-slate12'>
+              Login
+            </p>
+          </NavLink>
         )}
       </nav>
 
@@ -105,17 +100,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Link>
           ))}
           <p>© {new Date().getFullYear()} Derick Hoskinson</p>
-
         </div>
-        { user && (
+        {user && (
           <Form method='POST' action='/logout'>
-            <Button type='submit'
-             variant='danger_filled' size='small'>
+            <Button type='submit' variant='danger_filled' size='small'>
               <ExitIcon />
               <p>Logout</p>
             </Button>
           </Form>
-        ) }
+        )}
       </footer>
     </div>
   )
@@ -123,9 +116,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 function MantineMenu() {
   return (
-    <Menu withArrow trigger='click' shadow='md' width={150}
-    position='bottom'
-    >
+    <Menu withArrow trigger='click' shadow='md' width={150} position='bottom'>
       <Menu.Target>
         <Button variant='icon_unfilled' className='font-bold' size='small'>
           {' '}

@@ -1,12 +1,11 @@
 import { NavLink } from '@remix-run/react'
-import type { PostWithChildren } from '~/utils/schemas/post-schema';
+import type { PostWithChildren } from '~/utils/schemas/post-schema'
 
 export default function Tags({
   categories
 }: {
   categories: PostWithChildren['categories']
 }) {
-
   return (
     <div className='flex flex-row gap-2'>
       <div className='flex flex-row flex-wrap gap-2'>

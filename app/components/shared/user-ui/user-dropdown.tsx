@@ -1,6 +1,6 @@
 import type { UserType } from '~/utils/schemas/user-schema'
 import Avatar from '../avatar'
-import {  NavLink } from '@remix-run/react'
+import { NavLink } from '@remix-run/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import React from 'react'
 
@@ -19,7 +19,7 @@ export default function UserDropdown({ user }: { user: UserType }) {
           <div className='flex text-lg font-semibold text-black dark:text-slate-50'>
             {user.userName}
           </div>
-          { open ? <ChevronUpIcon /> : <ChevronDownIcon /> }
+          {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </button>
       </div>
       <div className='relative inline-block text-left'>
@@ -32,9 +32,7 @@ export default function UserDropdown({ user }: { user: UserType }) {
               <div className='font-medium '>Hello</div>
               <div className='truncate'>{user.email}</div>
             </div>
-            <ul
-              className='py-2 text-sm text-gray-700 dark:text-gray-200'
-            >
+            <ul className='py-2 text-sm text-gray-700 dark:text-gray-200'>
               <li>
                 <NavLink
                   to='/'
@@ -51,13 +49,11 @@ export default function UserDropdown({ user }: { user: UserType }) {
                   Profile
                 </NavLink>
               </li>
-
             </ul>
-
-            </div>
+          </div>
         ) : null}
         {/* form not working here for some reason but I have a logout button in the footer that works */}
-          {/* <Form method='POST' action='/logout'>
+        {/* <Form method='POST' action='/logout'>
                 <Button type='submit' variant='danger_filled' size='small'>
                   <ExitIcon />
                   <p>Logout</p>

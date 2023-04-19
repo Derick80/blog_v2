@@ -7,8 +7,6 @@ import { AuthForm } from '~/components/shared/auth/auth-form'
 import { SocialLoginForm } from '~/components/shared/auth/social-login-form'
 import { isAuthenticated, authenticator } from '~/utils/server/auth/auth.server'
 
-
-
 export async function loader(args: LoaderArgs) {
   return (await isAuthenticated(args.request)) ? redirect('/') : null
 }

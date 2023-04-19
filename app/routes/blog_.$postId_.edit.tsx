@@ -317,14 +317,14 @@ export default function EditPost() {
     </div>
   )
 }
-export function ErrorBoundary () {
+export function ErrorBoundary() {
   const error = useRouteError()
   if (isRouteErrorResponse(error)) {
     return (
       <div>
         <h1>oops</h1>
-        <h1>Status:{ error.status }</h1>
-        <p>{ error.data.message }</p>
+        <h1>Status:{error.status}</h1>
+        <p>{error.data.message}</p>
       </div>
     )
   }
@@ -339,8 +339,7 @@ export function ErrorBoundary () {
     <div>
       <h1 className='text-2xl font-bold'>uh Oh..</h1>
       <p className='text-xl'>something went wrong</p>
-      <pre>{ errorMessage }</pre>
+      <pre>{errorMessage}</pre>
     </div>
   )
 }
-

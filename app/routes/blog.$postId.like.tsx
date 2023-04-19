@@ -1,6 +1,4 @@
-import type {
-  ActionFunction,
-  LoaderArgs} from '@remix-run/node'
+import type { ActionFunction, LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'

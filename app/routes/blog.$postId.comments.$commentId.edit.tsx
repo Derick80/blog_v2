@@ -1,7 +1,7 @@
 import { json, redirect } from '@remix-run/node'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
-import type {  ActionArgs, LoaderArgs } from '@remix-run/node' // or cloudflare/deno
+import type { ActionArgs, LoaderArgs } from '@remix-run/node' // or cloudflare/deno
 
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
