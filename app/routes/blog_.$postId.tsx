@@ -1,6 +1,6 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { isRouteErrorResponse, useLoaderData, useRouteError } from '@remix-run/react'
 import { badRequest } from 'remix-utils'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import getAllCategories from '~/utils/server/categories.server'
@@ -36,12 +36,30 @@ export default function Index() {
   )
 }
 
-export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error)
+export function ErrorBoundary () {
+  const error = useRouteError()
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>oops</h1>
+        <h1>Status:{ error.status }</h1>
+        <p>{ error.data.message }</p>
+      </div>
+    )
+  }
+  let errorMessage = 'unknown error'
+  if (error instanceof Error) {
+    errorMessage = error.message
+  } else if (typeof error === 'string') {
+    errorMessage = error
+  }
 
   return (
     <div>
-      <pre>{JSON.stringify(error, null, 2)}</pre>
+      <h1 className='text-2xl font-bold'>uh Oh..</h1>
+      <p className='text-xl'>something went wrong</p>
+      <pre>{ errorMessage }</pre>
     </div>
   )
 }
+

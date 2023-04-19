@@ -1,6 +1,6 @@
 import type { LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import { Link, isRouteErrorResponse, useLoaderData, useRouteError } from '@remix-run/react'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import type { PostWithChildren } from '~/utils/schemas/post-schema'
 import type { User } from '~/utils/schemas/user-schema'
@@ -56,6 +56,33 @@ export default function Index() {
             showShare={true}
           />
         ))}
+    </div>
+  )
+}
+export function ErrorBoundary () {
+  const error = useRouteError()
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>oops</h1>
+        <h1>Status:{ error.status }</h1>
+
+        <p>{ error.data.message }</p>
+      </div>
+    )
+  }
+  let errorMessage = 'unknown error'
+  if (error instanceof Error) {
+    errorMessage = error.message
+  } else if (typeof error === 'string') {
+    errorMessage = error
+  }
+
+  return (
+    <div>
+      <h1 className='text-2xl font-bold'>uh Oh..</h1>
+      <p className='text-xl'>something went wrong</p>
+      <pre>{ errorMessage }</pre>
     </div>
   )
 }

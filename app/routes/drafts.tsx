@@ -1,6 +1,6 @@
 import type { LoaderArgs, SerializeFrom } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Link, useCatch, useLoaderData } from '@remix-run/react'
+import { Link, isRouteErrorResponse, useCatch, useLoaderData, useRouteError } from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
@@ -75,17 +75,29 @@ function DraftSideBar(props: { props: PostWithChildren[] }) {
       ))}
     </div>
   )
-}
-export function CatchBoundary() {
-  const caught = useCatch()
+} export function ErrorBoundary () {
+  const error = useRouteError()
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>oops</h1>
+        <h1>Status:{ error.status }</h1>
+        <p>{ error.data.message }</p>
+      </div>
+    )
+  }
+  let errorMessage = 'unknown error'
+  if (error instanceof Error) {
+    errorMessage = error.message
+  } else if (typeof error === 'string') {
+    errorMessage = error
+  }
 
   return (
     <div>
-      <h1>Caught</h1>
-      <p>Status: {caught.status}</p>
-      <pre>
-        <code>{JSON.stringify(caught.data, null, 2)}</code>
-      </pre>
+      <h1 className='text-2xl font-bold'>uh Oh..</h1>
+      <p className='text-xl'>something went wrong</p>
+      <pre>{ errorMessage }</pre>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { json, redirect } from '@remix-run/node'
-import { useCatch, useFetcher, useLoaderData } from '@remix-run/react'
+import { isRouteErrorResponse, useCatch, useFetcher, useLoaderData, useRouteError } from '@remix-run/react'
 import React from 'react'
 import { badRequest } from 'remix-utils'
 import invariant from 'tiny-invariant'
@@ -8,7 +8,7 @@ import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { createTravelLog } from '~/utils/server/travel.server'
 import { validateText } from '~/utils/validators.server'
 import type {
-  MetaFunction,
+
   ActionArgs,
   ActionFunction,
   LoaderArgs
@@ -223,16 +223,30 @@ export default function NewTravelLog() {
     </div>
   )
 }
-export function CatchBoundary() {
-  const caught = useCatch()
+
+export function ErrorBoundary () {
+  const error = useRouteError()
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>oops</h1>
+        <h1>Status:{ error.status }</h1>
+        <p>{ error.data.message }</p>
+      </div>
+    )
+  }
+  let errorMessage = 'unknown error'
+  if (error instanceof Error) {
+    errorMessage = error.message
+  } else if (typeof error === 'string') {
+    errorMessage = error
+  }
 
   return (
     <div>
-      <h1>Caught</h1>
-      <p>Status: {caught.status}</p>
-      <pre>
-        <code>{JSON.stringify(caught.data, null, 2)}</code>
-      </pre>
+      <h1 className='text-2xl font-bold'>uh Oh..</h1>
+      <p className='text-xl'>something went wrong</p>
+      <pre>{ errorMessage }</pre>
     </div>
   )
 }

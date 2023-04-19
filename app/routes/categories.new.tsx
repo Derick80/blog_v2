@@ -1,26 +1,49 @@
 import { Cross2Icon } from '@radix-ui/react-icons'
 import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { Form, Outlet, useLoaderData } from '@remix-run/react'
+import { Form, Outlet, isRouteErrorResponse, useActionData, useLoaderData, useRouteError } from '@remix-run/react'
+import { z } from 'zod'
+import Button from '~/components/shared/button'
+import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import getAllCategories, {
   createCategory
 } from '~/utils/server/categories.server'
+import { validateAction } from '~/utils/utilities'
 export async function loader({ request }: LoaderArgs) {
   const categories = await getAllCategories()
 
   return json({ categories })
 }
 
-export async function action({ request }: ActionArgs) {
-  const formData = await request.formData()
-  const categoryName = formData.get('categoryName')
 
-  if (typeof categoryName !== 'string') {
-    return json({
-      errorMsg: 'categoryName is not a string'
-    })
+const schema = z.object({
+  categoryName: z.string().min(1).max(50)
+
+})
+
+export type ActionInput = z.TypeOf<typeof schema>
+export async function action({ request }: ActionArgs) {
+
+  const user = await isAuthenticated(request)
+  if (!user) {
+    throw new Response('Not authenticated', { status: 401 })
   }
 
+  const { formData, errors } = await validateAction<ActionInput>({
+    request,
+    schema
+  })
+
+  if (errors) {
+    return json(
+      { errors },
+      {
+        status: 400
+      }
+    )
+  }
+
+  const { categoryName } = formData as ActionInput
   await createCategory(categoryName)
 
   return json({
@@ -30,6 +53,7 @@ export async function action({ request }: ActionArgs) {
 
 export default function CategoryIndex() {
   const data = useLoaderData<typeof loader>()
+const actionData = useActionData<{ errors?: { categoryName?: string } }>()
 
   return (
     <>
@@ -57,7 +81,7 @@ export default function CategoryIndex() {
           ))}
         </div>
         <h3 className=''> New Category</h3>
-        <form method='post'>
+        <Form  method='POST'>
           <div className='flex flex-col'>
             <label htmlFor='categoryName'>Category Name</label>
             <input
@@ -65,15 +89,53 @@ export default function CategoryIndex() {
               className='rounded-md border text-sm text-slate12'
               name='categoryName'
               id='categoryName'
+              defaultValue={ actionData?.errors?.categoryName }
+              aria-invalid={ Boolean(actionData?.errors?.categoryName) || undefined }
+              aria-errormessage={
+                actionData?.errors?.categoryName ? 'categoryName-error' : undefined
+              }
             />
-
-            <button className='' type='submit'>
+            { actionData?.errors?.categoryName && (
+              <p id='categoryName-error' className='text-red-500'>
+                { actionData?.errors?.categoryName }
+              </p>
+            ) }
+            <Button
+              variant='primary_filled'
+              size='base'
+            className='' type='submit'>
               Create
-            </button>
+            </Button>
           </div>
-        </form>
+        </Form>
         <Outlet />
       </div>
     </>
+  )
+}
+export function ErrorBoundary () {
+  const error = useRouteError()
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>oops</h1>
+        <h1>Status:{ error.status }</h1>
+        <p>{ error.data.message }</p>
+      </div>
+    )
+  }
+  let errorMessage = 'unknown error'
+  if (error instanceof Error) {
+    errorMessage = error.message
+  } else if (typeof error === 'string') {
+    errorMessage = error
+  }
+
+  return (
+    <div>
+      <h1 className='text-2xl font-bold'>uh Oh..</h1>
+      <p className='text-xl'>something went wrong</p>
+      <pre>{ errorMessage }</pre>
+    </div>
   )
 }

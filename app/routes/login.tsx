@@ -7,22 +7,7 @@ import { AuthForm } from '~/components/shared/auth/auth-form'
 import { SocialLoginForm } from '~/components/shared/auth/social-login-form'
 import { isAuthenticated, authenticator } from '~/utils/server/auth/auth.server'
 
-type ActionData = {
-  formError?: string
-  fieldErrors?: {
-    email: string | undefined
-    password: string | undefined
-    firstName?: string | undefined
-    lastName?: string | undefined
-  }
-  fields?: {
-    action: string
-    email: string
-    password: string
-    firstName?: string
-    lastName?: string
-  }
-}
+
 
 export async function loader(args: LoaderArgs) {
   return (await isAuthenticated(args.request)) ? redirect('/') : null

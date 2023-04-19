@@ -1,12 +1,13 @@
 import { MultiSelect, Switch } from '@mantine/core'
-import type { ActionArgs, ActionFunction, LoaderArgs } from '@remix-run/node'
+import type { ActionArgs,  LoaderArgs } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import {
   Form,
+  isRouteErrorResponse,
   useActionData,
-  useCatch,
   useNavigation,
+  useRouteError,
   useRouteLoaderData
 } from '@remix-run/react'
 import { z } from 'zod'
@@ -20,9 +21,6 @@ import ImageUploader from '~/components/shared/image-fetcher'
 import React from 'react'
 import { validateAction } from '~/utils/utilities'
 
-type ActionData = {
-  imageUrl?: string
-}
 
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
@@ -199,29 +197,29 @@ export default function Uploader() {
     </div>
   )
 }
-export function CatchBoundary() {
-  const caught = useCatch()
-
-  switch (caught.status) {
-    case 404: {
-      return <h2>Error at blog new</h2>
-    }
-    default: {
-      // if we don't handle this then all bets are off. Just throw an error
-      // and let the nearest ErrorBoundary handle this
-      throw new Error(`${caught.status} not handled`)
-    }
+export function ErrorBoundary () {
+  const error = useRouteError()
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>oops</h1>
+        <h1>Status:{ error.status }</h1>
+        <p>{ error.data.message }</p>
+      </div>
+    )
   }
-}
-
-// this will handle unexpected errors (like the default case above where the
-// CatchBoundary gets a response it's not prepared to handle).
-export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error)
+  let errorMessage = 'unknown error'
+  if (error instanceof Error) {
+    errorMessage = error.message
+  } else if (typeof error === 'string') {
+    errorMessage = error
+  }
 
   return (
     <div>
-      <pre>{JSON.stringify(error, null, 2)}</pre>
+      <h1 className='text-2xl font-bold'>uh Oh..</h1>
+      <p className='text-xl'>something went wrong</p>
+      <pre>{ errorMessage }</pre>
     </div>
   )
 }

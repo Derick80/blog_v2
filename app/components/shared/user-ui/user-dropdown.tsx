@@ -5,7 +5,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import React from 'react'
 
 export default function UserDropdown({ user }: { user: UserType }) {
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
   return (
     <>
       <div className='text relative flex flex-row gap-2'>
@@ -13,18 +13,18 @@ export default function UserDropdown({ user }: { user: UserType }) {
 
         <button
           type='button'
-          className='flex h-10 w-10 items-center justify-center gap-2 p-2 '
+          className='flex h-10 w-14 items-center justify-center'
           onClick={() => setOpen(!open)}
         >
-          <div className='flex text-xs font-semibold text-black dark:text-slate-50'>
-            {user.userName} {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          <div className='flex text-lg font-semibold text-black dark:text-slate-50'>
+            {user.userName}
           </div>
+          { open ? <ChevronUpIcon /> : <ChevronDownIcon /> }
         </button>
       </div>
       <div className='relative inline-block text-left'>
         {open ? (
           <div
-            id='dropdownAvatarName'
             className='bg-slate absolute right-0 top-0 z-[300] w-44 divide-y divide-gray-100 rounded-lg bg-slate-400 bg-opacity-100 shadow'
             onClick={() => setOpen(false)}
           >
@@ -34,7 +34,6 @@ export default function UserDropdown({ user }: { user: UserType }) {
             </div>
             <ul
               className='py-2 text-sm text-gray-700 dark:text-gray-200'
-              aria-labelledby='dropdownInformdropdownAvatarNameButtonationButton'
             >
               <li>
                 <NavLink

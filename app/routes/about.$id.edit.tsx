@@ -1,6 +1,6 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
-import { Form, useFetcher, useLoaderData } from '@remix-run/react'
+import { Form, isRouteErrorResponse, useFetcher, useLoaderData, useRouteError } from '@remix-run/react'
 import TipTap from '~/components/shared/tip-tap'
 import { editAbout, getAboutById } from '~/utils/server/about.server'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
@@ -214,6 +214,32 @@ export default function AboutEdit() {
       <button type='submit' form='editAbout'>
         Submit
       </button>
+    </div>
+  )
+}
+export function ErrorBoundary () {
+  const error = useRouteError()
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>oops</h1>
+        <h1>Status:{ error.status }</h1>
+        <p>{ error.data.message }</p>
+      </div>
+    )
+  }
+  let errorMessage = 'unknown error'
+  if (error instanceof Error) {
+    errorMessage = error.message
+  } else if (typeof error === 'string') {
+    errorMessage = error
+  }
+
+  return (
+    <div>
+      <h1 className='text-2xl font-bold'>uh Oh..</h1>
+      <p className='text-xl'>something went wrong</p>
+      <pre>{ errorMessage }</pre>
     </div>
   )
 }

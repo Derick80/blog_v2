@@ -2,11 +2,11 @@ import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import {
   Form,
-  useActionData,
-  useCatch,
+  isRouteErrorResponse,
   useFetcher,
   useLoaderData,
-  useNavigation
+  useNavigation,
+  useRouteError
 } from '@remix-run/react'
 import invariant from 'tiny-invariant'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
@@ -43,7 +43,7 @@ export async function loader({ params, request }: LoaderArgs) {
   return json({ post, allCategories })
 }
 
-export async function action({ params, request }: ActionArgs) {
+export async function action({ request }: ActionArgs) {
   const user = await isAuthenticated(request)
   invariant(user, 'user is required')
   const formData = await request.formData()
@@ -138,7 +138,6 @@ export async function action({ params, request }: ActionArgs) {
 export default function EditPost() {
   const data = useLoaderData<typeof loader>()
 
-  const actionData = useActionData<typeof action>()
   const user = useOptionalUser()
   const saveNav = useNavigation()
   const pubNav = useNavigation()
@@ -202,16 +201,16 @@ export default function EditPost() {
     return item.value
   })
 
-  const [formData, setFormData] = useState({
-    title,
-    description,
-    body,
-    imageUrl,
-    categories: pickedCategories,
-    id,
-    published,
-    featured
-  })
+  // const [formData, setFormData] = useState({
+  //   title,
+  //   description,
+  //   body,
+  //   imageUrl,
+  //   categories: pickedCategories,
+  //   id,
+  //   published,
+  //   featured
+  // })
   const [url, setUrl] = useState(imageUrl)
   return (
     <div className='mx-auto mb-7 mt-5 flex w-full flex-col items-center border-2  p-2 text-slate12  '>
@@ -252,21 +251,6 @@ export default function EditPost() {
             <label className='text-slate12' htmlFor='categories'>
               Categories
             </label>
-
-            {/* <select name='categories' id='categories' multiple
-            defaultValue={selected}
-            onChange={(e) => {
-              setSelected(Array.from(e.target.selectedOptions, (item) => item.value))
-            }}
-            >
-              {mainCategories.map((item) => {
-                return (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                )
-              })}
-            </select> */}
 
             <MultiSelect
               name='categories'
@@ -333,3 +317,30 @@ export default function EditPost() {
     </div>
   )
 }
+export function ErrorBoundary () {
+  const error = useRouteError()
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>oops</h1>
+        <h1>Status:{ error.status }</h1>
+        <p>{ error.data.message }</p>
+      </div>
+    )
+  }
+  let errorMessage = 'unknown error'
+  if (error instanceof Error) {
+    errorMessage = error.message
+  } else if (typeof error === 'string') {
+    errorMessage = error
+  }
+
+  return (
+    <div>
+      <h1 className='text-2xl font-bold'>uh Oh..</h1>
+      <p className='text-xl'>something went wrong</p>
+      <pre>{ errorMessage }</pre>
+    </div>
+  )
+}
+
