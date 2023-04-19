@@ -44,7 +44,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className='text-base uppercase font-semibold text-slate12'
             >travel</p>
             </NavLink>
-        {user && <UserDropdown user={user} />}
+        {user ?( <UserDropdown user={user} />):
+        (
+          <NavLink to='/login'>
+            <p
+              className='text-base uppercase font-semibold text-slate12'
+            >Login</p>
+            </NavLink>
+
+        )}
       </nav>
 
       <main className='mx-auto flex flex-col items-center gap-4'>
@@ -97,15 +105,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Link>
           ))}
           <p>© {new Date().getFullYear()} Derick Hoskinson</p>
-          {user && (
-            <Form method='post' action='/logout'>
-              <Button type='submit' variant='danger_filled' size='small'>
-                <ExitIcon />
-                <p>Logout</p>
-              </Button>
-            </Form>
-          )}
+
         </div>
+        { user && (
+          <Form method='POST' action='/logout'>
+            <Button type='submit'
+             variant='danger_filled' size='small'>
+              <ExitIcon />
+              <p>Logout</p>
+            </Button>
+          </Form>
+        ) }
       </footer>
     </div>
   )

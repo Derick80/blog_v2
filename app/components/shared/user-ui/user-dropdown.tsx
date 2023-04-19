@@ -1,6 +1,6 @@
 import type { UserType } from '~/utils/schemas/user-schema'
 import Avatar from '../avatar'
-import { Form, NavLink } from '@remix-run/react'
+import {  NavLink } from '@remix-run/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import React from 'react'
 
@@ -51,19 +51,18 @@ export default function UserDropdown({ user }: { user: UserType }) {
                   Profile
                 </NavLink>
               </li>
+
             </ul>
-            <div className='py-2'>
-              <Form method='POST'>
-                <button
-                  type='submit'
-                  className='block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
-                >
-                  Sign out
-                </button>
-              </Form>
+
             </div>
-          </div>
         ) : null}
+        {/* form not working here for some reason but I have a logout button in the footer that works */}
+          {/* <Form method='POST' action='/logout'>
+                <Button type='submit' variant='danger_filled' size='small'>
+                  <ExitIcon />
+                  <p>Logout</p>
+                </Button>
+              </Form> */}
       </div>
     </>
   )

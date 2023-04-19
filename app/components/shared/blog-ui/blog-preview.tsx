@@ -59,7 +59,7 @@ export default function BlogPreview({
         <p>{post.user.userName}</p>
       </div>
       {/* card actions */}
-      {showActions && <Actions postId={post.id} />}
+      {currentUser === post.userId &&  <Actions postId={post.id} />}
     </div>
   )
 }
