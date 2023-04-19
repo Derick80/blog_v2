@@ -25,7 +25,10 @@ export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
 
   if (!user) {
-    throw new Response('Not authenticated', { status: 401 })
+    throw new Response(
+      'Not authenticated Please Login to create a new blog post',
+      { status: 401 }
+    )
   }
   return json({ user })
 }
@@ -48,7 +51,7 @@ export type ActionInput = z.TypeOf<typeof schema>
 export async function action({ request }: ActionArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
-    throw new Response('Not authenticated', { status: 401 })
+    return json({ errors: ['Not .', 'please login'] }, { status: 401 })
   }
 
   const { formData, errors } = await validateAction<ActionInput>({
@@ -200,10 +203,11 @@ export function ErrorBoundary() {
   const error = useRouteError()
   if (isRouteErrorResponse(error)) {
     return (
-      <div>
-        <h1>oops</h1>
-        <h1>Status:{error.status}</h1>
-        <p>{error.data.message}</p>
+      <div className='flex flex-col items-center justify-center gap-2 border-2 border-red-500 text-slate12'>
+        <h1 className='text-2xl font-bold'>oops</h1>
+        <h1 className='text-2xl font-bold'>Status:{error.status}</h1>
+        <h2 className='text-xl font-semibold'>Error:{error.data}</h2>
+        <p className='text-base font-semibold'>{error.data.message}</p>
       </div>
     )
   }

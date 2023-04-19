@@ -1,5 +1,5 @@
 import { Cross2Icon } from '@radix-ui/react-icons'
-import type { ActionArgs, LoaderArgs } from '@remix-run/node'
+import { ActionArgs, LoaderArgs, redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import {
   Form,
@@ -56,7 +56,10 @@ export type ActionInput = z.TypeOf<typeof schema>
 export async function action({ request }: ActionArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
-    throw new Response('Not authenticated', { status: 401 })
+    return (
+      redirect('/login'),
+      json({ message: 'not authenticated' }, { status: 401 })
+    )
   }
 
   const { formData, errors } = await validateAction<ActionInput>({

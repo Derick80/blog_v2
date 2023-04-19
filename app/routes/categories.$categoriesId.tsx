@@ -1,4 +1,4 @@
-import type { LoaderArgs, MetaFunction } from '@remix-run/node'
+import { LoaderArgs, redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import invariant from 'tiny-invariant'
@@ -11,7 +11,12 @@ export async function loader({ request, params }: LoaderArgs) {
   console.log('params', params)
 
   const user = await isAuthenticated(request)
-
+  if (!user) {
+    return (
+      redirect('/login'),
+      json({ message: 'not authenticated' }, { status: 401 })
+    )
+  }
   const categoryId = params.categoriesId
   invariant(categoryId, 'categoryId is required')
 

@@ -1,7 +1,6 @@
 import { json, redirect } from '@remix-run/node'
 import {
   isRouteErrorResponse,
-  useCatch,
   useFetcher,
   useLoaderData,
   useRouteError
@@ -22,8 +21,9 @@ type ActionData = {
 
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
-  invariant(user, 'You must be signed in to view this page')
-
+  if (!user) {
+    throw new Error('You must be signed in to view this page')
+  }
   return json({ user })
 }
 

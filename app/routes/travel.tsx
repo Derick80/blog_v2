@@ -6,7 +6,6 @@ import {
   useLoaderData,
   Outlet,
   Link,
-  useCatch,
   isRouteErrorResponse,
   useRouteError
 } from '@remix-run/react'

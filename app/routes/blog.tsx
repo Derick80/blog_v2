@@ -1,4 +1,6 @@
-import { json } from '@remix-run/node'
+import { useAuth } from '@clerk/remix'
+import { getAuth } from '@clerk/remix/ssr.server'
+import { LoaderArgs, json } from '@remix-run/node'
 import {
   isRouteErrorResponse,
   useLoaderData,
@@ -17,7 +19,8 @@ export function meta() {
   ]
 }
 
-export async function loader() {
+export async function loader({ request, params, context}:LoaderArgs) {
+  
   const post = await getPosts()
 
   if (!post) throw new Error('Error')

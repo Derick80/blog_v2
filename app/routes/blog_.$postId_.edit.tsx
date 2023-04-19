@@ -185,16 +185,6 @@ export default function EditPost() {
     return item.value
   })
 
-  // const [formData, setFormData] = useState({
-  //   title,
-  //   description,
-  //   body,
-  //   imageUrl,
-  //   categories: pickedCategories,
-  //   id,
-  //   published,
-  //   featured
-  // })
   const [url, setUrl] = useState(imageUrl)
   return (
     <div className='mx-auto mb-7 mt-5 flex w-full flex-col items-center border-2  p-2 text-slate12  '>

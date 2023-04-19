@@ -55,7 +55,7 @@ export async function loader({ request, params }: LoaderArgs) {
 
 export async function action({ request, params }: ActionArgs) {
   const user = await isAuthenticated(request)
-  invariant(user, 'User is not authenticated')
+  invariant(user, 'User is not authenticateds')
   const formData = await request.formData()
   const action = await formData.get('action')
 
