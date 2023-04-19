@@ -31,17 +31,13 @@ export default function Login() {
         <h3 className='text-sm italic'>OR</h3>
         <p className='text-sm italic'>Login with your social account</p>
       </div>
-      <div className='flex items-center justify-center'>
+      <div className='flex items-center justify-center gap-2'>
         <SocialLoginForm provider='discord'>
           <button className='flex flex-col items-center gap-2'>
             <DiscordLogoIcon className='h-5 w-5' />
           </button>
         </SocialLoginForm>
-        <SocialLoginForm provider='github'>
-          <button className='flex flex-col items-center gap-2'>
-            <GitHubLogoIcon className='h-5 w-5' />
-          </button>
-        </SocialLoginForm>
+
         <SocialLoginForm provider='google'>
           <button className='flex flex-col items-center gap-2'>Google</button>
         </SocialLoginForm>

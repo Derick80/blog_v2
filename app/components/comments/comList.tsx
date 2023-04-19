@@ -3,6 +3,7 @@ import {
   CheckIcon,
   Cross1Icon,
   Cross2Icon,
+  DotsVerticalIcon,
   Pencil1Icon,
   TrashIcon
 } from '@radix-ui/react-icons'
@@ -35,14 +36,12 @@ function CommentActions({
   commentId,
   postId,
   userId,
-  message,
-  replyCount
+  message
 }: {
   postId: string
   commentId: string
   userId: string
   message?: string
-  replyCount: number
 }) {
   const [replying, setReplying] = useState(false)
 
@@ -51,30 +50,29 @@ function CommentActions({
   const deleteCommentFetcher = useFetcher()
 
   return (
-    <div className='flex flex-row items-center gap-2 '>
-      <p className='text-xs text-gray-500'>{getReplyCountText(replyCount)}</p>
+    <div className='flex flex-row items-center justify-end gap-2 '>
       {user ? (
         <>
           <Button
-            variant='primary_filled'
-            size='small'
+            variant='icon_unfilled'
+            size='tiny'
             onClick={() => setReplying(!replying)}
           >
-            Reply
+            {replying ? 'Cancel' : 'Reply'}
           </Button>
         </>
       ) : (
-        <Button variant='primary_filled' size='small' disabled>
+        <Button variant='primary_filled' size='tiny' disabled>
           <NavLink to='/login'>Login to Reply</NavLink>
         </Button>
       )}
       {currentUser === userId && (
         <>
           <deleteCommentFetcher.Form
-            method='post'
+            method='POST'
             action={`comments/${commentId}/delete`}
           >
-            <Button variant='danger_filled' size='small'>
+            <Button variant='icon_unfilled' size='tiny'>
               <TrashIcon />
             </Button>
           </deleteCommentFetcher.Form>
@@ -97,47 +95,46 @@ function Comment({ comment }: { comment: CommentWithChildren }) {
   }, [editCommentFetcher.type])
   const [editing, setEditing] = useState(false)
   return (
-    <div className='items-center bg-red-400'>
+    <div className='items-center'>
       <div className='flex w-full flex-col'>
         {editing ? (
           <>
             <Editor comment={comment} setState={setEditing} />
           </>
         ) : (
-          <div className='flex items-center'>
+          <div className='flex items-center justify-between'>
             <p className='prose w-1/2  rounded-md p-1'>{comment.message}</p>
-            <div className='flex w-1/2 flex-col items-center gap-1'>
-              <div className='flex flex-row items-center gap-2'>
-                <p className='text-xs text-gray-500'>Posted by</p>
-                <Avatar
-                  component={Link}
-                  to={`/users/${comment.user.id}`}
-                  src={comment.user.avatarUrl}
-                />
-              </div>
+
+            <div className='flex w-1/2 flex-row items-center  gap-1'>
               <p className='text-xs text-gray-500'>
-                {dayjs().from(new Date(comment.createdAt), true)} ago..{' '}
+                {comment.user.userName} {''}
+                commented {dayjs().from(new Date(comment.createdAt), true)}{' '}
+                ago..{' '}
+                <p className='text-xs text-gray-500'>
+                  {getReplyCountText(comment?.children?.length)}
+                </p>
               </p>
+
+              <p className='text-xs text-gray-500'></p>
+              {comment.userId === currentUser?.id && (
+                <Button
+                  variant='icon_unfilled'
+                  size='tiny'
+                  onClick={() => setEditing(!editing)}
+                >
+                  {editing ? <Cross2Icon /> : <DotsVerticalIcon />}
+                </Button>
+              )}
             </div>
-            {comment.userId === currentUser?.id && (
-              <Button
-                variant='primary_filled'
-                size='small'
-                onClick={() => setEditing(!editing)}
-              >
-                {editing ? <Cross2Icon /> : <Pencil1Icon />}
-              </Button>
-            )}
           </div>
         )}
 
-        <div className='flex flex-row justify-center gap-2'>
+        <div className='flex flex-row justify-end gap-2'>
           <CommentActions
             postId={comment.postId}
             commentId={comment.id}
             userId={comment.user.id}
             message={comment.message}
-            replyCount={comment?.children?.length}
           />
         </div>
       </div>
@@ -170,7 +167,7 @@ function Editor({
   let formRef = React.useRef<HTMLFormElement>(null)
   const [editing, setEditing] = useState(setState ? false : true)
   let navigation = useNavigation()
-  navigation.formMethod = 'post'
+  navigation.formMethod = 'POST'
   navigation.formAction = `comments/${comment.id}/edit`
 
   console.log(editing)
@@ -192,6 +189,9 @@ function Editor({
       <input type='hidden' name='postId' value={comment.postId} />
       <input type='hidden' name='commentId' value={comment.id} />
       <input type='hidden' name='userId' value={comment.userId} />
+      <label htmlFor='message' className='sr-only'>
+        {' '}
+      </label>
       <textarea
         required
         className='w-full'
@@ -200,7 +200,7 @@ function Editor({
       />
       <Button
         variant='primary_filled'
-        size='small'
+        size='tiny'
         name='_action'
         value='editComment'
       >
@@ -208,7 +208,7 @@ function Editor({
       </Button>
       <Button
         variant='danger_filled'
-        size='small'
+        size='tiny'
         name='_action'
         value='cancel'
         onClick={() => setEditing(!editing)}

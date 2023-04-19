@@ -55,7 +55,7 @@ export const PostCard = ({
     favorites
   } = data
   // this should be set to false outside of active development
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(true)
   return (
     <>
       <div key={id} className='mx-auto my-5 w-full  rounded-lg p-2 shadow-md'>

@@ -1,12 +1,14 @@
 import { ActionArgs, json, LoaderArgs } from '@remix-run/node'
 import { redirect } from 'react-router'
 import invariant from 'tiny-invariant'
+import { z } from 'zod'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import {
   createChildComment,
   createComment,
   getChildCommentsByParentId
 } from '~/utils/server/comments.server'
+import { validateAction } from '~/utils/utilities'
 
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
@@ -19,6 +21,15 @@ export async function loader({ request, params }: LoaderArgs) {
   const comments = await getChildCommentsByParentId({ parentId })
   return json({ comments })
 }
+
+const schema = z.object({
+  postId: z.string(),
+  parentId: z.string().optional(),
+  message: z.string()
+})
+
+export type ActionInput = z.infer<typeof schema>
+
 export async function action({ request, params }: ActionArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
@@ -28,19 +39,16 @@ export async function action({ request, params }: ActionArgs) {
   const userId = user.id
   const createdBy = user.userName
 
-  const formData = await request.formData()
-  const postId = formData.get('postId')
-  const parentId = formData.get('parentId')
-  const message = formData.get('message')
+  const { formData, errors } = await validateAction<ActionInput>({
+    request,
+    schema
+  })
 
-  if (
-    typeof postId !== 'string' ||
-    typeof message !== 'string' ||
-    typeof userId !== 'string' ||
-    typeof createdBy !== 'string'
-  ) {
-    return json({ error: 'Invalid form data' }, { status: 400 })
+  if (errors) {
+    return json({ error: errors }, { status: 400 })
   }
+
+  const { postId, parentId, message } = formData as ActionInput
 
   if (!parentId) {
     await createComment({
@@ -49,7 +57,7 @@ export async function action({ request, params }: ActionArgs) {
       postId,
       createdBy
     })
-    return json({ success: true })
+    return redirect(`/blog/${postId}`)
   } else if (parentId) {
     await createChildComment({
       message,
@@ -58,7 +66,7 @@ export async function action({ request, params }: ActionArgs) {
       createdBy,
       parentId: parentId?.toString()
     })
-    return json({ success: true })
+    return redirect(`/blog/${postId}`)
   } else {
     return json({ error: 'Invalid form data' }, { status: 400 })
   }

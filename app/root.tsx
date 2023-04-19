@@ -1,10 +1,5 @@
-import {
-  json,
-  LinksFunction,
-  LoaderArgs,
-  MetaFunction,
-  SerializeFrom
-} from '@remix-run/node'
+import type { LinksFunction, LoaderArgs, SerializeFrom } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import {
   Links,
   LiveReload,
@@ -12,9 +7,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useCatch,
-  useLoaderData,
-  useParams
+  useLoaderData
 } from '@remix-run/react'
 import { StylesPlaceholder } from '@mantine/remix'
 import { isAuthenticated } from './utils/server/auth/auth.server'
@@ -28,6 +21,28 @@ declare global {
   interface Window {
     ENV: SerializeFrom<typeof loader>['ENV']
   }
+}
+
+export function meta() {
+  return [
+    {
+      name: 'description',
+      content: 'A blog about web development and programming'
+    },
+    {
+      name: 'keywords',
+      content:
+        'web development, programming, javascript, typescript, react, remix, tailwind, vercel'
+    },
+    {
+      name: 'author',
+      content: 'Derick Hoskinson'
+    },
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1.0'
+    }
+  ]
 }
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: styles },
@@ -72,7 +87,7 @@ export default function App() {
         <Links />
       </head>
       {/* bg-gradient-to-b from-crimson3 to-crimson1 text-slate12' */}
-      <body className=''>
+      <body className='bg-slate-50 text-black dark:bg-slate-900 dark:text-slate-50'>
         <Layout>
           <Outlet />
           <Analytics />

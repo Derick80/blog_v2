@@ -3,6 +3,7 @@ import { Pencil1Icon } from '@radix-ui/react-icons'
 import type { SerializeFrom } from '@remix-run/node'
 import { Link } from '@remix-run/react'
 import { useOptionalUser } from '~/utils/utilities'
+import Button from './button'
 
 export type AboutProps = {
   about: Partial<SerializeFrom<About>>
@@ -12,23 +13,26 @@ export default function AboutMe({ about }: AboutProps) {
   const user = useOptionalUser()
   const isOwner = user?.id === about.userId
   return (
-    <article className='mx-auto mb-5 mt-5 flex  w-fit max-w-prose flex-col rounded-md shadow-xl transition-shadow  duration-200 ease-in-out hover:shadow-2xl md:w-fit'>
+    <article className='flex w-[350px] flex-col items-center gap-4 p-1'>
       <h1 className='my-3 border-b-2 border-black text-left text-3xl'>
         {about.firstName} {about.lastName}, PhD
       </h1>
       <p className='mb-2 indent-4 text-sm italic'> {about.occupation}</p>
 
       <div className='flex flex-row gap-5'>
-        <div className='h-full w-full'>
+        <div className='h-full w-1/2'>
           <img
             src={about.profilePicture}
-            style={{ height: '100%', width: '100%' }}
+            className='h-full w-full shrink-0 object-cover'
             alt='about'
           />
         </div>
-        <div>
-          <div className='mx-auto  flex max-w-prose  flex-row items-center space-x-4 md:w-fit'>
+        <div className='flex w-1/2 flex-col justify-center'>
+          <div className='prose'>
             <div>I live in {about.location}</div>
+            <div>
+              I am a {about.occupation} in {about.location}
+            </div>
           </div>
         </div>
       </div>
@@ -37,7 +41,7 @@ export default function AboutMe({ about }: AboutProps) {
         {about.bio && (
           <div
             dangerouslySetInnerHTML={{ __html: about.bio }}
-            className='prose prose-sm h-full dark:prose-invert'
+            className='prose'
           ></div>
         )}
       </div>
@@ -48,9 +52,9 @@ export default function AboutMe({ about }: AboutProps) {
             to={`/about/${about.id}/edit`}
             className='flex'
           >
-            <button type='button' className=''>
+            <Button type='button' variant='icon_unfilled' size='base'>
               <Pencil1Icon />
-            </button>
+            </Button>
           </Link>
         ) : null}
       </div>

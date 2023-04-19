@@ -53,7 +53,7 @@ export default function Index() {
             key={item.id}
             data={item}
             showCategories={true}
-            showComments={true}
+            showComments={false}
             showFavorites={true}
             showLikes={true}
             showOptions={true}

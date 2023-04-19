@@ -21,33 +21,43 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className='flex flex-col items-center gap-4 '>
-      <nav className='flex flex-row items-center gap-4'>
-        <NavLink to='/'>
-          <p className='text-base font-semibold uppercase text-slate12'>Home</p>
-        </NavLink>
-        <NavLink to='/blog'>
-          <p className='text-base font-semibold uppercase text-slate12'>Blog</p>
-        </NavLink>
-        <NavLink to='/projects'>
-          <p className='text-base font-semibold uppercase text-slate12'>
-            Projects
-          </p>
-        </NavLink>
-        <NavLink to='/travel'>
-          <p className='text-base font-semibold uppercase text-slate12'>
-            travel
-          </p>
-        </NavLink>
-        {user ? (
-          <UserDropdown user={user} />
-        ) : (
-          <NavLink to='/login'>
-            <p className='text-base font-semibold uppercase text-slate12'>
-              Login
+    <div className='flex flex-col items-center gap-1'>
+      <nav className='flex flex-col items-center gap-2'>
+        <div className='flex flex-row items-center gap-2'>
+          <NavLink to='/'>
+            <p className='text-sm font-semibold uppercase text-slate12'>Home</p>
+          </NavLink>
+          <NavLink to='/blog'>
+            <p className='text-sm font-semibold uppercase text-slate12'>Blog</p>
+          </NavLink>
+          <NavLink to='/about'>
+            <p className='text-sm font-semibold uppercase text-slate12'>
+              About
             </p>
           </NavLink>
-        )}
+          <NavLink to='/projects'>
+            <p className='text-sm font-semibold uppercase text-slate12'>
+              Projects
+            </p>
+          </NavLink>
+
+          {user ? (
+            <UserDropdown user={user} />
+          ) : (
+            <NavLink to='/login'>
+              <p className='text-sm font-semibold uppercase text-slate12'>
+                Login
+              </p>
+            </NavLink>
+          )}
+        </div>
+        <div className='flex flex-row items-center gap-4'>
+          <NavLink to='/travel'>
+            <p className='text-sm font-semibold uppercase text-slate12'>
+              Travel
+            </p>
+          </NavLink>
+        </div>
       </nav>
 
       <main className='mx-auto flex flex-col items-center gap-4'>
@@ -60,7 +70,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   className='flex flex-row justify-between text-slate12'
                 >
-                  <Button variant='primary_filled' size='small'>
+                  <Button variant='primary_filled' size='tiny'>
                     <PlusCircledIcon />
                     Create
                   </Button>
@@ -70,7 +80,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   className='flex flex-row justify-between text-slate12'
                 >
-                  <Button variant='primary_filled' size='small'>
+                  <Button variant='primary_filled' size='tiny'>
                     <Pencil1Icon />
                     Drafts
                   </Button>
@@ -80,7 +90,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   className='flex flex-row justify-between text-slate12'
                 >
-                  <Button variant='primary_filled' size='small'>
+                  <Button variant='primary_filled' size='tiny'>
                     <MixIcon />
                     Categories
                   </Button>

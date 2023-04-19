@@ -11,7 +11,7 @@ type buttonVariant =
   | 'primary_filled'
   | 'icon_filled'
   | 'icon_unfilled'
-type buttonSize = 'base' | 'large' | 'small'
+type buttonSize = 'base' | 'large' | 'small' | 'tiny'
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: buttonSize
@@ -29,7 +29,8 @@ export default function Button({
   const sizeClasses = {
     base: 'px-4 py-2',
     large: 'px-6 py-3',
-    small: 'px-2 py-1'
+    small: 'px-2 py-1',
+    tiny: 'px-1 py-1 text-xs'
   }
   const variantClasses = {
     success:

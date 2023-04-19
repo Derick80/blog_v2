@@ -2,7 +2,7 @@
 module.exports = {
   content: [    "./app/**/*.{js,ts,jsx,tsx}",
 ],  theme: {
-
+    darkMode: 'media',
     extend: {
       fontFamily:{
         sans:['Roboto', 'sans-serif'],

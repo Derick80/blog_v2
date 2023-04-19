@@ -7,7 +7,7 @@ module.exports = {
     v2_routeConvention: true,
     v2_errorBoundary: true,
     v2_meta: true,
-    v2_normalizeFormMethods: true,
+    v2_normalizeFormMethod: true,
     unstable_tailwind: true,
   },
   // appDirectory: "app",

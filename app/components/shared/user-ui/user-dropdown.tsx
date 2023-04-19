@@ -3,12 +3,13 @@ import Avatar from '../avatar'
 import { NavLink } from '@remix-run/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import React from 'react'
+import { Divider } from '@mantine/core'
 
 export default function UserDropdown({ user }: { user: UserType }) {
   const [open, setOpen] = React.useState(false)
   return (
     <>
-      <div className='text relative items-center flex flex-row gap-2'>
+      <div className='text relative flex flex-row items-center gap-2'>
         <Avatar imageUrl={user?.avatarUrl} h={10} w={10} />
 
         <button
@@ -16,7 +17,7 @@ export default function UserDropdown({ user }: { user: UserType }) {
           className='flex h-10 w-14 items-center justify-center'
           onClick={() => setOpen(!open)}
         >
-          <div className='text-lg font-semibold text-black'>
+          <div className='text-lg font-semibold text-slate12'>
             {user.userName}
           </div>
           {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
@@ -30,6 +31,7 @@ export default function UserDropdown({ user }: { user: UserType }) {
           >
             <div className='px-4 py-3 text-sm text-gray-900 dark:text-white'>
               <div className='font-medium '>Hello</div>
+              <Divider />
               <div className='truncate'>{user.email}</div>
             </div>
             <ul className='py-2 text-sm text-gray-700 dark:text-gray-200'>

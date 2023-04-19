@@ -19,7 +19,7 @@ export default function BlogPreview({
   const currentUser = user?.id || ''
 
   return (
-    <div className='flex w-full flex-col border-2 p-2 shadow-xl'>
+    <div className='flex w-[350px] flex-col border-2 p-2 shadow-xl'>
       {/* Card header */}
       <div className='flex'>
         <NavLink to={`/blog/${post.id}`}>

@@ -44,7 +44,7 @@ export const AuthForm = ({ authType }: Props) => {
   return (
     <Form
       className='mx-auto flex w-full flex-col items-center justify-center'
-      method='post'
+      method='POST'
       action={url}
     >
       <input type='hidden' name='redirectTo' value={redirectTo || '/'} />

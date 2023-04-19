@@ -1,5 +1,5 @@
 import { Cross2Icon } from '@radix-ui/react-icons'
-import type { ActionArgs, LoaderArgs, MetaFunction } from '@remix-run/node'
+import type { ActionArgs, LoaderArgs } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import {
   Form,
@@ -16,6 +16,32 @@ import getAllCategories, {
   createCategory
 } from '~/utils/server/categories.server'
 import { validateAction } from '~/utils/utilities'
+
+export function meta() {
+  return [
+    {
+      name: 'description',
+      content: 'Create a new category'
+    },
+    {
+      name: 'og:title',
+      content: 'Create a new category'
+    },
+    {
+      name: 'twitter:title',
+      content: 'Create a new category'
+    },
+    {
+      name: 'og:description',
+      content: 'Create a new category'
+    },
+    {
+      name: 'twitter:description',
+      content: 'Create a new category'
+    }
+  ]
+}
+
 export async function loader({ request }: LoaderArgs) {
   const categories = await getAllCategories()
 
@@ -61,8 +87,8 @@ export default function CategoryIndex() {
 
   return (
     <>
-      <div className='flex w-full flex-col items-center gap-4 p-2'>
-        <h3 className=''>Existing Categories</h3>
+      <div className='itemss-center flex w-[350px] flex-col gap-2 p-2'>
+        <h3 className='text-lg font-semibold uppercase'>Existing Categories</h3>
         <div className='flex flex-row flex-wrap justify-start gap-2'>
           {data.categories.map((category: { id: string; value: string }) => (
             <div
@@ -70,24 +96,29 @@ export default function CategoryIndex() {
               className='flex flex-col justify-start gap-4 rounded-sm outline'
             >
               <div className='flex items-center'>
-                <div className='m-0.5 flex-grow text-sm'>{category.value}</div>
+                <div className='m-0.5 flex-grow text-xs'>{category.value}</div>
                 <Form
-                  method='post'
+                  method='POST'
                   action={`/blog/categories/${category.id}/delete`}
                   className='inline-flex items-center border-l-2'
                 >
-                  <button type='submit' className=' '>
+                  <Button type='submit' variant='icon_unfilled' size='tiny'>
                     <Cross2Icon />
-                  </button>
+                  </Button>
                 </Form>
               </div>
             </div>
           ))}
         </div>
-        <h3 className=''> New Category</h3>
-        <Form method='POST'>
-          <div className='flex flex-col'>
-            <label htmlFor='categoryName'>Category Name</label>
+        <h3 className='text-lg font-semibold uppercase'> New Category</h3>
+        <Form className='itesms-center flex flex-col gap-1' method='POST'>
+          <div className='flex flex-col gap-1'>
+            <label
+              className='text-sm font-bold text-slate12'
+              htmlFor='categoryName'
+            >
+              Category Name
+            </label>
             <input
               type='text'
               className='rounded-md border text-sm text-slate12'
@@ -103,26 +134,26 @@ export default function CategoryIndex() {
                   : undefined
               }
             />
-            {actionData?.errors?.categoryName && (
-              <p id='categoryName-error' className='text-red-500'>
-                {actionData?.errors?.categoryName}
-              </p>
-            )}
-            <Button
-              variant='primary_filled'
-              size='base'
-              className=''
-              type='submit'
-            >
-              Create
-            </Button>
           </div>
+          {actionData?.errors?.categoryName && (
+            <p id='categoryName-error' className='text-red-500'>
+              {actionData?.errors?.categoryName}
+            </p>
+          )}
+          <Button
+            variant='primary_filled'
+            size='base'
+            className=''
+            type='submit'
+          >
+            Create
+          </Button>
         </Form>
-        <Outlet />
       </div>
     </>
   )
 }
+
 export function ErrorBoundary() {
   const error = useRouteError()
   if (isRouteErrorResponse(error)) {

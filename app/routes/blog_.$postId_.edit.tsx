@@ -22,10 +22,12 @@ import { MultiSelect, Switch } from '@mantine/core'
 import TipTap from '~/components/shared/tip-tap'
 import { useState } from 'react'
 import getAllCategories from '~/utils/server/categories.server'
-import { useOptionalUser } from '~/utils/utilities'
+import { useOptionalUser, validateAction } from '~/utils/utilities'
 // or cloudflare/deno
 import { badRequest } from 'remix-utils'
 import ImageUploader from '~/components/shared/image-fetcher'
+import { z } from 'zod'
+import Button from '~/components/shared/button'
 
 export async function loader({ params, request }: LoaderArgs) {
   const user = await isAuthenticated(request)
@@ -43,64 +45,46 @@ export async function loader({ params, request }: LoaderArgs) {
   return json({ post, allCategories })
 }
 
+const schema = z.object({
+  action: z.string().min(1).max(50),
+  postId: z.string().min(1).max(50),
+  userId: z.string().min(1).max(50),
+  title: z.string().min(1).max(100),
+  createdBy: z.string().min(1).max(150),
+  description: z.string().min(1).max(150),
+  body: z.string().min(1).max(10000),
+  imageUrl: z.string().min(1).max(500),
+  featured: z.coerce.boolean(),
+  categories: z.string().min(1).max(50)
+})
+
+export type ActionInput = z.TypeOf<typeof schema>
+
 export async function action({ request }: ActionArgs) {
   const user = await isAuthenticated(request)
   invariant(user, 'user is required')
-  const formData = await request.formData()
-  const action = formData.get('_action')
-  const postId = formData.get('postId')
-  const userId = formData.get('userId')
-  const title = formData.get('title')
-  const createdBy = formData.get('createdBy')
-  const description = formData.get('description')
-  const body = formData.get('body')
-  const imageUrl = formData.get('imageUrl')
-  const featured = Boolean(formData.get('featured'))
-  const categories = formData.get('categories')
+  const { formData, errors } = await validateAction<ActionInput>({
+    request,
+    schema
+  })
 
-  if (
-    typeof body !== 'string' ||
-    typeof categories !== 'string' ||
-    typeof action !== 'string' ||
-    typeof postId !== 'string' ||
-    typeof userId !== 'string' ||
-    typeof title !== 'string' ||
-    typeof createdBy !== 'string' ||
-    typeof description !== 'string' ||
-    typeof imageUrl !== 'string'
-  ) {
-    return badRequest({
-      fieldErrors: null,
-      fields: null,
-      formError: 'Invalid form data'
-    })
+  if (errors) {
+    return json({ errors }, { status: 400 })
   }
 
-  const fieldErrors = {
-    title: validateText(title),
-    description: validateText(description),
-    body: validateText(body),
-    imageUrl: validateText(imageUrl),
-    action: validateText(action),
-    createdBy: validateText(createdBy)
-  }
-  const fields = {
+  const {
+    action,
+    postId,
+    userId,
     title,
+    createdBy,
     description,
     body,
     imageUrl,
-    createdBy,
-    categories,
-    action,
-    featured
-  }
-  if (Object.values(fieldErrors).some(Boolean)) {
-    return badRequest({
-      fieldErrors,
-      fields,
-      formError: null
-    })
-  }
+    featured,
+    categories
+  } = formData as ActionInput
+
   const cats = categories?.split(',')
   const category = cats.map((cat) => {
     return {
@@ -273,45 +257,49 @@ export default function EditPost() {
 
         <ImageUploader onClick={onClick} setUrl={setUrl} />
         <div className='flex flex-row items-center justify-end gap-2 text-slate12'>
-          <button
+          <Button
             type='submit'
-            name='_action'
+            name='action'
             value='save'
             form='editPost'
-            className=''
+            variant='primary_filled'
+            size='small'
           >
             {text}
-          </button>
+          </Button>
           {published ? (
-            <button
+            <Button
               type='submit'
               form='editPost'
-              name='_action'
+              name='action'
               value='unpublish'
-              className='-warning'
+              variant='warning'
+              size='small'
             >
               {unpublishText}
-            </button>
+            </Button>
           ) : (
-            <button
+            <Button
               type='submit'
               form='editPost'
-              name='_action'
+              name='action'
               value='publish'
-              className='btn-secondary'
+              variant='primary_filled'
+              size='small'
             >
               {publishText}
-            </button>
+            </Button>
           )}
-          <button
+          <Button
             type='submit'
             form='editPost'
-            name='_action'
+            name='action'
             value='delete'
-            className='-danger'
+            variant='danger_filled'
+            size='small'
           >
             {deleteText}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
