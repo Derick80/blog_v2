@@ -4,12 +4,12 @@
   "prisma": {
     "seed": "node --require esbuild-register prisma/cv.ts"
   },
-  "scripts": {
-    "build": "npm run build:css && remix build && npx prisma generate",
-    "build:css": "tailwindcss -m -i ./styles/app.css -o app/styles/app.css",
+ "scripts": {
+    "build": "remix build",
+    "deploy": "fly deploy --remote-only",
     "dev": "remix dev",
-    "format": "prettier \"app/**/*.ts\" \"app/**/*.tsx\" --write . ",
-    "tsx": "tsx"
+    "start": "remix-serve build",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
