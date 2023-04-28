@@ -1,206 +1,111 @@
-import React from 'react'
 import {
   ExitIcon,
-  MixIcon,
-  Pencil1Icon,
-  PlusCircledIcon,
-  RocketIcon
 } from '@radix-ui/react-icons'
-import { Form, Link, NavLink } from '@remix-run/react'
-import { socialLinks } from '~/utils/constants/social-links'
-import Button from '../button'
+import { Form, NavLink } from '@remix-run/react'
+
+import {  Avatar, } from '@mantine/core'
+import { BrandIcon } from '~/resources/brand-icon'
 import { useOptionalUser } from '~/utils/utilities'
-import { Menu } from '@mantine/core'
-import { IconBook2 } from '@tabler/icons-react'
-import UserDropdown from '../user-ui/user-dropdown'
+import MenuBox from '../site-menus'
+import Button from '../button'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const user = useOptionalUser()
-  const activeStyle = {
-    color: 'var(--color-primary)'
-  }
 
   return (
-    <div className='flex flex-col items-center gap-1'>
-      <nav className='flex flex-col items-center gap-2'>
-        <div className='flex flex-row items-center gap-2'>
-          <NavLink to='/'>
-            <p className='text-sm font-semibold uppercase text-slate12'>Home</p>
-          </NavLink>
-          <NavLink to='/blog'>
-            <p className='text-sm font-semibold uppercase text-slate12'>Blog</p>
-          </NavLink>
-          <NavLink to='/about'>
-            <p className='text-sm font-semibold uppercase text-slate12'>
-              About
-            </p>
-          </NavLink>
-          <NavLink to='/projects'>
-            <p className='text-sm font-semibold uppercase text-slate12'>
-              Projects
-            </p>
-          </NavLink>
+    <div className='flex flex-col gap-2'>
+      <NavigationBar />
 
-          {user ? (
-            <UserDropdown user={user} />
-          ) : (
-            <NavLink to='/login'>
-              <p className='text-sm font-semibold uppercase text-slate12'>
-                Login
-              </p>
-            </NavLink>
-          )}
-        </div>
-        <div className='flex flex-row items-center gap-4'>
-          <NavLink to='/travel'>
-            <p className='text-sm font-semibold uppercase text-slate12'>
-              Travel
-            </p>
-          </NavLink>
-        </div>
-      </nav>
-
-      <main className='mx-auto flex flex-col items-center gap-4'>
-        <div className='flex w-full flex-col items-center  md:w-1/5'>
-          {user?.role === 'ADMIN' && (
-            <ul className='flex flex-col items-center gap-4 p-2'>
-              <li className='flex flex-row items-center gap-4 p-2'>
-                <NavLink
-                  to='/blog/new'
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  className='flex flex-row justify-between text-slate12'
-                >
-                  <Button variant='primary_filled' size='tiny'>
-                    <PlusCircledIcon />
-                    Create
-                  </Button>
-                </NavLink>
-                <NavLink
-                  to='/drafts'
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  className='flex flex-row justify-between text-slate12'
-                >
-                  <Button variant='primary_filled' size='tiny'>
-                    <Pencil1Icon />
-                    Drafts
-                  </Button>
-                </NavLink>
-                <NavLink
-                  to='/categories/new'
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  className='flex flex-row justify-between text-slate12'
-                >
-                  <Button variant='primary_filled' size='tiny'>
-                    <MixIcon />
-                    Categories
-                  </Button>
-                </NavLink>
-              </li>
-            </ul>
-          )}
-        </div>
-        {children}
-      </main>
-
-      <footer className='flex flex-col items-center gap-4'>
-        <div className='flex flex-row items-center gap-4'>
-          {socialLinks.map((link) => (
-            <Link key={link.href} to={link.href}>
-              {link.icon}
-            </Link>
-          ))}
-          <p>© {new Date().getFullYear()} Derick Hoskinson</p>
-        </div>
-        {user && (
-          <Form method='POST' action='/logout'>
-            <Button type='submit' variant='danger_filled' size='small'>
-              <ExitIcon />
-              <p>Logout</p>
-            </Button>
-          </Form>
-        )}
-      </footer>
+        <main className='flex-grsow relative mx-auto mt-10 flex w-full flex-col p-2 md:w-4/6 md:p-4'>
+          {children}
+        </main>
+      
+     
     </div>
   )
 }
 
-function MantineMenu() {
+function NavigationBar() {
+  const user = useOptionalUser()
+  // fix w-4/s6 if I want to change the latout
   return (
-    <Menu withArrow trigger='click' shadow='md' width={150} position='bottom'>
-      <Menu.Target>
-        <Button variant='icon_unfilled' className='font-bold' size='small'>
-          {' '}
-          Blog
-        </Button>
-      </Menu.Target>
+    <div className='fixed left-0 right-0 top-0 z-50 mx-auto flex h-16 w-full flex-row items-center justify-between bg-slate-50/70 p-1 dark:bg-slate-800 md:p-2'>
+      <BrandIcon />
 
-      <Menu.Dropdown>
-        <Menu.Label>Blog Menu</Menu.Label>
-        <Menu.Item icon={<IconBook2 />}>
-          <NavLink to='/blog'>Blog</NavLink>
-        </Menu.Item>
-        <Menu.Item icon={<PlusCircledIcon />}>
-          <NavLink to='/blog/new'>Create</NavLink>
-        </Menu.Item>
-        <Menu.Item icon={<Pencil1Icon />}>
-          <NavLink to='/drafts'>Drafts</NavLink>
-        </Menu.Item>
-        <Menu.Item icon={<MixIcon />}>
-          <Link to='/categories/new'>Categories</Link>
-        </Menu.Item>
+      <NavLink
+        style={({ isActive, isPending }) => {
+          return {
+            textDecorationLine: isActive ? 'underline' : '',
+            color: isPending ? 'red' : 'black'
+          }
+        }}
+        to='/'
+      >
+        <p className='text-sm font-semibold dark:text-slate-50'>Home</p>
+      </NavLink>
+      <NavLink
+        style={({ isActive, isPending }) => {
+          return {
+            textDecorationLine: isActive ? 'underline' : '',
+            color: isPending ? 'red' : 'black'
+          }
+        }}
+        to='/blog'
+      >
+        <p className='text-sm font-semibold dark:text-slate-50'>Blog</p>
+      </NavLink>
 
-        <Menu.Divider />
+      <NavLink
+        style={({ isActive, isPending }) => {
+          return {
+            textDecorationLine: isActive ? 'underline' : '',
+            color: isPending ? 'red' : 'black'
+          }
+        }}
+        to='/about'
+      >
+        <p className='text-sm font-semibold dark:text-slate-50'>About</p>
+      </NavLink>
+      <NavLink
+        style={({ isActive, isPending }) => {
+          return {
+            textDecorationLine: isActive ? 'underline' : '',
+            color: isPending ? 'red' : 'black'
+          }
+        }}
+        to='/projects'
+      >
+        <p className='text-sm font-semibold dark:text-slate-50'>Projects</p>
+      </NavLink>
+      <MenuBox title='Links' />
 
-        <Menu.Label>Danger zone</Menu.Label>
+      {/* <Switch size="md" onLabel={<SunIcon />} offLabel={<MoonIcon />} /> */}
 
-        <Menu.Item color='red'>
-          <Form method='post' action='/logout'>
-            <Button type='submit' variant='danger_filled' size='small'>
+      {user ? (
+        <div className='flex flex-row gap-2 p-2'>
+          <Avatar
+            src={user.avatarUrl}
+            alt={user.userName}
+            radius='xl'
+            size='sm'
+          />
+
+          <Form
+            className='flex items-center justify-center p-1'
+            method='POST'
+            action='/logout'
+          >
+            <Button variant='icon_unfilled' size='small'>
               <ExitIcon />
-              <p>Logout</p>
             </Button>
           </Form>
-        </Menu.Item>
-      </Menu.Dropdown>
-    </Menu>
+        </div>
+      ) : (
+        <NavLink to='/login'>
+          <p className='text-sm font-semibold dark:text-slate-50'>Login</p>
+        </NavLink>
+      )}
+    </div>
   )
 }
 
-function HobbiesMenu() {
-  return (
-    <Menu trigger='hover' shadow='md' width={150} withArrow>
-      <Menu.Target>
-        <Button variant='icon_unfilled' className='font-bold' size='small'>
-          {' '}
-          Hobbies
-        </Button>
-      </Menu.Target>
 
-      <Menu.Dropdown>
-        <Menu.Label>Hobbies Menu</Menu.Label>
-        <Menu.Item icon={<RocketIcon />}>
-          <Link to='/travel'>Travel</Link>
-        </Menu.Item>
-        <Menu.Item icon={<IconBook2 />}>
-          <Link to='/books'>Books</Link>
-        </Menu.Item>
-        <Menu.Item icon={<MixIcon />}>
-          <Link to='/categories'>Categories</Link>
-        </Menu.Item>
-
-        <Menu.Divider />
-
-        <Menu.Label>Danger zone</Menu.Label>
-
-        <Menu.Item color='red'>
-          <Form method='post' action='/logout'>
-            <Button type='submit' variant='danger_filled' size='small'>
-              <ExitIcon />
-              <p>Logout</p>
-            </Button>
-          </Form>
-        </Menu.Item>
-      </Menu.Dropdown>
-    </Menu>
-  )
-}

@@ -9,7 +9,9 @@
     "deploy": "fly deploy --remote-only",
     "dev": "remix dev",
     "start": "remix-serve build",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+        "format": "prettier \"app/**/*.ts\" \"app/**/*.tsx\" --write . "
+
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

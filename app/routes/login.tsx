@@ -5,6 +5,7 @@ import { Link } from '@remix-run/react'
 import { badRequest, serverError } from 'remix-utils'
 import { AuthForm } from '~/components/shared/auth/auth-form'
 import { SocialLoginForm } from '~/components/shared/auth/social-login-form'
+import Button from '~/components/shared/button'
 import { isAuthenticated, authenticator } from '~/utils/server/auth/auth.server'
 
 export async function loader(args: LoaderArgs) {
@@ -33,9 +34,12 @@ export default function Login() {
       </div>
       <div className='flex items-center justify-center gap-2'>
         <SocialLoginForm provider='discord'>
-          <button className='flex flex-col items-center gap-2'>
+          <Button
+            variant='icon_unfilled'
+            size='small'
+          className='flex flex-col items-center gap-2'>
             <DiscordLogoIcon className='h-5 w-5' />
-          </button>
+          </Button>
         </SocialLoginForm>
 
         <SocialLoginForm provider='google'>

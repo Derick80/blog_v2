@@ -34,7 +34,6 @@ export default function Index() {
   const categories = tags.categories.filter((item) => item._count.posts > 0)
 
   return (
-    <div className='flex flex-col items-center gap-4'>
       <div className='flex w-full flex-wrap gap-2 p-2'>
         {categories.map((item) => (
           <div
@@ -45,7 +44,7 @@ export default function Index() {
             <p className=''>{item._count.posts}</p>
           </div>
         ))}
-      </div>
+    
 
       {data.post &&
         data.post.map((item: PostWithChildren) => (

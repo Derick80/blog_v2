@@ -24,7 +24,6 @@ import { useState } from 'react'
 import getAllCategories from '~/utils/server/categories.server'
 import { useOptionalUser, validateAction } from '~/utils/utilities'
 // or cloudflare/deno
-import { badRequest } from 'remix-utils'
 import ImageUploader from '~/components/shared/image-fetcher'
 import { z } from 'zod'
 import Button from '~/components/shared/button'

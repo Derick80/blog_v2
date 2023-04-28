@@ -1,8 +1,11 @@
-import { useFetcher } from '@remix-run/react'
+import { useFetcher, useSubmit } from '@remix-run/react'
 import React from 'react'
+import Button from './button'
+
 
 export default function ImageUploader({ setUrl }: any) {
   const fetcher = useFetcher()
+
   const onClick = async () =>
     fetcher.submit({
       imageUrl: 'imageUrl',
@@ -15,43 +18,35 @@ export default function ImageUploader({ setUrl }: any) {
         method='POST'
         encType='multipart/form-data'
         action='/actions/cloudinary'
-        onClick={onClick}
-        className='mx-auto flex flex-col items-center gap-2'
+        onChange={onClick}
+        className='flex flex-row items-center gap-2'
       >
-        <label htmlFor='imageUrl' className='subtitle'>
-          Attach an Image
-        </label>
+        <label htmlFor='imageUrl' className='subtitle'></label>
         <input
           id='imageUrl'
-          className='block w-full rounded-xl border-2 p-2 text-sm text-slate12'
+          className='text-slate12 block w-full rounded-xl border-2 p-2 text-sm'
           type='file'
           name='imageUrl'
           accept='image/*'
         />
-        <button className='' type='submit'>
-          Upload Image
-        </button>
+        <Button variant='primary' className='' type='submit'>
+          Upload
+        </Button>
       </fetcher.Form>
       {fetcher.data ? (
-        <div className='flex w-full flex-col items-center gap-2'>
-          <p className='h6'>Image uploaded</p>
+        <div className='mx-auto flex h-fit w-12 flex-row items-center '>
           <input
             type='hidden'
             name='imageUrl'
-            value={fetcher?.data?.imageUrl}
             onChange={setUrl(fetcher?.data.imageUrl)}
           />
-          <div className='flex'>
-            <div className=' rounded-xl  text-slate12'>
-              <img
-                src={fetcher?.data?.imageUrl}
-                alt={'no'}
-                style={{
-                  objectFit: 'cover'
-                }}
-              />
-            </div>
-          </div>
+          {fetcher.data.imageUrl && (
+            <img
+              src={fetcher?.data?.imageUrl}
+              alt={'no'}
+              className='h-full w-full object-cover'
+            />
+          )}
         </div>
       ) : null}
     </>
