@@ -5,26 +5,19 @@ import {
   Form,
   isRouteErrorResponse,
   useActionData,
-  useCatch,
   useFetcher,
   useLoaderData,
-  useParams,
-  useRouteError,
-  useRouteLoaderData
-} from '@remix-run/react'
+  useRouteError} from '@remix-run/react'
 import React from 'react'
 import { z } from 'zod'
 import Button from '~/components/shared/button'
 import ImageUploader from '~/components/shared/image-fetcher'
-import { Category } from '~/utils/schemas/category-schema'
-import type { Categories } from '~/utils/schemas/projects-schema'
+import type { Category } from '~/utils/schemas/category-schema'
 import { isAuthenticated } from '~/utils/server/auth/auth.server'
 import { prisma } from '~/utils/server/prisma.server'
 import { getProjectById } from '~/utils/server/project.server'
 import { validateAction } from '~/utils/utilities'
-type ActionData = {
-  imageUrl?: string
-}
+
 export async function loader({ request, params }: LoaderArgs) {
   const user = await isAuthenticated(request)
   if (!user) {
@@ -98,17 +91,25 @@ export async function action({ request, params }: ActionArgs) {
 }
 export default function Index() {
   const data = useLoaderData<typeof loader>()
-  const { categories } = useRouteLoaderData('root') as {
-    categories: Category[]
-  }
+
   const [url, setUrl] = React.useState('')
   const [selected, setSelected] = React.useState<string[]>(
     data.project.categories.map((cat) => cat.value)
   )
 
-  const primaryCategories = categories.map((cat) => cat.value)
   const actionData = useActionData<{ errors: Record<string, string> }>()
+  const categoryFetcher = useFetcher()
 
+  React.useEffect(()=>
+{
+  if(categoryFetcher.state === 'idle' && !categoryFetcher.data)
+  categoryFetcher.load(`/categories/new`)
+},[categoryFetcher])
+
+
+ const categories = categoryFetcher?.data  as Category[]
+ console.log(categories, 'categories');
+ 
   return (
     <div className='flex h-full w-full flex-col items-center'>
       <Form
@@ -164,13 +165,18 @@ export default function Index() {
           Categories
         </label>
 
-        <MultiSelect
-          shadow='xl'
-          name='categories'
-          id='categories'
-          data={primaryCategories}
-          defaultValue={selected}
-        />
+        { categoryFetcher?.data && <MultiSelect
+            shadow='xl'
+            data={categoryFetcher?.data?.categories.map((cat: { value: string }) => ({
+              label: cat.value,
+              value: cat.value
+              }))}
+            onChange={(e) => {
+              setSelected(e.join(','))
+            }}
+          />
+
+            }
 
         {actionData?.errors?.categories && (
           <p id='categories-error' role='alert' className='text-red-500'>

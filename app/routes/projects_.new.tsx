@@ -1,12 +1,13 @@
 import { MultiSelect } from '@mantine/core'
 import type { ActionArgs } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
+import { json, redirect, } from '@remix-run/node'
 import {
   useRouteLoaderData,
   Form,
   isRouteErrorResponse,
   useRouteError,
-  useActionData
+  useActionData,
+  useFetcher,
 } from '@remix-run/react'
 import React from 'react'
 import { z } from 'zod'
@@ -99,13 +100,20 @@ export async function action({ request }: ActionArgs) {
 }
 
 export default function Index() {
-  const { categories } = useRouteLoaderData('root') as {
-    categories: Category[]
-  }
+
   const [url, setUrl] = React.useState('')
   const [selected, setSelected] = React.useState('')
   const actionData = useActionData<{ errors: Record<string, string> }>()
+  const categoryFetcher = useFetcher()
 
+React.useEffect(()=>
+{
+  if(categoryFetcher.state === 'idle' && !categoryFetcher.data)
+  categoryFetcher.load(`/categories/new`)
+},[categoryFetcher])
+
+
+  const categories = categoryFetcher?.data?.categories as Category[]
   return (
     <div className='flex h-full w-full flex-col items-center'>
       <Form
@@ -159,13 +167,18 @@ export default function Index() {
           Categories
         </label>
 
-        <MultiSelect
-          shadow='xl'
-          data={categories}
-          onChange={(e) => {
-            setSelected(e.join(','))
-          }}
-        />
+        { categoryFetcher?.data && <MultiSelect
+            shadow='xl'
+            data={categoryFetcher?.data?.categories.map((cat) => ({
+              label: cat.value,
+              value: cat.value
+              }))}
+            onChange={(e) => {
+              setSelected(e.join(','))
+            }}
+          />
+
+            }
         {actionData?.errors?.categories && (
           <p id='categories-error' role='alert' className='text-red-500'>
             {actionData?.errors?.categories}

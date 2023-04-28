@@ -11,7 +11,6 @@ import {
 } from '@remix-run/react'
 import { StylesPlaceholder } from '@mantine/remix'
 import { isAuthenticated } from './utils/server/auth/auth.server'
-import getAllCategories from './utils/server/categories.server'
 import Layout from './components/shared/layout/layout'
 import styles from './styles/app.css'
 import { useIsBot } from './is-bot.context'
@@ -55,14 +54,12 @@ export const links: LinksFunction = () => [
 
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
-  const categories = await getAllCategories()
 
   const { message, headers } = await getFlash(request)
 
   return json(
     {
       user,
-      categories,
       message,
       ENV: {
         VERCEL_ANALYTICS_ID: process.env.VERCEL_ANALYTICS_ID

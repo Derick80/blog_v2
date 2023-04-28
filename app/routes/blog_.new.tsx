@@ -6,10 +6,9 @@ import {
   Form,
   isRouteErrorResponse,
   useActionData,
+  useFetcher,
   useNavigation,
-  useRouteError,
-  useRouteLoaderData
-} from '@remix-run/react'
+  useRouteError} from '@remix-run/react'
 import { z } from 'zod'
 import { useState } from 'react'
 import TipTap from '~/components/shared/tip-tap'
@@ -91,11 +90,19 @@ export async function action({ request }: ActionArgs) {
 export default function Uploader() {
   const actionData = useActionData<typeof action>()
   const [url, setUrl] = React.useState('')
-
+const categoryFetcher = useFetcher()
   const navigation = useNavigation()
-  const { categories } = useRouteLoaderData('root') as {
-    categories: Category[]
-  }
+
+  React.useEffect(()=>
+{
+  if(categoryFetcher.state === 'idle' && !categoryFetcher.data)
+  categoryFetcher.load(`/categories/new`)
+},[categoryFetcher])
+
+
+ const categories = categoryFetcher?.data  as Category[]
+ console.log(categories, 'categories');
+ 
   const text =
     navigation.state === 'submitting'
       ? 'Saving...'
@@ -163,13 +170,28 @@ export default function Uploader() {
             Categories
           </label>
 
-          <MultiSelect
+{ categoryFetcher?.data && <MultiSelect
             shadow='xl'
-            data={categories}
+            data={categoryFetcher?.data?.categories.map((cat: { value: string }) => ({
+              label: cat.value,
+              value: cat.value
+              }))}
             onChange={(e) => {
               setSelected(e.join(','))
             }}
           />
+
+            }
+          {/* <MultiSelect
+            shadow='xl'
+            data={categories.map((cat) => ({
+              label: cat.value,
+              value: cat.value
+              }))}
+            onChange={(e) => {
+              setSelected(e.join(','))
+            }}
+          /> */}
         </div>
 
         <div className='mb-5 mt-5 flex flex-col items-center gap-5 text-slate12'>
