@@ -1,7 +1,6 @@
 import { ChevronUpIcon, ChevronDownIcon } from '@radix-ui/react-icons'
 import { NavLink } from '@remix-run/react'
 import React from 'react'
-import { RowBox } from './boxes'
 
 export type MenuBoxProps = {
   title: string
