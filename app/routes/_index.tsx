@@ -36,7 +36,7 @@ React.useEffect(()=>
   }) => item._count.posts > 0)
 
   return (
-      <div className='flex w-full flex-wrap gap-2 p-2'>
+      <div className='flex w-full h-full flex-wrap gap-2 p-2'>
         {categories?.map((item: {
           id: string
           value: string

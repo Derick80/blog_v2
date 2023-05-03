@@ -86,7 +86,13 @@ export async function action() {
 }
 
 export default function App() {
-  const data = useLoaderData<typeof loader>()
+  const data = useLoaderData<{
+    user: any
+    toastMessage: ToastMessage
+    ENV: {
+      VERCEL_ANALYTICS_ID: string
+    }
+  }>()
   const { toastMessage } = data
   let isBot = useIsBot()
 

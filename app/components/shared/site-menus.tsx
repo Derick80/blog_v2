@@ -9,33 +9,33 @@ export type MenuBoxProps = {
 export default function MenuBox({ title }: MenuBoxProps) {
   const [menu, setMenu] = React.useState(false)
   return (
-  
-     <RowBox
+  <>     
       
-     >
+    
             <button 
-            className='flex flex-row items-center gap-1 md:gap-2'
+            className='relative flex flex-row items-center gap-1 md:gap-2'
               onClick={() => setMenu(!menu)}>
 
         <h6 className='text-sm font-bold'>{title}</h6>
           {menu ? (
-            <ChevronUpIcon className='text-teal-400' />
+            <ChevronUpIcon className='relative text-teal-400' />
           ) : (
-            <ChevronDownIcon className='text-teal-400' />
+            <ChevronDownIcon className='relative text-teal-400' />
           )}
-        </button>
-     
+       
+
       {menu && (
         <div
-          className='relative right-0 flex flex-col  border-none'
-          onMouseLeave={() => setMenu(!menu)}
+          className='relative flex'
         >
-          <div className='absolute z-10 flex w-fit flex-col items-center justify-between rounded-md bg-white/60 dark:bg-slate-900'>
+          <div className='absolute right-0  flex w-fit flex-col items-center justify-between rounded-md p-1 bg-slate-200 dark:bg-slate-900'>
             <MapMenuItems menuItems={MenuItems} />
           </div>
-        </div>
+          </div>
+       
       )}
-     </RowBox>
+       </button>
+      </>
   )
 }
 

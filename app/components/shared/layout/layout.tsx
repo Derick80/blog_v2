@@ -3,7 +3,7 @@ import {
 } from '@radix-ui/react-icons'
 import { Form, NavLink } from '@remix-run/react'
 
-import {  Avatar, } from '@mantine/core'
+import {  Image, } from '@mantine/core'
 import { BrandIcon } from '~/resources/brand-icon'
 import { useOptionalUser } from '~/utils/utilities'
 import MenuBox from '../site-menus'
@@ -28,7 +28,7 @@ function NavigationBar() {
   const user = useOptionalUser()
   // fix w-4/s6 if I want to change the latout
   return (
-    <div className='fixed left-0 right-0 top-0 z-10 mx-auto flex h-16 w-full flex-row items-center justify-between bg-slate-50 p-1 dark:bg-slate-800 md:p-2'>
+    <div className='fixed left-0 right-0 top-0 z-20 mx-auto flex h-16 w-full flex-row items-center justify-between bg-slate-100 p-1 dark:bg-slate-800 md:p-2'>
       <BrandIcon />
 
       <NavLink
@@ -82,11 +82,12 @@ function NavigationBar() {
 
       {user ? (
         <div className='flex flex-row gap-2 p-2'>
-          <Avatar
+          <Image
             src={user.avatarUrl}
             alt={user.userName}
             radius='xl'
-            size='sm'
+            width={32}
+            height={32}
           />
 
           <Form
