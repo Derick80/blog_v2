@@ -3,35 +3,45 @@ import { json } from '@remix-run/node'
 import {
   Link,
   isRouteErrorResponse,
-  useFetcher,
   useLoaderData,
   useRouteError
 } from '@remix-run/react'
-import React from 'react'
 import { PostCard } from '~/components/shared/blog-ui/post-card'
 import type { PostWithChildren } from '~/utils/schemas/post-schema'
-import type { User } from '~/utils/schemas/user-schema'
 import { getHeroPost } from '~/utils/server/post.server'
-import { useMatchesData } from '~/utils/utilities'
+import { prisma } from '~/utils/server/prisma.server'
 
 export async function loader({ request }: LoaderArgs) {
   const post = await getHeroPost()
+const categories = await prisma.category.findMany({
+  select: {
+    id: true,
+    value: true,
+    label: true,
+    _count: {
+      select: {
+        posts: true
 
-  return json({ post })
+      }
+    }
+  }
+})
+
+  return json({ post,categories })
 }
 
 export default function Index() {
-  const data = useLoaderData<{ post: PostWithChildren[] }>()
-  const categoryFetcher = useFetcher()
+  const data = useLoaderData<{ post: PostWithChildren[],
+  categories: {
+    id: string
+    value: string
+    label: string
+    _count: { posts: number }
+  }[]
 
-React.useEffect(()=>
-{
-  if(categoryFetcher.state === 'idle' && !categoryFetcher.data)
-  categoryFetcher.load(`/categories/new`)
-},[categoryFetcher])
+  }>()
 
-
-  const categories = categoryFetcher?.data?.categories.filter((item: {
+  const categories = data?.categories.filter((item: {
     _count: { posts: number }
   }) => item._count.posts > 0)
 
