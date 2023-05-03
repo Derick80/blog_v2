@@ -12,7 +12,7 @@ import {
 import { StylesPlaceholder } from '@mantine/remix'
 import { isAuthenticated } from './utils/server/auth/auth.server'
 import Layout from './components/shared/layout/layout'
-import stylesheet from  './tailwind.css'
+import stylesheet from './tailwind.css'
 import { useIsBot } from './is-bot.context'
 import type { ToastMessage} from './utils/server/auth/session.server';
 import { commitSession, getSession } from './utils/server/auth/session.server'
