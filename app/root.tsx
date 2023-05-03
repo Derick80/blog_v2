@@ -12,7 +12,7 @@ import {
 import { StylesPlaceholder } from '@mantine/remix'
 import { isAuthenticated } from './utils/server/auth/auth.server'
 import Layout from './components/shared/layout/layout'
-import styles from './styles/app.css'
+import styles from './tailwind.css'
 import { useIsBot } from './is-bot.context'
 import { ToastMessage, commitSession, getFlash, getSession } from './utils/server/auth/session.server'
 import { Toaster, toast } from 'react-hot-toast'

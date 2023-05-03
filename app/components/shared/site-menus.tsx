@@ -18,19 +18,17 @@ export default function MenuBox({ title }: MenuBoxProps) {
 
         <h6 className='text-sm font-bold'>{title}</h6>
           {menu ? (
-            <ChevronUpIcon className='relative text-teal-400' />
+            <ChevronUpIcon className=' text-teal-400' />
           ) : (
-            <ChevronDownIcon className='relative text-teal-400' />
+            <ChevronDownIcon className=' text-teal-400' />
           )}
        
 
       {menu && (
-        <div
-          className='relative flex'
-        >
-          <div className='absolute right-0  flex w-fit flex-col items-center justify-between rounded-md p-1 bg-slate-200 dark:bg-slate-900'>
+      
+          <div className='absolute top-4 left-0 right-0  flex w-fit flex-col items-center justify-between rounded-md p-1 bg-slate-300 dark:bg-slate-900'>
             <MapMenuItems menuItems={MenuItems} />
-          </div>
+          
           </div>
        
       )}
