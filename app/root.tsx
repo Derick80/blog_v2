@@ -12,12 +12,14 @@ import {
 import { StylesPlaceholder } from '@mantine/remix'
 import { isAuthenticated } from './utils/server/auth/auth.server'
 import Layout from './components/shared/layout/layout'
-import styles from './tailwind.css'
+import stylesheet from '~/tailwind.css'
 import { useIsBot } from './is-bot.context'
-import { ToastMessage, commitSession, getFlash, getSession } from './utils/server/auth/session.server'
+import type { ToastMessage} from './utils/server/auth/session.server';
+import { commitSession, getSession } from './utils/server/auth/session.server'
 import { Toaster, toast } from 'react-hot-toast'
 import { Analytics } from '@vercel/analytics/react'
 import React from 'react'
+
 declare global {
   interface Window {
     ENV: SerializeFrom<typeof loader>['ENV']
@@ -46,7 +48,7 @@ export function meta() {
   ]
 }
 export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: styles },
+  { rel: 'stylesheet', href: stylesheet, preload: 'true' },
   {
     rel: 'preconnect',
     href: 'https://fonts.gstatic.com',
