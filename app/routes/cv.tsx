@@ -33,7 +33,9 @@ export default function Cv() {
             <h3 className='text-md font-Montserrat'>{job.institution}</h3>
             <AccordianTriggers job={job}>
               <div className='flex flex-col items-start px-4'>
-                <ul>
+                <ul
+                  className='list-disc text-teal-400'
+                >
                   {job.duties.map((duty) => (
                     <li className='list-disc text-teal-400' key={duty.id}>
                       <div className='flex flex-row items-center'>

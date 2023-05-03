@@ -12,10 +12,10 @@ import Button from '../button'
 export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='min-h-screen flex flex-col gap-2'>
       <NavigationBar />
 
-        <main className='flex-grsow relative mx-auto mt-10 flex w-full flex-col p-2 md:w-4/6 md:p-4'>
+        <main className='flex-grow relative mx-auto mt-10 flex w-full flex-col p-2 md:w-4/6 md:p-4'>
           {children}
         </main>
       
@@ -28,7 +28,7 @@ function NavigationBar() {
   const user = useOptionalUser()
   // fix w-4/s6 if I want to change the latout
   return (
-    <div className='fixed left-0 right-0 top-0 z-50 mx-auto flex h-16 w-full flex-row items-center justify-between bg-slate-50/70 p-1 dark:bg-slate-800 md:p-2'>
+    <div className='fixed left-0 right-0 top-0 z-10 mx-auto flex h-16 w-full flex-row items-center justify-between bg-slate-50 p-1 dark:bg-slate-800 md:p-2'>
       <BrandIcon />
 
       <NavLink

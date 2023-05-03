@@ -17,24 +17,14 @@ const cookieOptions = {
   secrets: [secret],
   secure: false
 }
+export const { commitSession, getSession } = createCookieSessionStorage({
+  cookie: cookieOptions
+})
 
 export const sessionStorage = createCookieSessionStorage({
   cookie: cookieOptions
 })
 
-export const getSession = async (request: Request) => {
-  const session = await sessionStorage.getSession(request.headers.get('Cookie'))
-
-  return session
-}
-
-export const commitSession = async (session: Session) => {
-  const headers = new Headers({
-    'Set-Cookie': await sessionStorage.commitSession(session)
-  })
-
-  return headers
-}
 // Flash
 type Flash = {
   type?: 'default' | 'success' | 'error'
@@ -70,4 +60,13 @@ export const getFlash = async (request: Request) => {
   const headers = await commitSession(session)
 
   return { ...flash, headers }
+}
+export type ToastMessage = { message: string; type: 'success' | 'error' }
+
+export function setSuccessMessage(session: Session, message: string) {
+  session.flash('toastMessage', { message, type: 'success' } as ToastMessage)
+}
+
+export function setErrorMessage(session: Session, message: string) {
+  session.flash('toastMessage', { message, type: 'error' } as ToastMessage)
 }

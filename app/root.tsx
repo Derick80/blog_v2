@@ -14,8 +14,10 @@ import { isAuthenticated } from './utils/server/auth/auth.server'
 import Layout from './components/shared/layout/layout'
 import styles from './styles/app.css'
 import { useIsBot } from './is-bot.context'
-import { getFlash } from './utils/server/auth/session.server'
+import { ToastMessage, commitSession, getFlash, getSession } from './utils/server/auth/session.server'
+import { Toaster, toast } from 'react-hot-toast'
 import { Analytics } from '@vercel/analytics/react'
+import React from 'react'
 declare global {
   interface Window {
     ENV: SerializeFrom<typeof loader>['ENV']
@@ -54,18 +56,29 @@ export const links: LinksFunction = () => [
 
 export async function loader({ request }: LoaderArgs) {
   const user = await isAuthenticated(request)
+  const session = await getSession(request.headers.get('Cookie'))
 
-  const { message, headers } = await getFlash(request)
+  const toastMessage = (await session.get('toastMessage')) as ToastMessage
 
-  return json(
+  if (!toastMessage) {
+    return json({ toastMessage: null, user })
+  }
+
+  if (!toastMessage.type) {
+    throw new Error('Message should have a type')
+  }
+
+   return json(
     {
       user,
-      message,
+      toastMessage,
       ENV: {
         VERCEL_ANALYTICS_ID: process.env.VERCEL_ANALYTICS_ID
       }
     },
-    { headers }
+    { headers :{
+      'Set-Cookie': await commitSession(session)
+    }}
   )
 }
 export async function action() {
@@ -74,7 +87,27 @@ export async function action() {
 
 export default function App() {
   const data = useLoaderData<typeof loader>()
+  const { toastMessage } = data
   let isBot = useIsBot()
+
+  React.useEffect(() => {
+    if (!toastMessage) {
+      return
+    }
+    const { message, type } = toastMessage
+
+    switch (type) {
+      case 'success':
+        toast.success(message)
+        break
+      case 'error':
+        toast.error(message)
+        break
+      default:
+        throw new Error(`${type} is not handled`)
+    }
+  }, [toastMessage])
+
   // bg-gradient-to-b from-[#2e026d] to-[#15162c]
   return (
     <html lang='en'>
@@ -87,6 +120,21 @@ export default function App() {
       <body className='bg-slate-50 text-black dark:bg-slate-900 dark:text-slate-50'>
         <Layout>
           <Outlet />
+          <Toaster
+              position='bottom-right'
+              toastOptions={{
+                success: {
+                  style: {
+                    background: 'green'
+                  }
+                },
+                error: {
+                  style: {
+                    background: 'red'
+                  }
+                }
+              }}
+            />
           <Analytics />
           <ScrollRestoration />
           {isBot ? null : <Scripts />}

@@ -1,5 +1,4 @@
-import { useFetcher, useSubmit } from '@remix-run/react'
-import React from 'react'
+import { useFetcher } from '@remix-run/react'
 import Button from './button'
 
 
