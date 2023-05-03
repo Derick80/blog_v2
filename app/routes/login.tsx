@@ -35,7 +35,7 @@ export default function Login() {
       <div className='flex items-center justify-center gap-2'>
         <SocialLoginForm provider='discord'>
           <Button
-            
+            // fix
             variant='icon_unfilled'
             size='small'
           className='flex flex-col items-center gap-2'>
